@@ -1,0 +1,243 @@
+<div class="container">
+  <div class="vote-bread-crumb d-flex align-item-center">
+    <a routerLink="/awards/2019" class="head-bread-crumb"> KSP Awards 2019 </a>
+    <img class="min-img-size margin-left-10" src="../../v1/assets/images/black-right-arrow.svg">
+    <a href="JavaScript:Void(0)" class="title-bread-crumb d-flex margin-left-10">
+                    {{categoryTitle}}
+                </a>
+  </div>
+  <div class="voting-wrapper clearfix">
+    <div class="voting-left float-left">
+      <img class="img-size-60 vertical-align-middle" src="{{categoryData.img_path}}">
+      <span class="img-cap display-inline-block margin-left-10 vertical-align-middle">
+          <h4 style="font-size: 18px;margin-bottom: 10px; font-weight: 700;"> {{categoryTitle}} </h4>
+          <h6 style="font-size: 14px;"> Click on your favourite brand to vote </h6>
+      </span>
+    </div>
+    <button class="pink-btn float-right cursor-pointer" *ngIf="submitvotetext == true" (click)="vote()">
+      Submit Vote
+      <!--<span class="yellow-round-white-border margin-left-10 vote-count-badge"> 2 </span>-->
+    </button>
+  </div>
+
+  <div class="d-flex flex-wrap thumb-container margin-top-10 scrollable-class">
+    <div class="tile-over" *ngFor="let brand of brands ;">
+      <div class="tile-inner text-center active" [ngClass]="{'active': selectedItem == brand.id}" (click)="listClick($event, brand.id)">
+        <div class="logo-img-wrapper">
+          <img *ngIf="brand.logo == null" src="../../v1/assets/images/brand11.jpeg">
+          <img *ngIf="brand.logo !== null" src="{{brand.logo}}">
+        </div>
+        <h6> {{ brand.companyName }} </h6>
+        <p> Select </p>
+        <div class="check-wrapper">
+          <img class="min-img-size" src="../../v1/assets/images/pink-circle-check.svg"> Selected
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="voting-pop-overlay" *ngIf="warning_submit == true">
+  <div class="vote-pop-box">
+    <h6> Cannot Submit </h6>
+    <p> Please select a brand to vote </p>
+    <button class="pink-btn cursor-pointer" (click)="close_warning_sumbit()"> close </button>
+  </div>
+</div>
+
+<div class="voting-pop-overlay" *ngIf="login_warning == true">
+  <div class="vote-pop-box">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="close_login_warning()">
+    <!-- close btn -> submit as guest (click)="voteAsGuest()" --> <!-- close btn -> close popup (click)="close_login_warning()" -->
+    <h6> Make it count! </h6>
+    <p> Authenticate your vote and make it count, so that your favourite brand can win it. </p>
+
+    <form [formGroup]="regForm" (ngSubmit)="regForm.valid && register(regForm.value)" #formReg="ngForm">
+      <div class="clearfix">
+        <label> Name </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="text" placeholder="Enter your name" [formControl]="regForm.controls['name']">
+        </div>
+        <div class="error-alert-text" *ngIf="(regForm.controls['name'].hasError('required') && regForm.controls['name'].dirty) || (regForm.controls['name'].hasError('required') && formReg.submitted)">
+          Please enter your name</div>
+      </div>
+      <div class="clearfix">
+        <label> Email address </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="email" placeholder="Enter your email address" [formControl]="regForm.controls['email']">
+        </div>
+        <div *ngIf="(regForm.controls['email'].hasError('required') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('required') && formReg.submitted)" class="error-alert-text">Please enter your email id</div>
+        <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('email') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('email') && formReg.submitted))" class="error-alert-text">Please enter a valid email</div>
+        <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('emailExist') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('emailExist') && formReg.submitted))" class="error-alert-text">This email id is already registered</div>
+      </div>
+      <div class="clearfix">
+        <label> Phone No </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="tel" maxlength="10" placeholder="Enter your contact number" [formControl]="regForm.controls['phone']">
+        </div>
+        <div *ngIf="(regForm.controls['phone'].hasError('pattern') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('pattern') && formReg.submitted)" class="error-alert-text">Please enter valid phone no</div>
+        <div *ngIf="!regForm.controls['phone'].hasError('pattern') && ((regForm.controls['phone'].hasError('phoneExist') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('phoneExist') && formReg.submitted))" class="error-alert-text">Phone no already registered</div>
+      </div>
+      <div class="custom-dropdown clearfix">
+        <label> Select City </label>
+        <select [formControl]="regForm.controls['city']">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+        </select>
+        <div *ngIf="(regForm.controls['city'].hasError('required') && regForm.controls['city'].dirty) || (regForm.controls['city'].hasError('required') && formReg.submitted)" class="error-alert-text">Please select city.</div>
+      </div>
+      <div class="clearfix">
+        <label> Password </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="password" placeholder="Enter a password for login usage" [formControl]="regForm.controls['password']">
+        </div>
+        <div *ngIf="(regForm.controls['password'].hasError('required') && regForm.controls['password'].dirty) || (regForm.controls['password'].hasError('required') && formReg.submitted)" class="error-alert-text">Please enter password</div>
+        <div *ngIf="!regForm.controls['password'].hasError('required') && (regForm.controls['password'].hasError('minlength') && regForm.controls['password'].dirty) || (regForm.controls['password'].hasError('minlength') && formReg.submitted)" class="error-alert-text">Please enter at least 6 characters.</div>
+      </div>
+      <!-- <div class="error-alert-text">{{loginText}}</div> -->
+      <button class="pink-btn cursor-pointer"  *ngIf="showRegButton == true"> Register </button>
+    </form>
+    <p class="pink-text">
+      Already a member?
+      <a class="pink-text cursor-pointer"  (click)="showLoginForm()"> Login </a>
+    </p>
+    <p class="pink-text">
+      <a class="pink-text cursor-pointer"  (click)="showOTPForm()"> Login With OTP </a>
+    </p>
+  </div>
+</div>
+
+<div class="voting-pop-overlay" *ngIf="login_form_show == true">
+  <div class="vote-pop-box">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="close_login_form()">
+    <!-- close btn -> submit as guest (click)="voteAsGuest()" --> <!-- close btn -> close popup (click)="close_login_form()" -->
+    <h6> Make it count! </h6>
+    <p> Authenticate your vote and make it count, so that your favourite brand can win it. </p>
+
+    <form [formGroup]="logForm" (ngSubmit)="logForm.valid && login(logForm.value)" #formLog="ngForm">
+      <div class="clearfix">
+        <label> Email address </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="email" placeholder="Enter your email address" [formControl]="logForm.controls['email']">
+        </div>
+        <div *ngIf="(logForm.controls['email'].hasError('required') && logForm.controls['email'].dirty) || (logForm.controls['email'].hasError('required') && formLog.submitted)" class="error-alert-text">Please enter your email id</div>
+        <div *ngIf="!logForm.controls['email'].hasError('required') && ((logForm.controls['email'].hasError('email') && logForm.controls['email'].dirty) || (logForm.controls['email'].hasError('email') && formLog.submitted))" class="error-alert-text">Please enter a valid email</div>
+      </div>
+      <div class="clearfix">
+        <label> Password </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="password" placeholder="Enter a password for login usage" [formControl]="logForm.controls['password']">
+        </div>
+        <div *ngIf="(logForm.controls['password'].hasError('required') && logForm.controls['password'].dirty) || (logForm.controls['password'].hasError('required') && formLog.submitted)" class="error-alert-text">Please enter password</div>
+      </div>
+      <div class="clearfix">
+        <a (click)="redirectToLogin()" class="forgot-password"> Forgot Password ? </a>
+      </div>
+      <button class="pink-btn cursor-pointer"> Login </button>
+    </form>
+    <div class="error-alert-text">{{loginText}}</div>
+    <p class="pink-text">
+      Not a member yet?
+      <a class="pink-text cursor-pointer" (click)="showRegisterForm()"> Register </a>
+    </p>
+  </div>
+</div>
+<!-- my code hcvjhbcsdjcbsjc asjcgasjkc-->
+<div class="voting-pop-overlay" *ngIf="otp_form_show == true">
+  <div class="vote-pop-box" style="min-width: 450px; max-width: 100%;">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="close_otp_form()">
+      <div class="clearfix">
+        <label> Email address </label>
+        <div class="votpop-input-wrapper clear">
+          <input type="email" style="margin-bottom: 10px; outline: none;" placeholder="Enter your email address" [(ngModel)]="otpemail">
+          <p class="text-center pink-text" *ngIf="showerr == 1">Please enter email id</p>
+        </div>
+      </div>
+
+      <button class="pink-btn cursor-pointer" *ngIf="showResendOTPText1 == true" (click)="sendLoginOTP()"> Send OTP </button>
+    <div class="error-alert-text">{{loginText}}</div>
+    <p class="pink-text" >
+      Not a member yet?
+      <a class="pink-text cursor-pointer" (click)="showRegisterForm()"> Register </a>
+    </p>
+  </div>
+</div>
+
+<div class="voting-pop-overlay" *ngIf="showOTPNEW == true">
+  <div class="vote-pop-box">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="close_otp1()">
+    <!-- close btn -> submit as guest (click)="voteAsGuest()" --> <!-- close btn -> close popup (click)="close_login_form()" -->
+    <h6> Verify OTP </h6>
+    <p> We have already sent you OTP in your email and mobile. </p>
+
+      <div class="clearfix">
+        <div class="votpop-input-wrapper clear">
+          <input type="text" style="margin-bottom: 10px; outline: none;" placeholder="Enter your OTP" [(ngModel)]="otp">
+          <div class="error-alert-text" *ngIf="otperr == 1">
+          Please enter otp</div>
+        </div>
+      </div>
+      <button class="pink-btn cursor-pointer" (click)="verifyLoginOTP()"> Verify OTP </button>
+
+    <p class="pink-text" *ngIf="showResendOTPText == true">
+      Not received OTP?
+      <a class="pink-text cursor-pointer" (click)="resendOTP()"> Re-send </a>
+    </p>
+    <div class="error-alert-text">{{otpVerifiedText}}</div>
+  </div>
+</div>
+
+<!--my code endjhhjhascajscjscj-->
+<div class="voting-pop-overlay" *ngIf="otp_verification_show == true">
+  <div class="vote-pop-box">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="close_otp()">
+    <!-- close btn -> submit as guest (click)="voteAsGuest()" --> <!-- close btn -> close popup (click)="close_login_form()" -->
+    <h6> Verify OTP </h6>
+    <p> We have already sent you OTP in your email and mobile. </p>
+
+    <form [formGroup]="otpVerifyForm" (ngSubmit)="otpVerifyForm.valid && verifyOTP(otpVerifyForm.value)" #formOtp="ngForm">
+      <div class="clearfix">
+        <div class="votpop-input-wrapper clear">
+          <input type="text" placeholder="Enter your OTP" [formControl]="otpVerifyForm.controls['otp']">
+          <div class="error-alert-text" *ngIf="(otpVerifyForm.controls['otp'].hasError('required') && otpVerifyForm.controls['otp'].dirty) || (otpVerifyForm.controls['otp'].hasError('required') && formOtp.submitted)">
+          Please enter otp</div>
+        </div>
+      </div>
+      <button class="pink-btn cursor-pointer"> Verify OTP </button>
+    </form>
+    <p class="pink-text" *ngIf="showResendOTPText == true">
+      Not received OTP?
+      <a class="pink-text cursor-pointer" (click)="resendOTP()"> Re-send </a>
+    </p>
+    <div class="error-alert-text">{{otpVerifiedText}}</div>
+  </div>
+</div>
+
+<div class="voting-pop-overlay" *ngIf="vote_submit === true">
+
+  <div class="vote-pop-box">
+    <h6> Thank you for voting! </h6>
+    <p> Winners will be announced soon. </p>
+    <button class="pink-btn cursor-pointer" (click)="close_vote_submit()"> Vote in another category </button>
+  </div>
+
+</div>
+<div class="voting-pop-overlay" *ngIf="alreadyVoted === true">
+
+  <div class="vote-pop-box">
+    <h6> Already Voted in this Category! </h6>
+    <button class="pink-btn cursor-pointer" (click)="close_vote_submit()"> Vote in another category </button>
+  </div>
+
+</div>
+
+
+<div class="voting-pop-overlay" *ngIf="recheckLogin === true">
+  <div class="vote-pop-box">
+    <img src="../../../v1/assets/images/close.svg" class="cross cursor-pointer" (click)="recheckClose()">
+    <h6> Make it count! </h6>
+    <p> Authenticate your vote and make it count, so that your favourite brand can win it. </p>
+    <button class="pink-btn cursor-pointer" (click)="recheck()"> Register </button>
+  </div>
+
+</div>

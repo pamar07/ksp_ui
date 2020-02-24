@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>INSTA@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="HOME-SCRREN-V3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HOME-SCREEN-3.3" transform="translate(-1200.000000, -89.000000)">
+            <g id="SUBHEADER" transform="translate(0.000000, 70.000000)">
+                <g id="SHARE" transform="translate(1088.000000, 19.000000)">
+                    <g id="INSTA" transform="translate(112.000000, 0.000000)">
+                        <g id="Group-2" transform="translate(3.913043, 3.913043)">
+                            <rect id="Rectangle-11" stroke="#333333" stroke-width="1.01449275" x="0.507246377" y="0.507246377" width="11.1594203" height="11.1594203" rx="4.05797101"></rect>
+                            <rect id="Rectangle-11" stroke="#333333" stroke-width="1.01449275" x="3.11594203" y="3.11594203" width="5.94202899" height="5.94202899" rx="2.97101449"></rect>
+                            <rect id="Rectangle-11" fill="#333333" x="8.69565217" y="1.73913043" width="1.73913043" height="1.73913043" rx="0.869565217"></rect>
+                        </g>
+                        <path d="M10,0 C4.48590909,0 0,4.48590909 0,10 C0,15.5140909 4.48590909,20 10,20 C15.5140909,20 20,15.5140909 20,10 C20,4.48590909 15.5140909,0 10,0 L10,0 Z M10,19.0909091 C4.98727273,19.0909091 0.909090909,15.0127273 0.909090909,10 C0.909090909,4.98727273 4.98727273,0.909090909 10,0.909090909 C15.0127273,0.909090909 19.0909091,4.98727273 19.0909091,10 C19.0909091,15.0127273 15.0127273,19.0909091 10,19.0909091 L10,19.0909091 Z" id="Shape" fill="#333333" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

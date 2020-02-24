@@ -1,0 +1,249 @@
+<!-- <div class="top_img_cover">
+    <img src="assets/images/banner-background.png" class="web-logo-hide" width="auto" />
+</div> -->
+
+<div class="col-lg-12 paddingNo" style="z-index: 9999; position: fixed; top: 0; width:100%;" *ngIf="showSearchPanel">
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xlg-12 paddingNo">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xlg-12 paddingNo margin-bottom-0">
+            <div class="search-panel pull-left" style="width:10%;">
+                <button id="search_textbox" type="button" class="btn btn-default dropdown-toggle all-btn height-40" data-toggle="dropdown">
+                	<span id="search_concept" class="font-Raleway-SemiBold">{{searchType}}</span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="javascript:void(0);" (click)="searchType = 'ARTICLE'">ARTICLE</a></li>
+                  <li><a href="javascript:void(0);" (click)="searchType = 'TV'">TV</a></li>
+                  <li><a href="javascript:void(0);" (click)="searchType = 'RADIO'">RADIO</a></li>
+                  <li><a href="javascript:void(0);" (click)="searchType = 'EVENT'">EVENT</a></li>
+                  <li><a href="javascript:void(0);" (click)="searchType = 'ALL'">ALL</a></li>
+                  <li><a href="javascript:void(0);" (click)="searchType = 'CAMP'">SUMMER CAMP</a></li>
+                </ul>
+            </div>
+            <div class="pull-left" style="width:85%;">
+              <input #searchKey id="searchKeyID" type="text" class="form-control height-40 margin-bottom0" name="x" placeholder="Search Articles, Events & Activities, Radio, TV ..." (keyup.enter)="_commonService.searchType = searchType; search(searchKey.value)">
+            </div>
+            <div class="pull-right" style="width:5%;">
+                <button id="search_cancel" class="btn btn-default height-40" type="button" (click)="showSearchPanel = false"><i class="fa fa-times font-size25" aria-hidden="true"></i></button>
+             </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xlg-12 paddingNo popular-search-section">
+          <div class="col-sm-2 col-md-2 col-lg-2 col-xlg-2 gray-backg-scroll">
+            <h5 class="font-size16 font-Raleway-SemiBold margin0">TRENDING SEARCH</h5>
+          </div>
+          <div class="col-xs-2 col-xlg-2 col-sm-2 col-md-2 col-lg-2 col-xlg-2 gray-backg-scroll" *ngFor="let tag of trendingTags" (click)="search(tag.name)" style="cursor:pointer;">
+            <h5 class="pink-color-text margin0">{{tag.name}}</h5>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- For mobile filters -->
+<div [ngStyle]="{'visibility':_commonService.showMobileFilter ? 'visible' : 'hidden' }">
+<div class="footer-filter" *showItDevice="['mobile', 'tablet']">
+  <div *ngIf="cityList && ageGroups" style="padding:10px;">
+    <i class="fa fa-close font-size20 text-center" aria-hidden="true" style="position: fixed;
+    right: -4px;
+    bottom: 75px;
+    background-color: #fff;
+    padding: 2px;" (click)="_commonService.showMobileFilter=!_commonService.showMobileFilter"></i>
+    <div style="width:45%; margin-top:20px; float:left;">
+      <span class="font-Raleway-SemiBold color-white">Filter by cities: </span>
+      <select style="height:25px;width:100%; margin-top:2px;" (change)="setCity($event.target.value)" multiple>
+        <option *ngFor="let city_name of cityList; let i=index" value="{{i}}">
+          {{city_name.city}}
+        </option>
+      </select>
+    </div>
+    <div style="width:45%; margin-top:20px; float:right;">
+      <span class="font-Raleway-SemiBold color-white">Filter by ages: </span>
+      <select style="height:25px;width:100%; margin-top:2px;" (change)="setAge($event.target.value)" multiple>
+        <option *ngFor="let group of ageGroups; let i=index" value="{{i}}" [ngClass]="{'hide':(i==10)}">
+          {{group.age}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+</div>
+
+<!--gray social area-->
+<section class="navbar navbar-fixed-top noFixed" *showItDevice="['desktop']">
+  <div class="w3_agile_banner_top topSocial color-bg-pink" style="background:#ffffff !important;">
+    <div class="container paddingNo">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/home"> <img src="assets/images/KSP-Logo-main.svg" class="web-logo-hide" width="auto" height="90px" alt=""/> </a>
+        <!-- <a class="navbar-brand" href="/home"> <img src="assets/images/xmas-logo.png" class="web-logo-hide" width="auto" height="90px" alt=""/> </a>  -->
+      </div>
+      <div class="agile_phone_mail pull-left">
+        <ul class="agile_forms margin-left145p margin-top3px">
+          <li style="padding-left:24px;"><span class=" font-size15 font-Raleway-SemiBol text-italic">#SimplifyingParenting</span></li>
+        </ul>
+      </div>
+      <div class="agile_phone_mail pull-right" *ngIf="cityList && ageGroups">
+        <ul class="agile_forms margin-left145p margin-top6px">
+          <li class="width50-lef paddingNo height-26px">
+            <ul class="nav navbar-nav navbar-right margin0">
+              <li class="dropdown cityWidth-160 paddingNo"> <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"> <i class="fa fa-map-marker" aria-hidden="true"></i> {{countCheckedCities() >1 ? 'Cities' : getCheckedCity()}} <span class="">{{countCheckedCities() >1 ? '(' + countCheckedCities() + ')' : ''}}</span><span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-cart" role="menu" (click)="stopPropagation($event)">
+                  <li *ngFor="let city_name of cityList; let i=index" class="dropdown-filter" (click)="setCity(i)">
+                    <i [ngClass]="{'fa fa-check pull-right tick':city_name.checked}" aria-hidden="true"></i>
+                    <span class="item" [ngClass]="{'no-border-bottom':(i==cityList.length-1)}">
+                      <span class="item-info">
+                        <span [ngClass]="{'color-pink-dropdown':city_name.checked}">
+                          {{city_name.city}}
+                        </span>
+                      </span>
+                    </span>
+
+                     <!-- <li><a href="#" class="small" data-value="option1" tabIndex="-1"><input type="checkbox"/>&nbsp;Option 1</a></li> -->
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- <li> | </li> -->
+          <li class="width50-righ paddingNo height-26px">
+            <ul class="nav navbar-nav navbar-right margin0">
+
+              <!--li class="paddingNo">
+                <div class="dropdown">
+                  <button class="btn-sm dropdown-toggle partener-button no-border" data-toggle="dropdown"><small  class="font-regular">Select Age Group</small> <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu1">
+                    <li *ngFor="let group of ageGroups"><a href="#" class="font-regular">{{group.age}}</a></li>
+                  </ul>
+                </div>
+              </li-->
+              <li class="dropdown cityWidth-160 paddingNo">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"> Age Groups <span class="">{{countCheckedAges() > 0 ? '(' + countCheckedAges() + ')' : ''}}</span><span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-cart" role="menu" (click)="stopPropagation($event)">
+                  <li *ngFor="let group of ageGroups; let i=index" class="dropdown-filter" (click)="setAge(i)" [ngClass]="{'hide':(i==10)}">
+                    <i [ngClass]="{'fa fa-check pull-right tick':group.checked}" aria-hidden="true"></i>
+                    <span class="item" [ngClass]="{'no-border-bottom':(i==ageGroups.length-1)}">
+                      <span class="item-info">
+                        <span [ngClass]="{'color-pink-dropdown':group.checked}">{{group.age}}</span>
+                      </span>
+                    </span>
+
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+        <!-- DROPDOWN LOGIN STARTS HERE  -->
+        <ul id="signInDropdown" class="nav navbar-nav pull-left margin-top5px">
+          <li class="dropdown paddingNo height-26px" *ngIf="_apiService.loggedIn()">
+            <span class="padding-left-right-8px icon-tooltip">
+              <a routerLink="/bookmarks">
+                <i id="MyBookmarks"
+                  class="fa fa-bookmark-o  font-size18 font-bolder margin0 margin-top5px"
+                  onmouseover="document.getElementById('MyBookmarks').classList.remove('fa-bookmark-o');document.getElementById('MyBookmarks').classList.add('fa-bookmark')"
+                  onmouseout="document.getElementById('MyBookmarks').classList.add('fa-bookmark-o');document.getElementById('MyBookmarks').classList.remove('fa-bookmark')">
+                </i>
+              </a>
+              <span class="icon-tooltiptext">See the posts you bookmarked</span>
+            </span>
+          </li>
+          <li class="dropdown paddingNo height-26px" *ngIf="_apiService.loggedIn()">
+            <span class="padding-left-right-8px icon-tooltip">
+              <a routerLink="/loves">
+                <i id="MyLoves"
+                  class="fa fa-heart-o  font-size18 font-bolder margin0 margin-top5px"
+                  onmouseover="document.getElementById('MyLoves').classList.remove('fa-heart-o');document.getElementById('MyLoves').classList.add('fa-heart')"
+                  onmouseout="document.getElementById('MyLoves').classList.add('fa-heart-o');document.getElementById('MyLoves').classList.remove('fa-heart')">
+                </i>
+              </a>
+              <span class="icon-tooltiptext">See the posts you loved</span>
+            </span>
+          </li>
+           <li class="dropdown paddingNo height-26px">
+             <span class="icon-tooltip">
+              <img src="assets/images/search-icon.png" width="auto" height="20px" (click)="showSearchPanel = true" class="padding-left-right-8px margin-top3px" style="cursor:pointer;" onclick="$(document).ready(function(){$('#searchKeyID').focus();});">
+              <span class="icon-tooltiptext">Search</span>
+             </span>
+              <!-- <input class="form-control margin-bottom0 search" placeholder=" Search" (click)="showSearchPanel = true"> -->
+          </li>
+          <li class="dropdown paddingNo height-26px" *ngIf="_apiService.loggedIn()">
+            <app-topnotification></app-topnotification>
+          </li>
+          <li class="dropdown paddingNo height-26px">
+            <span data-toggle="modal" data-target="#NewsletterModal" class="icon-tooltip" style="cursor:pointer;">
+              <i aria-hidden="true" class="fa fa-envelope-o font-size20  padding-left-right-8px margin0 margin-top2px"></i>
+              <span class="icon-tooltiptext">Subscribe to our news</span>
+            </span>
+          </li>
+           <li class="dropdown paddingNo height-26px" [ngClass]="{'margin0': _apiService.loggedIn()}">
+            <a data-toggle="dropdown" class="dropdown-toggle padding-left-right-8px" href="#" [ngClass]="{'margin-top-2px':_apiService.loggedIn()}">
+              <span class="icon-tooltip">
+                <img alt="" src="assets/images/user.png" style="height:20px;width:auto; margin-top: 3px;" *ngIf="!_apiService.loggedIn()">
+                <span class="icon-tooltiptext">Login or Register</span>
+              </span>
+              <span *ngIf="_apiService.loggedIn()" class="icon-tooltip">
+                <app-round-pic [picPath]="_apiService.getAuthUser().image_path" [userName]="_apiService.getAuthUser().name" [width]="'35px'" [height]="'35px'" [className]="'font-Raleway-Normal'"></app-round-pic>
+                <span class="icon-tooltiptext">My Profile</span>
+              </span>
+            </a>
+            <ul class="dropdown-menu extended logout" *ngIf="_apiService.loggedIn()">
+              <li class="paddingNo"><a routerLink="/user-profile"><i class=" fa fa-suitcase"></i> Profile</a></li>
+              <li class="paddingNo"><a routerLink="/bookmarks"><i class="fa fa-bookmark"></i> My Bookmarks</a></li>
+              <li class="paddingNo"><a routerLink="/loves"><i class="fa fa-heart"></i> Posts I Love</a></li>
+              <li class="paddingNo"><a routerLink="/article-submit"><i class="fa fa-book"></i> Submit Article</a></li>
+              <li class="paddingNo"><a routerLink="/event-submit"><i class="fa fa-calendar"></i> Submit Event</a></li>
+              <li class="paddingNo"><a routerLink="/saved-images"><i class="fa fa-image"></i> My Saved Images</a></li>
+              <li class="paddingNo"><a href="javascript:void(0);" (click)="logoutUser()"><i class="fa fa-key"></i> Log Out</a></li>
+            </ul>
+            <ul class="dropdown-menu extended logout" *ngIf="!_apiService.loggedIn()">
+              <li class="paddingNo"><a routerLink="/login"><i class=" fa fa-sign-in"></i> Log In</a></li>
+              <li class="paddingNo"><a routerLink="/signup"><i class="fa fa-user"></i> Register</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- DROPDOWN LOGIN ENDS HERE  -->
+        <ul class="social margin-left5px">
+          <!-- <li class="font-size13 font-bolder color-white">Follow Kidsstoppress</li> -->
+          <li><a href="https://www.facebook.com/Kidsstoppress/" target="_blank" class="face " title="Facebook"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="https://twitter.com/Kidsstoppress" target="_blank" class="twit " title="Twitter"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="https://www.instagram.com/kidsstoppress/" target="_blank" class="icoInstagram " title="Instagram"><i class="fa fa-instagram"></i></a></li>
+          <li><a href="https://plus.google.com/+Kidsstoppress" target="_blank" class="google " title="Google +"><i class="fa fa-google-plus"></i></a></li>
+          <li><a href="https://www.pinterest.com/kidsstoppress/pins/" target="_blank" class="pinterest " title="Pinterest"><i class="fa fa-pinterest-p"></i></a></li>
+          <li><a href="https://www.youtube.com/kidsstoppress" target="_blank" class="youtube " title="YouTube"><i class="fa fa-youtube"></i></a></li>
+          <li><a href="https://soundcloud.com/kidsstoppress" target="_blank" class="soundcloud " title="Soundcloud"><i class="fa fa-soundcloud"></i></a></li>
+          <li><a href="https://in.linkedin.com/company/kidsstoppress-media-pvt-ltd" target="_blank" class="linkedin " title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
+        <div class="clearfix"> </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Newsletter Modal -->
+
+<div class="modal fade" id="NewsletterModal" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pink-color" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title pink-color">Subscribe to our newsletter</h4>
+      </div>
+      <div class="modal-body">
+        <div class="footer-col-item min-height0">
+          <span style="font-size:14px; line-height:1.5;">Subscribe to get the latest news and updates delivered directly to your inbox.</span>
+          <form class="input-group signUpNewsletter">
+            <div class="input-group-addon border-rightnone"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+            <input *ngIf="!_apiService.loggedIn()" class="gt-email form-control" placeholder="Your email address" type="text" name="subscribe_email" [(ngModel)]="subscribe_email">
+            <input *ngIf="_apiService.loggedIn()" class="gt-email form-control" placeholder="{{_apiService.getAuthUser().email}}" type="text" name="subscribe_email" readonly>
+            <input type="button" class="btn-go go-button" style="z-index:2;" value="submit" (click)="subscribe()" data-dismiss="modal">
+          </form>
+          <div class="">
+            <div class="checkbox checkbox-primary capitalize">
+              <input id="mealplan_news" type="checkbox" [(ngModel)]="mealplan_news">
+              <label for="mealplan_news">Subscribe to our Meal Plans</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

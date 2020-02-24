@@ -1,0 +1,114 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row margin0">
+      <div class="container paddingN margin-bottom15 margin-top12px" *ngIf="masterCategoryList && categoryList">
+        <div class="text-center">
+        <span *ngFor="let cat of masterCategoryList; let i=index">
+          <span
+                  class="btn all-caps text-bold master-cat-btn"
+                  (click)="tab_selected = cat.id"
+                  [ngClass]="{'master-cat-selected':(tab_selected == cat.id), 'margin-right44p':(i!=masterCategoryList.length-1)}">{{cat.name}}
+          </span>
+        </span>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 category-filter-box matgin-top-13px padding-top0px">
+          <p class="pull-right text-italic color-pink font-size11 margin0 margin-bottom15px">Click on any category to see the Radio list of that category</p>
+          <div class="margin-top-bottom-20px text-left">
+            <span *ngFor="let cat of categoryList">
+              <a href="javascript:void(0);" *ngIf="cat.parent_id == tab_selected" routerLink="/categorywise-radio/{{cat.id}}">
+                <span class="ion-android-data light-blue-button all-caps sub-cat-button"
+                      [ngClass]="{'sub-cat-selected':cat.checked}"
+                      [ngStyle]="{'background-color':cat.colour_code, 'background-image':'url(assets/images/cat-right-black.png)', 'background-size': '0px 0px'}"
+                      [innerHTML]="cat.name"></span>&nbsp;
+              </a>
+            </span>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="row margin-bottom15 dark-gry-background categoryTopPadding">
+      <div class="container margin-top marginTop0 cata-gtop">
+        <div class="main-title margin0" *ngIf="categoryName">
+          <i class="fa" aria-hidden="true"><img src="{{categoryIcon}}" width="30" height="30" alt=""></i>
+          <span [innerHtml]="categoryName"></span>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15 marginTop0" *ngIf="articles">
+     <div class="container paddingNo">
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNo height-350px" *ngFor="let article of articles">
+        <div class="single-blog-item box-shadow">
+          <div class="blog-thumnail">
+            <div id="crop-feature-image-tv">
+              <a href="/details/{{article.perma_link}}/{{article.id}}">
+                <div class="square-thumbnail-image-container">
+                  <img class="square-thumbnail-image" src="{{article.radio_image? (article.radio_image.substring( 0, article.radio_image.lastIndexOf('/')) + '/w_400' + article.radio_image.substring( article.radio_image.lastIndexOf('/'), article.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}">
+                </div>
+              </a>
+            </div>
+            <section class="post-footer">
+              <div class="">
+                <div class="comment">
+                    <div class="blog-content all-caps">
+                      <app-category [categories]="article.category" [id]="article.id" [type]="'radio'"></app-category>
+                      <h4 class="blog-ellipsis"><a href="/details/{{article.perma_link}}/{{article.id}}">{{article.title}}</a></h4>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo border-righ">
+                        <div class="media-left">
+                          <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                            <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                          </a>
+                        </div>
+                        <div class="media-body">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                            <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+                              <h4 class="media-heading capitalize font-size13 color-black">{{article.author_name}}</h4>
+                            </a>
+                            <span class="anchor-time all-caps" [innerHtml]="_commonService.setDateFormat(article.created_at) | date:'yMMMd'"></span>
+                          </div>
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                             <ul class="list-unstyled text-left pull-right width-100per">
+                                <app-likecomment [permaLink]="article.perma_link" [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [loveCount]="article.likes" [commentCount]="article.comment_count"></app-likecomment>
+                             </ul>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type" [entityId]="article.id" [bookmarkCount]="article.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'"></app-bookmark>
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15">
+      <div class="container">
+          <div class="pull-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>

@@ -1,0 +1,313 @@
+.fixed-me{
+  background-color: #f0f1f1 !important;
+  margin-bottom: 5px;
+  position: fixed;
+  top: 104px;
+  z-index: 888;
+  width: 100%;
+  /*transition: all 0.1s;*/
+  z-index: 99999999;
+  left: 0;
+  padding: 18px 0 0;
+  -webkit-box-shadow: 0px 4px 7px 0px rgba(50, 50, 50, 0.3);
+  -moz-box-shadow: 0px 4px 7px 0px rgba(50, 50, 50, 0.3);
+  box-shadow: 0px 4px 7px 0px rgba(50, 50, 50, 0.3);
+}
+.slide-n {
+    background-color: #ffffff;
+    /*padding: 10px;*/
+    /*margin: 10px;*/
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 0 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,0.14);
+}
+.event-cat-btn{
+  background-color: rgb(219, 219, 219)!important;
+  color: #333!important;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#e35b7f!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+
+.bg-white{
+  background-color: #ffffff!important;
+}
+
+.mobile-ksp-faq button.faq-panel{
+  background-color: #fff!important;
+  height:50px!important;
+  padding: 10px;
+}
+.mobile-ksp-faq button.faq-panel a{
+  padding-left: 0!important;
+}
+.mobile-ksp-faq div.faq-body{
+  padding:5px 15px 15px 15px;
+  font-size: 12px;
+  font-family: 'Raleway-SemiBold';
+}
+.mobile-ksp-faq small{
+  font-family: 'Raleway-SemiBold';
+  font-size: 12px;
+}
+.mobile-ksp-faq button.faq-panel i{
+  font-size: 9px!important;
+  padding: 0!important;
+}
+
+.trending-tag-button{
+     color:#fff!important;
+     white-space: nowrap;
+     font-size: 10px!important;
+     padding: 7px 17px!important;
+     border-radius: 0!important;
+     width: auto;
+     margin: 1px;
+     font-weight: 600;
+     line-height: 20px;
+}
+.trending-tag-button:hover{
+  background-color: #d5d5d5!important;
+  color: #000!important;
+}
+.trending-tag-selected{
+  background-color: #d5d5d5!important;
+  color:#000!important;
+  outline: none;
+  background-size: 9px 9px!important;
+  background-repeat: no-repeat;
+  background-position-x: 5px;
+  background-position-y: 8px;
+}
+
+.event-participate-btn{
+	background-color: #e35b7f!important;
+	color: #ffffff;
+	width: 100%;
+  height: 50px;
+	float: right;
+  border-radius: 3px;
+  border: none!important;
+}
+.event-participate-btn:focus, .event-participate-btn:hover, .event-participate-btn:active{
+  outline: none!important;
+}
+
+/* New css For Banner Image*/
+.summer-banner-container {
+
+  height: 475px;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.summer-banner-container .carousel {
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner {
+  height: 100%;
+}
+
+.carousel-control {
+  display: none;
+}
+
+.summer-banner-container .carousel-inner .item, .banner-container .carousel-inner .item img {
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner .item {
+  position: relative;
+  background-color: #ff5163;
+}
+
+.summer-banner-container .carousel-inner .item:after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(93deg, #ff5163 0%, #ff6668 40%, transparent);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner .item img {
+  width: 60% !important;
+  height: 100%;
+    margin-left: auto;
+}
+
+.summer-banner-container .carousel-caption {
+    position: absolute;
+    width: 70%;
+    left: 50px;
+    text-align: left;
+    top: 30%;
+    text-shadow: none;
+    bottom: initial;
+    background: none;
+    border-left: none;
+}
+
+.summer-banner-container .carousel-caption p {
+  font-size: 62px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.summer-banner-container .carousel-caption h2 {
+    font-weight: bold;
+    font-size: 21px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #fff;
+}
+
+.summer-banner-container .carousel-caption h3 {
+  font-weight: normal;
+    font-size: 38px;
+    text-shadow: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.carousel-caption .bottom-title {
+  font-size: 18px;
+}
+
+.carousel-caption .bottom-title span {
+  vertical-align: text-bottom;
+}
+
+.carousel-caption .bottom-title .fa-caret-right {
+  margin-left: 5px;
+    font-size: 34px;
+    color: #ff939f;
+    display: inline;
+}
+
+@media (max-width: 1920px) {
+  .summer-banner-container {
+      height: 550px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .summer-banner-container {
+    height: 475px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .summer-banner-container {
+      height: 430px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .summer-banner-container {
+      height: 430px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .summer-banner-container {
+      height: 400px;
+  }
+}
+
+@media (max-width: 800px) {
+
+  .summer-banner-container {
+      height: 260px;
+
+  }
+
+  .summer-banner-container .carousel-caption {
+    left: 25px;
+    top: 25%;
+  }
+
+  .summer-banner-container .carousel-caption h3 {
+    font-size: 22px;
+  }
+
+  .summer-banner-container .carousel-caption p {
+    font-size: 38px;
+  }
+
+  .summer-banner-container .carousel-caption h2 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .summer-banner-container .carousel-inner .item .carousel-caption {
+    display: block;
+    bottom: 22px;
+    width: 95%;
+  }
+
+  .summer-bg-pattern:before { 
+    background-size: 500px 500px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .summer-banner-container {
+      height: 130px;
+      width: 100%;
+      margin-top: 5px;
+  }
+
+  .summer-banner-container .carousel-caption {
+      left: 0px;
+      top: 24%;
+  }
+
+  .summer-banner-container .carousel-caption p {
+      font-size: 16px;
+      margin-top: 2px;
+      margin-bottom: 4px;
+  }
+
+  .summer-banner-container .carousel-caption h2 {
+      font-size: 12px;
+      font-weight: bold;
+  }
+
+  .summer-banner-container .carousel-caption h3 {
+      font-size: 12px;
+      font-weight: bold;
+  }
+  
+}
+
+@media (width: 600px) {
+  .summer-banner-container {
+      height: 180px;
+      width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .summer-banner-container {
+      height: 130px;
+      width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .summer-banner-container {
+      height: 110px;
+      width: 100%;
+  }
+}
+/* New css For Banner Image*/

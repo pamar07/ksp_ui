@@ -1,0 +1,47 @@
+.all-caps{
+  text-transform: uppercase;
+}
+button[disabled]{
+  opacity:0.7;
+}
+.capitalize{
+  text-transform: capitalize;
+}
+.color-black{
+  color: #000;
+}
+.pink-fg{
+  color: #ff3366!important;
+}
+
+.like-comment-img{
+  /*width:21px;
+  height:21px;*/
+  width: 22px;
+  /*height: 31px;*/
+  font-size:22px;
+  float: left;
+  line-height: 20px;
+}
+
+.title-header {
+  font-size: 26px !important;
+  margin-bottom: 2%!important;
+  margin-top: 5%!important;
+}
+
+.table td, .table>tbody>tr>td {
+  padding: 10px!important;
+  color: #000!important;
+}
+
+.registerBtn{
+  font-size: 16px;
+  font-weight: 550;
+  padding: 5px 5px !important;
+}
+
+.error-survey-form {
+  color: red;
+  font-size: 13px;
+}

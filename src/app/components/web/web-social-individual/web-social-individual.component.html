@@ -1,0 +1,292 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--gray social area-->
+<section *ngIf="groupIndividual">
+  <div class="w3_agile_banner_topWhite">
+    <div class="container paddingNo">
+      <div class="media">
+        <div class="blog-content paddingNo">
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 paddingNo" style="width:132px;">
+          <a href="#"><img class="social-imge" src="{{groupIndividual.img.substring( 0, groupIndividual.img.lastIndexOf('/')) + '/w_200' + groupIndividual.img.substring( groupIndividual.img.lastIndexOf('/'), groupIndividual.img.length)}}" alt="blog-img" style="height:130px;width:130px;border-radius:50%;border-width:3px;border-style:solid; border-color:#d1d1d1;margin-bottom:15px; object-fit:cover; object-position:center;"></a>
+          </div>
+          <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 margin-top">
+            <h3 class="font-bolder">{{groupIndividual.name}}</h3>
+            <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12 paddingNo">
+              <div class="pull-left paddingNo font-size11 col-md-10 all-caps margin-top5px anchor-time font-bolder"> BY {{groupIndividual.author}} </div>
+              <div class="media-body pull-left margin-top5px"> <span href="#" class="anchor-time font-bolder"><b><span class="pink-color">{{groupIndividual.members.length}} MEMBERS &nbsp;&nbsp;|&nbsp;&nbsp; {{groupIndividual.posts.length}} POSTS</span></b></span> </div>
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 paddingNo">
+              <a *ngIf="!_apiService.loggedIn()" href="javascript:void(0);" (click) ="_commonService.setNavigationUrl('social-group', groupIndividual.id)">
+                 <div class="pull-right font-size11 ion-android-data red-pink-button">
+                   <span>JOIN</span>
+                 </div>
+               </a>
+              <a *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 0" routerLink="/create-social-post/{{groupIndividual.id}}">
+                <div class="pull-right font-size11 ion-android-data red-pink-button">
+                  <span>CREATE NEW POST</span>
+                </div>
+              </a>
+              <a *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 0" href="javascript:void(0);" (click)="leaveGroup(groupIndividual.id,groupIndividual.name)">
+                <div class="pull-right font-size11 ion-android-data red-pink-button margin-top margin-left leave-btn">
+                  <span>LEAVE GROUP</span>
+                </div>
+              </a>
+              <a href="javascript:void(0);" *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 4" (click)="join(groupIndividual.id,groupIndividual.name)">
+                <div class="pull-right font-size11 ion-android-data red-pink-button">
+                  <span>JOIN</span>
+                </div>
+              </a>
+              <a href="javascript:void(0);" *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 1">
+                <div class="pull-right font-size11 ion-android-data red-pink-button disabled-btn">
+                  <span>REQUEST PENDING</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+            <div class="main-title-outer pull-left">
+              <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/handpk.png" width="30" height="30" alt=""></i>ABOUT</div>
+            </div>
+            <p class="margin-top" [innerHTML]="safeHtml(groupIndividual.excerpt)"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--main content start-->
+<section id="main-content" *ngIf="groupIndividual">
+    <section class="wrapper margin0">
+      <div class="container paddingNo">
+      <div class="row margin-bottom15">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+            <div class="single-blog-item">
+              <div class="blog-thumnail">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment">
+                      <div class="media">
+                        <div class="main-title-outer pull-left">
+                          <div class="main-title ">
+                            <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30" height="30" alt=""></i>FEEDS
+                          </div>
+                        </div>
+                        <div *ngIf="groupIndividual.posts.length==0">
+                          <p>Oops! sorry, no post have been created till now.</p>
+                          <p>Be the first to post in this group.</p>
+                        </div>
+                        <div *ngIf="groupIndividual.posts.length!=0">
+                        <div class="blog-content paddingNo" *ngFor="let feed of groupIndividual.posts.slice().reverse(); let i=index">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <ul>
+                              <li class="recent-post paddingNo bg-transparent">
+                                <div class="media-left post-img">
+                                  <a href="#">
+                                    <app-round-pic [picPath]="feed.image_path" [userName]="feed.author_name" [width]="'50px'" [height]="'50px'" [className]="'padding-top5px'"></app-round-pic>
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="" *ngIf="getUserName()==null || getUserName()!=feed.name"><a href="#" class="font-size14 color-black font-bolder">{{feed.name}}</a></h4>
+                                    <h4 class="" *ngIf="getUserName()!=null && getUserName()==feed.name"><a href="#" class="font-size14 color-black font-bolder">You</a></h4>
+                                    <app-bookmark [bookmarkData]="feed.bookmarked" [entityType]="feed.post_type" [entityId]="feed.id" [bookmarkCount]="feed.bookmark_count"></app-bookmark>
+                                  <div class="pull-left paddingNo col-md-10 col-lg-10 col-sm-10 col-xs-10 all-caps anchor-time font-size10 font-bolder margin-top3px"> {{_commonService.setDateFormat(feed.created_at) | date:'yMMMd'}}</div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 margin-top5px paddingNo">
+                            <h4 class=""><a routerLink="/post-individual/{{feed.id}}" class="font-size18">{{feed.title}}</a></h4>
+                          </div>
+                          <span *ngIf="_apiService.loggedIn()">
+                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 margin-top5px paddingNo" *ngIf="loggedInUserId == feed.creator_id">
+                              <a data-toggle="dropdown" class="dropdown-toggle">
+                                <i class="fa fa-ellipsis-v margin-top10px pull-right post-delete-menu-padding hand-cursor"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#edit-post" (click)="editSocialPost(i,feed.id,feed.title)">Edit Post</a>
+                                  <hr class="margin0"/>
+                                  <a href="javascript:void(0);" (click)="deleteSocialPost(feed.id,feed.title)">Delete Post</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </span>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <span class="margin-top5px post-ellipsis font-size10" [innerHTML]="feed.safeContent"></span>
+                            <a routerLink="/post-individual/{{feed.id}}"><span class="show-more">   ...read more</span></a>
+                            <!--p class="margin-top" [ngClass]="{'post-ellipsis':(show_read_more[i]==true && post_read_more[i]==false)}" [innerHTML]="feed.safeContent"></p>
+                            <a href="javascript:void(0);" *ngIf="show_read_more[i]==true && post_read_more[i]==false" (click)="post_read_more[i]=true"><span class="show-more">   ...read more</span></a>
+                            <a href="javascript:void(0);" *ngIf="show_read_more[i]==true && post_read_more[i]==true" (click)="post_read_more[i]=false"><span class="show-more">   ...show less</span></a-->
+                            <br>
+                            <div class="post-footer-option margin-lft margin-top10px">
+                              <ul  class="list-unstyled text-left" style="width:25%;">
+                                <app-likecomment [loveData]="feed.liked" [permaLink]="perma_link" [entityType]="feed.post_type" [entityId]="feed.id" [loveCount]="feed.likes" [commentCount]="feed.comment_count" [isBlack]="true"></app-likecomment>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-12 col-lg-12 paddingNo"><hr *ngIf="i<groupIndividual.posts.length-1"></div>
+                          <div class="clearfix"></div>
+                          <br>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNo margin-top-5per">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="groupIndividual.moderator">
+          <div class="content-widget-sidebar">
+            <ul>
+              <li class="recent-post border1 bg-no-color">
+                <h5 class="margin0"><i class="fa " aria-hidden="true"><img src="assets/images/tr-group.png" width="30" height="26" alt=""></i>MODERATOR </h5>
+                <hr>
+                <ul>
+                  <li class="recent-post paddingNo bg-no-color">
+                    <div class="media-left post-img">
+                      <app-round-pic [picPath]="groupIndividual.moderator.image_path" [userName]="groupIndividual.moderator.name" [width]="'50px'" [height]="'50px'" [className]="'padding-top5px'"></app-round-pic>
+                    </div>
+                    <div class="media-body">
+                      <a href="#">
+                        <h5 class="capitalize margin0">{{groupIndividual.moderator.name}}</h5>
+                      </a>
+                      <div><div class="pull-left paddingNo font-size11"> <small>{{groupIndividual.moderator.timeline_tag}}</small> </div></div>
+                      <div class="clearfix"></div>
+                      <div class="font-size11 read-more"> <small>{{groupIndividual.moderator.city}}</small> </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="groupIndividual.members.length!=0">
+          <div class="content-widget-sidebar">
+            <ul>
+              <li class="recent-post border1 bg-no-color">
+                <h5 class="margin0"><i class="fa " aria-hidden="true"><img src="assets/images/tr-group.png" width="30" height="26" alt=""></i>MEMBERS ({{groupIndividual.members.length}}) </h5>
+                <hr>
+                <ul>
+                  <li class="recent-post paddingNo bg-no-color" *ngFor="let member of groupIndividual.members">
+                    <div class="media-left post-img">
+                      <app-round-pic [picPath]="member.image_path" [userName]="member.name" [width]="'50px'" [height]="'50px'" [className]="'padding-top5px'"></app-round-pic>
+                    </div>
+                    <div class="media-body">
+                      <a href="#">
+                        <h5 class="capitalize margin0">{{member.name | capitalize}}</h5>
+                      </a>
+                      <div><div class="pull-left paddingNo font-size11"> <small>{{member.timeline_tag}}</small> </div></div>
+                      <div class="clearfix"></div>
+                      <div class="font-size11 read-more"> <small>{{member.city}}</small> </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="clearfix"></div>
+       </div>
+      <div class="row gry-background" *ngIf="trendinggroups">
+    <div class="container paddingNo" >
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 main-title-outerN pull-left margin-bottom2">
+       <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/grp.png" width="30" height="30" alt=""></i>TRENDING GROUPS</div>
+        <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/social-all"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12" *ngFor="let group of trendinggroups">
+        <div class="white-background padding">
+          <div class="blog-content paddingNo">
+            <div class="media-left"> <a routerLink="/social-individual/{{group.id}}" onclick="window.scrollTo(0,0)"> <img class="media-object photo-profile" src="{{group.img[0].path.substring( 0, group.img[0].path.lastIndexOf('/')) + '/w_200' + group.img[0].path.substring( group.img[0].path.lastIndexOf('/'), group.img[0].path.length)}}" width="60" height="60" style="border-radius:50%; object-fit:cover; object-position:center;" alt="{{group.name}}"> </a> </div>
+            <div class="media-body">
+              <a routerLink="/social-individual/{{group.id}}" class="anchor-username" onclick="window.scrollTo(0,0)">
+                <h4 class="media-heading blog-ellipsis-article-excerpt color-black">{{group.name}}</h4></a>
+            <span class="anchor-time">{{group.members}} MEMBERS | {{group.post_count}} POSTS</span> </div>
+          </div>
+
+           <p class="font-size11 blog-ellipsis-group-excerpt" [innerHTML]="safeHtml(group.excerpt)"></p>
+
+            <a href="javascript:void(0);">
+              <div class="col-md-12 center-block text-center margin-top6">
+                <span *ngIf="!_apiService.loggedIn()" class="ion-android-data btn-xs red-pink-button border-radius0" (click)="_commonService.setNavigationUrl('','','')">JOIN</span>
+                <span *ngIf="_apiService.loggedIn()" class="ion-android-data btn-xs red-pink-button border-radius0" (click)="join(group.id,group.name)">JOIN</span>
+              </div>
+            </a>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+      <div class="clearfix"></div>
+    </section>
+</section>
+<hr>
+
+
+<div id="edit-post" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Edit Post</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div *ngIf="_apiService.loggedIn()">
+            <div class="row text-center">
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <b class="font-size13 margin-bottom15">Title</b><br/>
+                <input type="text" [(ngModel)]="editedPostTitle" [ngModelOptions]="{standalone: true}" class="form-control height40 margin-top2per font-Raleway" style="text-align: left;font-size:14px;">
+                <div *ngIf="editedPostTitle==''" class="error-survey-form">Please enter the title.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top20px" style="text-align: left">
+                <b class="font-size13">Content</b><br/><br/>
+                <ckeditor
+                  [(ngModel)]="editedPostContent"
+                  [ngModelOptions]="{standalone: true}"
+                  [config]="{
+                    uiColor: '#c1c1c1',
+                    filebrowserBrowseUrl: 'image-browser',
+                    filebrowserUploadUrl: uploadUrl,
+                    toolbarGroups: [
+                    {'name':'basicstyles','groups':['basicstyles']},
+                    {'name':'links','groups':['links']},
+                    {'name':'paragraph','groups':['list','blocks']},
+                    {'name':'insert','groups':['insert']},
+                    {'name':'styles','groups':['styles']}
+                    ]
+                  }"
+                  [readonly]="isReadonly"
+                  debounce="500">
+                </ckeditor>
+                <div *ngIf="editedPostContent==''" class="error-survey-form margin-top">Please enter your content.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13" (click)="saveEditedPost()" data-dismiss="modal">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+<div class="agile-main mobile-login-bg">
+  <div class="content-wrap gry-background paddingNo">
+      <img src="assets/images/mobile-login-baby.jpeg" alt="" width="100%" height="200px" style="object-fit:cover; object-position:top center; border-radius: 0 0 50px 50px;">
+      <div class="topRightCross"><a (click)="_commonService.showBottomNav = true" routerLink="{{_commonService.urlBeforeLogin}}">X</a></div>
+      <div class="container margin-top-bottom-5px text-center">
+        <div class="form-login col-md-10 center-block text-center mobile-login-card" [ngSwitch]="loginStatus">
+
+          <div *ngSwitchDefault>
+              <br>
+              <br>
+              <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="email">
+                <input type="text" class="form-control border-rads" placeholder="Email Id" [(ngModel)] = "email"/>
+                 </div>
+              <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12" id="password">
+                <input type="password" class="form-control border-rads" placeholder="Password" [(ngModel)] = "password"/>
+              </div>
+              <!-- <div class="width-center"> -->
+                <!--re-captcha site_key="6Le9BzAUAAAAAO-RXjA2qNzbMlLJ0SaA4pAEdmlv" size=""></re-captcha-->
+                 <!-- <div class="g-recaptcha" data-theme="light" data-sitekey="6Le9BzAUAAAAAO-RXjA2qNzbMlLJ0SaA4pAEdmlv" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;">
+                   <re-captcha site_key="6Le9BzAUAAAAAO-RXjA2qNzbMlLJ0SaA4pAEdmlv" size=""></re-captcha>
+                 </div>
+              </div> -->
+              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 paddingNo margin-top">
+                <div class="text-right">
+                  <a href="javascript:void(0);" (click)="goToEditPhone()" tabindex="5" class="forgot-password font-size11 color-gray font-Raleway-SemiBold letter-spacing-1px">Forgot Password?</a>
+                </div>
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 mobile-remember-me-box">
+                <div class="checkbox checkbox-primary margin0 text-left">
+                  <input type="checkbox" id="remember_me" [(ngModel)]="rememberMe" />
+                  <label class="paddingtop5px color-gray font-Raleway-SemiBold letter-spacing-1px" for="remember_me">Remember Me</label>
+                </div>
+              </div>
+              <div class="wrapper margin0">
+                <span class="group-btn center-block center-div">
+                  <a href="javascript:void(0);" class="btn btn-md pink-color-button border-rads login-button" (click)="onLoginSubmit()">LOGIN </a>
+                </span>
+                <span class="group-btn center-block center-div">
+                  <a href="javascript:void(0);" class="btn btn-md pink-color-button border-rads login-button" (click)="loginwithOtp()">LOGIN WITH OTP </a>
+                </span>
+              </div>
+          </div>
+
+          <div *ngSwitchCase="1">
+              <br>
+              <br>
+              <div class="input-group col-lg-12 col-md-12">
+                 <input type="text" class="form-control border-rads border-pink" placeholder="Email Id" [(ngModel)] = "resetEmail" autofocus/>
+              </div>
+               <div class="col-lg-12 paddingNo">
+                 <div class="text-center forgot-password font-size11 color-gray font-Raleway-SemiBold"> *Enter your email address where you will receive your OTP</div>
+               </div>
+               <div class="wrapper margin0">
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="sendEmailOTP()" class="btn btn-md pink-color-button border-rads login-button">SEND OTP </a>
+                  </span>
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="loginStatus=0" class="btn btn-md pink-color-button border-rads login-button back-login">BACK TO LOGIN</a>
+                  </span>
+              </div>
+          </div>
+
+          <div *ngSwitchCase="2">
+              <br>
+              <br>
+              <div class="input-group col-lg-12 col-md-12">
+                  <input type="text" class="form-control border-rads" disabled placeholder="{{this.resetEmail}}" />
+                  <span class="login-eye padding-top7">
+                    <a href="javascript:void(0);" (click)="goToEditPhone()"><img src="assets/images/edit.png" width="30" height="26" alt=""/></a>
+                  </span>
+              </div>
+              <div class="input-group col-lg-12 col-md-12">
+                  <input type="text" class="form-control border-rads border-pink" placeholder="Enter OTP" [(ngModel)] = "otp"/>
+              </div>
+              <div class="col-lg-12 paddingNo">
+                <div class="text-center">
+                  <span class="forgot-password font-size11 color-gray font-Raleway-SemiBold">Have not received OTP yet?</span>&nbsp;<a href="javascript:void(0);" (click)="sendEmailOTP()" tabindex="5" class="forgot-password font-size11 color-pink">Resend OTP</a>
+                </div>
+              </div>
+              <div class="wrapper margin0">
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="verifyEmailOTP()" class="btn btn-md pink-color-button border-rads login-button">VERIFY OTP </a>
+                  </span>
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="loginStatus=0" class="btn btn-md pink-color-button border-rads login-button back-login">BACK TO LOGIN </a>
+                  </span>
+              </div>
+          </div>
+
+          <div *ngSwitchCase="3">
+              <br>
+              <br>
+              <div class="input-group col-lg-12 col-md-12">
+                  <input type="password" class="form-control border-rads" placeholder="New Password" [(ngModel)] = "newPassword"/>
+              </div>
+              <div class="input-group col-lg-12 col-md-12">
+                  <input type="password" class="form-control border-rads" placeholder="Confirm Password" [(ngModel)] = "newConfirmPassword"/>
+              </div>
+              <div class="wrapper margin0">
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="changePasswordByEmail()" class="btn btn-md pink-color-button border-rads login-button">SAVE </a>
+                  </span>
+                  <span class="group-btn center-block center-div">
+                    <a href="javascript:void(0);" (click)="loginStatus=0" class="btn btn-md pink-color-button border-rads login-button  back-login">BACK TO LOGIN </a>
+                  </span>
+              </div>
+          </div>
+          <div *ngSwitchCase="4">
+            <br>
+            <br>
+            <div class="input-group col-lg-12 col-md-12" *ngIf="showotp == 0">
+                <input type="text" class="form-control border-rads"  placeholder="Enter Email Id" [(ngModel)] = "email" />
+            </div>
+            <span class="group-btn center-block center-div" *ngIf="showotp == 0">
+              <a href="javascript:void(0);" (click)="sendOTP()" class="btn btn-md pink-color-button border-rads login-button">SEND OTP </a>
+            </span>
+            <div class="input-group col-lg-12 col-md-12" *ngIf="showotp == 1">
+                <input type="text" class="form-control border-rads border-pink" placeholder="Enter OTP" [(ngModel)] = "otp"/>
+            </div>
+            <div class="col-lg-12 paddingNo">
+              <div class="text-center">
+                <span class="forgot-password font-size11 color-gray">Have not received OTP yet?</span>&nbsp;<a href="javascript:void(0);" (click)="sendOTP()" tabindex="5" class="forgot-password font-size11 color-pink">Resend OTP</a>
+              </div>
+            </div>
+            <div class="wrapper margin0">
+                <span class="group-btn center-block center-div" *ngIf="showotp == 1">
+                  <a href="javascript:void(0);" (click)="verifyOTPforlogin()" class="btn btn-md pink-color-button border-rads login-button">VERIFY OTP </a>
+                </span>
+                <span class="group-btn center-block center-div">
+                  <a href="javascript:void(0);" (click)="loginStatus=0" class="btn btn-md pink-color-button border-rads login-button back-login">BACK TO LOGIN </a>
+                </span>
+            </div>
+        </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 margin-top80">
+          <div class="green-light register-button">
+            <span class="center-block">
+              <span class="border-rads login-button">
+                <span class="font-Raleway-Normal">Not an user?</span> <a (click)="_commonService.showBottomNav = true" routerLink="/signup" class="white-color font-Raleway-SemiBold font-size14 letter-spacing-1px">&emsp;Register Here</a>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,197 @@
+<span *isDesktop>
+<section *ngIf="_commonService.showBottomNav">
+  <div class="container paddingN">
+    <!-- <div id="newsletter" class="sidenav" *isDesktop>
+      <span id="newsletter-content" data-toggle="modal" data-target="#NewsletterModal">
+        <i aria-hidden="true" class="fa fa-envelope-o font-size18"></i>
+        &emsp;SUBSCRIBE TO OUR NEWS
+      </span>
+    </div> -->
+    <!-- Newsletter Modal -->
+
+    <!-- <div class="modal fade" id="NewsletterModal" role="dialog">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close pink-color" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title pink-color">Subscribe to our newsletter</h4>
+          </div>
+          <div class="modal-body">
+            <div class="footer-col-item min-height0">
+              <span style="font-size:14px; line-height:1.5;">Sign up here to get the latest news and updates delivered directly to your inbox.</span>
+              <form class="input-group signUpNewsletter">
+                <div class="input-group-addon border-rightnone"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                <input *ngIf="!_apiService.loggedIn()" class="gt-email form-control" placeholder="Your email address" type="text" name="subscribe_email" [(ngModel)]="subscribe_email">
+                <input *ngIf="_apiService.loggedIn()" class="gt-email form-control" placeholder="{{_apiService.getAuthUser().email}}" type="text" name="subscribe_email" readonly>
+                <input type="button" class="btn-go go-button" style="z-index:2;" value="submit" (click)="subscribe()" data-dismiss="modal">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+   <footer id="footer-Section">
+     <div class="footer-top-layout white-background color-black paddingNo">
+       <div class="container">
+         <div class="row">
+           <div class="OurBlog">
+             <div class="link-effect-3" id="link-effect-3">
+               <ul class="footer-navigations">
+                 <li class="padding-left0"><a routerLink="cms/about-us" data-hover="ABOUT">ABOUT</a></li>
+                 <li class="hid">|</li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a routerLink="/team" data-hover="TEAM">TEAM</a></li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" class="hid">|</li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a routerLink="/contributors" data-hover="CONTRIBUTORS">CONTRIBUTORS</a></li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" class="hid">|</li>
+                 <li><a routerLink="cms/contact-us" data-hover="CONTACT US">CONTACT US</a></li>
+                  <li class="hid">|</li>
+                 <li><a routerLink="cms/advertise" data-hover="ADVERTISE">ADVERTISE</a></li>
+                  <li class="hid">|</li>
+                 <li><a routerLink="cms/careers" data-hover="CAREERS">CAREERS</a></li>
+                 <li class="hid">|</li>
+                 <li><a routerLink="cms/terms-conditions" data-hover="TERMS &amp; CONDITIONS">TERMS &amp; CONDITIONS</a></li>
+                 <li class="hid">|</li>
+                 <li><a routerLink="cms/privacy-policy" data-hover="PRIVACY POLICY">PRIVACY POLICY</a></li>
+                 <li class="hid">|</li>
+                 <li><a routerLink="press" data-hover="PRESS">PRESS</a></li>
+                 <li class="hid">|</li>
+                 <li><a routerLink="cms/editorial-policy" data-hover="EDITORIAL POLICY">EDITORIAL POLICY</a></li>
+                 <li class="hid">|</li>
+                 <li><a href="//www.kidsstoppress.com/ksp_api/sitemap.xml" target="_blank"  data-hover="SITEMAP">SITEMAP</a></li>
+                </ul>
+             </div>
+           </div>
+           <div class="col-lg-12 paddingNo">
+             <div class="col-sm-6 col-md-6">
+               <div class="footer-col-item min-height0">
+                 <h4 class="margin0">
+                   <a href="/home"><img src="assets/images/KSP-Logo-main.svg" width="100px" height="auto" alt=""/></a>
+                   <span class="font-size15 font-Raleway-SemiBold text-italic">#SimplifyingParenting</span>
+                 </h4>
+               </div>
+               <div class="copyright-tag margin-top14px font-style-footer"><i class="fa fa-copyright margin0" aria-hidden="true"></i> 2017 Kids Stop Press, All Rights Reserved.</div>
+             </div>
+
+             <div class="col-sm-6 col-md-6">
+               <!-- <div class="footer-col-item min-height0">
+                 <h4 class="margin0">SUBSCRIBE TO OUR NEWS</h4>
+                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xlg-6 paddingNo">
+                   <div class="checkbox checkbox-primary capitalize">
+                     <input id="mealplan_news" type="checkbox" [(ngModel)]="mealplan_news">
+                     <label for="mealplan_news">Subscribe to our Meal Plan News</label>
+                   </div>
+                 </div>
+                 <form class="input-group signUpNewsletter">
+                   <div class="input-group-addon border-rightnone"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+                   <input *ngIf="!_apiService.loggedIn()" class="gt-email form-control" placeholder="Your email address" type="text" name="subscribe_email" [(ngModel)]="subscribe_email">
+                   <input *ngIf="_apiService.loggedIn()" class="gt-email form-control" placeholder="{{_apiService.getAuthUser().email}}" type="text" name="subscribe_email" readonly>
+                   <input type="button" class="btn-go go-button" style="z-index:2;" value="submit" (click)="subscribe()">
+                 </form>
+               </div> -->
+               <ul class="col-md-12 col-lg-12 col-sm-12 social paddingNo">
+                 <li class="font-style-footer">Follow Kidsstoppress</li>
+                 <li><a href="https://www.facebook.com/Kidsstoppress/" target="_blank" class="face" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                 <li><a href="https://twitter.com/Kidsstoppress" target="_blank" class="twit" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                 <li><a href="https://www.instagram.com/kidsstoppress/" target="_blank" class="icoInstagram" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                 <li><a href="https://plus.google.com/+Kidsstoppress" target="_blank" class="google" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                 <li><a href="https://www.pinterest.com/kidsstoppress/pins/" target="_blank" class="pinterest" title="Pinterest"><i class="fa fa-pinterest-p"></i></a></li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a href="https://www.youtube.com/kidsstoppress" target="_blank" class="youtube" title="YouTube"><i class="fa fa-youtube"></i></a></li>
+                 <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a href="https://soundcloud.com/kidsstoppress" target="_blank" class="soundcloud" title="Soundcloud"><i class="fa fa-soundcloud"></i></a></li>
+                 <li><a href="https://in.linkedin.com/company/kidsstoppress-media-pvt-ltd" target="_blank" class="linkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+               </ul>
+             </div>
+             <div class="clearfix"></div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <hr>
+   </footer>
+   <!-- / footer -->
+</div>
+</section>
+</span>
+<span *showItDevice="['mobile','tablet']">
+  <!--Footer Start-->
+  <section *ngIf="_commonService.showBottomNav">
+  <!-- footer -->
+  <div class="downloadAppBanner" *ngIf="downloadBanner && applink">
+      <div>
+        <img src="assets/images/mockup.png" width="30">
+      </div>
+      <div  class="bannerHeading">
+        <span class="officialHeading">Download our official app</span>
+        <span class="subHeading">for the best  experience on your phone</span>
+      </div>
+      <div >
+        <a class="downloadBtn" href="{{applink}}" target="_blank">Download</a>
+      </div>
+      <div>
+        <img src="assets/images/close.svg" (click)="hideBanner()">
+      </div>
+  </div>
+
+    <div class="container paddingN">
+      <footer id="footer-Section">
+       <div class="footer-top-layout white-background color-black paddingNo">
+         <div class="container">
+           <div class="row">
+             <div class="OurBlog">
+               <div class="link-effect-3" id="link-effect-3">
+                 <ul class="footer-navigations">
+                   <li class="padding-left0"><a routerLink="cms/about-us" data-hover="ABOUT">ABOUT</a></li>
+                   <li class="hid">|</li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a routerLink="/team" data-hover="TEAM">TEAM</a></li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" class="hid">|</li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a routerLink="/contributors" data-hover="CONTRIBUTORS">CONTRIBUTORS</a></li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" class="hid">|</li>
+                   <li><a routerLink="cms/contact-us" data-hover="CONTACT US">CONTACT US</a></li>
+                    <li class="hid">|</li>
+                   <li><a routerLink="cms/advertise" data-hover="ADVERTISE">ADVERTISE</a></li>
+                    <li class="hid">|</li>
+                   <li><a routerLink="cms/careers" data-hover="CAREERS">CAREERS</a></li>
+                   <li class="hid">|</li>
+                   <li><a routerLink="cms/terms-conditions" data-hover="TERMS &amp; CONDITIONS">TERMS &amp; CONDITIONS</a></li>
+                   <li class="hid">|</li>
+                   <li><a routerLink="cms/privacy-policy" data-hover="PRIVACY POLICY">PRIVACY POLICY</a></li>
+                   <li class="hid">|</li>
+                   <li><a routerLink="press" data-hover="PRESS">PRESS</a></li>
+                   <li class="hid">|</li>
+                   <li><a routerLink="cms/editorial-policy" data-hover="EDITORIAL POLICY">EDITORIAL POLICY</a></li>
+                   <li><a href="//www.kidsstoppress.com/ksp_api/sitemap.xml" target="_blank" data-hover="SITEMAP">SITEMAP</a></li>
+                  </ul>
+
+               </div>
+             </div>
+             <hr>
+             <div class="col-lg-12 paddingNo">
+               <!-- <div class="col-sm-6 col-md-6">
+                 <div class="footer-col-item min-height0">
+                   <h4 class="margin0"><a href="/home"><img src="assets/images/KSP-Logo-main.svg" width="100px" height="auto" alt=""/></a></h4>
+                 </div>
+                 <div class="copyright-tag margin-top14px font-style-footer"><i class="fa fa-copyright margin0" aria-hidden="true"></i> 2017 Kids Stop Press, All Rights Reserved.</div>
+               </div> -->
+
+               <div class="row margin-bottom10px">
+                 <ul class="col-md-12 col-lg-12 col-sm-12 social paddingNo">
+                   <!-- <li class="font-style-footer">Follow Kidsstoppress</li> -->
+                   <li><a href="https://www.facebook.com/Kidsstoppress/" target="_blank" class="face" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                   <li><a href="https://twitter.com/Kidsstoppress" target="_blank" class="twit" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                   <li><a href="https://www.instagram.com/kidsstoppress/" target="_blank" class="icoInstagram" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                   <li><a href="https://plus.google.com/+Kidsstoppress" target="_blank" class="google" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+                   <li><a href="https://www.pinterest.com/kidsstoppress/pins/" target="_blank" class="pinterest" title="Pinterest"><i class="fa fa-pinterest-p"></i></a></li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a href="https://www.youtube.com/kidsstoppress" target="_blank" class="youtube" title="YouTube"><i class="fa fa-youtube"></i></a></li>
+                   <li *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"><a href="https://soundcloud.com/kidsstoppress" target="_blank" class="soundcloud" title="Soundcloud"><i class="fa fa-soundcloud"></i></a></li>
+                   <li><a href="https://in.linkedin.com/company/kidsstoppress-media-pvt-ltd" target="_blank" class="linkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                 </ul>
+               </div>
+               <div class="clearfix"></div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </footer>
+     <!-- / footer -->
+  </div>
+  </section>
+</span>

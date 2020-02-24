@@ -1,0 +1,30 @@
+<app-topnavnofilter></app-topnavnofilter>
+
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row" *ngIf="playlist">
+      <div class="container paddingNo margin-top">
+        <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12 padding-right0 margin-top-bottom-5px" *ngIf="playlist">
+          <div class="main-title margin0 paddingNo width-100per bg-color-white channel-header line-height-inherit no-float">
+            <span class="font-size16" style="text-decoration:underline;">{{playlist_name}}</span>
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12" *ngFor="let radio of playlist; let i=index">
+            <div class="single-blog-item box-shadow radio-card-layout" style="height:170px;">
+              <div class="blog-content all-caps paddingNo">
+                <a href="javascript:void(0);" (click)="setRadio(radio.id,radio.path,radio.title)">
+                  <i class="fa color-baby-pink font-size45 margin0" aria-hidden="true" [ngClass]="{'fa-play-circle':!radio.playing, 'fa-pause-circle':radio.playing}"></i>
+                </a>
+                <h4 class="blog-ellipsis font-Raleway-Bold letter-spacing-1px">
+                  <a href="/details/{{radio.perma_link}}/{{radio.id}}">{{radio.title}}</a>
+                </h4>
+                <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'"></app-category>
+                <div class="anchor-time font-size10 font-Raleway-Bold margin-top-bottom-5px">{{_commonService.setDateFormat(radio.created_at) | date:'yMMMd'}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>

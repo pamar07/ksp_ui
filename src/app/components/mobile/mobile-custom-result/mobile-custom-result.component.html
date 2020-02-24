@@ -1,0 +1,145 @@
+<ngx-loading [show]="loading" [config]="{ fullScreenBackdrop : true }"></ngx-loading>
+<div class="agile-main gry-background paddingNo">
+  <div class="content-wrap margin-bottom10px">
+    <div class="container margin-top">
+      <div class="container padding-left6px" *ngIf="articles.length">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Articles</div>
+      </div>
+      <div class="social-group" *ngIf="articles.length">
+        <div class="social-group-card" *ngFor="let article of articles">
+          <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type" [entityId]="article.id" [bookmarkCount]="article.bookmark_count" [className]="''" (update)="updateArticleList($event)" [classTooltip]="'margin-tooltip-tv-all'" [noCount]="'true'" [isSmall]="'true'" class="bookmark-section-event"></app-bookmark>
+            <a href="/details/{{article.perma_link}}/{{article.id}}">
+              <img class="group-card-img" src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}"  alt="">
+            </a>
+            <div class="color-black card-title social-group-detail">
+              <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+                <p class="card-title">{{article.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                  <app-round-pic [picPath]="article.author_path" [userName]="article.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                    <span class="media-heading capitalize">{{article.author_name}}</span>
+                  </a>
+                  <span class="anchor-time font-Raleway-SemiBold font-size10 pull-right" [innerHtml]="_commonService.setDateFormat(article.published_date) | date:'yMMMd'"></span>
+                </div>
+              </span>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [permaLink]="article.perma_link" [loveCount]="article.likes" [commentCount]="article.comment_count" [isSmall]="'true'"></app-likecomment>
+                 </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="tvs.length">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">KSP TV</div>
+      </div>
+      <div class="widget-sidebar padding-left-right6px" *ngIf="tvs.length">
+        <div class="content-widget-sidebar margin0">
+          <ul class="tv-radio-vertical-scroll">
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let tv of tvs">
+              <div class="post-img pull-left" style="width:115px;">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <img [src]="tv.path.split('0.jpg').join('mqdefault.jpg')" width="100px" height="67px" style="border-radius:4px;">
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 184px);">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <h5 class="font-size13 small-title-excerpt pull-left" style="width:80%;">{{tv.title}}</h5>
+                </a>
+                <app-bookmark [bookmarkData]="tv.bookmarked" [entityType]="tv.post_type" [entityId]="tv.id" [bookmarkCount]="tv.bookmark_count" [className]="''" (update)="updateTvList()" [classTooltip]="'margin-tooltip-tv-all'" [noBackground]="'true'" [noCount]="'true'" [isSmall]="'true'" style="width:auto;float:right;"></app-bookmark>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}"><small>BY {{tv.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(tv.published_date) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="tv.liked" [entityType]="tv.post_type" [entityId]="tv.id" [loveCount]="tv.likes" [permaLink]="tv.perma_link" [commentCount]="tv.comment_count" [isSmall]="'true'"></app-likecomment>
+                 </ul>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="radios.length">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">KSP Radio</div>
+      </div>
+      <div class="widget-sidebar padding-left-right6px" *ngIf="radios.length!=0">
+        <div class="content-widget-sidebar margin0">
+          <ul class="tv-radio-vertical-scroll">
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let radio of radios">
+              <div class="post-img pull-left" style="width:65px;">
+                <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                  <i class="fa fa-play-circle color-baby-pink font-size50"></i>
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 138px);">
+                <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                  <h5 class="font-size13 small-title-excerpt pull-left" style="width:80%;">{{radio.title}}</h5>
+                </a>
+                <app-bookmark [bookmarkData]="radio.bookmarked" [entityType]="radio.post_type" [entityId]="radio.id" [bookmarkCount]="radio.bookmark_count" [className]="''" (update)="updateRadioList()" [classTooltip]="'margin-tooltip-tv-all'" [noBackground]="'true'" [noCount]="'true'" [isSmall]="'true'" style="width:auto;float:right;"></app-bookmark>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{radio.creator_id}}"><small>BY {{radio.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(radio.published_date) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="radio.liked" [entityType]="radio.post_type" [entityId]="radio.id" [loveCount]="radio.likes" [permaLink]="radio.perma_link" [commentCount]="radio.comment_count" [isSmall]="'true'"></app-likecomment>
+                 </ul>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="events.length">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Events</div>
+      </div>
+      <div class="social-group" *ngIf="events.length">
+        <div class="social-group-card" *ngFor="let event of events">
+          <app-bookmark [bookmarkData]="event.bookmarked" [entityType]="'event'" [entityId]="event.id" [bookmarkCount]="event.event_bookmarks" [className]="''" (update)="updateEventList()" [classTooltip]="'margin-tooltip-tv-all1'" [noCount]="'true'" [isSmall]="'true'" class="bookmark-section-event"></app-bookmark>
+            <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+              <img class="group-card-img" src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}"  alt="">
+            </a>
+            <div class="color-black card-title social-group-detail">
+              <span class="ion-android-data light-blue-button all-caps event-cat-btn">{{event.venue_city=='' ? 'All Cities' : event.venue_city}}</span>
+              <div class="font-Raleway-SemiBold font-size14 margin-top event-title-excerpt" style="white-space:normal;">
+                <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">{{event.title}}</a>
+              </div>
+              <div class="anchor-time font-Raleway-SemiBold font-size10 margin-top"><b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}} - {{_commonService.setDateFormat(event.end_date) | date:'EEE'}}, {{_commonService.setDateFormat(event.end_date) | date:'yMMMd'}}</b></div>
+            </div>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="camps.length">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Summer Camps</div>
+      </div>
+      <div class="social-group" *ngIf="camps.length">
+        <div class="social-group-card" *ngFor="let camp of camps">
+          <app-bookmark [bookmarkData]="camp.bookmarked" [entityType]="'event'" [entityId]="camp.id" [bookmarkCount]="camp.event_bookmarks" [className]="''" (update)="updateEventList()" [classTooltip]="'margin-tooltip-tv-all1'" [noCount]="'true'" [isSmall]="'true'" class="bookmark-section-event"></app-bookmark>
+            <a routerLink="/event-individual/{{camp.id}}">
+              <img class="group-card-img" src="{{camp.path.substring( 0, camp.path.lastIndexOf('/')) + '/w_300' + camp.path.substring( camp.path.lastIndexOf('/'), camp.path.length)}}"  alt="">
+            </a>
+            <div class="color-black card-title social-group-detail">
+              <span class="ion-android-data light-blue-button all-caps event-cat-btn">{{camp.venue_city=='' ? 'All Cities' : camp.venue_city}}</span>
+              <div class="font-Raleway-SemiBold font-size14 margin-top event-title-excerpt" style="white-space:normal;">
+                <a routerLink="/event-individual/{{camp.id}}">{{camp.title}}</a>
+              </div>
+              <div class="anchor-time font-Raleway-SemiBold font-size10 margin-top"><b>{{_commonService.setDateFormat(camp.start_date) | date:'EEE'}}, {{_commonService.setDateFormat(camp.start_date) | date:'yMMMd'}} - {{_commonService.setDateFormat(camp.end_date) | date:'EEE'}}, {{_commonService.setDateFormat(camp.end_date) | date:'yMMMd'}}</b></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

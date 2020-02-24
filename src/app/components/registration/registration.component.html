@@ -1,0 +1,11 @@
+<span *isMobile>
+  <app-mobile-registration></app-mobile-registration>
+  <!-- <app-mobile-registration></app-mobile-registration> -->
+</span>
+<span *isTablet>
+  <!-- <app-mobile-registration></app-mobile-registration> -->
+  <app-web-registration></app-web-registration>
+</span>
+<span *isDesktop>
+  <app-web-registration></app-web-registration>
+</span>

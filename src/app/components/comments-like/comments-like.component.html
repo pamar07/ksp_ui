@@ -1,0 +1,7 @@
+<a href="javascript:void(0);" (click)="doLove()">
+  <i class="fa fa-heart-o like-comment-img color-black" aria-hidden="true" *ngIf="!isLoved" [ngClass]="{'color-black':isBlack, 'like-comment-img-small':isSmall}"></i>
+  
+  <i class="fa fa-heart color-pink like-comment-img color-black" aria-hidden="true" *ngIf="isLoved" [ngClass]="{'like-comment-img-small':isSmall}"></i>
+  
+  {{loveCount}}
+</a>

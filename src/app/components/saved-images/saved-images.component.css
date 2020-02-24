@@ -1,0 +1,40 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#e35b7f!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+
+.add-image-btn {
+	background-image: none !important;
+	width: 130px !important;
+	height: 35px !important;
+	background-color: #ec5b7c !important; 
+	font-size: 15px !important;
+	line-height: 5px;
+	font-weight: bold;
+}
+
+@media (max-width: 800px) {
+	.add-image-btn {
+		background-image: none !important;
+		width: 95px !important;
+		height: 35px !important;
+		background-color: #ec5b7c !important; 
+		font-size: 13px !important;
+		line-height: 5px;
+		font-weight: bold;
+	}
+	.container {
+		padding-right: 0px;
+		padding-left: 0px;
+	}	
+}
+
+@media screen and (max-width: 1024px) and (min-width: 481px) {
+	.wrapper {
+	    padding: 0!important; 
+	    margin-top: 90px !important; 
+	}
+}

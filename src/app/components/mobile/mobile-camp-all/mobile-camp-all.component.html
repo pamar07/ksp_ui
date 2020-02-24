@@ -1,0 +1,242 @@
+<ngx-loading
+  [show]="!isEventLoaded"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<div class="agile-main" *ngIf="!showFilter">
+  <div class="content-wrap">
+    <div>
+      <div class="summer-banner-container">
+        <a routerLink="/event-submit">
+        <div id="myCarousel" class="carousel slide" >
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="assets/images/summer-banner-new_1.png" style="width:100%;">
+              <div class="carousel-caption">
+                <h3> List your </h3>
+                <p> Summer camp with us </p>
+                <h2><i> #SimplifyingParenting </i></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      </div>
+    </div>
+
+    <!-- Editor's Pick -->
+    <div *ngIf="editorEvents.length">
+      <div class="margin-top20px main-title-outer pull-left" >
+        <div class="main-title" style="padding:0px!important;"><img src="assets/images/go.png" width="20" style="margin-right: 10px;">EDITOR'S PICK</div>
+      </div>
+      
+      <div class="margin-top card-scroll-box margin-bottom15px">
+        <span *ngIf="editorEvents.length">
+        <app-generic-carousel [carauselId]="'editor-summer'" [articleList]="editorEvents" ></app-generic-carousel>
+        </span>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    
+    <!-- All Camps. -->
+    <div class="gry-background padding-bottom0px">
+      <div class="container">
+        <div class="main-title-outer-fixed">
+          <div class="main-title color-gray font-size13 margin0 font-Raleway-Bold">ALL SUMMER CAMPS</div>
+          <div class="span-outer"><span class="pull-right text-danger last-update"> <a href="javascript:void(0);" (click)="showFilter = true;" onclick="window.scrollTo(0,0);" class="color-gray font-Raleway-Bold font-size16">Filter<i class="fa fa-filter" aria-hidden="true"></i></a></span> </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-bottom20px">
+      <a href="//www.kidsstoppress.com/article-individual/15205" target="_blank"><img src="assets/images/two_minute_survey_banner.jpg" width="100%"></a>
+    </div>
+    <div>
+      <div class="container">
+        <div class="city-scroll-box margin-bottom15px margin-top" *ngIf="cityList" style="width:105%">
+          <a *ngFor="let city of cityList; let i=index" href="javascript:void(0);"
+              (click)="checkCity(i); updateEvents()"
+              class="city-tab" aria-selected="true"
+              [ngClass]="{'active-pink-btn':city.checked}">{{city.city}}
+          </a>
+          <span style="position: sticky;position: -webkit-sticky;right: 0px;padding: 7px 4px;background: #fff;"><i class="fa fa-chevron-right"></i></span>    
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6  paddingNoMobile">
+              <button type="button" class="btn btn-danger btn-cons red-orangebtn all-caps text-bold font-size-normal" (click)="filterEventsDaywise(today,1)" [ngClass]="{'today-selected':todaySelected}">
+                Today<small>{{today | date:'EEE'}}&nbsp;{{today | date:'dd'}}&nbsp;{{today | date:'MMM'}}</small>
+              </button>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 paddingNoMobile">
+              <button type="button" class="btn btn-warning btn-cons orangebtn all-caps text-bold margin0 font-size-normal" (click)="filterEventsDaywise(tomorrow,2)" [ngClass]="{'tomorrow-selected':tomorrowSelected}">
+                Tomorrow<small>{{tomorrow | date:'EEE'}}&nbsp;{{tomorrow | date:'dd'}}&nbsp;{{tomorrow | date:'MMM'}}</small>
+              </button>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 padding-15-25">
+              <button type="button" class="btn btn-primary btn-cons blue-light all-caps text-bold font-size-normal margin-bottom0" (click)="filterEventsDaywise(nextSaturday,3)" [ngClass]="{'saturday-selected':saturdaySelected}">
+                Saturday<small>{{nextSaturday | date:'dd'}}&nbsp;{{nextSaturday | date:'MMM'}}</small>
+              </button>
+            </div>
+           <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 padding-15-25">
+              <button type="button" class="btn btn-success btn-cons green-light all-caps text-bold font-size-normal margin-bottom0" (click)="filterEventsDaywise(nextSunday,4)" [ngClass]="{'sunday-selected':sundaySelected}">
+                Sunday<small>{{nextSunday | date:'dd'}}&nbsp;{{nextSunday | date:'MMM'}}</small>
+              </button>
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNoMobile padding-bottom10px">
+             <span class="pull-left text-danger last-update"> <a href="javascript:void(0);" (click)="clearFilters()">RESET<i class="fa fa-times" aria-hidden="true"></i></a></span>
+             <div class="col-md-2 col-lg-2 paddingNo pull-right b"> <a routerLink="/event-submit" class="btn font-size13 pink-color-button padding4-10">Submit a Summer Camp</a> </div>
+            </div>
+        </div>
+      </div>
+      <div class="gry-background" *ngIf="events">
+        <div class="container" *ngIf="events.length>0">
+          <a *ngFor="let event of events" routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+          <div class="col-xs-12 col-sm-12 slide-n margin-top-bottom-10px paddingNo">
+            <div><img src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" width="100%" height="150px" alt="" style="object-fit:cover; object-position: top center; border-radius:4px 4px 0 0;"> </div>
+            <div class="col-xs-12 col-sm-12 margin-top" style="background-color:#ffffff;border-radius: 0 0 4px 4px!important;">
+              <div class="col-sm-12 col-xs-12 paddingNo">
+                <span *ngFor="let cat of event.category?.slice(0,2); let i=index">
+                  <span class="ion-android-data light-blue-button all-caps event-cat-btn" [innerHTML]="cat.name"></span>&nbsp;
+                </span>
+              </div>
+              <div class="col-sm-12 col-xs-12 paddingNo font-Raleway-SemiBold font-size18 line-height-15 margin-top">
+                {{event.title}}
+              </div>
+              <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top">
+                <span class="line-height-2 font-Raleway-SemiBold pink-color font-size11">
+                  <!-- <i class="fa fa-calendar color-gray font-size21" style="vertical-align:middle;"></i> -->
+                  <small *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}},
+                    <span *ngIf="event.start_date==event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}</span>
+                    <span *ngIf="event.start_date!=event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}} - {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</span>
+                  </small>
+                  <small *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}&nbsp; - &nbsp;{{_commonService.setDateFormat(event.end_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</small>
+                </span>
+              </div>
+              <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top margin-bottom10px">
+                <span class="line-height-2 font-Raleway-SemiBold pink-color font-size12">{{event.venue_city=='' ? 'All Cities' : event.venue_city}}</span>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+        <div class="container" *ngIf="events.length==0">
+          <div class="col-sm-12 col-xs-12">
+            <div class="text-center font-size12">
+              Sorry, No Events Found.
+            </div>
+          </div>
+        </div>
+        <div class="container margin-top">
+          <span class="pull-right text-danger last-update">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                      <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                      <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                    </li>
+                    <li [class]="isNext ? '' : 'disabled'">
+                      <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Filter Section-->
+<div class="agile-main" *ngIf="showFilter">
+  <div class="content-wrap">
+    <div class="container gry-background">
+      <div class="col-sm-12 col-xs-12">
+        <div class="panel-group mobile-ksp-faq margin0" id="accordion">
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">Find by Date</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <hr class="margin0 margin-bottom10px">
+            <div id="collapse2" class="panel-collapse collapse in">
+              <div class="faq-body">
+                <div class="form-group margin-top">
+                  <label for="username" class="control-label">From Date</label>
+                    <div class="input-group margin-top6 col-md-12 col-lg-12">
+                      <input class="form-control bg-white" (click)="pickerStart.open()" [ngModel]="start_date | date:'EEEE, MMM d, yyyy'"  mdInput placeholder="Choose a date" onclick="window.scrollBy(0,100);">
+                      <br/>
+                      <input class="form-control bg-white" style="height: 0px;width: auto;margin: 0px;padding: 0px;border: 0;" (click)="pickerStart.open()" [(ngModel)]="start_date" mdInput [mdDatepicker]="pickerStart" placeholder="Choose a date">
+                      <md-datepicker #pickerStart></md-datepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label for="username" class="control-label">To Date</label>
+                    <div class="input-group margin-top6 col-md-12 col-lg-12">
+                      <input class="form-control bg-white" (click)="pickerEnd.open()" [ngModel]="end_date | date:'EEEE, MMM d, yyyy'"  mdInput placeholder="Choose a date" onclick="window.scrollBy(0,100);">
+                      <br/>
+                      <input class="form-control bg-white" style="height: 0px;width: auto;margin: 0px;padding: 0px;border: 0;" (click)="pickerEnd.open()" [(ngModel)]="end_date" mdInput [mdDatepicker]="pickerEnd" placeholder="Choose a date">
+                      <md-datepicker #pickerEnd></md-datepicker>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" *ngIf="categoryList">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">Find by Interests</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <hr class="margin0 margin-bottom10px">
+            <div id="collapse3" class="panel-collapse collapse">
+              <div class="faq-body">
+                <div class="" *ngFor="let category of categoryList">
+                  <div class="checkbox checkbox-primary capitalize">
+                    <input id="category{{category.id}}" type="checkbox" [(ngModel)]="category.checked">
+                    <label for="category{{category.id}}" [innerHTML]="category.name"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" *ngIf="ageGroups">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">Find by Age Groups</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <hr class="margin0 margin-bottom10px">
+            <div id="collapse4" class="panel-collapse collapse">
+              <div class="faq-body">
+                <div class="" *ngFor="let group of ageGroups">
+                  <div class="checkbox checkbox-primary capitalize">
+                    <input id="group{{group.id}}" type="checkbox" [(ngModel)]="group.checked">
+                    <label for="group{{group.id}}" [innerHTML]="group.age"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12 margin-top">
+        <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" (click)="showFilter = false; updateEvents()" style="pointer:cursor;">SEARCH</button>
+      </div>
+    </div>
+  </div>
+</div>

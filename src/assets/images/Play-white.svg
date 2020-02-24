@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="55px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>ICO@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="HOME-SCRREN-V3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HOME-SCREEN-3.3" transform="translate(-120.000000, -7273.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <path d="M147.5,7273 L147.5,7273 C132.331579,7273 120,7285.33158 120,7300.5 L120,7300.5 C120,7315.66842 132.331579,7328 147.5,7328 L147.5,7328 C162.668421,7328 175,7315.66842 175,7300.5 L175,7300.5 C175,7285.33158 162.668421,7273 147.5,7273 Z M159.484211,7302.41053 L142.810526,7312.83158 C141.305263,7313.75789 139.336842,7312.71579 139.336842,7310.92105 L139.336842,7290.07895 C139.336842,7288.28421 141.305263,7287.18421 142.810526,7288.16842 L159.484211,7298.58947 C160.873684,7299.45789 160.873684,7301.54211 159.484211,7302.41053 Z" id="ICO"></path>
+        </g>
+    </g>
+</svg>

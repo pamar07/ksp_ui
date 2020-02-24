@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="14px" viewBox="0 0 8 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="HOME-SCRREN-V3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="HOME-SCREEN-3.3" transform="translate(-1293.000000, -2647.000000)" stroke="#333333" fill-rule="nonzero" stroke-width="0.833333333" fill="#333333">
+            <g id="HEADER" transform="translate(100.000000, 2619.000000)">
+                <g id="SEE-MORE" transform="translate(1115.000000, 29.000000)">
+                    <path d="M79.136058,11.8868205 C79.2248215,11.9773641 79.335776,12 79.4467304,12 C79.5576848,12 79.6908302,11.9547282 79.7795937,11.8641846 L84.8834978,6.31838818 C85.0388341,6.13730096 85.0388341,5.86567011 84.8834978,5.70721879 L79.7795937,0.138786489 C79.6020666,-0.04230074 79.335776,-0.04230074 79.1582489,0.116150586 C78.9807218,0.297237815 78.9807218,0.568868658 79.136058,0.749955888 L83.9514806,6.00148553 L79.1138671,11.2303793 C78.9585309,11.4114665 78.9585309,11.7057333 79.136058,11.8868205 Z" id="Shape" transform="translate(82.000000, 6.000000) scale(-1, 1) translate(-82.000000, -6.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

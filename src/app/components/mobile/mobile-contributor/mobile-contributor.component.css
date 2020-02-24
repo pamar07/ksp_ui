@@ -1,0 +1,38 @@
+.blog-ellipsis-title {
+    font-size: 16px!important;
+    font-weight: 700;
+    margin-bottom: 15px!important;
+    margin-top: 2%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*height: 35px;*/
+    height: 18px;
+    width: 100%;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.small-title-excerpt{
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 50px;
+  line-height: 1.2;
+}
+.padding11px{
+  padding: 11px!important;
+}
+.currentCategorySelected-btn{
+  background-color: rgb(219, 219, 219)!important;
+  color: #333!important;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-size: 9px;
+}

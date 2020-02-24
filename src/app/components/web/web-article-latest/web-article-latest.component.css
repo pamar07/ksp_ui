@@ -1,0 +1,20 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.dark-gry-background{
+  background-color: #ffffff!important;
+  padding: 14px 0 0;
+}
+.image-fit {
+    object-fit: cover;
+    object-position: center left;
+    width: 100%;
+    height: 100%;
+}

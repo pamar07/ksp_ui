@@ -1,0 +1,105 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper" *ngIf="categories">
+    <div class="row">
+      <div class="text-center padding30">
+        <img src="assets/images/ksp-awards-2016-logo.png" style="width: 100px;height: auto;">
+        <span class="font-size21 font-Raleway-Bold">KSP Awards 2017</span>
+      </div>
+    </div>
+
+    <div class="row gry-background" style="padding:20px 0!important;">
+      <div class="text-center">
+        <span class="font-size16 font-Raleway-SemiBold">WINNERS ANNOUNCED! BEST OF 2017</span>
+      </div>
+    </div>
+    <div class="row survey-bg" style="padding-top: 20px;">
+      <div class="row">
+        <div class="col-xs-12 col-md-4 col-lg-4 col-xlg-4" *ngFor="let category of singleRunner">
+          <div class="row awards-wrapper margin-top">
+            <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 col each-award-box">
+              <div class="box">
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo" style="border: 1px solid #e5e5e5;background-color: #f0f0f0; border-radius:5px;">
+                  <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xlg-4">
+                    <img src="{{category.category_image}}" alt="" style="object-fit:cover!important;width:100%;height:auto;margin-top:3%;"/>
+                  </div>
+                  <div class="col-xs-8 col-md-8 col-sm-8 col-lg-8 col-xlg-8 font-size16 font-Raleway-SemiBold text-left padding-left0" style="padding-top:7%;">
+                    <p>{{category.category_name}}</p>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12" style="border-bottom: 1px solid #e5e5e5;">
+                  <div style="inline-block">
+                    <p class="font-Raleway-SemiBold font-size18">Winner</p>
+                  </div>
+                  <div *ngFor="let winner of category.winners; let i=index" style="margin:0 auto; width:45%;">
+                    <div class="square-thumbnail-image-container">
+                      <img class="square-thumbnail-image" src="{{winner.option_image}}" alt="" style="object-fit:contain!important;"/>
+                    </div>
+                    <p class="font-size16 margin-bottom0 font-Raleway-SemiBold" style="min-height:50px;color: #f53366; padding-top: 5%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">{{winner.option_name}}</p>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 margin-top10px" *ngFor="let runner of category.runners; let i=index">
+                  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xlg-3 paddingNo">
+                    <div class="square-thumbnail-image-container">
+                      <img class="square-thumbnail-image" src="{{runner.option_image}}" alt="" style="object-fit:contain!important;"/>
+                    </div>
+                  </div>
+                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xlg-9">
+                    <div style="inline-block">
+                      <p class="margin0 font-Raleway-SemiBold font-size16">Runner Up</p>
+                    </div>
+                    <p class="font-size14 margin-bottom0" style="min-height:50px;color: #f53366; padding-top: 5%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">{{runner.option_name}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><hr/>
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-12 col-xlg-12 paddingNo">
+          <div class="col-xs-12 col-md-4 col-lg-4 col-xlg-4" *ngFor="let category of doubleRunner">
+            <div class="row awards-wrapper margin-top">
+              <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 col each-award-box">
+                <div class="box">
+                  <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo" style="border: 1px solid #e5e5e5;background-color: #f0f0f0; border-radius:5px;">
+                    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xlg-4">
+                      <img src="{{category.category_image}}" alt="" style="object-fit:cover!important;width:100%;height:auto;margin-top:3%;"/>
+                    </div>
+                    <div class="col-xs-8 col-md-8 col-sm-8 col-lg-8 col-xlg-8 font-size16 font-Raleway-SemiBold text-left padding-left0" style="padding-top:7%;">
+                      <p>{{category.category_name}}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12" style="border-bottom: 1px solid #e5e5e5;">
+                    <div style="inline-block">
+                      <p class="font-Raleway-SemiBold font-size18">Winner</p>
+                    </div>
+                    <div *ngFor="let winner of category.winners; let i=index" style="margin:0 auto; width:45%;">
+                      <div class="square-thumbnail-image-container">
+                        <img class="square-thumbnail-image" src="{{winner.option_image}}" alt="" style="object-fit:contain!important;"/>
+                      </div>
+                      <p class="font-size16 margin-bottom0 font-Raleway-SemiBold" style="min-height:50px;color: #f53366; padding-top: 5%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">{{winner.option_name}}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 margin-top10px" *ngFor="let runner of category.runners; let i=index">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xlg-3 paddingNo">
+                      <div class="square-thumbnail-image-container">
+                        <img class="square-thumbnail-image" src="{{runner.option_image}}" alt="" style="object-fit:contain!important;"/>
+                      </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xlg-9">
+                      <div style="inline-block">
+                        <p class="font-Raleway-SemiBold font-size16 margin0">Runner Up</p>
+                      </div>
+                      <p class="font-size14 margin-bottom0" style="min-height:50px;color: #f53366; padding-top: 5%; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">{{runner.option_name}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </section>
+</section>

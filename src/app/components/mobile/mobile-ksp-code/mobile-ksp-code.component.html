@@ -1,0 +1,657 @@
+<div class="agile-main">
+  <div class="content-wrap gry-background" style="padding-top:0px!important;margin-top: 20px">
+    <!-- Banner Carousel -->
+    <div class="row">
+      <ngx-carousel [inputs]="carouselOne">
+         <ngx-tile NgxCarouselItem *ngFor="let banner of bannerImages; let i=index">
+            <div class="box" *ngIf="!banner.link">
+              <img class="" [src]="banner.path" style="width:100%;" alt="" />
+            </div>
+            <div class="box"  *ngIf="banner.link">
+              <a routerLink="{{banner.link}}"><img class="" [src]="banner.path" style="width:100%;" alt="" /></a>
+            </div>
+            <div class="clearfix"></div>
+         </ngx-tile>
+         <button NgxCarouselPrev class='leftRs hide'>&lt;</button> 
+         <button NgxCarouselNext class='rightRs hide'>&gt;</button>
+      </ngx-carousel>
+    </div>
+    
+    <div class="container margin-top20px">
+      <!-- Section 1 -->
+      <div class="col-sm-12 col-xs-12 paddingNo mobile-ksp-code-video-card">
+        <div class="margin-top-bottom-5px">
+          <!-- <div class="col-sm-12 col-xs-12 margin-top">
+            <span class="font-size16 ">KSP CODE CARD</span>
+          </div> -->
+          <div class="col-sm-12 col-xs-12">
+            <p class="font-size12">Get 15% off on the best brands for kids and enjoy exclusive access to curated events.</p>
+          </div>
+          <div class="col-sm-12 col-xs-12 margin-bottom15px">
+            <button class="ion-android-data ksp-code-btn margin-right-4per font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" (click)="scrollToCard()">Buy</button>
+            <button class="ion-android-data ksp-code-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" (click)="scrollToCard()">Renew</button>
+          </div>
+        </div>
+      </div>
+   
+      <!-- Section 2 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">KSP CODE EVENTS</p>
+        <small>Get invites to the best events for families</small>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px social-group" *ngIf="kspEvents">
+        <div class="social-group-card" *ngFor="let event of kspEvents">
+          <span routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0)">
+            <img class="group-card-img" src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" alt="">
+            <div class="color-black card-title social-group-detail">
+              <div class="font-Raleway-SemiBold font-size16 partner-title-elipsis">
+                {{event.title}}
+              </div>
+              <div class="anchor-time font-Raleway-SemiBold letter-spacing-1px font-size10 partner-tagline-elipsis margin-top5px">
+              <small class="date-color" *ngIf="(event.start_date | date:'EEEE')==(event.end_date | date:'EEEE')">{{event.start_date | date:'EEEE'}}, {{event.start_date | date:'yMMMd'}}</small>
+
+              <small class="date-color" *ngIf="(event.start_date | date:'EEEE')!=(event.end_date | date:'EEEE')">{{event.start_date | date:'EEEE'}}, {{event.start_date | date:'yMMMd'}} - {{event.end_date | date:'EEEE'}}, {{event.end_date | date:'yMMMd'}}</small>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="partners">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">KSP CODE PARTNERS</p>
+        <small>Get immediate savings on your bills with a flat 15% off</small>
+      </div>
+      <div class="article-category-scroll-box" *ngIf="categoryList" style="width:105%">
+        <span *ngFor="let cat of categoryList" class="article-category-tab" aria-selected="true" (click)="setCategory(cat.slug)" [ngClass]="{'article-category-tab-selected':(tab_selected == cat.slug)}">
+          {{cat.name}}
+        </span>
+        <span style="position: sticky;position: -webkit-sticky;right: 0px;padding: 7px 4px;background: #eee;"><i class="fa fa-chevron-right"></i></span>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px social-group" *ngIf="partners">
+        <div class="inn_media_box">
+          <div class="media">
+            <ul *ngFor="let partner of partners; let i=index" style="margin-bottom:3px;">
+              <li class="partner-li-class" data-toggle="modal" data-target="#partnerInfoWindow" (click)="partnerClicked = i" [ngClass]="partner.category == tab_selected ? 'show' : 'hide'">
+                <div class="paddingNo col-sm-2 col-xs-3">
+                  <a href="javascript:void(0)">
+                    <div class="square-thumbnail-image-container">
+                      <img [src]="partner.img_path" class="square-thumbnail-image" style="border-radius:4px;">
+                    </div>
+                  </a>
+                </div>
+                <div class="col-sm-10 col-xs-9 padding-right0">
+                  <div class="col-sm-12 col-xs-12 padding-left-right0" style="white-space: normal; padding-top: 0.25rem">
+                    <a href="javascript:void(0)">
+                      <h5 class="font-size13 small-title-excerpt font-Raleway-SemiBold partner-title">{{partner.title}}</h5>
+                    </a>
+                  </div>
+                  <div class="col-sm-12 col-xs-12 paddingNo">
+                    <div class="font-size11 margin-top font-size10 padding-left-right0">
+                      <span class="pull-left span-class">{{partner.tagline}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Section 4 -->
+    <div class="signUp">
+      <span>SIGN UP NOW</span>
+    </div>
+    <div class="content" style="padding:1px 20px " id="codeCard">
+      <div class="otherPlans clearfix">
+        <h4 class="other_plans" style="text-align: center;">KSP CODE CARD</h4>
+        <small style="display: flex;justify-content: center;">Select a plan that works the best for your kids.</small>
+        <div class="plansDiv clearfix" style="margin-top: 5px;">
+          <a routerLink="/3-MONTHS-PLAN/1/1000" (click)="payLink('3-MONTHS-PLAN')">
+            <div class="col-xs-6 no-padding-l">
+              <div class="planDiv no-margin-left">
+                <div class="plan-div-head">3 MONTHS PLAN</div>
+                <div class="plan-div-cont">
+                  <ul>
+                      <li> Get 15% discount on all partner brands</li>
+                      <li> Attend 1 event </li>
+                  </ul>
+                </div>
+                <div class="priceSpan"> <i class="fa fa-rupee"></i> 1000 </div>
+              </div>
+            </div>
+          </a>
+          <a routerLink="/6-MONTHS-PLAN/2/1800" (click)="payLink('6-MONTHS-PLAN')">
+            <div class="col-xs-6 no-padding-r">
+              <div class="planDiv no-margin-right">
+                <div class="plan-div-head">6 MONTHS PLAN</div>
+                <div class="plan-div-cont">
+                  <ul>
+                      <li> Get 15% discount on all partner brands </li>
+                      <li> Attend 2 events </li>
+                  </ul>
+                </div>
+                <div class="priceSpan"> <i class="fa fa-rupee"></i> 1800 </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="planDiv clearfix col-xs-12 no-margin-left">
+          <a routerLink="/12-MONTHS-PLAN/3/3000" (click)="payLink('12-MONTHS-PLAN')"  style="color: #fff">
+            <div class="plan-div-head">12 MONTHS PLAN</div>
+            <div class="plan-div-cont">
+              <ul>
+                <li> Get 15% discount on all partner brands </li>
+                <li> Attend unlimited events </li>
+              </ul>
+            </div>
+            <div class="priceSpan"> <i class="fa fa-rupee"></i> 3000 </div>
+          </a>
+        </div>
+
+        <!-- <h4 class="other_plans" style="text-align: center;margin-bottom: 10px;">ACTIVITY BOXES FOR KIDS</h4>
+        <div class="planDiv clearfix col-xs-12 no-margin-left">
+          <a target="_blank" routerLink="/ksp-code-activity"  style="color: #fff">
+            <div class="plan-div-head">FUN BUSY BOX FOR KIDS</div>
+            <div class="plan-div-cont">
+              <ul>
+                <li> Earth Lab (MRP Rs 1500) </li>
+                <li> Chauka Bara (MRP Rs 499) </li>
+                <li> Fixi Bricks (MRP Rs 199) </li>
+              </ul>
+            </div>
+            <div class="priceSpan"> <i class="fa fa-rupee"></i> 999 </div>
+          </a>
+        </div>
+
+        <div class="planDiv clearfix col-xs-12 no-margin-left">
+          <a target="_blank" routerLink="/ksp-code-activity"  style="color: #fff">
+            <div class="plan-div-head">FESTIVE FUN BOX FOR KIDS</div>
+            <div class="plan-div-cont">
+              <ul>
+                <li> Slime activator (MRP Rs 299) </li>
+                <li> Geoboard (MRP 800) </li>
+                <li> Memory & Movement board game (MRP Rs 645) </li>
+              </ul>
+            </div>
+            <div class="priceSpan"> <i class="fa fa-rupee"></i> 999 </div>
+          </a>
+        </div>
+
+        <div class="planDiv clearfix col-xs-12 no-margin-left">
+          <a target="_blank" routerLink="/ksp-code-activity"  style="color: #fff">
+            <div class="plan-div-head">SKILL BUILDER BOX</div>
+            <div class="plan-div-cont">
+              <ul>
+                <li> 7 Colour Science Experiments (MRP Rs 599) </li>
+                <li> Magnetic Shapes Set  (MRP 429) </li>
+                <li> Logical thinking based board game (MRP Rs 445) </li>
+              </ul>
+            </div>
+            <div class="priceSpan"> <i class="fa fa-rupee"></i> 1200 </div>
+          </a>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="col-sm-12 col-xs-12 paddingNo mobile-ksp-code-video-card" style="margin-top:10px;">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe allowfullscreen="allowfullscreen" class="embed-responsive-item" height="auto" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" width="100%" src="https://kspbucket.s3.ap-south-1.amazonaws.com/KSP+Code+Promo+Video.mp4"></iframe>
+      </div>
+    </div>
+
+    
+    <div class="container">
+      <!-- section 7 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">KSP CODE ARTICLES</p>
+        <small>What's new on the Card</small>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px social-group" *ngIf="codeArticles">
+        <app-generic-carousel [carauselId]="'ksp-code-article'" [articleList]="codeArticles" ></app-generic-carousel>
+      </div>
+
+      <!-- Section 8 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">BENEFITS</p>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px benifit" style="padding: 0px 10px!important;">
+        <ngx-carousel [inputs]="carouselBenifit">
+          <span class="side-arrow-rapper left" NgxCarouselPrev>
+            <span><i class="fa fa-chevron-left"></i></span>
+          </span>
+          <ngx-tile NgxCarouselItem *ngFor="let benifit of benifits; let i = index;">
+            <div class="color-black horizontal-scroll-card-content" data-toggle="modal" data-target="#infowindow">
+              <div class=" font-size13">
+                <span class="col-sm-2 col-xs-2 paddingNo">
+                  <img class="benefit-star-img" src="assets/images/benefit-start-ksp-code.svg" width="25px" height="auto" alt="">
+                </span>
+                <span class="col-sm-10 col-xs-10 padding-right0 horizontal-scroll-card-detail">{{benifit}}</span>
+              </div>
+            </div>
+          </ngx-tile>
+          <span class="side-arrow-rapper right" NgxCarouselNext>
+            <span><i class="fa fa-chevron-right"></i></span>
+          </span>
+        </ngx-carousel>
+      </div>
+
+      
+      <!-- Section 9 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">FAQS</p>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px">
+        <div class="panel-group mobile-ksp-faq" id="accordion">
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">What offers or privileges do I get with my KSP Code card?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse1" class="panel-collapse collapse">
+              <div class="faq-body">This card opens the discount till at all our partner restaurants, cakes shops, play areas, children’s stores, online baby stores, and any other service that parents like you and me visit frequently. For a complete list of all our partners click here.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How many times can I avail these offers at KSP partner outlets?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse2" class="panel-collapse collapse">
+              <div class="faq-body">Even if your child likes to eat the same dish at a restaurant five times a week, or play at the same play zone every weekend, you can get the discount as many times as you like as a KSP Card subscriber.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">What if a partner brand backs out during the year?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse3" class="panel-collapse collapse">
+              <div class="faq-body">We hate it when this happens and cross all our fingers and toes hoping it won’t. But in case bad luck strikes, we will try our best to replace the partner at the earliest and most importantly we keep you posted. We will not issue refunds in this case.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How can I stay updated about the KSP Code Programme?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse4" class="panel-collapse collapse">
+              <div class="faq-body">We love mail and we know you do too, but we promise not to spam you! We will stay in touch with you via emails, SMS and through regular updates on our website.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How much does the KSP Code card cost?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse5" class="panel-collapse collapse">
+              <div class="faq-body">The KSP Code Card costs Rs.1800 inclusive of taxes for a 6 month membership and Rs.3,000 inclusive of taxes for one year from the date of purchase. At just Rs.250 a month for a yearly plan, that’s a steal! For every membership, we will send 2 cards, one for each parent.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How do I get the KSP Code card?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse6" class="panel-collapse collapse">
+              <div class="faq-body">1. Click ‘Get the KSP Code’ on our website
+                      2. Fill out the subscription form online.
+                      3. Once you submit the form, you can select your mode of online payment (bank transfer or cheque). We also have a cash pick-up option for Mumbai customers, but at an additional charge of Rs.150. Our logistic partner will call you for a convenient time to complete the transaction.
+                      4. You will also receive an email confirming your purchase and your card will be delivered to you within 21 days of receipt of your payment.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">Can I gift the KSP Code Card to a friend?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse7" class="panel-collapse collapse">
+              <div class="faq-body">A KSP Code Card could be the perfect birthday gift for a friend. Just fill in the form and we will send it right over! Make sure to provide the correct name and address of your friend/family member to whom you are gifting the card.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse8">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">I lost my card, how can I get a new one?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse8" class="panel-collapse collapse">
+              <div class="faq-body">A new card will be issued at a charge of Rs.200. Please write to us kspcode@kidsstoppress.com to get a replacement.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse9">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">I am not from Mumbai, can I apply for the KSP CODE Card?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse9" class="panel-collapse collapse">
+              <div class="faq-body">The KSP Code Card programme is currently available in MUMBAI only.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse10">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How do I renew my membership with KSP Code?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse10" class="panel-collapse collapse">
+              <div class="faq-body">We will send you a reminder to renew your card at least 2 months before your card expires via SMS, and a renewal form will be emailed to you, or you can visit our webpage to renew your card.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse11">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">How do I avail the offers using the KSP Code card?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse11" class="panel-collapse collapse">
+              <div class="faq-body">When using the KSP Code card in-stores:
+
+              Present your valid KSP Code card with a valid photo ID prior to asking for the bill. The partner outlet will give you the bill after discount. Acceptable photo IDs include driver’s license, company ID, Aadhar card, PAN Card. All partner stores reserve the right to withhold the offer if you do not have your KSP Code card or a valid ID proof.
+              Only one KSP Card can be used per family (2 adults and 2 children).
+
+              When using the KSP Code Card at online stores:
+
+              Use your KSP Code membership number as your promo code to avail the discounts when shopping with our online partner stores.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse12">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">Are there any rewards points I can collect on my KSP Code Card card?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse12" class="panel-collapse collapse">
+              <div class="faq-body">The CODE guarantees so many wonderful thing, we feel they are equal to reward points. Now isn’t that fantastic?</div>
+            </div>
+          </div>
+          <div class="panel">
+            <button class="faq-panel outlineNone">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse13">
+              <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                <small style="width:90%; float:left;">What if the partner store does not provide the discount?</small>
+                <i class="fa fa-chevron-down pull-right"></i>
+              </div>
+            </a>
+            </button>
+            <div id="collapse13" class="panel-collapse collapse">
+              <div class="faq-body">In case of any problems in availing the discount, you can call us on +917045900890 All our partner stores reserve the right to withhold discounts if a card-holder does not have a valid photo ID along with the KSP Code card.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 10 -->
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top">
+        <p class="color-gray font-size14 font-Raleway-SemiBold">TERMS AND CONDITIONS</p>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px">
+        <div style="background-color: white; border-radius5px; padding: 10px;">
+           <p class="font-size12">
+             1. Make sure to always carry a valid photo ID proof and KSP Code Card to redeem discounts.
+           </p>
+           <p class="font-size12">
+             2. We know you love the card and want to give it to every member of your household but only one KSP card can be used per family (2 adults and 2 children).
+           </p>
+           <p class="font-size12">
+             3. Again make sure to carry a valid photo ID proof and KSP Code Card otherwise our partner stores could withhold the offers to you!
+           </p>
+           <p class="font-size12">
+             Read the complete terms and conditions <a class="color-pink" href="javascript:void(0);" data-toggle="modal" data-target="#termsandconditions">click here</a>
+           </p>
+           <div id="termsandconditions" class="modal fade" role="dialog">
+             <div class="modal-dialog">
+               <div class="modal-content">
+                 <div class="modal-header tnc-header">
+                   <button type="button" class="close" data-dismiss="modal" style="">×</button>
+                   <div class="row">
+                     <div class="col-xs-12">
+                       <h4 class="modal-title all-caps font-Raleway-SemiBold font-size15 text-center">TERMS AND CONDITIONS</h4>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="modal-body">
+                   <p class="font-size12 text-justify">
+                     The Terms and Conditions as listed form the basis of participation in KSP Code Card Programme; they are intended to protect your rights as a Member of KSP Code Card Programme. These provisions will govern your participation in this programme, and you are requested to read these carefully and understand all of them.
+                     By using the Card, the member unconditionally accepts and agrees to comply with and abide by these Terms and Conditions as stated herein or as may be modified at any time by Kidsstoppress Media Pvt Ltd without any prior notice to the member. The decisions of Kidsstoppress for all matters relating to this Terms and Conditions shall be final and binding in all respects and that no correspondence will be entertained regarding the same.
+                     By accepting these Terms and Conditions, the member hereby represents and warrants that the Customer has read, understood, accepted and agrees to abide with all the terms and conditions contained herein.
+                   </p>
+                   <ol class="font-size12 text-justify margin0">
+                    <li>The KSP Code card programme is owned and operated by Kidsstoppress Media Pvt Ltd.</li>
+                    <li>Membership is open to all individuals who are aged 18 (eighteen) years or more by filling up a KSP Code Card Application Form available on www.kspcode.com and paying a membership fee (currently Rs.1800 for 6 months or Rs.3000/- for 12 months) or as per the offer by Kidsstoppress Media Pvt.Ltd .</li>
+                    <li>The membership fee for KSP Code Card is non refundable.</li>
+                    <li>KSP Code Card will be delivered to the subscriber within 21 working days of receipt of a completed application form and realised subscription amount.</li>
+                    <li>KSP Code Card will be delivered to the subscriber within 21 working days of receipt of a completed application form and realised subscription amount.</li>
+                    <li>Member is required to present the Photo ID in order to redeem the KSP Code Card discount. Acceptable photo IDs include driver’s license, company ID, Aadhar card, PAN Card. All partnering outlets reserve the right to withhold the offer if you do not have your KSP Code card along with a valid ID.</li>
+                    <li>Only one KSP card can be used per family (2 adults and 2 children). A card owned by both parents will be treated as the same card.</li>
+                    <li>The discount offer at partnering restaurants/cake shops extends to a maximum of four people (so if you're a group of 10 people, you would get 15% off on 40% of the bill).</li>
+                    <li>The KSP Code Card programme does not entitle its members to priority reservation, free entry or free tickets, meals or services at any of our partner outlets. All existing policies of partner outlets continue to apply to KSP Card holders.</li>
+                    <li>The KSP Card offers may not be clubbed with any other promotional offers; these include but are not restricted to on-going promotions by the partnering outlets and discounts with other merchants/parties, unless specified otherwise.</li>
+                    <li>The offers cannot be clubbed with large orders, birthday parties or home deliveries.</li>
+                    <li>The card is non-transferable and intended for personal use only. Any liability arising due to card loss, misuse, or out of sharing of KSP Code membership card consciously or otherwise, would render the Member liable for all losses.</li>
+                    <li>The member acknowledges that Kidsstoppress is merely a facilitator for discount and shall not be responsible for any quality or hospitality/service issues with the Partner Outlet. The Customer shall directly lodge the complaint with the respective Partner Outlet towards the same.</li>
+                    <li>Each partner offer shall have a separate Terms and Conditions and hence the Customer should ensure to read it carefully before availing the Offer. The terms and conditions of the respective Offer shall be available on the website www.kspcode.com under the partners section.</li>
+                    <li>The Member should take adequate precautions to protect the card and prevent damage.</li>
+                    <li>Should a card be lost, a fresh application can be made for a replacement card on payment of Rs.200. The latest charges would be available on request and can be viewed on the website of the programme.</li>
+                    <li>The Member permits Kidsstoppress Media Pvt Ltd to use the ‘Data’ for communication, marketing activities and for enabling offer redemptions with partnering brands.</li>
+                    <li>Kidsstoppress Media Pvt Ltd reserves the right to discontinue KSP Code membership to any Member who appears to be using the programme in a manner inconsistent with the terms and conditions or intent of the programme or any portion of the programme, including, but not limited to, offer redemption. Kidsstoppress also reserves the right to discontinue membership for any Member who acts in a manner inconsistent with local or state laws, statutes or ordinances.</li>
+                    <li>All interpretations of programme rules shall be at the sole discretion of Kidsstoppress Media Pvt. Ltd.</li>
+                    <li>The programme and any benefit, offering or the like relating to the programme, shall not be construed as to constitute a contract or otherwise establish a contractual relationship between Kidsstoppress and any subscriber.</li>
+                    <li>Nothing in the KSP Code Card Programme rules is intended or shall be construed to create or establish any agency, partnership or joint venture relationship between Kidsstoppress and the subscriber and partners.</li>
+                    <li>The KSP Code Card Programme has no predetermined termination date and may continue until such time as Kidsstoppress media Pvt. Ltd decides to terminate the programme, at any time, with or without notice.</li>
+                    <li>Each Member is responsible for remaining knowledgeable as to the programme rules. Kidsstoppress will send correspondence to Members to advise them of matters of interest, including notification of programme changes from time to time. However, neither Kidsstoppress, its affiliates or allied companies nor programme management service providers nor the owners of participating outlets nor companies participating as partners in the programme will be liable for any failure to do so and will not be responsible for correspondence lost or delayed in the mail. The latest terms and conditions shall be available on request or can be viewed on the website of the programme.</li>
+                    <li>Terms and conditions of KSP Card Programme are governed by the laws of the Republic of India and will be restricted to the Mumbai jurisdiction under the Mumbai High Court.</li>
+                    <li>Kidsstoppress Media Pvt Ltd shall not be liable to the member for any eventuality caused directly or indirectly by any act of God, wars (declared or undeclared), insurrections, acts of terrorism, acts of governments or boycotts, lockouts and other civil unrest, or any act of similar nature beyond the Company’s reasonable control.</li>
+                    <li>Terms and conditions of the KSP Card Programme are subject to change without prior notice and for further details Members may log onto www.kspcode.com</li>
+                    </ol>
+                 </div>
+                 <div class="modal-footer tnc-footer">
+                   <button type="button" class="btn btn-default" data-dismiss="modal" style="padding: 5px!important;">Close</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="infowindow" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close color-pink font-size25" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title pink-color">WHY YOU NEED THE KSP CODE CARD?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="footer-col-item min-height0">
+          <span style="font-size:14px; line-height:1.5; text-align: justify;">
+            <p class="margin-top">
+              1. The card gets you exclusively curated offers on all the brands you use for your children.
+            </p>
+            <p>
+              2. It is instant gratification with this one! Get immediate savings on your bills, even before you pay, at every partnering shop, restaurant, and play zone your child likes to go to!
+            </p>
+            <p>
+              3. It isn’t just once or twice, but you can use the card, at the same places, and enjoy your KSP discounts all year round!
+            </p>
+            <p>
+              4. We love to work on holidays too! Get your discounts with KSP Code on weekends and public holidays too!
+            </p>
+            <p>
+              5. Get one free complimentary card with every subscription, one for each parent.
+            </p>
+            <p>
+              6. Your friends will love you more for gifting them the KSP Code Card.
+            </p>
+            <p>
+              7. KSP Code is the best way for any parent to get more for kids without feeling the pinch.
+            </p>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="partnerInfoWindow" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content" *ngIf="partners">
+      <div class="modal-header">
+        <button type="button" class="close color-pink font-size25" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title pink-color">{{partners[partnerClicked].title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="footer-col-item min-height0">
+          <img [src]="partners[partnerClicked].img_path" width="100%" height="auto" style="margin-bottom:10px;">
+          <span style="font-size:14px; line-height:1;">{{partners[partnerClicked].tagline}}</span>
+          <hr/>
+          <span class="color-pink" style="font-size:16px; line-height:1.2;">{{partners[partnerClicked].offer}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="playOffer" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close color-pink font-size25" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title pink-color">
+          KSP Play pack offers<br>
+          <small>Works on all days , unlimited visits at all partner brands</small>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding-top: 0px;">
+        <div class="inn_media_box">
+          <div class="media">
+            <ul *ngFor="let partner of playPartners; let i=index" class="partner_popup_ul">
+              <li class="partner-li-class" style="background: white;">
+                <div class="paddingNo col-sm-2 col-xs-3">
+                  <div class="square-thumbnail-image-container">
+                    <img [src]="partner.img_path" class="square-thumbnail-image" style="border-radius:4px; object-fit: contain;">
+                  </div>
+                </div>
+                <div class="col-sm-10 col-xs-9 padding-right0">
+                  <div class="col-sm-12 col-xs-12 padding-left-right0" style="white-space: normal; padding-top: 0.25rem">
+                    <h5 class="font-size13 small-title-excerpt font-Raleway-SemiBold partner-title">{{partner.title}}</h5>
+                  </div>
+                  <div class="col-sm-12 col-xs-12 paddingNo">
+                    <div class="font-size11 margin-top font-size10 padding-left-right0">
+                      <span class="pull-left span-class">{{partner.tag_line}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="code-con" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="codeForm" (ngSubmit)="codeForm.valid && submitCodePopup(codeForm.value)" #formCode="ngForm">
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Have a query or want to know more about KSP Code or Play Pack? Simply leave us your deets and we will get in touch with you.</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          
+          <div class="row text-center">
+            <div class="col-md-6 col-lg-6" style="text-align: left">
+              <input class="form-control" type="text" placeholder="Enter your email" style="width:100%" [formControl]="codeForm.controls['email']" (keyup)="checkEmailOrPhone('email')"/>
+              
+              <div *ngIf="((codeForm.controls['email'].hasError('pattern') && codeForm.controls['email'].dirty) || (codeForm.controls['email'].hasError('pattern') && formCode.submitted))" class="error-survey-form">Please enter a valid email</div>
+            </div>
+            
+            <div class="col-md-6 col-lg-6" style="text-align: left">
+              <input class="form-control" type="number" placeholder="Enter your mobile" style="width:100%" [formControl]="codeForm.controls['mobile']" (keyup)="checkEmailOrPhone('phone')"/>
+
+              <div *ngIf="((codeForm.controls['mobile'].hasError('pattern') && codeForm.controls['mobile'].dirty) || (codeForm.controls['mobile'].hasError('pattern') && formCode.submitted))" class="error-survey-form">Please enter a valid mobile no</div>
+            </div>
+
+            <div class="col-md-12 col-lg-12 custom-select-option location position-relative" style="text-align: left;">
+              <select [formControl]="codeForm.controls['city']" class="form-control"> 
+                <option value="">Select City</option>
+                <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+              </select>
+            </div>
+
+            
+            <div class="col-md-12 col-lg-12 sign-input-wrapper other position-relative" *ngIf="codeForm.controls.city.value == 'National'" style="text-align: left">
+              <input type="text" class="form-control" [formControl]="codeForm.controls['cityOther']" placeholder="Please enter city name">
+            </div>
+
+            <div *ngIf="(codeForm.controls['email'].hasError('required') && formCode.submitted) && (codeForm.controls['mobile'].hasError('required') && formCode.submitted)" class="error-survey-form">Please enter email or mobile no.</div>
+            
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="paddingNo" style="width:auto;">
+                <button type="submit" class="btn green-background blue-green font-size15">Submit</button> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

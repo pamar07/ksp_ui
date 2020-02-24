@@ -1,0 +1,38 @@
+<li [ngClass]="{'social-ind':isBlack}">
+  <a href="javascript:void(0);" (click)="doLove()">
+    <i class="fa fa-heart-o like-comment-img color-black" aria-hidden="true" *ngIf="!isLoved" [ngClass]="{'color-black':isBlack, 'like-comment-img-small':isSmall}"></i>
+    <i class="fa fa-heart color-pink like-comment-img color-black" aria-hidden="true" *ngIf="isLoved" [ngClass]="{'like-comment-img-small':isSmall}"></i>
+    <p class="paddingNo margin0">{{loveCount}}</p>
+  </a>
+</li>
+
+
+<li *ngIf="_apiService.loggedIn()"  [ngClass]="{'social-ind':isBlack}">
+  <a *ngIf="entityType=='post' || entityType=='banner'" href="/details/{{permaLink}}/{{entityId}}">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+  <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+  <a *ngIf="entityType=='videos' || entityType=='ksp-tv'" href="/details/{{permaLink}}/{{entityId}}">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+  <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+  <a *ngIf="entityType=='ksp-radio'" href="/details/{{permaLink}}/{{entityId}}">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+    <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+  <a *ngIf="entityType=='social-group'" routerLink="/post-individual/{{entityId}}">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+    <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+  <a *ngIf="entityType=='event'" routerLink="/event-individual/{{permaLink}}/{{entityId}}">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+    <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+</li>
+
+<li *ngIf="!_apiService.loggedIn()"  [ngClass]="{'social-ind':isBlack}">
+  <a href="javascript:void(0);" (click)="_commonService.setNavigationUrl(entityType,entityId)">
+    <img src="assets/images/message-black.svg" class="like-comment-img margin-top3px" [ngClass]="{'like-comment-img-small':isSmall}">
+  <p class="paddingNo margin0">{{commentCount}}</p>
+  </a>
+</li>

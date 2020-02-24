@@ -1,0 +1,161 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--gray social area-->
+<section>
+  <div class="w3_agile_banner_topWhite">
+    <div class="container">
+      <div class="main-title-outer-none pull-left margin0">
+        <div class="main-title margin0 font-size21"> <i class="fa" aria-hidden="true"><img src="assets/images/my group.svg" width="30" height="30" alt=""/></i>MY GROUPS</div>
+        <!--div class="pull-left col-md-12 font-size12">Simple dummy text of the printing and typesetting industry.</div-->
+      </div>
+    </div>
+  </div>
+</section>
+<!--main content start-->
+<section id="main-content">
+ <div class="container">
+  <section class="wrapper margin0 paddingNo">
+    <hr>
+    <div class="row margin-top margin-bottom15 paddingNo" *ngIf="userGroups">
+      <div *ngIf="userGroups.length>0">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 margin0">
+          <div class="single-blog-item margin0">
+            <div class="blog-thumnail">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment" *ngFor="let group of userGroups; let i=index">
+                      <div class="media" >
+                        <div class="blog-content paddingNo">
+                          <div class="col-md-1 col-lg-1 col-sm-2 col-xs-2 paddingNo">
+                            <img src="{{group.img[0].path.substring( 0, group.img[0].path.lastIndexOf('/')) + '/w_80' + group.img[0].path.substring( group.img[0].path.lastIndexOf('/'), group.img[0].path.length)}}" height="80px" width="80px" style="border-radius:50%; object-fit:cover; object-position:center;"> </div>
+                          <div class="col-md-11 col-lg-11 col-sm-10 col-xs-10 paddingLeft-40">
+                            <h3><a href="javascript:void(0);" class="color-black font-bolder font-size18" routerLink="/social-individual/{{group.id}}">{{group.name}}</a> </h3>
+                            <div class="col-md-9 col-lg-9 col-sm-10 col-xs-10 paddingNo">
+                             <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps margin-top5px anchor-time font-bolder">  BY {{group.author}} </div>
+                               <a routerLink="/social-individual/{{group.id}}"></a>
+                              <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps pink-color margin-top5px font-bolder"><b>{{group.members.length}} MEMBERS &nbsp;&nbsp;|&nbsp;&nbsp; {{group.posts}} POSTS</b>
+                              </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12 join font-size11 pull-right padding-right0">
+                              <a routerLink="/social-individual/{{group.id}}">
+                                <span class="ion-android-data green-button width-auto pull-right"><i class="fa fa-bell-o" aria-hidden="true"></i>&nbsp;{{group.today_posts.length}} NEW POSTS</span>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <p class="margin-top" [innerHtml] = "group.excerpt"></p>
+                            <section class="post-footer footerlike margin-top12px">
+                              <div class="post-footer-option">
+                                <ul class="list-unstyled">
+                                  <app-group-love [loveData]="group.liked" [entityType]="group.post_type" [entityId]="group.id" [loveCount]="group.likes"></app-group-love>
+                                  <!-- <li class="pull-right font-size11"> Last Active:2 Hours ago</li> -->
+                                </ul>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                      <hr *ngIf="i<userGroups.length-1">
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="userGroups.length==0">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 margin0 font-size18">
+          <p>Oops! seems like you have not joined any group yet.</p>
+          <p>Please join our populars groups.</p>
+          <p>You may also love to join the groups specially recommended for you.</p>
+        </div>
+      </div>
+    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingN" *ngIf="popularGroups || recommendedGroups">
+      <div class="content-widget-sidebar">
+            <ul>
+              <li class="recent-post border1 bg-no-color">
+                <h5 class="font-bolder"><i class="fa " aria-hidden="true"><img src="assets/images/my group.svg" width="30" height="26" alt=""></i>GROUPS</h5>
+                <hr class="margin-top-bottom-5px">
+                <div class="tabbable-panel">
+                  <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                      <li class="active" *ngIf="popularGroups"> <a href="#tab_default_1" data-toggle="tab">POPULAR</a> </li>
+                      <li> <a href="#tab_default_2" data-toggle="tab" *ngIf="recommendedGroups">RECOMMENDED</a> </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_default_1" *ngIf="popularGroups">
+                        <ul>
+                          <li class="recent-post recent-post-new padding-top-bottom0 margin0" *ngFor="let group of popularGroups; let i=index" [style.display]="group.show ? '':'none'">
+                            <div class="post-img"> <img src="{{group.path.substring( 0, group.path.lastIndexOf('/')) + '/w_200' + group.path.substring( group.path.lastIndexOf('/'), group.path.length)}}" height="60px" width="60px" style="border-radius:50%; object-fit:cover; object-position:center;"> </div>
+                            <a href="javascript:void(0);" routerLink="/social-individual/{{group.id}}">
+                              <h5 class="font-size13">{{group.title}}</h5>
+                            </a>
+                            <div class="pull-left paddingNo font-size11 margin-top5px"> <small> {{group.noOfMembers}} MEMBERS | {{group.postCount}} POSTS </small> </div><br/>
+                            <div class="pull-left margin-top-bottom-10px">
+                              <a href="javascript:void(0);" (click)="join(group.id,group.title,1,i)"><button type="button" class="btn-fresh text-capitalize btn-xs pull-right btn-brown font-size10 font-bolder">JOIN</button></a>
+                            </div>
+                            <hr class="width-100per margin-top-bottom-5px" *ngIf="i<popularGroups.length-1"/>
+                            <div class="clearfix"></div>
+                          </li>
+                          <li class="recent-post recent-post-new paddingNo margin0 text-center">
+                            <hr class="margin-top-bottom-5px">
+                            <p class="margin-bottom0"><a href="javascript:void(0);" class="font-Raleway-SemiBold" routerLink="/social-all">SEE ALL GROUPS</a></p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="tab-pane" id="tab_default_2" *ngIf="recommendedGroups">
+                        <ul>
+                          <li class="recent-post recent-post-new padding-top-bottom0 margin0" *ngFor="let group of recommendedGroups; let i=index" [style.display]="group.show ? '':'none'">
+                            <div class="post-img"> <img src="{{group.img[0].path.substring( 0, group.img[0].path.lastIndexOf('/')) + '/w_60' + group.img[0].path.substring( group.img[0].path.lastIndexOf('/'), group.img[0].path.length)}}" height="60px" width="60px" style="border-radius:50%; object-fit:cover; object-position:center;"> </div>
+                            <a href="javascript:void(0);" routerLink="/social-individual/{{group.id}}">
+                              <h5 class="font-size13">{{group.name}}</h5>
+                            </a>
+                            <div class="pull-left paddingNo font-size11 margin-top5px"> <small> {{group.members}} MEMBERS | {{group.post_count}} POSTS </small> </div><br/>
+                            <div class="pull-left margin-top-bottom-10px">
+                              <a href="javascript:void(0);" (click)="join(group.id,group.name,2,i)"><button type="button" class="btn-fresh text-capitalize btn-xs pull-right btn-brown font-size10 font-bolder">JOIN</button></a>
+                            </div>
+                            <hr class="width-100per margin-top-bottom-5px" *ngIf="i<recommendedGroups.length-1"/>
+                            <div class="clearfix"></div>
+                          </li>
+                          <li class="recent-post recent-post-new paddingNo margin0 text-center">
+                            <hr class="margin-top-bottom-5px">
+                            <p class="margin-bottom0"><a href="javascript:void(0);" class="font-Raleway-SemiBold" routerLink="/social-all">SEE ALL GROUPS</a></p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <ul>
+                  <li class="recent-post recent-post-new " *ngFor="let group of popularGroups">
+                    <div class="post-img"> <img src="{{group.path}}" height="60px" width="60px" style="border-radius:50%; object-fit:cover; object-position:center;"> </div>
+                    <a href="javascript:void(0);" routerLink="/social-individual/{{group.id}}">
+                    <h5 class="font-size13">{{group.title}}</h5>
+                    </a><div class="pull-left paddingNo font-size11 margin-top5px"> <small> {{group.noOfMembers}} MEMBERS | {{group.postCount}} POSTS </small> </div><p></p>
+                    <div class="clearfix"></div>
+                  </li>
+                  <li class="recent-post recent-post-new paddingNo margin0 text-center">
+                    <hr>
+                    <p><a href="javascript:void(0);" class="font-Raleway-SemiBold" routerLink="/social-all">SEE ALL GROUPS</a></p>
+                  </li>
+                </ul> -->
+              </li>
+            </ul>
+       </div>
+    </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+ </div>
+ <div class="clearfix"></div>
+ <div class="container" *ngIf="allPageBanners.length>0">
+   <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image}}" width="100%"></a>
+ </div>
+ <div class="clearfix"></div>
+ <div class="container margin-top" *ngIf="allPageBanners.length>1">
+   <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img src="{{allPageBanners[1].image}}" width="100%"></a>
+ </div>
+ <hr>
+</section>

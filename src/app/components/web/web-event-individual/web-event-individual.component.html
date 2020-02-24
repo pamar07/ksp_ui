@@ -1,0 +1,455 @@
+<app-topnavnofilter></app-topnavnofilter>
+<section id="main-content">
+  <section class="wrapper">
+    <section class="container main-margin-top">
+      <div class="row margin-bottom15">
+        <div class="container">
+          <div class="col-md-12 main-title-outer-nobr"><a routerLink="/event-all"> <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;Back To Events & Activities </a></div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="row">
+      <div class="container">
+        <div class="row margin-bottom15">
+          <div class="blog-content paddingNo">
+            <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+              <span  *ngIf="eventIndividual">
+                <div class="col-md-12 col-lg-12 col-sm-12 paddingNo">
+                  <div class="col-md-12 col-lg-12 col-sm-12 paddingNo">
+                    <h1 class="image-text font-bolder title-header">{{eventIndividual.title}}</h1>    
+                    <span *ngFor="let cat of eventIndividual.category; let i=index">
+                      <span class="ion-android-data light-blue-button all-caps" style="background-color:grey" [innerHTML]="cat.name"></span>&nbsp;
+                      <br *ngIf="((i+1)%7)==0">
+                      <br *ngIf="((i+1)%7)==0">
+                    </span>
+                    <div class="three-by-two-image-container margin-top margin-bottom15px">
+                      <img class="center-block three-by-two-image" *ngIf="eventIndividual" src="{{eventIndividual.path.substring( 0, eventIndividual.path.lastIndexOf('/')) + '/w_700' + eventIndividual.path.substring( eventIndividual.path.lastIndexOf('/'), eventIndividual.path.length)}}" style="object-fit:contain; object-position:left;" alt=""/>
+                    </div>
+                  </div>
+                </div>
+              <br/>
+              </span>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo">
+                <div class="margin-bottom15 margin-top" *ngIf="!_apiService.loggedIn() && eventIndividual">
+                  <div class="green-bar">
+                    <div class="main-bordernone pull-left">
+                      <div class="main-title btn-white-elli"> <i class="fa" aria-hidden="true">
+                        <img src="assets/images/icon-us.png" width="35" height="36" alt=""></i>
+                        Get weekly stories in your inbox
+                      </div>
+                      <div class="span-outer"><span class="pull-right text-danger last-update">
+                        <a [routerLink]="['/signup', {c: 'event-'+eventIndividual.id}]" (click)="_commonService.navUrl='/event-individual/'+eventIndividual.id"><span class="ion-android-data icon"></span>SIGN UP NOW<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+                      </span> </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 paddingNo" *ngIf="eventIndividual">
+                <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5 margin-top5px" *ngIf="eventIndividual">
+                  <div class="post-footer-option margin-lft image-text">
+                    <ul class="list-unstyled text-left">
+                      <app-likecomment [loveData]="eventIndividual.liked" [permaLink]="eventIndividual.perma_link" [entityType]="event" [entityId]="eventIndividual.id" [loveCount]="eventIndividual.likes" [commentCount]="eventIndividual.comment_count" [isBlack]="'true'"></app-likecomment>
+                      <li class="social-ind width25p">
+                        <a href="javascript:void(0);" (click)="doBookmark('event',eventIndividual.id)">
+                          <i class="fa fa-bookmark-o color-black like-comment-img" aria-hidden="true" *ngIf="!isBookmarked"></i>
+                          <i class="fa fa-bookmark color-pink like-comment-img" aria-hidden="true" *ngIf="isBookmarked"></i>
+                          <p class="paddingNo margin0 color-black">{{eventIndividual.total_bookmarks}}</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <app-eventactions *ngIf="!(currentDate > getOnlyDate(eventIndividual.end_date))" [eventId]="eventIndividual.id" [eventPermalink]='eventIndividual.perma_link'></app-eventactions>
+                <button style="display: -webkit-box;color: #8e8a8a;border: 1px solid;border-radius: 2px" *ngIf="currentDate > getOnlyDate(eventIndividual.end_date)">Past Event</button>
+
+
+
+                <!--<button class="more-partener participate-button font-regular pull-right" *ngIf="eventIndividual.participate==1 && eventIndividual.participated==0 && eventIndividual.exclusive==1" style="border-radius:5px;color:#fff; margin-top:0px" data-toggle="modal" data-target="#registerModal">Register Now</button>-->
+              </div>
+              <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo" *ngIf="eventIndividual">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="promotionInsideContentTop">
+                  <app-advertise [add]="promotionInsideContentTop"></app-advertise>
+                </div>
+              </div> -->
+              
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="eventIndividual">
+                <p class="article-content-style" [innerHTML]="eventIndividual.content"></p>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" [vp-in-view-config]="{infinite: true}" (vp-in-view)="eventEnd = true;"></div>
+              </div>
+              <span *ngIf="eventIndividual">
+                <div *ngFor="let event_date of eventIndividual.eventDate">
+                  <small *ngIf="getOnlyDate(event_date.start_date)==getOnlyDate(event_date.end_date)">    
+                    {{_commonService.setDateFormat(event_date.start_date) | date:'fullDate'}},
+                    
+                    <span *ngIf="event_date.start_date==event_date.end_date">{{_commonService.setDateFormat(event_date.start_date) | date:'jm'}}</span>
+
+                    <span *ngIf="event_date.start_date!=event_date.end_date">{{_commonService.setDateFormat(event_date.start_date) | date:'jm'}} - {{_commonService.setDateFormat(event_date.end_date) | date:'jm'}}</span>
+                  </small>
+                  
+                  <small *ngIf="getOnlyDate(event_date.start_date)!=getOnlyDate(event_date.end_date)">
+                    {{_commonService.setDateFormat(event_date.start_date) | date:'fullDate'}}, {{_commonService.setDateFormat(event_date.start_date) | date:'jm'}}&nbsp; - &nbsp;{{_commonService.setDateFormat(event_date.end_date) | date:'fullDate'}}, {{_commonService.setDateFormat(event_date.end_date) | date:'jm'}}</small>
+                </div>
+              </span>
+              
+              <table class="where-margin-top table table-bordered" *ngIf="eventIndividual">
+                <tr>
+                  <td class="where">Where:</td>
+                  <td>
+                    <span *ngFor="let venue_detail of eventIndividual.event_venue_details">
+                      <small>{{venue_detail.venue_address}} , {{venue_detail.venue_city}}</small>
+                    </span>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="where">Age:</td>
+                  <td>
+                    <!--small>All</small-->
+                    <small *ngFor="let age of eventIndividual.age; let i=index">
+                        <span class="gray-box" [innerHtml]="age.age"></span>
+                        <br *ngIf="((i+1)%5)==0">
+                    </small>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="where">Contact Number:</td>
+                  <td><a href="tel:{{eventIndividual.contact_phone}}" class="pink-fg"><small>{{eventIndividual.contact_phone}}</small></a></td>
+                </tr>
+                
+                <tr>
+                  <td class="where">Facebook:</td>
+                  <td class="facebook-text"><small>
+                    <a href="{{eventIndividual.facebook_link}}" target="_blank"  class="pink-fg" *ngIf="eventIndividual.facebook_link">{{eventIndividual.facebook_link}}</a>
+                    <span *ngIf="!eventIndividual.facebook_link">N/A</span>
+                  </small></td>
+                </tr>
+                
+                <tr>
+                  <td class="where">Email:</td>
+                  <td>
+                    <small>
+                      <a href="mailto:{{eventIndividual.email=='' ? NULL : eventIndividual.email}}" target="_top" class="pink-fg" *ngIf="eventIndividual.email">{{eventIndividual.email}}
+                      </a>
+                      <span *ngIf="!eventIndividual.email">N/A</span>
+                    </small>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="where">website:</td>
+                  <td>
+                    <small>
+                      <a href="{{eventIndividual.event_website}}" target="_blank"  class="pink-fg" *ngIf="eventIndividual.event_website">{{eventIndividual.event_website}}</a>
+                      <span *ngIf="!eventIndividual.event_website">N/A</span>
+                    </small>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="where">Cost:</td>
+                  <td><small>{{eventIndividual.event_cost=='' ? 'N/A' : eventIndividual.event_cost}}</small></td>
+                </tr>
+              </table>
+              
+              <div id="sample" style = "width:100%; height:280px; margin-top:20px;"></div>
+              <div class="row" *ngIf="eventIndividual">
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12"></div>
+                <!--<div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">-->
+                  <!--<button *ngIf="eventIndividual.participate==1 && eventIndividual.participated==0" class="more-partener participate-button font-regular" style="border-radius:5px;color:#fff;" (click)="participate()">PARTICIPATE</button>-->
+                  <!--<button *ngIf="eventIndividual.participate==1 && eventIndividual.participated==1" [disabled]="eventIndividual.participate==1 && eventIndividual.participated==1" class="more-partener participate-button font-regular" style="border-radius:5px;color:#fff;">YOU ARE GOING TO THIS EVENT</button>-->
+                  <!--<button *ngIf="eventIndividual.participate==0" [disabled]="eventIndividual.participate==0" class="more-partener participate-button font-regular" style="border-radius:5px;color:#fff;" disabled>EVENT IS OVER</button>-->
+                <!--</div>-->
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12"></div>
+              </div>
+
+              <!-- Promotion inside the content. -->
+              <span *ngIf="promotionInsideContentBottom">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngFor="let botprom of promotionInsideContentBottom">
+                  <app-advertise [add]="botprom"></app-advertise>
+                </div>
+              </span>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" [vp-in-view-config]="{infinite: true}" (vp-in-view)="eventEnd = true;"></div>
+
+              <!-- Like, comment and share -->
+              <app-web-inline-share [shareCount]="shareCount"></app-web-inline-share>
+
+              <!-- Comments -->
+              <div class="row margin-top margin-bottom15" *ngIf="eventIndividual">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="responses">
+                  <div class="blog-thumnail">
+                    <section class="post-footer footer-im">
+                      <div class="post-footer-comment-wrapper">
+                        <div class="comment-form"> </div>
+                        <div class="comment">
+                          <div class="media">
+                            <div class="main-title-outer pull-left">
+                              <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30" height="30" alt=""></i>RESPONSES</div>
+                            </div>
+                            <div *ngIf="eventIndividual.comments.length==0">
+                              <div class="blog-content paddingNo">
+                                No comment posted yet.
+                              </div>
+                            </div>
+                            <div *ngIf="eventIndividual.comments.length!=0">
+                              <div class="blog-content paddingNo" *ngFor="let comment of eventIndividual.comments.slice().reverse(); let i=index">
+                                <div [style.display]="(i<10 || showAll) ? '':'none'">
+                                  <div class="col-md-1 col-lg-1 col-sm-12 col-xs-12">
+                                    <app-round-pic [picPath]="comment.user_profile" [userName]="comment.user_name" [width]="'40px'" [height]="'40px'"></app-round-pic>
+                                  </div>
+                                  <div class="col-md-11 col-lg-11 col-sm-12 col-xs-12 paddingNo" style="margin-bottom: 5px;">
+                                    <h4 class="capitalize margin0 padding-bottom10px" style="padding-bottom: 5px;">
+                                      <span *ngIf="getUserName()==null || getUserName()!=comment.user_name" style="font-size:15px; font-weight:600;">{{comment.user_name}}</span>
+                                      <span *ngIf="getUserName()!=null && getUserName()==comment.user_name" style="font-size:15px; font-weight:600;">You</span>
+                                    </h4>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                      <p class="margin0"[innerHTML]="safeHtml(comment.content)"></p>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" style="padding-top:5px !important;">
+                                      <div class="pull-left paddingNo font-size11 col-md-10"> 
+                                        {{_commonService.setDateFormat(comment.created_at) | date:'yMMMd'}} 
+                                        <app-comments-like [isLoved]="comment.isLoved" [loveCount]="comment.likes" [entityType]="'event'" [commentId]="comment.id" [permaLink]="eventIndividual.perma_link" [entityId]="eventIndividual.id" ></app-comments-like>
+                                        <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(comment.id, i)">Reply</span>
+                                      </div>
+                                      <!-- reply Comment -->
+                                      <div *ngIf="comment.commentReplies.length" class="col-md-12 paddingNo" style="margin-top: 10px">
+                                        <div class="col-md-1 text-center paddingNo">
+                                          <img src="assets/images/arrow-down-right.png" width="20px" height="20px">
+                                        </div>
+                                        <div class="col-md-11 paddingNo">
+                                          <div *ngFor="let reply of comment.commentReplies; let j=index"  [ngClass]="(j<2 || replyComment ==  comment.id || showReply[comment.id]) ? 'show' : 'hide'">
+                                            <div class="col-md-1 col-lg-1 col-sm-12 col-xs-12">
+                                              <app-round-pic [picPath]="reply.user_profile" [userName]="reply.user_name" [width]="'40px'" [height]="'40px'"></app-round-pic>
+                                            </div>
+                                            <div class="col-md-10 col-lg-11 col-sm-12 col-xs-12 paddingNo" style="margin-bottom: 5px;">
+                                              <h4 class="capitalize margin0 padding-bottom10px" style="padding-bottom: 5px;">
+                                                <span *ngIf="getUserName()==null || getUserName()!=reply.user_name" style="font-size:15px; font-weight:600;">{{reply.user_name}}</span>
+                                                <span *ngIf="getUserName()!=null && getUserName()==reply.user_name" style="font-size:15px; font-weight:600;">You</span>
+                                              </h4>
+                                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                                <p class="margin0"[innerHTML]="safeHtml(reply.content)"></p>
+                                              </div>
+                                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-bottom4per" style="padding-top:5px !important;">
+                                                <div class="pull-left paddingNo font-size11 col-md-10"> {{_commonService.setDateFormat(reply.created_at) | date:'yMMMd'}} 
+                                                <app-comments-like [isLoved]="reply.isLoved" [loveCount]="reply.likes" [entityType]="'event'" [commentId]="reply.id" [permaLink]="eventIndividual.perma_link" [entityId]="eventIndividual.id" ></app-comments-like>
+                                                <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(reply.parent_id, i)">Reply</span></div>                                      
+                                              </div>
+                                            </div>
+                                            <hr *ngIf="j<comment.commentReplies.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">     
+                                          </div>
+                                          <div class="col-md-11 paddingNo" style="cursor: pointer;">
+                                            <span *ngIf="comment.commentReplies.length > 2 && !showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = true">
+                                              {{comment.commentReplies.length -2 }} More {{comment.commentReplies.length -2 > 1 ? 'Replies' : 'Reply'}} 
+                                            </span>
+                                            <span *ngIf="showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = false"> 
+                                              Show less 
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- reply Comment Box -->
+                                      <div id="comment_id_{{comment.id}}" class="col-md-11 col-md-offset-1" style="margin-top: 10px">
+                                        <div *ngIf="replyComment ==  comment.id">
+                                          <ckeditor
+                                            [(ngModel)]="user_comment_reply"
+                                            [config]="{
+                                              uiColor: '#c1c1c1',
+                                              toolbar:[
+                                               { name: 'insert',items: [ 'Smiley'] }
+                                              ],
+                                              toolbarLocation: 'bottom',
+                                              contentsCss: '../assets/css/ckeditor-custom.css',
+                                              height:'100px'
+                                            }"
+                                            [readonly]="false"
+                                            debounce="500">
+                                          </ckeditor>
+                                          <p *ngIf="user_comment_reply_error" style="color:red; font-size:13px;">{{user_comment_reply_error}}</p>
+                                          <button id="submit" name="submit" class="btn font-size13 margin-top" (click)="doCommentReply()">POST YOUR REPLY</button>
+                                        </div>  
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <hr *ngIf="i<eventIndividual.comments.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" *ngIf="eventIndividual.comments.length>2">
+                  <label class="col-md-5 control-label" for="submit"></label>
+                  <div class="col-md-3">
+                    <button id="submit" name="submit" class="btn font-size13" *ngIf="!showAll" (click)="showAll=!showAll">LOAD ALL RESPONSES</button>
+                    <button id="submit" name="submit" class="btn font-size13" *ngIf="showAll" (click)="showAll=!showAll" onclick="document.getElementById('responses').scrollIntoView();">SHOW LESS</button>
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top">
+                  <div class="main-title-outer pull-left">
+                    <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30" height="30" alt=""></i>YOUR RESPONSE</div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="!_apiService.loggedIn()">
+                  <a routerLink="/login" style="color:#e35b7f;">Please Login to comment</a>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="_apiService.loggedIn()">
+                    <ckeditor
+                      [(ngModel)]="user_comment"
+                      [config]="{
+                        uiColor: '#c1c1c1',
+                        toolbar:[
+                         { name: 'insert',items: [ 'Smiley'] }
+                        ],
+                        toolbarLocation: 'bottom',
+                        contentsCss: '../assets/css/ckeditor-custom.css',
+                        height:'100px'
+                      }"
+                      [readonly]="false"
+                      debounce="500">
+                    </ckeditor>
+                    <span *ngIf="user_comment_error" style="color:red; font-size:13px;">{{user_comment_error}}</span>
+                    <button id="submit" name="submit" class="btn font-size13 margin-top" (click)="doComment()">POST YOUR RESPONSE</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Advertisement goes here -->
+            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top2per art-paddingNo" *ngIf="promotions">
+              <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index" [ngClass]="{'hide':advertisement < i}">
+                <app-advertise [add]="promotion"></app-advertise>
+              </div>
+              <div class="content-widget-sidebar" [vp-in-view-config]="{infinite: true}" (vp-in-view)="getAdvertisement();" ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    
+    <div class="row margin-top margin-bottom15" *ngIf="events">
+      <div class="container">
+      <div class="main-title-outer pull-left">
+        <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/go.png" width="30" height="30" alt=""/></i>Also See </div>
+        <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/event-all"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div>
+      </div>
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" *ngIf="events.length==0">
+        Sorry, No related events found.
+      </div>
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" *ngFor="let event of events">
+        <div class="single-blog-item">
+          <div class="blog-thumnail">
+            <div id="crop-feature-image">
+            <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0);">
+              <img src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_400' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" width="100%" class="image-fit" alt="blog-img">
+            </a>
+            </div>
+            <section class="post-footer">
+              <div class="post-footer-comment-wrapper">
+                <div class="comment-form"> </div>
+                <div class="comment">
+                  <div class="media">
+                    <div class="blog-content">
+                      <a *ngIf="event.venue_city!='' || event.venue_state!=''" class="ion-android-data mumbai-blue-button all-caps" style="border-radius:6px;">{{event.venue_city=='' ? event.venue_state : event.venue_city}}</a>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo text-right pull-right">
+                        <ul class="list-unstyled text-left pull-right width-100per">
+                          <app-likecomment [loveData]="event.liked" [entityType]="'event'" [entityId]="event.id" [loveCount]="event.likes" [permaLink]="event.perma_link" [commentCount]="event.comment_count"></app-likecomment>
+                        </ul>
+                      </div>
+                      <h4><a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0);" class="a1">{{event.title}}</a></h4>
+                      <small class="date-color" *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}}</small>
+                      <small class="date-color" *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}} - {{_commonService.setDateFormat(event.end_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.end_date) | date:'yMMMd'}}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!--span class="blog-date"><i class="fa fa-bookmark-o" aria-hidden="true"></i>54</span-->
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr/>
+    </section>
+</section>
+
+
+<div id="registerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="eventRegister" (ngSubmit)="eventRegister.valid && submitRegisterPopup(eventRegister.value)" #registerForm="ngForm" >
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Register Now</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-12 col-lg-12" style="text-align: left">
+              <input class="form-control" type="text" placeholder="Enter your name" style="width:100%" [formControl]="eventRegister.controls['name']" />
+              
+              <div *ngIf="((eventRegister.controls['name'].hasError('required') && eventRegister.controls['name'].dirty ) || (eventRegister.controls['name'].hasError('required') && registerForm.submitted))" class="error-survey-form">Please enter name</div>
+            </div>
+
+            <div class="col-md-12 col-lg-12" style="text-align: left">
+              <input class="form-control" type="text" placeholder="Enter your email" style="width:100%" [formControl]="eventRegister.controls['email']" />
+              
+              <div *ngIf="((eventRegister.controls['email'].hasError('required') && eventRegister.controls['email'].dirty ) || (eventRegister.controls['email'].hasError('required') && registerForm.submitted))" class="error-survey-form">Please enter email</div>
+              
+              <div *ngIf="(!eventRegister.controls['email'].hasError('required') && ((eventRegister.controls['email'].hasError('pattern') && eventRegister.controls['email'].dirty) || (eventRegister.controls['email'].hasError('pattern') && registerForm.submitted)))" class="error-survey-form">Please enter a valid email</div>
+            </div>
+
+            <div class="col-md-12 col-lg-12" style="text-align: left">
+              <input class="form-control" type="number" placeholder="Enter your mobile" style="width:100%" [formControl]="eventRegister.controls['number']"/>
+
+              <div *ngIf="((eventRegister.controls['number'].hasError('required') && eventRegister.controls['number'].dirty) || (eventRegister.controls['number'].hasError('required') && registerForm.submitted ))" class="error-survey-form">Please enter mobile no</div>
+
+              <div *ngIf="(!eventRegister.controls['email'].hasError('required') && ((eventRegister.controls['number'].hasError('pattern') && eventRegister.controls['number'].dirty) || (eventRegister.controls['number'].hasError('pattern') && registerForm.submitted)))" class="error-survey-form">Please enter a valid mobile no</div>
+            </div>
+
+            <div class="col-md-12 col-lg-12" style="text-align: left">
+              <select class=" form-control" [formControl]="eventRegister.controls['city']">
+                <option value="">Select city</option>
+                <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+              </select>
+              
+              <div *ngIf="((eventRegister.controls['city'].hasError('required') && eventRegister.controls['city'].dirty ) || (eventRegister.controls['city'].hasError('required') && registerForm.submitted))" class="error-survey-form">Please select city</div>
+            </div>
+
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="paddingNo" style="width:auto;">
+                <button type="submit" class="btn green-background blue-green font-size13">Submit</button> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="showRegThanks" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="row text-center">
+          <p>{{registerMsg}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

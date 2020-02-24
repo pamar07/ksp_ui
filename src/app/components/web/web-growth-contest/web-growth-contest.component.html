@@ -1,0 +1,270 @@
+<!-- <ngx-loading
+        [show]="!isLatestLoaded || !isPopularLoaded || !isRadioLoaded || !isTvLoaded"
+        [config]="{ fullScreenBackdrop : true }">
+</ngx-loading> -->
+<app-topnav-social></app-topnav-social>
+
+<section id="main-content">
+  <section class="wrappe padding-left-right0">
+
+    <!-- Banner Carousel -->
+    <div class="row" style="position:relative" *ngIf="pageData">
+      <img class="" src={{myimg}}
+        style="width: 100%;height: calc(53vw / 2);object-fit:  contain;object-position: center;margin-top:20px" />
+      <div class="col-lg-3 col-md-3 line-height40 text-center font-size14 font-Raleway-SemiBold cursor_pointer"
+        (click)="gotoPediaTop()" style="background-color: #e35b7f; color: #fff;    padding: 15px;
+                position: absolute;right: 27px;bottom: 12px;">CLICK TO KNOW MORE</div>
+    </div>
+    <div class="row margin-top margin-bottom15 marginTop0">
+      <div class="container paddingNo">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top15 art-paddingNo" *ngIf="pageData">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+            <span class="margin-top font-size14 width-100 article-content-style" [innerHTML]="content"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+
+
+    <div class="row margin-top margin-bottom15 marginTop0" *ngIf="articles">
+      <div class="container paddingNo">
+          <owl-carousel [options]="carouselOptions" [items]="articles" [carouselClasses]="['owl-theme', 'sliding']" >
+              <div class="item" *ngFor="let article of articles;let i = index">
+                  <div class="col-item2 box-shadow">
+                      <div class="photo">
+                        <div class="slider-top">
+                          <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type"
+                            [entityId]="article.id" [bookmarkCount]="article.bookmark_count"></app-bookmark>
+                        </div>
+                        <div id="crop-feature-image">
+                          <a *ngIf="article.post_type == 'videos'" href="/details/{{article.perma_link}}/{{article.id}}"
+                            onclick="window.scrollTo(0,0)"
+                            target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}">
+                            <img *ngIf="article.img[0].path.split('/')[2] == 'd2riyb99hqtj11.cloudfront.net'"
+                              src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_300' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                              alt="{{article.title}}">
+                              <img *ngIf="article.img[0].path.split('/')[2] != 'd2riyb99hqtj11.cloudfront.net'"
+                              src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/'))  + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                              alt="{{article.title}}">
+                          </a>
+                          <a *ngIf="article.post_type == 'post'" href="/details/{{article.perma_link}}/{{article.id}}"
+                          onclick="window.scrollTo(0,0)"
+                          target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}">
+                          <img *ngIf="article.img[0].path.split('/')[2] == 'd2riyb99hqtj11.cloudfront.net'"
+                            src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_300' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                            alt="{{article.title}}">
+                            <img *ngIf="article.img[0].path.split('/')[2] != 'd2riyb99hqtj11.cloudfront.net'"
+                            src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/'))  + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                            alt="{{article.title}}">
+                        </a>
+                        </div>
+                      </div>
+                      <div class="info-2">
+                        <div class="images-product-old">
+                          <div class="product-old">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top5px paddingNo">
+                              <app-category [categories]="article.category" [id]="article.id"></app-category>
+                              <h4 *ngIf="article.post_type == 'post'" class="blog-ellipsis"><a
+                                  href="/details/{{article.perma_link}}/{{article.id}}"
+                                  onclick="window.scrollTo(0,0)"
+                                  target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}"><b>{{article.title}}</b></a>
+                              </h4>
+                              <h4 *ngIf="article.post_type == 'videos'" class="blog-ellipsis"><a
+                                href="/details/{{article.perma_link}}/{{article.id}}"
+                                onclick="window.scrollTo(0,0)"
+                                target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}"><b>{{article.title}}</b></a>
+                            </h4>
+                            </div>
+                            <div class="blog-content">
+                              <div class="">
+                                <div class="col-md-12 col-lg-12 col-sm-8 col-xs-5 pull-left margin-top paddingNo">
+                                  <div class="media-left">
+                                    <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                                      <app-round-pic [picPath]="article.author_img" [userName]="article.author_name"
+                                        [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                      <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+                                        <h4 class="media-heading capitalize font-size13 color-black">
+                                          {{article.author_name}}</h4>
+                                      </a>
+                                      <span class="anchor-time all-caps"
+                                        [innerHtml]="_commonService.setDateFormat(article.published_date) | date:'yMMMd'"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                      <ul class="list-unstyled text-left pull-right width-100per">
+                                        <app-likecomment [loveData]="article.liked" [entityType]="article.post_type"
+                                          [entityId]="article.id" [permaLink]="article.perma_link"
+                                          [loveCount]="article.likes" [commentCount]="article.comment_count">
+                                        </app-likecomment>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+              </div>
+             </owl-carousel>
+        <!-- <span>
+          <div id="carousel-{{carauselId}}" class="carousel slide height-494 eb-view" data-ride="carousel"
+            data-interval="false">
+            <div class="col-md-12 col-lg-12 arrow-left-right" *ngIf="articles">
+              <a class="pull-left left fa fa-chevron-left btn" style="background: rgba(208, 208, 208, 0.5);"
+                href="#carousel-{{carauselId}}" data-slide="prev" *ngIf="articles.length > 3"></a>
+              <a class="pull-right right fa fa-chevron-right btn" style="background: rgba(208, 208, 208, 0.5);"
+                href="#carousel-{{carauselId}}" data-slide="next" *ngIf="articles.length > 3"></a>
+            </div>
+
+            <div class="carousel-inner" *ngIf="articles">
+
+              <div class="item" *ngFor="let loop of [0,1,2]" [ngClass]="{'active':loop==0}">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 paddingNo height-494"
+                    *ngFor="let article of articles.slice((3 * loop ),(3 * loop + 3))">
+                    <div class="col-item2 box-shadow">
+                      <div class="photo">
+                        <div class="slider-top">
+                          <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type"
+                            [entityId]="article.id" [bookmarkCount]="article.bookmark_count"></app-bookmark>
+                        </div>
+                        <div id="crop-feature-image">
+                          <a href="/details/{{article.perma_link}}/{{article.id}}"
+                            onclick="window.scrollTo(0,0)"
+                            target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}">
+                            <img
+                              src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_300' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                              alt="{{article.title}}">
+                          </a>
+                        </div>
+                      </div>
+                      <div class="info-2">
+                        <div class="images-product-old">
+                          <div class="product-old">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top5px paddingNo">
+                              <app-category [categories]="article.category" [id]="article.id"></app-category>
+                              <h4 class="blog-ellipsis"><a
+                                  href="/details/{{article.perma_link}}/{{article.id}}"
+                                  onclick="window.scrollTo(0,0)"
+                                  target="{{carauselId == 'summersFunfactory' ? '_blank' : ''}}"><b>{{article.title}}</b></a>
+                              </h4>
+                            </div>
+                            <div class="blog-content">
+                              <div class="">
+                                <div class="col-md-12 col-lg-12 col-sm-8 col-xs-5 pull-left margin-top paddingNo">
+                                  <div class="media-left">
+                                    <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                                      <app-round-pic [picPath]="article.author_img" [userName]="article.author_name"
+                                        [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                      <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+                                        <h4 class="media-heading capitalize font-size13 color-black">
+                                          {{article.author_name}}</h4>
+                                      </a>
+                                      <span class="anchor-time all-caps"
+                                        [innerHtml]="_commonService.setDateFormat(article.published_date) | date:'yMMMd'"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                      <ul class="list-unstyled text-left pull-right width-100per">
+                                        <app-likecomment [loveData]="article.liked" [entityType]="article.post_type"
+                                          [entityId]="article.id" [permaLink]="article.perma_link"
+                                          [loveCount]="article.likes" [commentCount]="article.comment_count">
+                                        </app-likecomment>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </span> -->
+        <div class="row" id="theTarget" style="box-shadow: 0px 0px 10px 0px #b1b1b1;margin:20px;border-radius:20px">
+          <div class="col-md-6 col-sm-12" >
+            <div class="left-box">
+              <h3 class="question">Did you know that 0-5 years are the critical years of growth and development for your child? Undernourishment can really impact their cognitive growth. </h3>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="radiobutton" id=""
+                  (change)="onSelectionChange('option1')" value="option1">
+                <label class="form-check-label" for="radiobutton1">
+                  Yes I do
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2"
+                  (change)="onSelectionChange('option2')" value="option2">
+                <label class="form-check-label" for="exampleRadios2">
+                  No, I don’t need to
+                </label>
+              </div>
+              <p style="color:red" *ngIf="validAnswer == 1">*please select one option.</p>
+              <div class="line-height40 text-center font-size14 font-Raleway-SemiBold cursor_pointer sub" style="background-color: #e35b7f; color: #fff;    padding: 15px;
+                    margin:20px auto;width: 20%;" (click)="polesSubmit()">Submit</div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12 hello">
+            <div style="text-align: center;">
+              <!-- <h3 class="question">Did you know?</h3>
+              <h4 style="margin-top: 50px;">Ideally your child should be eating 3 of the 5 food groups at each meal. And
+                a snack should comprise of 2 food groups at least.</h4> -->
+                <img src="{{showImage}}">
+                <!-- <img *ngIf="view2 == 1" src="../../../../assets/images/did you know_ (2).png"> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pediaImage image-container container paddingNo height-300px"
+        style="margin-bottom: 30px;border: 1px solid #d6d3d3;">
+        <img (click)="gotoPedia()" src="../../../../assets/images/Pediasure .png" width="100%" class="image-fit">
+        <!-- <div class="after">
+          <button class="btn btn-sm buy_clr button_pedia" style="background: #e35b82!important;" (click)="gotoPedia()">
+            Go to PediaSure </button>
+        </div> -->
+      </div>
+      <div class="container">
+        <div class="elfsight-app-06bb282e-cf71-46bb-8234-00e2c3b7743a "></div>
+      </div>
+    </div>
+  </section>
+</section>
+<div id="code-con" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="pull-right">
+        <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+      </div>
+      <div class="correct" *ngIf="answerReview == 'correct'">
+        <!-- <h3><img class="popImg" src="assets/images/right.png" />Correct Answer!</h3> -->
+        <p> Your child may not be meeting their nutritional requirements. Know what to watch out for. Click <span class="here" (click)="gotomyarticle()">Here</span> to find out
+          more.</p>
+
+      </div>
+      <div class="correct" *ngIf="answerReview == 'wrong'">
+        <!-- <h3><img class="popImg" src="assets/images/cross.png" />Wrong Answer!</h3> -->
+        <p> You may have overlooked these things. Learn more about what they are. Click <span class="here" (click)="gotomyarticle()">Here</span></p>
+      </div>
+
+    </div>
+  </div>
+</div>

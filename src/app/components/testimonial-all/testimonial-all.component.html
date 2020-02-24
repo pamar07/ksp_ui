@@ -1,0 +1,105 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row margin-bottom15 dark-gry-background paddingNo">
+      <div class="container margin-top">
+          <div class="main-title margin0 margin-bottom15">WHAT PEOPLE SAY ABOUT KSP</div>
+          <div class="pull-right">
+            <!--nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav-->
+          </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15" *ngIf="testimonials">
+     <div class="container">
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngFor="let testimonial of testimonials; let i=index; let even = even; let odd = odd">
+        <div class="single-blog-itemN">
+          <div class="blog-thumnail">
+
+            <section class="post-footer">
+              <div class="post-footer-comment-wrapper">
+                <div class="comment">
+                  <div class="media">
+                    <div class="blog-content">
+                      <div class="media-left padding-top10px">
+                        <a href="#">
+                          <app-round-pic [picPath]="testimonial.image_path" [userName]="testimonial.name" [width]="'60px'" [height]="'60px'" [className]="'padding-top12px'"></app-round-pic>
+                        </a>
+                      </div>
+                      <div class="media-body">
+                        <a href="#" class="anchor-username">
+                          <h4 class="media-heading all-caps">{{testimonial.name}}</h4>
+                        </a>
+                        <span class="anchor-time all-caps">{{testimonial.timeline_tag}}</span>
+                        <p class="" [innerHtml]="testimonial.testimonial"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <!--div class="white-background padding" [ngClass]="{'light-gray-card':odd,'gray-card':even}">
+          <div class="blog-content">
+            <div class="media-left">
+              <a href="#">
+                <app-round-pic [picPath]="testimonial.image_path" [userName]="testimonial.name" [width]="'60px'" [height]="'60px'" [className]="'padding-top20px'"></app-round-pic>
+              </a>
+            </div>
+            <div class="media-body">
+              <a href="#" class="anchor-username">
+                <h4 class="media-heading all-caps">{{testimonial.name}}</h4>
+              </a>
+                <span class="anchor-time all-caps">{{testimonial.timeline_tag}}</span>
+            </div>
+          </div>
+          <p class="testimonial-ellipsis">{{testimonial.testimonial}}</p>
+        </div-->
+      </div>
+     </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15">
+      <div class="container">
+          <div class="pull-right">
+            <!--nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav-->
+          </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>

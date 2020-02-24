@@ -1,0 +1,7 @@
+<div class="event-btn-holder" *ngIf="over === '0'">
+  <button class="font-regular card-event-btn" (click)="going()" [ngClass]="(status=='3')?'active':''">Going</button>
+  <button class="font-regular card-event-btn" (click)="insterested()" [ngClass]="(status=='2')?'active':''" [disabled]="(status=='3')">Interested</button>
+</div>
+<div class="event-btn-holder" *ngIf="over === '1'">
+  <button class="font-regular card-event-btn" disabled>Event is over</button>
+</div>

@@ -1,0 +1,50 @@
+.error-message{
+  border-radius: 8px;
+  background-color: #ff6868;
+  border-color: #d61313;
+  border-style: solid;
+  font-weight: 400;
+  border-width: 2px;
+  color: #fff;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+.success-message{
+  border-radius: 8px;
+  background-color: #6ff27a;
+  border-color: #079613;
+  border-style: solid;
+  font-weight: 400;
+  border-width: 2px;
+  color: #fff;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+.width100per{
+  width:100%!important;
+}
+.bg-light-gray{
+  margin-top: 65px!important;
+  padding: 19px!important;
+  cursor: default!important;
+  color:#000!important;
+  background-color: #eaeaea!important;
+}
+.back-login{
+  padding: 14px!important;
+  color:#000!important;
+  background-color: #eaeaea!important;
+}
+.fg-color-pink{
+  color:#e35b7f!important;
+}
+.margintop0px{
+  margin-top: -35px!important;
+}
+.paddingtop0px{
+  padding-top: 0!important;
+}
+
+.paddingtop5px{
+  padding-top: 5px!important;
+}

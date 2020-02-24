@@ -1,0 +1,219 @@
+<ngx-loading
+  [show]="!isEventLoaded"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<app-topnav-social (city)="filterCity($event)" (age)="filterAge($event)"></app-topnav-social>
+<!--main content start-->
+<section id="main-content"  *ngIf="events">
+  <section class="wrapper">
+    <a routerLink="/event-submit">
+    <div class="summer-bg-pattern">
+      <div class="summer-banner-container">
+        <div id="myCarousel" class="carousel slide" >
+          <div class="carousel-inner">
+            <div class="item active">
+               <img src="https://d2riyb99hqtj11.cloudfront.net/w_450/1554461602.Indra.png" style="width:100%;">
+              <div class="carousel-caption">
+                <h3> List your </h3>
+                <p> Summer camp with us </p>
+                <h2><i> #SimplifyingParenting </i></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+    <div class="row margin-bottom15">
+      <div class="container">
+          <div class="col-md-12 main-title-outer-nobr pull-right" style="text-align: right;">
+            <div class="col-md-2 col-lg-2 paddingNo pull-right b"> <a routerLink="/event-submit" class="btn font-size13 pink-color-button padding4-10">Submit a Summer Camp</a> </div>
+          </div>
+      </div>
+    </div>
+    <!-- Editor's pick -->
+    <div class="row margin-bottom15 margin-top" *ngIf="editorEvents.length">
+      <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/go.png" width="30" height="30" alt=""></i>EDITOR'S PICK</div>
+        </div>
+        <!-- <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/categorywise-article/{{categorywiseArticle[0]?.id}}"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div> -->
+        <app-generic-carousel [carauselId]="'editor-summer'" [articleList]="editorEvents" ></app-generic-carousel>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    
+    <!-- Filter -->
+    <div class="row">
+      <div class="container">
+        <div class="col-md-12">
+          <div class="panel with-nav-tabs panel-default">
+            <div class="filter-cat-box">
+              <span class="btn all-caps text-bold master-cat-btn margin0"
+                    (click)="tab_selected=1"
+                    [ngClass]="{'master-cat-selected':(tab_selected == 1)}">
+                <a href="#tab1default" data-toggle="tab">FIND BY DATE<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+              </span>
+              <span class="btn all-caps text-bold master-cat-btn margin0"
+                    (click)="tab_selected=2"
+                    [ngClass]="{'master-cat-selected':(tab_selected == 2)}">
+                <a href="#tab2default" data-toggle="tab">FIND BY INTERESTS<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+              </span>
+            </div>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab1default">
+                  <div class="col-md-12 col-lg-12">
+
+                    <div class="search-other-div">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                          <div class="col-md-2 col-lg-2 col-sm-6 col-xs-6  paddingNoMobile margin-bottom15px">
+                            <button type="button" class="btn btn-danger btn-cons red-orangebtn all-caps text-bold margin0 padding-all-5px font-size16px font-bolder" (click)="filterEventsDaywise(today,1)" [ngClass]="{'today-selected':todaySelected}">
+                              Today<small>{{today | date:'EEE'}}&nbsp;{{today | date:'dd'}}&nbsp;{{today | date:'MMMM'}}</small>
+                            </button>
+                          </div>
+                          <div class="col-md-2 col-lg-2 col-sm-6 col-xs-6 paddingNoMobile margin-bottom15px">
+                            <button type="button" class="btn btn-warning btn-cons orangebtn all-caps text-bold margin0 padding-all-5px font-size16px font-bolder" (click)="filterEventsDaywise(tomorrow,2)" [ngClass]="{'tomorrow-selected':tomorrowSelected}">
+                              Tomorrow<small>{{tomorrow | date:'EEE'}}&nbsp;{{tomorrow | date:'dd'}}&nbsp;{{tomorrow | date:'MMMM'}}</small>
+                            </button>
+                          </div>
+                          <div class="col-md-2 col-lg-2 col-sm-6 col-xs-6 paddingNoMobile margin-bottom15px">
+                            <button type="button" class="btn btn-primary btn-cons blue-light all-caps text-bold margin0 padding-all-5px font-size16px font-bolder" (click)="filterEventsDaywise(nextSaturday,3)" [ngClass]="{'saturday-selected':saturdaySelected}">
+                              Saturday<small>{{nextSaturday | date:'EEE'}}&nbsp;{{nextSaturday | date:'dd'}}&nbsp;{{nextSaturday | date:'MMMM'}}</small>
+                            </button>
+                          </div>
+                         <div class="col-md-2 col-lg-2 col-sm-6 col-xs-6 paddingNoMobile margin-bottom15px">
+                            <button type="button" class="btn btn-success btn-cons green-light all-caps text-bold margin0 padding-all-5px font-size16px font-bolder" (click)="filterEventsDaywise(nextSunday,4)" [ngClass]="{'sunday-selected':sundaySelected}">
+                              Sunday<small>{{nextSunday | date:'EEE'}}&nbsp;{{nextSunday | date:'dd'}}&nbsp;{{nextSunday | date:'MMMM'}}</small>
+                            </button>
+                          </div>
+                      </div>
+                        <div class="form-group col-md-3 margin-top">
+                          <label for="username" class="control-label">From Date</label>
+                            <div class="input-group margin-top6 col-md-12 col-lg-12">
+                              <input class="form-control bg-white" (click)="pickerStart.open()" [ngModel]="start_date | date:'EEEE, MMM d, yyyy'"  mdInput placeholder="Choose a date" onclick="window.scrollBy(0,100);">
+                              <br/>
+                              <input class="form-control bg-white" style="height: 0px;width: auto;margin: 0px;padding: 0px;border: 0;" (click)="pickerStart.open()" [(ngModel)]="start_date" mdInput [mdDatepicker]="pickerStart" placeholder="Choose a date">
+                              <md-datepicker #pickerStart></md-datepicker>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="username" class="control-label">To Date</label>
+                            <div class="input-group margin-top6 col-md-12 col-lg-12">
+                              <input class="form-control bg-white" (click)="pickerEnd.open()" [ngModel]="end_date | date:'EEEE, MMM d, yyyy'"  mdInput placeholder="Choose a date" onclick="window.scrollBy(0,100);">
+                              <br/>
+                              <input class="form-control bg-white" style="height: 0px;width: auto;margin: 0px;padding: 0px;border: 0;" (click)="pickerEnd.open()" [(ngModel)]="end_date" mdInput [mdDatepicker]="pickerEnd" placeholder="Choose a date">
+                              <md-datepicker #pickerEnd></md-datepicker>
+                            </div>
+                        </div>
+                      </div>
+                    <div class="col-md-12 col-lg-12">
+                      <span> <a href="javascript:void(0);" class="btn font-size13 pink-color-button" (click)="updateEvents()">SEARCH EVENTS</a> </span>
+                      <span> <a href="javascript:void(0);" class="btn font-size13 gray-color-button" (click)="clearFilters()">CLEAR FILTERS</a> </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab2default" *ngIf="categoryList">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="search-category-div">
+                    <div class="col-md-3" *ngFor="let category of categoryList">
+                      <div class="checkbox checkbox-primary capitalize">
+                        <input id="category{{category.id}}" type="checkbox" [(ngModel)]="category.checked">
+                        <label for="category{{category.id}}" [innerHTML]="category.name"></label>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12 margin-top6">
+                      <span> <a href="javascript:void(0);" class="btn font-size13 pink-color-button" (click)="updateEvents()">SEARCH EVENTS</a> </span>
+                      <span> <a href="javascript:void(0);" class="btn font-size13 gray-color-button" (click)="clearFilters()">CLEAR FILTERS</a> </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    
+    <!-- All Camps -->
+    <div class="row margin-top margin-bottom15">
+      <div class="container bg-white">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/go.png" width="30" height="30" alt=""></i>All SUMMER CAMPS</div>
+        </div>
+        <div *ngIf="events.length>0">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 border-left" *ngFor="let event of events">
+          <div class="single-blog-item">
+            <div class="blog-thumnail">
+              <div id="crop-feature-image">
+              <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0);">
+                <img src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_400' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" class="image-fit" alt="blog-img">
+              </a>
+              </div>
+              <section class="post-footer footer-img position top0">
+                <div class="post-footer-comment-wrapper">
+                  <div class="comment-form"> </div>
+                  <div class="comment">
+                    <div class="media">
+                      <div class="blog-content">
+                        <span class="ion-android-data mumbai-blue-button all-caps">{{event.venue_city=='' ? 'All Cities' : event.venue_city}}</span>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo text-right pull-right">
+                          <ul class="list-unstyled text-left pull-right width-100per">
+                            <app-likecomment  [permaLink]="event.perma_link" [loveData]="event.liked" [entityType]="'event'" [entityId]="event.id" [loveCount]="event.likes" [commentCount]="event.comment_count"></app-likecomment>
+                          </ul>
+                        </div>
+                        
+                        
+                        <h4 class="ellipsis-event-title"><a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0);" class="a1">{{event.title}}</a></h4>
+                        <small class="date-color" *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}}</small>
+                        <small class="date-color" *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}} - {{_commonService.setDateFormat(event.end_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.end_date) | date:'yMMMd'}}</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <app-bookmark [bookmarkData]="event.bookmarked" [entityType]="'event'" [entityId]="event.id" [bookmarkCount]="event.total_bookmarks" [classTooltip]="'margin-tooltip-tv-all'"></app-bookmark>
+          </div>
+        </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" *ngIf="events.length==0">
+          <div class="single-blog-item">
+            <div class="blog-thumnail">
+              Sorry, No Events Found.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="margin-top container">
+      <span class="pull-right text-danger last-update">
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+              <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+              <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+            </li>
+            <li [class]="isNext ? '' : 'disabled'">
+              <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+    <div class="container margin-top">
+      <a href="//www.kidsstoppress.com/article-individual/15205" target="_blank"><img src="assets/images/two_minute_survey_banner.jpg" width="100%"></a>
+    </div>
+    <hr>
+  </section>
+</section>

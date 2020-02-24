@@ -1,0 +1,104 @@
+<div class="agile-main">
+  <div class="content-wrap">
+    <div *ngIf="bannerRadio">
+      <!-- <div class="embed-responsive embed-responsive-4by3">
+        <iframe class="embed-responsive-item" [src]="bannerRadio.path" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" width="100%" height="auto"></iframe>
+      </div> -->
+      <a href="/details/{{bannerRadio?.id}}">
+        <div class="square-thumbnail-image-container">
+          <img class="square-thumbnail-image" src="{{bannerRadio.radio_image? (bannerRadio.radio_image.substring( 0, bannerRadio.radio_image.lastIndexOf('/')) + '/w_300' + bannerRadio.radio_image.substring( bannerRadio.radio_image.lastIndexOf('/'), bannerRadio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}"  alt="">
+        </div>
+      </a>
+      <div class="container margin-top-bottom-5px">
+        <div class="media-left">
+          <i class="fa fa-play-circle color-baby-pink font-size45 margin0" aria-hidden="true"></i>
+        </div>
+        <div class="media-body">
+          <a href="/details/{{bannerRadio.id}}">
+            <h4 class="color-black mobile-radio-title-ellipsis">{{bannerRadio.title}}</h4>
+          </a>
+        </div>
+        <app-category [categories]="bannerRadio.category" [id]="bannerRadio.id" [type]="'radio'"></app-category>
+        <p class="font-size13 text-justify" style="word-wrap:break-word;">{{bannerRadio.excerpt}}</p>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-bottom20px" *ngIf="allPageBanners.length>0">
+      <a href="{{(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link}}" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image.substring( 0, allPageBanners[0].image.lastIndexOf('/')) + '/w_300' + allPageBanners[0].image.substring( allPageBanners[0].image.lastIndexOf('/'), allPageBanners[0].image.length)}}" width="100%"></a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-bottom20px" *ngIf="allPageBanners.length>1">
+      <a href="{{(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link}}" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img src="{{allPageBanners[1].image.substring( 0, allPageBanners[1].image.lastIndexOf('/')) + '/w_300' + allPageBanners[1].image.substring( allPageBanners[1].image.lastIndexOf('/'), allPageBanners[1].image.length)}}" width="100%"></a>
+    </div>
+    <div class="gry-background padding-top0px">
+      <div class="col-md-12 col-lg-12 col-sm-12 paddingNo margin-bottom20px">
+        <div class="color-white text-center" style="padding: 1em 0px!important; background-color: #e15b82!important;">
+          <p class="font-size21 font-Raleway-SemiBold">Subscribe to KSP Radio through Whatsapp!</p>
+          <div class="text-center">
+            <p>
+              <!-- <span class="white-color"><i aria-hidden="true" class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;</span> -->
+              Add <a class="white-color font-Raleway-SemiBold" href="tel:9819368429">9819368429</a> to your contacts list
+            </p>
+            <p>
+              <!-- <span class="white-color"><i aria-hidden="true" class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;</span> -->
+              Send "<span class="font-Raleway-SemiBold">Add KSP Radio</span>" as a WhatsApp text
+            </p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="lists.length">
+        <div class="versnsec3_tab_menu_in">
+          <ul class="nav nav-tabs nav-playlist" role="tablist">
+            <li role="presentation" [ngClass]="list.id == playlist.id ? 'active': ''" *ngFor="let list of lists;" (click)="getRadioTracks(1,list)">
+              <a aria-controls="playlist1">{{list.name}}</a>
+            </li>
+          </ul>
+          <div class="versnsec3_tab_cont tab-content">
+            <div class="versnsec3_tab2_top tab-pane fade in active">
+              <div class="mobile-radio-card" *ngFor="let radio of playlist.tracks; let i=index">
+                <div class="padding15">
+                  <div class="media-body" style="position: relative">
+                    <!-- <iframe class="embed-responsive-item" [src]="safeUrl(radio.path)" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" width="100%" height="auto"></iframe> -->
+                    <a href="/details/{{radio.perma_link}}/{{radio?.id}}">
+                      <div class="square-thumbnail-image-container">
+                        <img class="square-thumbnail-image" src="{{radio.radio_image? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_300' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}"  alt="">
+                      </div>
+                    </a>
+                    <div ><a href="/details/{{radio.perma_link}}/{{radio.id}}" class="font-size16 font-Raleway-SemiBold margin-top">{{radio.title}}</a></div>
+                  </div>
+                  <div class="all-caps anchor-time font-size10 font-Raleway-Bold margin-top-bottom-5px">
+                    {{_commonService.setDateFormat(radio.published_date) | date:'yMMMd'}}
+                  </div>
+                  <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'"></app-category>
+                  <p class="font-size11 text-justify" style="word-wrap:break-word;">{{radio.excerpt}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container margin-top">
+            <span class="pull-right text-danger last-update">
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                    <a href="javascript:void(0);" aria-label="Previous" (click)="getRadioTracks(currentPage - 1, playlist)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                    <a href="javascript:void(0);" (click)="getRadioTracks(i, playlist)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                  </li>
+                  <li [class]="isNext ? '' : 'disabled'">
+                    <a href="javascript:void(0);" aria-label="Next" (click)="getRadioTracks(currentPage + 1, playlist)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

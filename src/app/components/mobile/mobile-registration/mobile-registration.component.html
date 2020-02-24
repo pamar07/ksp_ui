@@ -1,0 +1,289 @@
+<ngx-loading [show]="isFormSubmitted" [config]="{ fullScreenBackdrop : true }"></ngx-loading>
+<app-topnavnofilter></app-topnavnofilter>
+<section *ngIf="!stepTwo">
+  <div class="wrapper gry-background">
+    <div class="container-fluid">
+      <div class="signup-wrapper">
+        <h3 class="text-center"> Sign Up for a World of Information </h3>
+        <div class="thumb-wrapper">
+        <div class="thum-choice bottom-gap active">
+          <img src="assets/images/reg/user_logo.svg">
+          <h4> User Registration </h4>
+        </div>
+        
+        <a class="thum-choice bottom-gap pull-right" routerLink="/brand-signup">
+          <div >
+            <img src="assets/images/business_user.png">
+            <h4 style="color:#000 !important;"> Business Registration </h4>
+          </div>
+        </a>
+      </div>
+        
+        <div class="signup-form-wrapper">
+          <form [formGroup]="regForm" (ngSubmit)="regForm.valid && registerUser(regForm.value)" #formReg="ngForm">
+            <div class="sign-input-wrapper user position-relative">
+              <input type="text" placeholder="Enter your name" [formControl]="regForm.controls['name']">
+            </div>
+            <div class="error-alert-text" *ngIf="(regForm.controls['name'].hasError('required') && regForm.controls['name'].dirty) || (regForm.controls['name'].hasError('required') && formReg.submitted)"> 
+              Please enter your name</div>
+            
+            <div class="sign-input-wrapper mail position-relative">
+              <input type="text" placeholder="Enter your email" [formControl]="regForm.controls['email']">
+            </div>
+            <div *ngIf="(regForm.controls['email'].hasError('required') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('required') && formReg.submitted)" class="error-alert-text">Please enter your email id</div>
+            
+            <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('email') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('email') && formReg.submitted))" class="error-alert-text">Please enter a valid email</div>
+            
+            <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('emailExist') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('emailExist') && formReg.submitted))" class="error-alert-text">This email id is already registered</div>
+            
+            <div class="sign-input-wrapper call position-relative">
+              <input type="number" placeholder="Phone no" [formControl]="regForm.controls['phone']">
+            </div>
+
+            <div *ngIf="(regForm.controls['phone'].hasError('pattern') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('pattern') && formReg.submitted)" class="error-alert-text">Please enter valid phone no</div>
+            
+            <div *ngIf="!regForm.controls['phone'].hasError('pattern') && ((regForm.controls['phone'].hasError('phoneExist') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('phoneExist') && formReg.submitted))" class="error-alert-text">Phone no already registered</div>
+            
+            <div class="sign-input-wrapper password position-relative">
+              <input type="password" placeholder="Enter your password" [formControl]="regForm.controls['password']" autocomplete="new-password" >
+            </div>
+            
+            <div *ngIf="(regForm.controls['password'].hasError('required') && regForm.controls['password'].dirty) || (regForm.controls['password'].hasError('required') && formReg.submitted)" class="error-alert-text">Please enter password</div>
+
+            <div *ngIf="!regForm.controls['password'].hasError('required') && (regForm.controls['password'].hasError('minlength') && regForm.controls['password'].dirty) || (regForm.controls['password'].hasError('minlength') && formReg.submitted)" class="error-alert-text">Please enter at least 6 characters.</div>
+            
+            
+            <div class="custom-select-option location position-relative">
+              <select [formControl]="regForm.controls['city']" (change)="checkCity()"> 
+                <option value="">Select City</option>
+                <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+              </select>
+            </div>
+            <div *ngIf="(regForm.controls['city'].hasError('required') && regForm.controls['city'].dirty) || (regForm.controls['city'].hasError('required') && formReg.submitted)" class="error-alert-text">Please select city.</div>
+            
+            <div class="sign-input-wrapper other position-relative" *ngIf="regForm.controls.city.value == 'National'">
+              <input type="text" class="form-control  input-sm" [formControl]="regForm.controls['cityOther']" placeholder="Please enter city name">
+            </div>
+            <div *ngIf="(regForm.controls['cityOther'].hasError('required') && regForm.controls['cityOther'].dirty) || (regForm.controls['cityOther'].hasError('required') && formReg.submitted)" class="error-alert-text">Please enter other city</div>
+
+            <div style="display: flex;flex-direction: column;margin: 5px 0">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" [formControl]="regForm.controls['newsLetter']" checked>
+                  Subscribe For Newsletter
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" [formControl]="regForm.controls['mealPlan']" checked>
+                  Subscribe For Meal plan
+                </label>
+              </div>
+            </div>
+            <button class="sign-up-submit">Submit</button>
+          </form>
+          <div class="text-center bottom-gap">
+            <p class="no-bottom-gap font-size-14"> By clicking this button, you agree to our </p>
+            <a class="font-size-14 blue-text bold-text" target="_blank" routerLink="/cms/terms-conditions"> Terms & conditions </a><br/>
+            <p class="text-center font-size-14" style="margin-top: 0px;">  
+              Already have an account <a class="blue-text bold-text" routerLink="/login"> Login </a> here
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="stepTwo" class="stepTwo">
+  <form [formGroup]="stepTwoForm" (ngSubmit)="stepTwoForm.valid && saveUserDetails(stepTwoForm.value)" #formTwo="ngForm">
+    <div class="container-fluid no-padding-lr">
+      <div class="col-md-9 col-sm-8 position-relative">
+        <h3 class="new-reg-mob-title"> A little more information to help us serve you better. The following information will help us serve you better </h3>
+        <div class="new-reg-form-wrapper">
+          <div class="position-relative reg-stage-line">
+            <span class="form-stage-indicator"> 1 </span>
+            <p class="new-reg-label-style"> Would you mind telling us if you are a would be parent or already have kids </p>
+            <div class="clearfix padding-bottom-30 padding-top-10 text-xs-center">
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top">
+                <label class="custom-radio-btn-container">
+                  <input type="radio" id="planning" name="pRadio" [formControl]="stepTwoForm.controls['parentalStatus']" value="1" (click)="changeParentalStatus(1)">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label for="planning" class="reg-radio-label text-left">  
+                  Planning a Baby
+                </label>
+              </div>
+
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top">
+                <label class="custom-radio-btn-container">
+                  <input type="radio" id="expecting" name="pRadio"  [formControl]="stepTwoForm.controls['parentalStatus']" value="2" (click)="changeParentalStatus(2)">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label for="expecting" class="reg-radio-label text-left">  
+                  Expecting a Baby
+                </label>
+              </div>
+
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top">
+                <label class="custom-radio-btn-container">
+                  <input type="radio" id="having" name="pRadio" [formControl]="stepTwoForm.controls['parentalStatus']" value="3" (click)="changeParentalStatus(3)">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label for="having" class="reg-radio-label text-left">  
+                  Have a Child
+                </label>
+              </div>
+
+              <div class="new-reg-custom-select" *ngIf="stepTwoForm.controls.parentalStatus.value =='3'">
+                <select (change)="filterChanged($event.target.value)" [formControl] = "stepTwoForm.controls['noOfChild']">
+                  <option value="1"> 1 Child </option>
+                  <option value="2"> 2 Children </option>
+                  <option value="3"> 3 Children </option>
+                  <option value="4"> 4 Children </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="position-relative reg-stage-line" *ngIf="stepTwoForm.controls.parentalStatus.value =='1'">
+            <span class="form-stage-indicator"> 2 </span>
+            <p class="new-reg-label-style"> When are you planning? </p>
+            <div class="clearfix padding-bottom-30">
+              <div class="form-control input-sm bg-white" style="width:70%">
+                <app-dd-datetime (dateChange)="onDateChange($event,'babyplan')" [inputDate]="stepTwoForm.controls.babyplan.value ? getDate(stepTwoForm.controls.babyplan.value) : currentDate" yearMax="5" yearMin="0" dateFormat="dd-mm-yy hh:i:s a"></app-dd-datetime>
+              </div>
+              <input type="hidden" [formControl]="stepTwoForm.controls['babyplan']">
+              <div class="error-text" *ngIf="(stepTwoForm.controls['babyplan'].hasError('required') && stepTwoForm.controls['babyplan'].dirty) || (stepTwoForm.controls['babyplan'].hasError('required') && formTwo.submitted)"> 
+                Please select date
+              </div>
+            </div>
+          </div>
+          
+          <div class="position-relative reg-stage-line" *ngIf="stepTwoForm.controls.parentalStatus.value =='2'">
+            <span class="form-stage-indicator"> 2 </span>
+            <p class="new-reg-label-style"> Tentative Due Date ?</p>
+            <div class="clearfix padding-bottom-30">
+              <div class="form-control input-sm bg-white" style="width:70%">
+                <app-dd-datetime (dateChange)="onDateChange($event,'babydue')" [inputDate]="currentDate" yearMax="2" yearMin="0" dateFormat="dd-mm-yy hh:i:s a"></app-dd-datetime>
+              </div>
+              <input type="hidden" [formControl]="stepTwoForm.controls['babydue']">
+              <div class="error-text" *ngIf="(stepTwoForm.controls['babydue'].hasError('required') && stepTwoForm.controls['babydue'].dirty) || (stepTwoForm.controls['babydue'].hasError('required') && formTwo.submitted)"> 
+                Please select date
+              </div>
+            </div>
+          </div>
+          
+          <div class="position-relative" *ngIf="stepTwoForm.controls.parentalStatus.value =='3'">
+            <span class="form-stage-indicator"> 2 </span>
+            <p class="new-reg-label-style"> Children's Detail </p>
+            <div class="clearfix padding-bottom-30 text-xs-center" *ngFor="let child of noOfChilldren; let i= index">
+              <table class="children-det-wrapper children-mob-det-wrapper">
+                <tr>  
+                  <td class="side-col vertical-align-top rowspan-title" rowspan="5">
+                    <span>{{child}}</span> 
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-left" formArrayName="childName" [ngClass]="((stepTwoForm.controls.childName.at(i).hasError('required') && stepTwoForm.controls.childName.at(i).dirty) || (stepTwoForm.controls.childName.at(i).hasError('required') && formTwo.submitted)) ? 'error-border' : ''">
+                    <div class="half"> 
+                      <input type="text" placeholder="Name" [formControlName]="i">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="input-row gender text-xs-left" formArrayName="childGender" [ngClass]="((stepTwoForm.controls.childGender.at(i).hasError('required') && stepTwoForm.controls.childGender.at(i).dirty) || (stepTwoForm.controls.childGender.at(i).hasError('required') && formTwo.submitted)) ? 'error-border' : ''"> 
+                    <label class="custom-radio-btn-container" style="padding-left: 20px;">
+                        <input type="radio" checked="checked" [formControlName]="i" value="1" >
+                      <span class="custom-radio-btn-checkmark"></span>
+                    </label>
+                    <label class="reg-radio-label">Male</label>
+                    
+                    <label class="custom-radio-btn-container" style="padding-left: 20px;">
+                        <input type="radio" checked="checked" [formControlName]="i" value="2">
+                      <span class="custom-radio-btn-checkmark"></span>
+                    </label>
+                    <label class="reg-radio-label">Female</label>
+                  </td>
+                </tr>
+                <tr>  
+                  <td formArrayName="childDob" [ngClass]="((stepTwoForm.controls.childDob.at(i).hasError('required') && stepTwoForm.controls.childDob.at(i).dirty) || (stepTwoForm.controls.childDob.at(i).hasError('required') && formTwo.submitted)) ? 'error-border' : ''"> 
+                    <div class="position-relative half"> 
+                      <app-dd-datetime (dateChange)="onDateChangeChild($event,i)" [inputDate]="stepTwoForm.controls.childDob.at(i).value ? getDate(stepTwoForm.controls.childDob.at(i).value) : currentDate" yearMax="0" yearMin="45" dateFormat="dd-mm-yy hh:i:s a"></app-dd-datetime>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td formArrayName="childSchool" [ngClass]="((stepTwoForm.controls.childSchool.at(i).hasError('required') && stepTwoForm.controls.childSchool.at(i).dirty) || (stepTwoForm.controls.childSchool.at(i).hasError('required') && formTwo.submitted)) ? 'error-border' : ''"> 
+                    <div class="half"> 
+                      <input type="text" placeholder="School Name" [formControlName]="i">
+                    </div>
+                   </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div class="position-relative">
+            <span class="form-stage-indicator"> 3 </span>
+            <p class="new-reg-label-style"> I am a </p>
+            <div class="clearfix padding-bottom-30 padding-top-20 text-xs-center">
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top">
+                <label class="custom-radio-btn-container">
+                  <input type="radio" name="prelation" (click)="selectRelationship(1)" [formControl]="stepTwoForm.controls['relation']" value="1">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label class="reg-radio-label text-left">  
+                  Mom
+                </label>
+              </div>
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top">
+                <label class="custom-radio-btn-container">
+                  <input type="radio" name="prelation" (click)="selectRelationship(2)" [formControl]="stepTwoForm.controls['relation']" value="2">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label class="reg-radio-label text-left">  
+                  Dad
+                </label>
+              </div>
+              <div class="display-inline-block display-mob-block radio-label-mob-wrapper vertical-align-top" >
+                <label class="custom-radio-btn-container">
+                  <input type="radio" name="prelation" (click)="selectRelationship(3)" [formControl]="stepTwoForm.controls['relation']" value="3">
+                  <span class="custom-radio-btn-checkmark"></span>
+                </label>
+                <label class="reg-radio-label text-left">  
+                  Relative
+                </label>
+              </div>
+              <div class="new-reg-custom-select" *ngIf="stepTwoForm.controls.relation.value =='3'">
+                <select [formControl]="stepTwoForm.controls['relationship']">
+                  <option value="">Select Relationship</option>
+                  <option value="uncle">Uncle</option>
+                  <option value="aunt">Aunt</option>
+                </select>
+                <div class="error-text" *ngIf="(stepTwoForm.controls['relationship'].hasError('required') && stepTwoForm.controls['relationship'].dirty) || (stepTwoForm.controls['relationship'].hasError('required') && formTwo.submitted)"> 
+                  Please select relation ship.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="corner-circle"></span>
+      </div>
+      <div class="select-mob-region">
+        <div class="interset-select-wrapper">
+          <h3> What are you interested in ? </h3>
+          <span class="each-interest" *ngFor="let int of interestList" (click)="interestSelected(int)" [class.selected]="selectedIntArray.indexOf(int.id) > -1">
+            {{ int.name }}
+          </span>
+        </div>
+        <h5 class="interest-alert" *ngIf="(formTwo.submitted && !selectedIntArray.length && stepTwoForm.valid)"> <img src="./assets/images/warning.svg"> Please select your Interest </h5>
+
+        <h5 class="interest-alert" *ngIf="formTwo.submitted && stepTwoForm.invalid"> <img src="./assets/images/warning.svg"> Please fill all the fields </h5>
+        <button class="reg-mob-submit" type="submit"> Submit </button>
+        <button class="reg-mob-later" (click)="skipToWebsite()"> Skip to Website </button>
+      </div>
+    </div>
+  </form>
+</section>

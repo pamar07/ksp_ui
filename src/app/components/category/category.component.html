@@ -1,0 +1,49 @@
+<span *ngIf="firstCategory">
+  <a *ngIf="type==null" routerLink="/categorywise-article/{{firstCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(firstCategory.colour_code)" style="border-radius:6px;" [innerHTML]="firstCategory.name"></span></a>
+  <a *ngIf="type=='tv'" routerLink="/categorywise-tv/{{firstCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(firstCategory.colour_code)" style="border-radius:6px;" [innerHTML]="firstCategory.name"></span></a>
+  <a *ngIf="type=='radio'" routerLink="/categorywise-radio/{{firstCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(firstCategory.colour_code)" style="border-radius:6px;" [innerHTML]="firstCategory.name"></span></a>
+</span>
+&nbsp;
+<span *ngIf="secondCategory">
+  <a *ngIf="type==null" routerLink="/categorywise-article/{{secondCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(secondCategory.colour_code)" style="border-radius:6px;" [innerHTML]="secondCategory.name"></span></a>
+  <a *ngIf="type=='tv'" routerLink="/categorywise-tv/{{secondCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(secondCategory.colour_code)" style="border-radius:6px;" [innerHTML]="secondCategory.name"></span></a>
+  <a *ngIf="type=='radio'" routerLink="/categorywise-radio/{{secondCategory.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(secondCategory.colour_code)" style="border-radius:6px;" [innerHTML]="secondCategory.name"></span></a>
+</span>
+<!--span *ngIf="initCategories">
+  <span *ngFor="let cat of initCategories">
+    <a routerLink="/categorywise-article/{{cat.id}}"><span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;" [innerHTML]="cat.name"></span></a>&nbsp;
+  </span>
+</span-->
+<span *ngIf="show">
+<a *ngIf="restCategories" class="collapsed margin-padding pull-right" href="#collapse-{{id}}-{{randomString}}" data-toggle="collapse" (click)="showAll=!showAll" >
+  <i class="fa fa-plus-square" aria-hidden="true" [style.display]="!showAll ? '':'none'" title="View all categories"></i>
+  <i class="fa fa-minus-square" aria-hidden="true" [style.display]="showAll ? '':'none'" title="View less categories"></i>
+</a>
+<div id="collapse-{{id}}-{{randomString}}" class="panel-collapse collapse" *ngIf="restCategories">
+   <span *ngFor="let cat of restCategories">
+     <a *ngIf="type==null" routerLink="/categorywise-article/{{cat.id}}">
+       <span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;" [innerHTML]="cat.name"></span>&nbsp;
+     </a>
+     <a *ngIf="type=='tv'" routerLink="/categorywise-tv/{{cat.id}}">
+       <span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;" [innerHTML]="cat.name"></span>&nbsp;
+     </a>
+     <a *ngIf="type=='radio'" routerLink="/categorywise-radio/{{cat.id}}">
+       <span class="ion-android-data light-blue-button all-caps small-button" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;" [innerHTML]="cat.name"></span>&nbsp;
+     </a>
+   </span>
+</div>
+</span>
+
+<!--div class="btn-group dropup pull-right" *ngIf="restCategories">
+  <button type="button" class="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="showAll=!showAll">
+    <i class="fa fa-plus-square" aria-hidden="true" [style.display]="!showAll ? '':'none'" title="View all categories"></i>
+    <i class="fa fa-minus-square" aria-hidden="true" [style.display]="showAll ? '':'none'" title="View less categories"></i>
+  </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <span *ngFor="let cat of restCategories">
+      <a routerLink="/categorywise-article/{{cat.id}}">
+        <span class="ion-android-data light-blue-button all-caps small-button small-button" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;margin-bottom:10px;" [innerHTML]="cat.name"></span>&nbsp;
+      </a>
+    </span>
+  </div>
+</div-->

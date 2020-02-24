@@ -1,0 +1,115 @@
+<ngx-loading [show]="!isPdfLoaded" [config]="{ fullScreenBackdrop : true }"></ngx-loading>
+<div class="agile-main" *ngIf="!showFilter">
+    <div class="content-wrap">
+        <div class="gry-background padding-bottom0px">
+            <div class="container">
+                <div class="main-title-outer-fixed">
+                    <div class="main-title color-gray font-size13 margin0 font-Raleway-Bold">ALL MAGAZINE</div>
+                    <div class="span-outer">
+                        <span class="pull-right text-danger last-update">
+                            <a href="javascript:void(0);" (click)="showFilter = true;" onclick="window.scrollTo(0,0);" class="color-gray font-Raleway-Bold font-size16">Filter
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="city-scroll-box margin-bottom15px margin-top filterCity" *ngIf="cityList" >
+                <a *ngFor="let city of cityList; let i=index" href="javascript:void(0);" (click)="checkCity(i); filterPdfCityWise();" class="city-tab" aria-selected="true" [ngClass]="{'active-pink-btn':city.checked}">{{city.city}}
+                </a>
+                <span style="position: sticky;position: -webkit-sticky;right: 0px;padding: 7px 4px;background: #fff;">
+                    <i class="fa fa-chevron-right"></i>
+                </span>    
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="gry-background" style="padding-top: 0!important">
+            <div class="container" *ngIf="pdfs.length>0">
+                <div class="col-xs-12 col-sm-12 slide-n margin-top-10px paddingNo" *ngFor="let pdf of pdfs">
+                    <div class="col-sm-4 col-xs-4">
+            	        <img src="{{pdf.img_path.substring( 0, pdf.img_path.lastIndexOf('/')) + '/w_300' + pdf.img_path.substring( pdf.img_path.lastIndexOf('/'), pdf.img_path.length)}}" width="100%" height="80px" alt="" style="object-fit:cover; object-position: top center; border-radius:4px 4px 0 0;margin:10px 0"> 
+                    </div>
+                    <div class="col-xs-8 col-sm-8 margin-top" style="background-color:#ffffff;border-radius: 0 0 4px 4px!important;margin-top: 5px;">    
+                        <div class="col-sm-12 col-xs-12 paddingNo font-Raleway-SemiBold font-size13 line-height-15 margin-top">
+                            {{pdf.title}}
+                        </div>
+                        <div class="col-sm-12 col-xs-12" style="padding: 0;margin-top:15px">
+                            <div *ngIf="!_apiService.loggedIn()">
+                                <a href="javascript:void(0)" (click)="showPreLogin(pdf.id)" class="btn-primary btn-sm"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
+                            </div>
+                            <div *ngIf="_apiService.loggedIn()">
+                                <a class="btn-primary btn-sm" href="{{pdf.pdf}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i>Download</a>
+                            </div>
+                        </div>         
+                    </div>
+                </div>
+            </div>
+            <div class="container" *ngIf="pdfs.length==0">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="text-center font-size12">
+                        Sorry, No Magazine Found.
+                    </div>
+                </div>
+            </div>
+            <div class="container margin-top" *ngIf="paginations.length">
+                <span class="pull-right text-danger last-update">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                          <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                          <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                        </li>
+                        <li [class]="isNext ? '' : 'disabled'">
+                          <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Filter Section-->
+<div class="agile-main" *ngIf="showFilter">
+    <div class="content-wrap">
+        <div class="container gry-background">
+            <div class="col-sm-12 col-xs-12">
+                <div class="panel-group mobile-ksp-faq margin0" id="accordion">
+                    <div class="panel" >
+                        <button class="faq-panel outlineNone">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                <div class="col-sm-12 col-xs-12 paddingNo clearfix">
+                                    <small style="width:90%; float:left;">Find by Age Groups</small>
+                                    <i class="fa fa-chevron-down pull-right"></i>
+                                </div>
+                            </a>
+                        </button>
+                        <hr class="margin0 margin-bottom10px">
+                        <div id="collapse4" class="panel-collapse collapse">
+                            <div class="faq-body">
+                                <div class="" *ngFor="let group of ageGroups">
+                                    <div class="checkbox checkbox-primary capitalize">
+                                        <input id="group{{group.id}}" type="checkbox" [(ngModel)]="group.checked">
+                                        <label for="group{{group.id}}" [innerHTML]="group.age"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-12 margin-top">
+                <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" (click)="showFilter = false; filterMagazineAgewise()" style="pointer:cursor;">
+                    SEARCH
+                </button>
+            </div>
+        </div>
+    </div>`
+</div>

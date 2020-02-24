@@ -1,0 +1,325 @@
+<!--header start-->
+<header class="header fixed-top clearfix desktop">
+  <!--logo start-->
+  <div class="container">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container paddingNo">
+        <div class="collapse navbar-collapse navbar-ex1-collapse top-nav">
+          <!-- For Site users -->
+          <ul class="nav navbar-nav brown-nav margin-top5px" *ngIf="_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5">
+            <li routerLinkActive="active"><a href="/home" ><i class="fa fa-home" aria-hidden="true"></i>HOME</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/article-user" ><i class="fa fa-book" aria-hidden="true"></i>ARTICLES</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a href="https://kidsstoppress.com/shopping"><i class="fa fa-shopping-cart" aria-hidden="true"></i>SHOP</a>
+              <ul class="camp-child" style="height: 3.2em">
+                <!-- <li><a routerLink="/KSPAwards2018">Amit Camp</a></li>
+                <li><a routerLink="/KSPAwards2017"> Amar Camp</a></li> -->
+              </ul>
+            </li>
+            <li>|</li>
+            
+            <li routerLinkActive="active" class="camp"><a routerLink="/grow-right" style="color: #a478be;" ><i class="fa fa-map-signs" aria-hidden="true"></i>Grow Right</a>
+              <!-- <ul class="camp-child" style="height: 3.2em"> -->
+                
+                <!-- <li><a routerLink="/summer-funfactory" style="color: #00b0ec;"> SUMMER FUN FACTORY</a></li> -->
+                <!-- <li><a routerLink="/camp-all" style="color: #F3B63A;">SUMMER CAMP</a></li>
+              </ul> -->
+            </li>
+            <!-- <li routerLinkActive="active"><a routerLink="/social-user" ><i class="fa fa-users" aria-hidden="true"></i>GROUPS</a></li> -->
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/event-all" ><i class="fa fa-calendar" aria-hidden="true"></i>EVENTS</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/categorywise-article/20"><i class="fa fa-cutlery" aria-hidden="true"></i>MEAL PLAN</a></li>
+            <li>|</li>
+            <li routerLinkActive="active" class="awardlink"> <a routerLink="/awards/2019"><i class="fa fa-trophy" aria-hidden="true"></i>AWARDS</a>
+              <ul class="awards" style="height: 3.2em">
+                <li *ngFor="let menu of awardMenu"><a (click)="goToAwards(menu)">{{menu.heading}}</a></li>
+                <li><a routerLink="/KSPAwards2018">AWARDS 2018</a></li>
+                <li><a routerLink="/KSPAwards2017"> AWARDS 2017</a></li>
+              </ul>
+            </li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/radio-all" ><i class="fa fa-headphones" aria-hidden="true"></i>RADIO</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/tv-all" ><i class="fa fa-television" aria-hidden="true"></i>TV</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/ksp-code" ><i class="fa fa-credit-card" aria-hidden="true"></i>CODE</a></li>
+          </ul>
+
+          <!-- For Business Users -->
+          <ul class="nav navbar-nav brown-nav margin-top5px" *ngIf="_apiService.loggedIn() && _apiService.getAuthUser().usertype == 5">
+            <li routerLinkActive="active"><a routerLink="/brand-dashboard" ><i class="fa fa-home" aria-hidden="true"></i>HOME</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/manage-events" ><i class="fa fa-book" aria-hidden="true"></i>MANAGE EVENTS</a></li>
+          </ul>
+
+          <!-- For Guest Useres -->
+          <ul class="nav navbar-nav brown-nav margin-top5px" *ngIf="!_apiService.loggedIn()">
+            <li routerLinkActive="active"><a href="/home" ><i class="fa fa-home" aria-hidden="true"></i>HOME</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/article-public" ><i class="fa fa-book" aria-hidden="true"></i>ARTICLES</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a href="https://kidsstoppress.com/shopping"><i class="fa fa-shopping-cart" aria-hidden="true"></i>SHOP</a></li>
+            <li>|</li>
+            <li routerLinkActive="active" class="camp"><a routerLink="/grow-right" style="color: #a478be;" ><i class="fa fa-map-signs" aria-hidden="true"></i>Grow Right</a>
+              <!-- <ul class="camp-child" style="height: 3.2em"> -->
+                
+                <!-- <li><a routerLink="/summer-funfactory" style="color: #00b0ec;">SUMMER FUN FACTORY</a></li> -->
+                <!-- <li><a routerLink="/camp-all" style="color: #F3B63A;">SUMMER CAMP</a></li> -->
+              <!-- </ul> -->
+            </li>
+            <li>|</li>
+            <!-- <li routerLinkActive="active"><a routerLink="/social-public" ><i class="fa fa-users" aria-hidden="true"></i>GROUPS</a></li>
+            <li>|</li> -->
+            <li routerLinkActive="active"><a routerLink="/event-all" ><i class="fa fa-calendar" aria-hidden="true"></i>EVENTS</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/categorywise-article/20"><i class="fa fa-cutlery" aria-hidden="true"></i>MEAL PLAN</a></li>
+            <li>|</li>
+            <li routerLinkActive="active" class="awardlink"> <a routerLink="/awards/2019"><i class="fa fa-trophy" aria-hidden="true"></i>AWARDS</a>
+              <ul class="awards" style="height: 3.2em">
+                <li *ngFor="let menu of awardMenu" (click)="goToAwards(menu)"><a>{{menu.heading}}</a></li>
+                <li><a routerLink="/KSPAwards2018">AWARDS 2018</a></li>
+                <li><a routerLink="/KSPAwards2017"> AWARDS 2017</a></li>
+              </ul>
+            </li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/radio-all" ><i class="fa fa-headphones" aria-hidden="true"></i>RADIO</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/tv-all" ><i class="fa fa-television" aria-hidden="true"></i>TV</a></li>
+            <li>|</li>
+            <li routerLinkActive="active"><a routerLink="/ksp-code" ><i class="fa fa-credit-card" aria-hidden="true"></i>CODE</a></li>
+          </ul>
+          <app-topnav-radio *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)"></app-topnav-radio>
+        </div>
+      </div>
+      <!-- <div class="container-fluid paddingNo">
+        <img src = "/assets/images/festive-banner/christmas/christmas-banner.png" class="img-responsive festive-banner" alt="Christmas Banner">
+      </div> -->
+      <!-- <div class="container-fluid paddingNo">
+        <img src = "/assets/images/festive-banner/newyear/New_year_banner_new.png" class="img-responsive festive-banner" alt="New Year Banner">
+      </div> -->
+    </div>
+  </div>
+</header>
+
+<!--header end-->
+
+<!-- Responsive starts here Menu -->
+<header role="banner" class="navbar navbar-fixed-top navbar-inverse mobile">
+  <div class="container">
+    <!-- For Site and Guest Users -->
+    <div class="navbar-header" *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)">
+      <input  #searchValue type="text" class="mobile-search mobile-view hide" style="width: 80%;" placeholder="Search here..." (keyup.enter)="search(searchValue.value)"/>
+   
+      <button class="mobile-search mobile-view hide" style="width: 20%;background: #ffffff;box-shadow: none;padding: 0;left:80%;font-weight: 900;color: red;" (click)="search(searchValue.value)">Submit</button>
+
+      <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left margin-bottom0">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home"> <img src="assets/images/KSP-Logo-main.svg" width="50px" height="50px" alt=""/></a>
+      <!-- <a class="navbar-brand" href="/home"> <img src="assets/images/xmas-logo.png" style="width: 60px !important;" height="50px" alt=""/></a>  -->
+      
+      <ul class="pull-right margin-right15px margin-top12px">
+        <li class="dropdown" *ngIf="_apiService.loggedIn()">
+          <app-topnotification></app-topnotification>
+        </li>
+        <li class="dropdown" *ngIf="showMobileFilterIcon">
+          <i class="fa fa-filter" aria-hidden="true" (click)="_commonService.showMobileFilter=!_commonService.showMobileFilter"></i>
+        </li>
+        <li class="dropdown">
+          <i class="mobile-search-icon fa fa-search"></i>
+        </li>
+        <li class="dropdown" style="vertical-align:middle;">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <img alt="" src="assets/images/2.png" *ngIf="!_apiService.loggedIn()">
+            <span *ngIf="_apiService.loggedIn()">
+              <app-round-pic [picPath]="_apiService.getAuthUser().image_path" [userName]="_apiService.getAuthUser().name" [width]="'30px'" [height]="'30px'" [className]="'font-size20'"></app-round-pic>
+            </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right logout" *ngIf="_apiService.loggedIn()"  style="height: 14em;">
+            <li><a routerLink="/user-profile"><i class=" fa fa-suitcase"></i> Profile</a></li>
+            <li><a routerLink="/bookmarks"><i class="fa fa-bookmark"></i>  My Bookmarks</a></li>
+            <li><a routerLink="/loves"><i class="fa fa-heart"></i>  Posts I Love</a></li>
+            <li><a routerLink="/article-submit"><i class="fa fa-book"></i>  Submit Article</a></li>
+            <li><a routerLink="/event-submit"><i class="fa fa-calendar"></i>  Submit Event</a></li>
+            <li><a routerLink="/saved-images"><i class="fa fa-image"></i> My Saved Images</a></li>
+            <li><a href="javascript:void(0);" (click)="logoutUser()"><i class="fa fa-key"></i> Log Out</a></li>
+          </ul>
+          <ul class="dropdown-menu dropdown-menu-right logout height-width" *ngIf="!_apiService.loggedIn()">
+            <li><a (click)="storeCurrentUrl()" routerLink="/login"><i class=" fa fa-sign-in"></i> Log In</a></li>
+            <li><a routerLink="/signup"><i class="fa fa-user"></i> Register</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- For Business Users -->
+    <div class="navbar-header" *ngIf="_apiService.loggedIn() && _apiService.getAuthUser().usertype == 5">
+      <button data-toggle="collapse-side" data-target=".side-collapse" data-target-2=".side-collapse-container" type="button" class="navbar-toggle pull-left">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/home"> <img src="assets/images/KSP-Logo-main.svg" width="70px" height="70px" alt=""/></a>
+            <!-- <a class="navbar-brand" href="/home"> <img src="assets/images/xmas-logo.png" width="60px" height="70px" alt=""/></a> -->
+      <ul class="pull-right top-gap right-gap">
+        <li class="dropdown" style="vertical-align:middle;">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <img alt="" src="assets/images/2.png" *ngIf="!_apiService.loggedIn()">
+            <span>
+              <app-round-pic [picPath]="_apiService.getAuthUser().image_path" [userName]="_apiService.getAuthUser().name" [width]="'35px'" [height]="'35px'" [className]="'font-size25'"></app-round-pic>
+            </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right logout" *ngIf="_apiService.loggedIn()" style="height: 3.2em">
+            <li><a href="javascript:void(0);" (click)="logoutUser()"><i class="fa fa-key"></i> Log Out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- For Site and Guest users -->
+    <div class="navbar-inverse side-collapse in" *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)">
+      <nav role="navigation" class="navbar-collapse">
+        <ul class="nav sidebar-nav navbar-nav" *ngIf="!_apiService.loggedIn()">
+          <li routerLinkActive="active"><a href="/home">
+            <i class="fa"><img src="assets/images/mobileImage/1.svg" alt="" ></i>HOME</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/article-public" ><i class="fa"><img src="assets/images/mobileImage/2.svg" alt="" ></i>ARTICLES</a></li>
+
+          <!-- <li routerLinkActive="active"><a routerLink="/social-public" ><i class="fa"><img src="assets/images/mobileImage/3.svg" alt="" ></i>GROUPS</a></li> -->
+
+          <li routerLinkActive="active"><a routerLink="/event-all" ><i class="fa"><img src="assets/images/mobileImage/4.svg" alt="" ></i>EVENTS</a></li>
+
+
+
+          <li routerLinkActive="active"><a routerLink="/summer-funfactory" ><i class="fa"><img src="assets/images/mobileImage/4.svg" alt="" ></i>FUN FACTORY</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/radio-all" ><i class="fa"><img src="assets/images/mobileImage/5.svg" alt="" ></i>RADIO</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/tv-all" ><i class="fa"><img src="assets/images/mobileImage/6.svg" alt="" ></i>TV</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/ksp-code" ><i class="fa"><img src="assets/images/mobileImage/8.svg" alt="" ></i>CODE</a></li>
+        </ul>
+
+        <ul class="nav sidebar-nav navbar-nav" *ngIf="_apiService.loggedIn()">
+          <li routerLinkActive="active"><a href="/home" >
+            <i class="fa"><img src="assets/images/mobileImage/1.svg" alt="" ></i>HOME</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/article-user" ><i class="fa"><img src="assets/images/mobileImage/2.svg" alt="" ></i>ARTICLES</a></li>
+
+          <!-- <li routerLinkActive="active"><a routerLink="/social-user" ><i class="fa"><img src="assets/images/mobileImage/3.svg" alt="" ></i>GROUPS</a></li> -->
+
+          <li routerLinkActive="active"><a routerLink="/event-all" ><i class="fa"><img src="assets/images/mobileImage/4.svg" alt="" ></i>EVENTS</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/summer-funfactory" ><i class="fa"><img src="assets/images/mobileImage/4.svg" alt="" ></i> FUN FACTORY</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/radio-all" ><i class="fa"><img src="assets/images/mobileImage/5.svg" alt="" ></i>RADIO</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/tv-all" ><i class="fa"><img src="assets/images/mobileImage/6.svg" alt="" ></i>TV</a></li>
+
+          <li routerLinkActive="active"><a routerLink="/ksp-code" ><i class="fa"><img src="assets/images/mobileImage/8.svg" alt="" ></i>CODE</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- For Business users -->
+    <div class="navbar-inverse side-collapse in" *ngIf="_apiService.loggedIn() && _apiService.getAuthUser().usertype == 5">
+      <nav role="navigation" class="navbar-collapse">
+        <ul class="nav sidebar-nav navbar-nav">
+          <li routerLinkActive="active"><a routerLink="/brand-dashboard" >
+            <i class="fa"><img src="assets/images/mobileImage/1.svg" alt="" ></i>HOME</a>
+          </li>
+
+          <li routerLinkActive="active"><a routerLink="/manage-events" ><i class="fa"><img src="assets/images/mobileImage/2.svg" alt="" ></i>MANAGE EVENTS</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+<!--header end-->
+<input class="upload event_upload_btn" type="file" id="event_pic" name="event_pic" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="event_pic" (change)="fileChange($event)" style="display: none;">
+<div id="ksp-survey-confirm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right"><a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a></div>
+        <div class="profile-sidebar">
+          <div class="col-md-12 paddingNo">
+            <h4><a class="color-pink" style="display: flex;justify-content: center;">Let's see if you know this?</a></h4>
+          </div>
+          <br><hr>
+        </div>
+        <div class="panel panel-default">
+          <div class="text-center small-text">
+            <div class="margin-top8per">
+              <button class="btn pink-color-button font-size13" data-dismiss="modal" (click)="openKSPSurvey(1)">Bring It On</button>
+              <button class="btn pink-color-button font-size13" data-dismiss="modal" (click)="openKSPSurvey(0)">I Usually Pass Things</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ksp-survey" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="surveyForm" (ngSubmit)="surveyForm.valid && submitSurvey(surveyForm.value)" #formSurvey="ngForm">
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Please answer the following questions:</a>&nbsp;&nbsp;#growright</h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+
+          <div class="row" *ngIf="!surveythankText">
+            <div *ngIf="survey">
+              <div class="col-md-12 col-lg-12" style="text-align: left" *ngFor="let que of survey" style="margin-bottom: 15px;">
+                <span>{{que.text}}</span><br/>
+                
+                <div class="col-md-6 d-flex align-items-center" style="display: flex; margin: 0.25rem 0;" *ngFor="let option of que.options">
+                  <input class="radio-button" type="radio" [formControlName]="que.id" value="{{option.value}}"><label class="margin-top-25">{{option.text}}</label>
+                </div>
+                
+                <!-- <div class="col-md-6 d-flex align-items-center" style="display: flex; margin: 0.25rem 0;"><input class="radio-button" type="radio" [formControlName]="que.id" value="no"><label class="margin-top-25"> No</label></div>
+                
+                <div class="col-md-6 d-flex align-items-center" style="display: flex; margin: 0.25rem 0;"><input class="radio-button" type="radio" [formControlName]="que.id" value="dont_know"><label class="margin-top-25"> Don't Know</label></div>
+                
+                <div class="col-md-6 d-flex align-items-center" style="display: flex; margin: 0.25rem 0;"><input class="radio-button" type="radio" [formControlName]="que.id" value="maybe"><label class="margin-top-25"> Maybe</label></div> -->
+
+                <div *ngIf="(surveyForm.controls[que.id].hasError('required') && surveyForm.controls[que.id].dirty) || (surveyForm.controls[que.id].hasError('required') && formSurvey.submitted)" class="error-survey-form">
+                Please select atleast one option.</div>
+              </div>
+            </div>
+
+
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                <button type="submit" class="btn green-background blue-green font-size13">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="surveythankText">
+            <p>{{surveythankText}}</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+  };
+</script>

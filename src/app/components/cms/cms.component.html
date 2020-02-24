@@ -1,0 +1,37 @@
+<app-topnavnofilter></app-topnavnofilter>
+<section>
+    <div class="w3_agile_banner_topWhite">
+      <div class="container">
+        <div class="main-title-outer-none pull-left">
+          <div class="main-title margin0"> <i class="fa" aria-hidden="true"><img src="assets/images/articles.png" width="30" height="30" alt=""></i>{{title}}</div>
+        </div>
+         <hr class="col-md-12">
+      </div>
+    </div>
+</section>
+<section id="main-content">
+  <section class="wrapper margin0">
+    <div class="container">
+      <div class="row col-md-8 col-lg-8 col-sm-12 col-xs-12 margin-bottom15">
+        <p [innerHtml]="content"></p>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" [vp-in-view-config]="{infinite: true}" (vp-in-view)="articleEnd = true;"></div>
+      </div>
+
+      <!-- Advertisement goes here -->
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top2per art-paddingNo" *ngIf="promotions && mobilePromo">
+        <span *isDesktop>
+          <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index" [ngClass]="{'hide':advertisement < i}">
+            <app-advertise [add]="promotion"></app-advertise>
+          </div>
+          <div class="content-widget-sidebar" [vp-in-view-config]="{infinite: true}" (vp-in-view)="getAdvertisement();" ></div>
+        </span>
+        <!-- <span *showItDevice="['mobile','tablet']">
+          <div class="content-widget-sidebar" *ngFor="let promotion of mobilePromo;">
+            <app-advertise [add]="promotion"></app-advertise>
+          </div>
+        </span> -->
+      </div>
+   </div>
+ </section>
+</section>
+<hr>

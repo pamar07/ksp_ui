@@ -1,0 +1,58 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.group-card-img{
+  width:200px;
+	height:150px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 4px 4px 0 0;
+}
+.social-group-card{
+  padding: 6px;
+}
+.social-group-detail{
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 0 0 4px 4px;
+  width:200px;
+}
+.social-group {
+  overflow-x: scroll;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.social-group > .social-group-card {
+  display: inline-block;
+  float: none;
+}
+.social-join-btn-mobile{
+  border: 0;
+  outline: 0;
+  border-radius: 2px;
+  height: 30px;
+  width: 100%;
+  background-color: #e35b7f!important;
+  color: #ffffff;
+}
+
+.bg-white{
+  background-color: #ffffff!important;
+}
+
+.scroll-card-group-title-excerpt{
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 34px; /* fallback */
+  width: 100%;
+  line-height: 1.2;
+}

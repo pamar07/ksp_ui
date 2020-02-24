@@ -1,0 +1,210 @@
+<ngx-loading [show]="!isTvLoaded" [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<!-- <app-topnavnofilter></app-topnavnofilter> -->
+<app-topnav-social (city)="filterCity($event)" (age)="filterAge($event)"></app-topnav-social>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row radio">
+      <div class="container width-1170">
+        <div class="main-title margin0"> <i class="fa" aria-hidden="true"><img src="assets/images/television.png"
+              width="30" height="30" alt=""></i>KSP TV</div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!--Banner section starts-->
+    <div class="row" *ngIf="bannerTv">
+      <div class="container width-1170 paddingNo" *ngIf="bannerTv.length>0">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo ">
+          <div class="box-shadow">
+            <a href="/details/{{bannerTv[0].perma_link}}/{{bannerTv[0]?.id}}">
+              <div class="box">
+                <img class="img-responsive banner-img"
+                  [src]="bannerTv[0].thumbnail.split('0.jpg').join('maxresdefault.jpg')" style="width:100%;height:100%;"
+                  alt="">
+              </div>
+              <div class="carousel-caption">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                  <span *ngFor="let category of bannerTv[0].category">
+                    <a routerLink="/categorywise-tv/{{category.id}}">
+                      <span class="ion-android-data light-blue-button all-caps"
+                        [ngStyle]="{'background-color':category.colour_code }" [innerHTML]="category.name"></span>
+                    </a>
+                  </span>
+                  <span
+                    class="anchor-time all-caps white-color">{{_commonService.setDateFormat(bannerTv[0].published_date) | date:'yMMMd'}}</span>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                  <h4 class="blog-ellipsis-title margin-top0">{{bannerTv[0].title}}</h4>
+                </div>
+              </div>
+            </a>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo" *ngFor="let tv of bannerTv.slice(1,3); let i=index">
+          <div class="box-shadow" [ngClass]="{'margin-top3px':i==1}">
+            <div class="box">
+              <div id="crop-latest-feature-image">
+                <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+                  <img src="{{tv.thumbnail.split('0.jpg').join('mqdefault.jpg')}}" alt="">
+                </a>
+              </div>
+            </div>
+            <div class="carousel-caption padding-bottom0px">
+              <app-category [categories]="tv.category" [id]="tv.id" [type]="'tv'"></app-category>
+              <span
+                class="anchor-time all-caps white-color">{{_commonService.setDateFormat(tv.published_date) | date:'yMMMd'}}</span>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+                  <h4 class="blog-ellipsis-title margin-top0 margin-bottom0">{{tv.title}}</h4>
+                </a>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="container" *ngIf="allPageBanners.length>0">
+      <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link"
+        target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img
+          src="{{allPageBanners[0].image}}" width="100%"></a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15 margin0" *ngIf="tvs">
+      <div class="container width-1170 paddingNo">
+
+        <div *ngFor="let tv of tvs; let i=index">
+          <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo margin-top5px"
+            *ngIf="promotionsArr[i] && promotionsArr[i].img_path">
+            <div class="single-blog-item box-shadow height-350px">
+              <a href="safeUrl(promotionsArr[i].link)" target="_blank">
+                <div class="blog-thumnail">
+                  <div id="crop-feature-image-tv">
+                    <!-- <img
+                      src="{{promotionsArr[i].img_path.substring( 0, promotionsArr[i].img_path.lastIndexOf('/')) + '/w_400' + promotionsArr[i].img_path.substring( promotionsArr[i].img_path.lastIndexOf('/'), promotionsArr[i].img_path.length)}}"
+                      width="100%" height="200px" class="image-fit" style="object-position: top center;"> -->
+                  </div>
+                  <section class="post-footer">
+                    <div class="">
+                      <div class="comment">
+                        <div class="blog-content all-caps">
+                          <div *ngIf="promotionsArr[i].tags">
+                            <div *ngFor="let x of promotionsArr[i].tags.split(',')">
+                              <span>
+                                <span class="ion-android-data light-blue-button all-caps small-button"
+                                  style="border-radius: 6px;">
+                                  {{x}}
+                                </span>
+                              </span>
+                              &nbsp;
+                            </div>
+                          </div>
+                          <h4 class="blog-ellipsis"><a href="safeUrl(promotionsArr[i].link)"
+                              target="_blank">{{promotionsArr[i].excerpt}}</a></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo margin-top5px">
+            <div class="single-blog-item box-shadow height-350px">
+              <div class="blog-thumnail">
+                <div id="crop-feature-image-tv">
+                  <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                    <img src="{{tv.thumbnail.split('0.jpg').join('mqdefault.jpg')}}" width="100%" height="200px"
+                      class="image-fit" alt="{{tv.title}}">
+                  </a>
+                </div>
+                <section class="post-footer">
+                  <div class="">
+                    <div class="comment">
+                      <div class="blog-content all-caps">
+                        <app-category [categories]="tv.category" [id]="tv.id" [type]="'tv'"></app-category>
+                        <h4 class="blog-ellipsis"><a
+                            href="/details/{{tv.perma_link}}/{{tv.id}}">{{tv.title}}</a></h4>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo border-righ">
+                          <div class="media-left">
+                            <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                              <app-round-pic [picPath]="tv.author_path" [userName]="tv.author_name" [width]="'40px'"
+                                [height]="'40px'" [className]="''"></app-round-pic>
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                              <a routerLink="/authorwise-posts/{{tv.creator_id}}" class="anchor-username">
+                                <h4 class="media-heading capitalize font-size13 color-black">{{tv.author_name}}</h4>
+                              </a>
+                              <span class="anchor-time all-caps"
+                                [innerHtml]="_commonService.setDateFormat(tv.published_date) | date:'yMMMd'"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                              <ul class="list-unstyled text-left pull-right width-100per">
+                                <app-likecomment [loveData]="tv.liked" [permaLink]="tv.perma_link"
+                                  [entityType]="tv.post_type" [entityId]="tv.id" [loveCount]="tv.likes"
+                                  [commentCount]="tv.comment_count"></app-likecomment>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!--section class="post-footer footerlike">
+                  <div class="post-footer-option">
+                    <ul class="list-unstyled">
+                      <app-likecomment [loveData]="tv.liked" [entityType]="tv.post_type" [entityId]="tv.id" [loveCount]="tv.likes" [commentCount]="tv.comment_count"></app-likecomment>
+                    </ul>
+                  </div>
+                </section-->
+                </section>
+              </div>
+              <app-bookmark [bookmarkData]="tv.bookmarked" [entityType]="tv.post_type" [entityId]="tv.id"
+                [bookmarkCount]="tv.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'">
+              </app-bookmark>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15">
+      <div class="container width-1170">
+        <div class="pull-right">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+              </li>
+              <li [class]="isNext ? '' : 'disabled'">
+                <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="container margin-top" *ngIf="allPageBanners.length>1">
+      <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link"
+        target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img
+          src="{{allPageBanners[1].image}}" width="100%"></a>
+    </div>
+    <hr>
+  </section>
+</section>

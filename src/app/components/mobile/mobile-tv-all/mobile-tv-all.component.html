@@ -1,0 +1,120 @@
+<ngx-loading
+  [show]="!isTvLoaded"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<app-topnav-social (city)="filterCity($event)" (age)="filterAge($event)"></app-topnav-social>
+<div class="agile-main gry-background paddingNo">
+  <div class="content-wrap">
+    <div class="card-scroll-box" *ngIf="bannerTv">
+      <span *ngIf="bannerTv.length>0">
+        <span *ngFor="let tv of bannerTv">
+            <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+              <img class="border-radius18 card-img" [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+                <p class="white-color card-title">{{tv.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                  <app-round-pic [picPath]="tv.author_path" [userName]="tv.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{tv.author_name}}</span>
+                  </a>
+                  <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(tv.published_date) | date:'yMMMd'"></span>
+                </div>
+              </span>
+            </span>
+        </span>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top12px" *ngIf="allPageBanners.length>0">
+      <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image.substring( 0, allPageBanners[0].image.lastIndexOf('/')) + '/w_300' + allPageBanners[0].image.substring( allPageBanners[0].image.lastIndexOf('/'), allPageBanners[0].image.length)}}" width="100%"></a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top12px margin-top12px" *ngIf="allPageBanners.length>1">
+      <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img  src="{{allPageBanners[1].image.substring( 0, allPageBanners[1].image.lastIndexOf('/')) + '/w_300' + allPageBanners[1].image.substring( allPageBanners[1].image.lastIndexOf('/'), allPageBanners[1].image.length)}}" width="100%"></a>
+    </div>    
+    <div class="container">
+      <div class="font-size15 color-gray font-bolder margin-top12px">All Videos</div>
+      <div class="widget-sidebar">
+        <div class="content-widget-sidebar margin0" *ngIf="tvList1.length!=0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px" *ngFor="let tv of tvList1">
+              <div class="post-img pull-left" style="width:115px;">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <img [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')" width="100px" height="67px" style="border-radius:4px;">
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 167px);">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <h5 class="font-size13 small-title-excerpt">{{tv.title}}</h5>
+                </a>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}"><small>BY {{tv.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(tv.published_date) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="promotions">
+      <img *ngIf="promotions.length>0" src="{{promotions[0].img_path.substring( 0, promotions[0].img_path.lastIndexOf('/')) + '/w_300' + promotions[0].img_path.substring( promotions[0].img_path.lastIndexOf('/'), promotions[0].img_path.length)}}" width="100%" height="auto" class="margin-bottom10px"/>
+    </div>
+    <div class="container">
+      <div class="widget-sidebar margin0">
+        <div class="content-widget-sidebar" *ngIf="tvList2.length!=0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px" *ngFor="let tv of tvList2">
+              <div class="post-img pull-left" style="width:115px;">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <img [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')" width="100px" height="67px" style="border-radius:4px;">
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 167px);">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <h5 class="font-size13 small-title-excerpt">{{tv.title}}</h5>
+                </a>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}"><small>BY {{tv.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(tv.published_date) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row margin-top-bottom-5px">
+        <div class="pull-right">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+              </li>
+              <li [class]="isNext ? '' : 'disabled'">
+                <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

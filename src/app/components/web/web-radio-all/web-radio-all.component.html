@@ -1,0 +1,286 @@
+<ngx-loading [show]="!isRadioLoaded" [config]="{ fullScreenBackdrop : true }"></ngx-loading>
+<app-topnavnofilter></app-topnavnofilter>
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row radio">
+      <div class="container width-1170 paddingNo">
+        <div class="main-title margin0"> <i class="fa" aria-hidden="true"><img src="assets/images/Radio-Color.svg" width="30" height="30" alt=""></i>KSP RADIO</div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row" *ngIf="bannerRadio">
+      <div class="container paddingNo">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo ">
+          <div class="box-shadow">
+            <a href="/details/{{bannerRadio[0].perma_link}}/{{bannerRadio[0]?.id}}" >
+              <div class="box">
+                <div class="three-by-two-image-container" style="padding-top:56.25%!important;">
+                  <img class="three-by-two-image" src= "{{bannerRadio[0].radio_image? (bannerRadio[0].radio_image.substring( 0, bannerRadio[0].radio_image.lastIndexOf('/')) + '/w_750' + bannerRadio[0].radio_image.substring( bannerRadio[0].radio_image.lastIndexOf('/'), bannerRadio[0].radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}" style="width:100%;height:100%;" alt="">
+                </div>
+              </div>
+              <div class="carousel-caption">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                  <span *ngFor="let category of bannerRadio[0].category">
+                    <a routerLink="/categorywise-radio/{{category.id}}">
+                      <span class="ion-android-data light-blue-button all-caps" [ngStyle]="{'background-color':category.colour_code }" [innerHTML]="category.name"></span>
+                    </a>
+                  </span>
+                  <span class="anchor-time all-caps white-color">{{_commonService.setDateFormat(bannerRadio[0].published_date) | date:'yMMMd'}}</span>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                  <h4 class="blog-ellipsis-title margin-top0">{{bannerRadio[0].title}}</h4>
+                </div>
+              </div>
+            </a>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo"  *ngFor="let radio of bannerRadio.slice(1,3); let i=index">
+          <div class="box-shadow" [ngClass]="{'margin-top3px padding-top0px':i==1}">
+            <div class="box">
+              <a href="/details/{{radio.perma_link}}/{{radio?.id}}">
+                <div class="three-by-two-image-container" style="padding-top:56.25%!important;">
+                  <img class="three-by-two-image" src= "{{radio.radio_image ? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_400' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}" style="width:100%;height:100%;" alt="">
+                </div>
+              </a>
+            </div>
+            
+            <div class="carousel-caption padding-bottom0px">
+              <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'"></app-category>
+              <span class="anchor-time all-caps white-color">{{_commonService.setDateFormat(radio.published_date) | date:'yMMMd'}}</span>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                <a href="/details/{{radio.perma_link}}/{{radio?.id}}"><h4 class="blog-ellipsis-title margin-top0 margin-bottom0">{{radio.title}}</h4></a>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      
+        <div class="col-md-12 col-lg-12 col-sm-12">
+          <div class="color-white text-center" style="padding: 2em 0px!important; background-color: #e15b82!important;">
+            <p class="font-size25 font-Raleway-SemiBold">Subscribe to KSP Radio through Whatsapp!</p>
+            <div class="text-center">
+              <p>Add <a class="white-color font-Raleway-SemiBold" href="tel:9819368429">9819368429</a> to your contacts list</p>
+              <p>Send "<span class="font-Raleway-SemiBold">Add KSP Radio</span>" as a WhatsApp text</p>
+            </div>
+          </div>
+        </div>
+        <hr class="col-lg-12 col-md-12 col-sm-12"/>
+        <div class="clearfix"></div>
+        
+        <div class="container margin-bottom20px" *ngIf="allPageBanners.length>0">
+          <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image}}" width="100%"></a>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-bottom20px" *ngIf="curr_playlist1 && curr_playlist2 && playlist1 && playlist2">
+          <div style="width:10%;float:left;">
+            <span class="font-size18 font-Raleway-SemiBold" style="line-height:50px;">CHANNELS</span>
+          </div>
+          <div style="width:90%;float:left;">
+            <ul class="toggleTab">
+              <li (click)="showPlaylist1=true; showPlaylist2=false;" [ngClass]="{'active':showPlaylist1}">{{playlist1.name}}</li>
+              <li style="margin-left:-30px;" (click)="showPlaylist1=false; showPlaylist2=true;" [ngClass]="{'active':showPlaylist2}">{{playlist2.name}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div *ngIf="curr_playlist1 && curr_playlist2">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top-bottom-5px" *ngIf="showPlaylist1">
+            <div *ngFor="let radio of curr_playlist1; let i=index" >
+              <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo margin-top5px" *ngIf="promotionsArr[i] && promotionsArr[i].img_path">
+                <div class="single-blog-item box-shadow height-350px">
+                  <a href="safeUrl(promotionsArr[i].link)">
+                    <div class="blog-thumnail">
+                      <div id="crop-feature-image-tv">
+                        <img src="{{promotionsArr[i].img_path.substring( 0, promotionsArr[i].img_path.lastIndexOf('/')) + '/w_400' + promotionsArr[i].img_path.substring( promotionsArr[i].img_path.lastIndexOf('/'), promotionsArr[i].img_path.length)}}" width="100%" height="200px" class="image-fit" style="object-position: top center;">
+                      </div>
+                      <section class="post-footer">
+                        <div class="">
+                          <div class="comment">
+                            <div class="blog-content all-caps">
+                              <div *ngIf="promotionsArr[i].tags">
+                                <div *ngFor="let x of promotionsArr[i].tags.split(',')">
+                                  <span>
+                                    <span class="ion-android-data light-blue-button all-caps small-button" style="border-radius: 6px;">
+                                      {{x}}
+                                    </span>
+                                  </span>
+                                  &nbsp;
+                                </div>
+                              </div>
+                              <h4 class="blog-ellipsis"><a href="safeUrl(promotionsArr[i].link)" target="_blank">{{promotionsArr[i].excerpt}}</a></h4>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4 paddingNo margin-top5px" >
+                <div class="single-blog-item box-shadow height-350px">
+                  <div class="blog-thumnail">
+                    <div id="crop-feature-image-tv">
+                      <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                        <div class="three-by-two-image-container" style="padding-top:56.25%!important;">
+                          <img class="three-by-two-image" src="{{radio.radio_image ? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_400' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}" style="width:100%;height:100%;" alt="">
+                        </div>
+                      </a>
+                    </div>
+                    <section class="post-footer">
+                      <div class="">
+                        <div class="comment">
+                            <div class="blog-content all-caps">
+                              <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'"></app-category>
+                              <h4 class="blog-ellipsis"><a href="/details/{{radio.perma_link}}/{{radio.id}}">{{radio.title}}</a></h4>
+                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo border-righ">
+                                <div class="media-left">
+                                  <a routerLink="/authorwise-posts/{{radio.creator_id}}">
+                                    <app-round-pic [picPath]="radio.author_path" [userName]="radio.author_name" [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                    <a routerLink="/authorwise-posts/{{radio.creator_id}}" class="anchor-username">
+                                      <h4 class="media-heading capitalize font-size13 color-black">{{radio.author_name}}</h4>
+                                    </a>
+                                    <span class="anchor-time all-caps" [innerHtml]="_commonService.setDateFormat(radio.published_date) | date:'yMMMd'"></span>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                     <ul class="list-unstyled text-left pull-right width-100per">
+                                        <app-likecomment [loveData]="radio.liked" [entityType]="radio.post_type" [entityId]="radio.id" [permaLink]="radio.perma_link" [loveCount]="radio.likes" [commentCount]="radio.comment_count"></app-likecomment>
+                                     </ul>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                      </div>
+                    </section>
+                  </div>
+                  <app-bookmark [bookmarkData]="radio.bookmarked" [entityType]="radio.post_type" [entityId]="radio.id" [bookmarkCount]="radio.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'"></app-bookmark>
+                </div>
+              </div>  
+            </div>
+            <div class="clearfix"></div>
+            <div class="row margin-top margin-bottom15" *ngIf="paginations.length > 0">
+              <div class="container width-1170">
+                  <div class="pull-right">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                          <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                          <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                        </li>
+                        <li [class]="isNext ? '' : 'disabled'">
+                          <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+              </div>
+            </div>
+          </div>
+            
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top-bottom-5px" *ngIf="showPlaylist2">
+            <div *ngFor="let radio of curr_playlist2; let i=index">
+              <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 paddingNo margin-top5px" *ngIf="promotionsArr[i] && promotionsArr[i].img_path">
+                <div class="single-blog-item box-shadow height-350px">
+                  <a href="safeUrl(promotionsArr[i].link)" target="_blank">
+                    <div class="blog-thumnail">
+                      <div id="crop-feature-image-tv" style="height: 275px;">
+                        <img src="{{promotionsArr[i].img_path.substring( 0, promotionsArr[i].img_path.lastIndexOf('/')) + '/w_400' + promotionsArr[i].img_path.substring( promotionsArr[i].img_path.lastIndexOf('/'), promotionsArr[i].img_path.length)}}" width="100%" height="200px" class="image-fit">
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4 paddingNo margin-top5px" >
+                <div class="single-blog-item box-shadow height-350px">
+                  <div class="blog-thumnail">
+                    <div id="crop-feature-image-tv">
+                      <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                        <div class="three-by-two-image-container" style="padding-top:56.25%!important;">
+                          <img class="three-by-two-image" src="{{radio.radio_image ? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_400' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}" style="width:100%;height:100%;" alt="">
+                        </div>
+                      </a>
+                    </div>
+                    <section class="post-footer">
+                      <div class="">
+                        <div class="comment">
+                            <div class="blog-content all-caps">
+                              <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'"></app-category>
+                              <h4 class="blog-ellipsis"><a href="/details/{{radio.perma_link}}/{{radio.id}}">{{radio.title}}</a></h4>
+                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo border-righ">
+                                <div class="media-left">
+                                  <a routerLink="/authorwise-posts/{{radio.creator_id}}">
+                                    <app-round-pic [picPath]="radio.author_path" [userName]="radio.author_name" [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                    <a routerLink="/authorwise-posts/{{radio.creator_id}}" class="anchor-username">
+                                      <h4 class="media-heading capitalize font-size13 color-black">{{radio.author_name}}</h4>
+                                    </a>
+                                    <span class="anchor-time all-caps" [innerHtml]="_commonService.setDateFormat(radio.published_date) | date:'yMMMd'"></span>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                     <ul class="list-unstyled text-left pull-right width-100per">
+                                        <app-likecomment [loveData]="radio.liked" [entityType]="radio.post_type" [entityId]="radio.id" [permaLink]="radio.perma_link" [loveCount]="radio.likes" [commentCount]="radio.comment_count"></app-likecomment>
+                                     </ul>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                      </div>
+                    </section>
+                  </div>
+                  <app-bookmark [bookmarkData]="radio.bookmarked" [entityType]="radio.post_type" [entityId]="radio.id" [bookmarkCount]="radio.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'"></app-bookmark>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row margin-top margin-bottom15" *ngIf="paginations2.length > 0">
+              <div class="container width-1170">
+                  <div class="pull-right">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <li [class]="isPrevious2 ? '' : 'disabled'" class="disabled">
+                          <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage2(currentPage2 - 1)">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li *ngFor="let i of paginations2" [class]="currentPage2==i ? 'active' : ''">
+                          <a href="javascript:void(0);" (click)="getNewPage2(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                        </li>
+                        <li [class]="isNext2 ? '' : 'disabled'">
+                          <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage2(currentPage2 + 1)">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="container margin-top" *ngIf="allPageBanners.length>1">
+          <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img src="{{allPageBanners[1].image}}" width="100%"></a>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>

@@ -1,0 +1,178 @@
+.profile-content{
+  border-radius: 10px!important;
+  margin-bottom: 0px!important;
+}
+.profile-sidebar{
+  border-radius: 10px!important;
+}
+.answer-style{
+  font-size: 12px!important;
+  border-radius:50px!important;
+  white-space:nowrap;
+  line-height: 27px;
+  color:#ffffff;
+}
+.no-answer-style{
+  font-size: 12px!important;
+  border-radius:50px!important;
+  white-space:nowrap;
+  line-height: 27px;
+  background-color: #c2c2c2;
+  color: #000000;
+  font-weight: 400!important;
+}
+.user-image-upload-btn{
+  position: absolute;
+  z-index: 9;
+  /*top: 33%;
+  left: 53%;*/
+  top: 185px;
+  left: 325px;
+  background-color: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 96px;
+  display: inline-block;
+}
+.user-image-upload-btn input{
+  height:74px;
+}
+.child-image-upload-btn{
+  position: absolute;
+  z-index: 9;
+  /*top: 35%;
+  left: 53%;*/
+  top: 185px;
+  left: 325px;
+  background-color: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 96px;
+  display: inline-block;
+}
+.child-image-upload-btn input{
+  height:74px;
+}
+
+.user_pic{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  float: none;
+  margin: 0 auto;
+  object-fit: cover;
+  object-position: center;
+}
+.user_pic_view{
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
+  float: none;
+  margin: 0 auto;
+  object-fit: cover;
+  object-position: center;
+}
+.child-pic{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  /*border-width: 4px;
+  border-style: solid;
+  border-color: #fff;*/
+}
+.profile-pic-bg{
+  background-color: #e35b7f;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+input{
+	text-align:left!important;
+}
+.capitalize{
+  text-transform: capitalize;
+}
+.bg-white{
+  background-color: #fff;
+}
+.max-width480{
+  max-width: 480px!important;
+}
+.no-child{
+  min-height: 600px;
+  text-align: center;
+}
+.no-child div{
+  margin-top: 50%;
+}
+
+.margin-favourite{
+  /*margin-top: 30px!important;*/
+}
+
+/* favourite color */
+.btn span.glyphicon {
+	opacity: 0;
+}
+.btn.active span.glyphicon {
+	opacity: 1;
+}
+.color-label{
+  width: 30px!important;
+  border-radius: 50%!important;
+  margin-right: 15px;
+}
+.color-select{
+  top:2px!important;
+  right:7px!important;
+}
+.capitalize{
+  text-transform: capitalize!important;
+}
+
+
+/*Profile completion progress-bar*/
+.progressBar .cont{
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
+  position: relative;
+}
+#progress-bar{
+  appearance:none;
+  width: 100%;
+  color: #000;
+  height: 5px;
+  margin: 0 auto;
+  background: #36312b;
+  margin-left: 1px;
+}
+.progressBar span {
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  border: 5px solid #eaeaea;
+  background: #44d3ca;
+  position: absolute;
+  left:0;
+  top: 4px;
+  /*cursor: pointer;*/
+  transition: all 0.4s ease-in-out;
+}
+#progress-bar::-webkit-progress-value{
+  background: #00d3ca;
+  transition: all 2s ease-in-out;
+}
+#progress-bar::-webkit-progress-bar{
+  background: #c2c2c2;
+}
+.progressBar span.border-change{
+  border-color: #0eb2a8!important;
+  transition: all 2s ease-in-out!important;
+}
+.progressBar .second{left: 20%!important;}
+.progressBar .third{left: 40%!important;}
+.progressBar .fourth{left: 60%!important;}
+.progressBar .fifth{left: 80%!important;}
+.progressBar .sixth{left: 100%!important;}

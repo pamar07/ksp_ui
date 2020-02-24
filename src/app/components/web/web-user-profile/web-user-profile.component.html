@@ -1,0 +1,1023 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content" class="gry-background" *ngIf="user_profile_details">
+  <section class="wrapper">
+    <div class="row margin-bottom15">
+      <div class="container">
+        <div class="col-md-12 main-title-outer-nobr"><a routerLink="/dashboard"> <i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp;&nbsp;Back to Dashboard </a></div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-bottom15">
+      <div class="container">
+        <div class="row profile">
+          <div class="col-md-3">
+            <div class="profile-sidebar profile-pinkbg padding-bottom10px">
+              <div class="col-md-12">
+                <ul>
+                  <li class="pull-right"><a href="javascript:void(0);" (click)="showProfilePopup=true" title="Edit Profile Details" data-toggle="modal" data-target="#profile-left"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
+                </ul>
+              </div>
+              <div class="profile-userpic"> <img src="{{ user_profile_details.image_path ? (user_profile_details.image_path.substring( 0, user_profile_details.image_path.lastIndexOf('/')) + '/w_200' + user_profile_details.image_path.substring( user_profile_details.image_path.lastIndexOf('/'), user_profile_details.image_path.length)) : 'assets/images/blank-profile-picture.png'}}" class="img-responsive user_pic_view" alt="" > </div>
+              <div class="profile-usertitle">
+                <div class="profile-usertitle-name capitalize" [innerHtml]="user_profile_details.name"> </div>
+                <!-- <div class="profile-usertitle-job" [innerHtml]="user_profile_details.timeline_tag"></div> -->
+              </div>
+              <!-- <div class="profile-usermenu">
+                <ul class="profile">
+                  <li class="padding30"><p style="color:#000;" [innerHtml]="user_profile_details.about_yourself"></p></li>
+                  <li class="padding030">
+                    <div class="center margin-top6">
+                      <ul class="social-network social-circle">
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa"><img src="assets/images/fac.png" width="100%" height="auto" alt=""/></i></a></li>
+                        <li><a href="#" class="icoInstagram" title="Instagram"><i class="fa" aria-hidden="true"><img src="assets/images/ints.png" width="100%" height="auto" alt=""/></i></a></li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa"><img src="assets/images/twt.png"  width="100%" height="auto" alt=""/></i></a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div> -->
+            </div>
+            <div class="profile-sidebar margin-top">
+              <div class="col-md-12">
+                <ul>
+                  <li>
+                    <h4>
+                      <span class="color-pink">Profile Details</span>
+                      <!--a href="javascript:void(0);" title="Edit" class="pull-right" data-toggle="modal" data-target="#profile-left"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a-->
+                    </h4>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <hr>
+              <div class="col-md-12">
+                <div class="form-group display">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black"><strong>City</strong></label>
+                  <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top">
+                    {{user_profile_details.city == 'National' ? (user_profile_details.cityOther ?  user_profile_details.cityOther : user_profile_details.city) : user_profile_details.city}}
+                  </label>
+                </div>
+                <div class="form-group display">
+                  <label for="exampleInputEmail" class="col-lg-12 color-black"><strong>Email</strong></label>
+                  <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top" [innerHtml]="user_profile_details.email"></label>
+                </div>
+                <div class="form-group display">
+                  <label for="telephone" class="col-lg-12 color-black"><strong>Date of Birth</strong></label>
+                  <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top" [innerHtml]="setDateFormat(user_profile_details.dateofbirth) | date:'yMMMd'"></label>
+                </div>
+                <div class="form-group display">
+                  <label for="telephone" class="col-lg-12 color-black"><strong>Phone Number</strong></label>
+                  <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top" [innerHtml]="user_profile_details.phone"></label>
+                </div>
+                <div class="form-group display">
+                  <label for="telephone" class="col-lg-12 color-black"><strong>Occupation</strong></label>
+                  <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top" [innerHtml]="user_profile_details.occupation ? user_profile_details.occupation : 'Not Mentioned'">Govt Job</label>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="profile-sidebar margin-top yellowBox">
+              <div class="col-md-12">
+                <ul>
+                  <li>
+                    <h4><span class="color-white">Onboard Child</span> <!--a href="javascript:void(0);" title="Edit Profile Details" data-toggle="modal" data-target="#profile-left" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </h4>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <hr>
+              <div class="profile-usermenu yellowBox color-white">
+                <ul class="profile">
+                  <li class="padding-n">Have a baby on the way?<br/>Introduce baby to us!</li>
+                  <li class="padding030">
+                    <div class="col-md-12 col-lg-12 paddingNo">
+                      <div class="col-md-7 col-lg-7 paddingNo"> <a href="javascript:void(0);" (click)="showOnboardPopup=true" data-toggle="modal" data-target="#onboard-child" class="btn whitebtn-background font-size13">Click Here</a> </div>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+                <br>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="profile-content">
+                <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12 padding-left0">
+                  <div class="form-group margin-bottom0">
+                    <div class="col-lg-10 col-md-10 col-xlg-10 col-sm-10 paddingNo">
+                      <h4>
+                        <span class="color-pink">Profile Completion</span>
+                      </h4>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xlg-2 col-sm-2 paddingNo">
+                      <h4>
+                        <span class="color-black pull-right font-Raleway-SemiBold" style="transition: all 5s ease;">{{roundOffNumber(profileProgress)}} %</span>
+                      </h4>
+                    </div>
+
+                    <section class="progressBar margin-top20px col-lg-12 col-md-12 col-xlg-12 col-sm-12 paddingNo">
+                        <div class="cont">
+                            <progress id="progress-bar" min="0" max="100" value="{{profileProgress}}"></progress>
+                            <span class="first border-change"><!--0%--></span>
+                            <span class="second" [ngClass]="{'border-change':profileProgress>=20}"><!--20%--></span>
+                            <span class="third" [ngClass]="{'border-change':profileProgress>=40}"><!--40%--></span>
+                            <span class="fourth" [ngClass]="{'border-change':profileProgress>=60}"><!--60%--></span>
+                            <span class="fifth" [ngClass]="{'border-change':profileProgress>=80}"><!--80%--></span>
+                            <span class="sixth" [ngClass]="{'border-change':profileProgress==100}"><!--100%--></span>
+                        </div>
+                    </section>
+                  </div>
+                </div>
+            </div>
+            <div class="profile-content" *ngIf="tmp_user_profile_details">
+                <div class="col-md-12 paddingNo">
+                  <div class="form-group margin-bottom0">
+                    <span class="pull-right">
+                      <a href="javascript:void(0);" title="Edit tell us about yourself" (click)="showSaveTellus=!showSaveTellus"><i class="fa fa-pencil color-pink" aria-hidden="true"></i></a>
+                    </span>
+                    <h4><span class="color-pink">About You</span> </h4>
+                    <p class="font-size13 color-gray font-Raleway-SemiBold" *ngIf="!showSaveTellus">{{user_profile_details.timeline_tag}}</p>
+                    <textarea *ngIf="showSaveTellus" class="form-control max-width480 margin-top" style="height:50px; padding:15px; min-height:50px; min-width: 150px;" id="description" placeholder="e.g. Mother of two lovely kids and travel enthusiast  (Max. 50 characters)" [(ngModel)]="tmp_user_profile_details.timeline_tag" maxlength="50" autofocus></textarea>
+                  </div>
+                  <div class="col-md-12 col-lg-12 paddingNo" *ngIf="showSaveTellus">
+                    <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="updateAboutYourself()" class="btn green-background blue-green font-size13">Save</a> </div>
+                  </div>
+                </div>
+            </div>
+            <br>
+            <div *ngIf="child_details">
+              <div class="profile-content no-child" *ngIf="child_details.length == 0">
+                <div class="color-gray" *ngIf="!expectingAgegroupCheck && !planingAgegroupCheck">No Child Information</div>
+
+                <div *ngIf="expectingAgegroupCheck">
+                  Have a baby on the way? Introduce baby to us!
+                  <a href="javascript:void(0);" (click)="showOnboardPopup=true" data-toggle="modal" data-target="#onboard-child" class="light-blue-button small-button font-size13 answer-style" style="background-color: #ab0570">Click Here</a>
+                </div>
+
+                <div *ngIf="planingAgegroupCheck">
+                  Expecting a baby ? start your parenting journey with Kidsstoppress!
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="#planingAgegroupPopup" class="light-blue-button small-button font-size13 answer-style" style="background-color: #ab0570">Click Here</a>
+                </div>
+              </div>
+              <div class="profile-content" *ngIf="child_details.length > 0">
+              <div class="tabbable-panel">
+                <div class="tabbable-line">
+                  <ul class="nav nav-tabs ">
+                    <li *ngFor="let child of child_details; let i=index" [ngClass]="{'active':i==0}">
+                      <a href="#tab_default_{{i+1}}" data-toggle="tab"><span> {{getFirstName(child.name) | capitalize}} </span></a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane" *ngFor="let child of child_details; let i=index" [ngClass]="{'active':i==0}" id="tab_default_{{i+1}}">
+                      <div class="col-md-12 col-lg-12 paddingNo pull-left">
+                        <span class="dropdown-toggle pull-left">
+                          <img src="{{ child.img_path ? (child.img_path.substring( 0, child.img_path.lastIndexOf('/')) + '/w_200' + child.img_path.substring( child.img_path.lastIndexOf('/'), child.img_path.length)) : 'assets/images/blank-profile-picture.png'}}" class="child-pic" alt=""/>
+                          <div class="pull-right paddinglr"> <span class="user-name pink-color capitalize"><b>{{child.name | capitalize}}</b> </span> <br>
+                            <span class="font-size13 color-gray">
+                              <small>{{child.gender=='Male' ? 'Son' : 'Daughter'}} of <span class="text-capitalize">{{user_profile_details.name}}</span></small>
+                            </span>
+                          </div>
+                        </span>
+                        <a href="javascript:void(0);" (click)="showChildPopup=true" title="Edit {{child.name}}'s Details" class="pull-right"  data-toggle="modal" data-target="#child-detail">
+                          <i class="fa fa-pencil color-pink" aria-hidden="true" (click)="current_child_edit=i"></i>
+                        </a>
+                      </div>
+                      <div class="profile-sidebar col-md-12">
+                        <hr>
+                        <div class="col-md-2 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>Gender</strong></label>
+                                <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top paddingNo text-capitalize">{{child.gender}}</label>
+                              </div>
+                          </ul>
+                        </div>
+                        <div class="col-md-4">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>Date of Birth</strong></label>
+                                <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top  paddingNo">{{setDateFormat(child.dateofbirth) | date:'yMMMd'}}</label>
+                              </div>
+                          </ul>
+                        </div>
+                        <div class="col-md-6 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>School</strong></label>
+                                <label for="exampleInputUsername" class="col-lg-12 color-gray margin-top paddingNo text-capitalize">{{child.school}}</label>
+                              </div>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                      </div>
+                      <div class="col-lg-12 col-xlg-12 col-sm-12 col-md-12 paddingNo">
+                        <a href="javascript:void(0);" title="Edit {{child.name}}'s Favourites" class="pull-right" (click)="showSaveChildfav=!showSaveChildfav">
+                          <i class="fa fa-pencil color-pink" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12" *ngIf="!showSaveChildfav && child.favourites">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What genre of books does your kid like to read?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.book.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.book">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ff5541;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                          <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What cuisine does your kid love to eat when you go out to eat?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.cuisine.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.cuisine">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#f0822a;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                          <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What does your child like doing with you?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.hobby.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.hobby">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#2690c3;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                          <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What does your child like to watch on TV?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.tv.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.tv">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ab0570;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                          <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">How long does your child play outside?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.playtime.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.playtime">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ac2925;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                          <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                          <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What is your Child's favourite app?</strong></label>
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                            <span *ngIf="child.favourites.app.length==0">
+                              <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                            </span>
+                            <span *ngFor="let item of child.favourites.app">
+                              <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#1e688d;" [innerHTML]="item.itemName"></span>&nbsp;
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <span *ngIf="showSaveChildfav">
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_bookList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What genre of books does your kid like to read?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_bookList"
+                                    [(ngModel)]="child.favourites.book"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_cuisineList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What cuisine does your kid love to eat when you go out to eat?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_cuisineList"
+                                    [(ngModel)]="child.favourites.cuisine"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_hobbyList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What does your child like doing with you?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_hobbyList"
+                                    [(ngModel)]="child.favourites.hobby"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_tvList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What does your child like to watch on TV?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_tvList"
+                                    [(ngModel)]="child.favourites.tv"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_playList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>How long does your child play outside?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_playList"
+                                    [(ngModel)]="child.favourites.playtime"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_appList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What is your Child's favourite app?</strong> <!--a href="#popup1" title="Edit" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </label>
+                                <div class="dropdown margin-top">
+                                  <angular2-multiselect
+                                    [data]="child_appList"
+                                    [(ngModel)]="child.favourites.app"
+                                    [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="OnItemDeSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelectAll)="onDeSelectAll($event)">
+                                  </angular2-multiselect>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      <!-- <div class="profile-sidebar col-md-12 paddingNo" *ngIf="child_colorList && child.favourites">
+                        <div class="col-md-12 paddingNo">
+                          <ul>
+                            <li>
+                              <div class="form-group display">
+                                <label for="exampleInputUsername" class="col-lg-12 color-black  paddingNo"><strong>Favorite Colour</strong></label>
+                                <div class="btn-group margin-top" data-toggle="buttons">
+                            			<label class="btn btn-default color-label"
+                                      *ngFor="let color of child.favourites.color; let j=index"
+                                      [ngStyle]="{'background-color' : color.itemName}"
+                                      [ngClass]="{'active':(color.selected==1)}"
+                                      (click)="updateFavColor(i,j)">
+                            				<input type="checkbox" autocomplete="off" [(ngModel)]="child.favourites.color[j].checked">
+                            				<span class="glyphicon glyphicon-ok color-select"></span>
+                            			</label>
+                          		  </div>
+                              </div>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div> -->
+                      <div class="col-md-12 col-lg-12 paddingNo">
+                        <div class="col-md-4 col-lg-4 paddingNo"> <a href="javascript:void(0);" (click)="updateChildFavourites(i,child.id)" class="btn green-background blue-green font-size13" onclick="window.scrollTo(0,0);">Save Changes</a> </div>
+                      </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="profile-sidebar">
+              <div class="col-md-12">
+                <ul>
+                  <li>
+                    <h4><span class="color-pink">Details</span>
+                      <!--a href="javascript:void(0);" title="Edit your favourites" class="pull-right margin45" (click)="showSaveUserfav=!showSaveUserfav">
+                        <i class="fa fa-pencil color-pink" aria-hidden="true"></i>
+                      </a-->
+                      <a href="javascript:void(0);" title="Edit your favourites" class="pull-right" (click)="showSaveUserfav=!showSaveUserfav"> <i class="fa fa-pencil color-pink" aria-hidden="true"></i></a>
+                    </h4>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <hr>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12" *ngIf="!showSaveUserfav">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What genre of books do you like to read?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedBook.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedBook">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ff5541;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What cuisine do you love to eat when you go out to eat?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedCuisine.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedCuisine">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#f0822a;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What is your ideal family holiday?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedPlace.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedPlace">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#2690c3;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What do you like doing in your free time?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedHobby.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedHobby">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ab0570;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What is your favourite thing to do with your child?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedDowithchild.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedDowithchild">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#ac2925;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">What is your parenting style?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedParenting.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedParenting">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#1e688d;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">How do you use technology in your parenting?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedTechnology.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedTechnology">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#804aeb;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                  <hr class="col-xlg-12 col-lg-12 col-md-12 col-sm-12 margin-top-bottom-10px paddingNo">
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-bottom15px">
+                  <label class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo color-black"><strong style="line-height:1.4;">How do you destress after the kids are off to bed?</strong></label>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xlg-12 paddingNo margin-top">
+                    <span *ngIf="selectedDestress.length==0">
+                      <span class="ion-android-data light-blue-button small-button no-answer-style">Not Answered</span>&nbsp;
+                    </span>
+                    <span *ngFor="let item of selectedDestress">
+                      <span class="ion-android-data light-blue-button small-button answer-style" style="background-color:#358f09;" [innerHTML]="item.itemName"></span>&nbsp;
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12" *ngIf="showSaveUserfav">
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin0">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What genre of books do you like to read?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="bookList"
+                      [(ngModel)]="selectedBook"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What cuisine do you love to eat when you go out to eat?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="cuisineList"
+                      [(ngModel)]="selectedCuisine"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What is your ideal family holiday?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="placeList"
+                      [(ngModel)]="selectedPlace"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What do you like doing in your free time?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="hobbyList"
+                      [(ngModel)]="selectedHobby"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What is your favourite thing to do with your child?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="dowithchildList"
+                      [(ngModel)]="selectedDowithchild"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>What is your parenting style?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="parentingList"
+                      [(ngModel)]="selectedParenting"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>How do you use technology in your parenting?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="technologyList"
+                      [(ngModel)]="selectedTechnology"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+                <div class="form-group display col-md-12 md-lg-12 paddingNo margin-favourite">
+                  <label for="exampleInputUsername" class="col-lg-12 color-black paddingNo"><strong>How do you destress after the kids are off to bed?</strong></label>
+                  <div class="dropdown margin-top">
+                    <angular2-multiselect
+                      [data]="destressList"
+                      [(ngModel)]="selectedDestress"
+                      [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="OnItemDeSelect($event)"
+                      (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event)">
+                    </angular2-multiselect>
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-lg-12 paddingNo margin-top-bottom-10px">
+                  <div class="col-md-12 col-lg-12 paddingNo"> <a href="javascript:void(0);" (click)="updateUserFavourites()" class="btn green-background blue-green font-size13" onclick="window.scrollTo(0,0);">Save Changes</a> </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="profile-sidebar margin-top yellowBox">
+              <div class="col-md-12">
+                <ul>
+                  <li>
+                    <h4><span class="color-white">Change Password</span> <!--a href="javascript:void(0);" title="Edit Profile Details" data-toggle="modal" data-target="#profile-left" class="pull-right"> <i class="fa fa-pencil color-gray" aria-hidden="true"></i></a--> </h4>
+                  </li>
+                </ul>
+              </div>
+              <br>
+              <hr>
+              <div class="profile-usermenu yellowBox color-white">
+                <ul class="profile">
+                  <li class="padding-n">Here you can change your password.</li>
+                  <li class="padding030">
+                    <div class="col-md-12 col-lg-12 paddingNo">
+                      <div class="col-md-7 col-lg-7 paddingNo"> <a href="javascript:void(0);" data-toggle="modal" data-target="#change-password" class="btn whitebtn-background font-size13">Change Here</a> </div>
+                    </div>
+                  </li>
+                </ul>
+                <br>
+                <br>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!--main content end-->
+
+<!-- Popup -->
+
+<div id="profile-left" class="modal fade" role="dialog" *ngIf="showProfilePopup">
+  <div class="modal-dialog" *ngIf="tmp_user_profile_details">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" (click)="showProfilePopup = false" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Profile Details</a>  </h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+            <div class="profile-pic-bg">
+              <div class="fileUpload btn btn-primary user-image-upload-btn">
+                <input type="file" class="upload" (change)="userProfilePicChange($event)"/>
+              </div>
+              <div>
+                <img [src]="tmp_user_profile_details.image_path ? tmp_user_profile_details.image_path : 'assets/images/blank-profile-picture.png'" class="img-responsive user_pic" alt="" >
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.name">
+            </div>
+
+            
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+                <label for="exampleInputUsername" class="color-black"><b>Email</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.email">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <label for="exampleInputUsername1" class="color-black"><b>Date of Birth</b></label>
+                <div class="form-control input-sm bg-white">
+                  <app-dd-datetime (dateChange)="onDateChange($event,1)" yearMax="0" yearMin="100" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="tmp_user_profile_details.dateofbirth"></app-dd-datetime>
+                </div>
+                <!-- <input type="date" class="form-control margin-top6 input-sm bg-white" [(ngModel)]="tmp_user_profile_details.dateofbirth"> -->
+                <!--input class="form-control margin-top6 input-sm bg-white" [value]="tmp_user_profile_details.dateofbirth | date : 'MM/dd/yyyy'" [(ngModel)]="tmp_user_profile_details.dateofbirth" dateTimePicker [autoClose]="true" [pickerType]="'date'" readonly-->
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="tmp_user_profile_details.dateofbirth" mode="date"  readonly></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <label for="exampleInputUsername" class="color-black"><b>Phone Number</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.phone">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <label for="exampleInputUsername" class="color-black"><b>Occupation</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_user_profile_details.occupation">
+                  <option value="Private sector">Private sector</option>
+                  <option value="Public sector">Public sector</option>
+                  <option value="Education industry">Education industry</option>
+                  <option value="Business">Business</option>
+                  <option value="Work from home">Work from home</option>
+                  <option value="Arts/Media/Fashion">Arts/Media/Fashion</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6" *ngIf="cityList">
+              <label for="exampleInputUsername" class="color-black"><b>City</b></label>
+              <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_user_profile_details.city">
+                <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+              </select>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-6" *ngIf="tmp_user_profile_details.city == 'National'">
+              <label for="exampleInputUsername" class="color-black"><b>Other City</b></label>
+              <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.cityOther">
+            </div>
+            <!-- <div class="col-xs-12 col-sm-12 col-md-12">
+                <label for="exampleInputUsername" class="color-black"><b>Timeline Tag</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="tmp_user_profile_details.timeline_tag">
+            </div> -->
+            <div class="col-md-12 col-lg-12">
+              <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="updateUserProfileDetails()" class="btn green-background blue-green font-size13"  data-dismiss="modal">Save</a> </div>
+            </div>
+           </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="child-detail" class="modal fade" role="dialog" *ngIf="showChildPopup">
+  <div class="modal-dialog" *ngIf="tmp_child_details">
+
+    <!-- Modal content-->
+    <div class="modal-content" *ngIf="tmp_child_details[current_child_edit]">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" (click)="showChildPopup = false" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Child Details</a>  </h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+            <div class="profile-pic-bg">
+              <div class="fileUpload btn btn-primary child-image-upload-btn">
+                <input type="file" class="upload" (change)="childPicChange($event)"/>
+              </div>
+              <div>
+                <img [src]="tmp_child_details[current_child_edit].img_path ? tmp_child_details[current_child_edit].img_path : 'assets/images/blank-profile-picture.png'" class="img-responsive user_pic" alt="" >
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_child_details[current_child_edit].name">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Gender</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_child_details[current_child_edit].gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black "><b>Date of Birth</b></label>
+                <div class="form-control input-sm bg-white">
+                  <app-dd-datetime (dateChange)="onDateChange($event,2)" yearMax="0" yearMin="100" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="tmp_child_details[current_child_edit].dateofbirth"></app-dd-datetime>
+                </div>
+                <!--input class="form-control margin-top6 input-sm bg-white" [value]="tmp_child_details[current_child_edit].dateofbirth | date : 'MM/dd/yyyy'" [(ngModel)]="tmp_child_details[current_child_edit].dateofbirth" dateTimePicker [autoClose]="true" [pickerType]="'date'" readonly-->
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="tmp_child_details[current_child_edit].dateofbirth" mode="date" name="tmp_child_details[current_child_edit].dateofbirth" readonly></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>School</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_child_details[current_child_edit].school">
+            </div>
+
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="updateChildDetails()" class="btn green-background blue-green font-size13"  data-dismiss="modal">Save</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="onboard-child" class="modal fade" role="dialog" #onBoardPopup>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Onboard Child</a>  </h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="onboardChild_name">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Gender</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="onboardChild_gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Date of Birth</b></label>
+                <div class="form-control input-sm bg-white">
+                  <app-dd-datetime (dateChange)="onDateChange($event,3)" yearMax="0" yearMin="100" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="onboardChild_dob"></app-dd-datetime>
+                </div>
+                <!-- <input type="date" class="form-control input-sm" [(ngModel)]="onboardChild_dob" name="onboardChild_dob" placeholder="Date of birth" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"> -->
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="onboardChild_dob" mode="date" readonly></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>School</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="onboardChild_school">
+            </div>
+
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="onboardChild()" class="btn green-background blue-green font-size13"  data-dismiss="modal">Save</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="change-password" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Change Password</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+
+            <div class="col-xs-6 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>New Password</b></label>
+                <input type="password" class="form-control  input-sm" [(ngModel)]="password">
+            </div>
+
+            <div class="col-xs-6 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Confirm Password</b></label>
+                <input type="password" class="form-control  input-sm" [(ngModel)]="confirm_password">
+            </div>
+
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="updatePassword()" class="btn green-background blue-green font-size13"  data-dismiss="modal">Change</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="planingAgegroupPopup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="profile-sidebar">
+          <div class="col-md-12 paddingNo">
+            <h4><a class="color-pink">Expecting a Baby</a></h4>
+          </div>
+          <br>
+          <hr>
+        </div>
+        <div class="row">
+          <!-- <h4 style="text-align: center;">You have crossed the planed date, Are you expecting a baby ?</h4> -->
+          <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+            <label for="exampleInputUsername" class="color-black"><b>Expected Date</b></label>
+            <div class="form-control input-sm bg-white">
+              <app-dd-datetime (dateChange)="onDateChange($event,4)" yearMax="0" yearMin="100" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="dateDue"></app-dd-datetime>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 margin-top">
+            <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" (click)="updateAgeGroup()" class="btn green-background blue-green font-size13"  data-dismiss="modal">Save</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup Ends -->

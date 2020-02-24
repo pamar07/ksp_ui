@@ -1,0 +1,42 @@
+<!-- For Site and Guest users -->
+<!-- <div class="container-fluid paddingNo" style="margin-top: 28px;">
+  <img src = "/assets/images/festive-banner/christmas/christmas-banner-mobile.png" class="img-responsive festive-banner" alt="Christmas Banner">
+</div> --> 
+<!-- <div class="container-fluid paddingNo" style="margin-top: 28px;">
+  <img src = "/assets/images/festive-banner/newyear/New_year_banner_mobile_new.png" class="img-responsive festive-banner" alt="New Year Banner">
+</div>  -->
+    <!-- <img src="assets/images/christmas-banner.png" class="mobile-bg" width="auto" /> -->
+<div class="menu-scroll-box mobile-top-menu" *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" >
+    <!-- <img src="assets/images/banner-background.png" class="web-logo-hide" width="auto" /> -->
+  <a *ngIf="!_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" href="/home" class="menu-tab-mobile" aria-selected="true">Home</a>
+  <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/dashboard" class="menu-tab-mobile" aria-selected="true">Home</a>
+
+  <a *ngIf="!_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/article-public" class="menu-tab-mobile">Articles</a>
+  <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/article-user" class="menu-tab-mobile">Articles</a>
+
+  <a routerLinkActive="mobile-tab-selected" href="https://shop.kidsstoppress.com/" class="menu-tab-mobile">Shop</a>
+  <!-- <a *ngIf="!_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/social-public" class="menu-tab-mobile">Groups</a> -->
+  <!-- <a routerLinkActive="mobile-tab-selected" routerLink="/summer-funfactory" class="menu-tab-mobile" style="color: #F3B63A !important;">Summer Fun Factory</a> -->
+  <a routerLinkActive="mobile-tab-selected" routerLink="/grow-right" class="menu-tab-mobile" style="color: #502b65 !important;">Grow Right</a>
+  <a routerLinkActive="mobile-tab-selected" routerLink="/event-all" class="menu-tab-mobile">Events</a>
+  <a routerLinkActive="mobile-tab-selected" routerLink="/categorywise-article/20" class="menu-tab-mobile">Meal Plan</a> 
+  <a routerLinkActive="mobile-tab-selected"  class="menu-tab-mobile" *ngFor="let item of awardMenu" [routerLink]="['awards', item.id]">{{item.heading}}</a>
+  <a routerLinkActive="mobile-tab-selected" routerLink="/KSPAwards2018" class="menu-tab-mobile">Awards 2018</a>
+  <!-- <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/social-user" class="menu-tab-mobile">Groups</a> -->
+  <a routerLinkActive="mobile-tab-selected" routerLink="/radio-all" class="menu-tab-mobile">Radio</a>  
+  <a routerLinkActive="mobile-tab-selected" routerLink="/tv-all" class="menu-tab-mobile">TV</a>
+  <a routerLinkActive="mobile-tab-selected" routerLink="/ksp-code" class="menu-tab-mobile">CODE</a>
+  <!-- <a routerLinkActive="mobile-tab-selected" routerLink="/KSPAwards2018" class="menu-tab-mobile">Awards 2018</a> -->
+  <span style="position: sticky;position: -webkit-sticky;right: 0px;padding: 9px 4px;color: #fff; background-color: #e35b7f"><i class="fa fa-chevron-right"></i></span>    
+
+</div>
+
+<!-- For Business User -->
+<div class="menu-scroll-box mobile-top-menu" *ngIf="_apiService.loggedIn() && _apiService.getAuthUser().usertype == 5">
+  <a routerLinkActive="mobile-tab-selected" routerLink="/brand-dashboard" class="menu-tab-mobile" aria-selected="true">Home</a>
+  <a routerLinkActive="mobile-tab-selected" routerLink="/manage-events" class="menu-tab-mobile">Manage Events</a>
+</div>
+
+<!--Dummy div to fill up the blank space created by the above div due to fixed position-->
+<!--<div class="mobile-menu-dummy-div" *isMobile></div>-->
+<!--<div class="tablet-menu-dummy-div" *isTablet></div>-->

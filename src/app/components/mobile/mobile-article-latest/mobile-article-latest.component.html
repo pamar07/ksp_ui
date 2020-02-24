@@ -1,0 +1,91 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<div class="agile-main">
+  <div class="content-wrap">
+    <div class="container" *ngIf="articles">
+        <div class="col-sm-12 col-xs-12 paddingNo">
+          <p class="font-Raleway-SemiBold font-size13"><img src="assets/images/ksp-today.svg" width="20" style="margin-right:10px;">KSP TODAY</p>
+          <div class="inn_tab_sec">
+            <div class="tab-content">
+                <div class="inn_media_box margin0">
+                  <div class="media">
+                    <ul *ngFor="let article of articles; let i=index" style="margin-bottom:3px;">
+                      <li class="paddingNo">
+                        <div class="paddingNo col-sm-2 col-xs-3">
+                          <a routerLink="/{{type[article.post_type]}}/{{article.id}}">
+                            <div class="square-thumbnail-image-container">
+                              <img src="{{article.path}}" class="square-thumbnail-image" style="border-radius:4px;">
+                            </div>
+                          </a>
+                        </div>
+                        <div class="col-sm-10 col-xs-9 padding-right0">
+                          <div class="col-sm-12 col-xs-12 padding-left-right0">
+                            <a routerLink="/{{type[article.post_type]}}/{{article.id}}">
+                              <h5 class="font-size13 small-title-excerpt font-Raleway-SemiBold">{{article.title}}</h5>
+                            </a>
+                          </div>
+                          
+                          <div class="col-sm-12 col-xs-12 margin-top padding-left0" *ngIf="article.post_type != 'event'">
+                            <span class="ion-android-data light-blue-button currentCategorySelected-btn" [innerHTML]="article.category[0]?.name" [ngStyle]="{'background-color':article.category[0]?.colour_code}"></span>
+                          </div>
+                          
+                          <div class="col-sm-12 col-xs-12 margin-top padding-left0" *ngIf="article.post_type == 'event'">
+                            <span class="ion-android-data light-blue-button currentCategorySelected-btn" [innerHTML]="article.venue_city" style="background: rgb(219, 101, 35)"></span>
+                          </div>
+
+                          <div class="col-sm-12 col-xs-12 paddingNo" *ngIf="article.post_type != 'event'">
+                            <div class="font-size11 col-sm-8 col-xs-12 margin-top font-size10 padding-left-right0"><a routerLink="/authorwise-posts/{{article.creator_id}}"><span class="pull-left">By {{article.author_name}}</span></a></div>
+                          </div>
+
+                          <div class="col-sm-12 col-xs-12 paddingNo" *ngIf="article.post_type == 'event'">
+                            <div class="font-size11 col-sm-8 col-xs-8 margin-top font-size10 padding-left-right0">
+                              <span class="pull-left pink-color font-size11">
+                                <small *ngIf="getOnlyDate(article.start_date)==getOnlyDate(article.end_date)">{{_commonService.setDateFormat(article.start_date) | date:'mediumDate'}},
+                                  <span *ngIf="article.start_date==article.end_date">{{_commonService.setDateFormat(article.start_date) | date:'shortTime'}}</span>
+                                  <span *ngIf="article.start_date!=article.end_date">{{_commonService.setDateFormat(article.start_date) | date:'shortTime'}} - {{_commonService.setDateFormat(article.end_date) | date:'shortTime'}}</span>
+                                </small>
+                                <small *ngIf="getOnlyDate(article.start_date)!=getOnlyDate(article.end_date)">{{_commonService.setDateFormat(article.start_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(article.start_date) | date:'shortTime'}}&nbsp; - &nbsp;{{_commonService.setDateFormat(article.end_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(article.end_date) | date:'shortTime'}}</small>
+                              </span>
+                            </div>
+                            <div class="paddingNo font-size10 col-sm-4 col-xs-4 margin-top"><span class="pull-right anchor-time margin-left font-size9 font-Raleway-SemiBold">{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}}</span></div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 margin-top-bottom-5px" style="border-bottom: 1px solid #ededed;" *ngIf="i<articles.length-1"></div>
+                        <div class="clearfix"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row margin-top margin-bottom15">
+          <div class="container paddingNo">
+              <div class="pull-right">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                      <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                      <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                    </li>
+                    <li [class]="isNext ? '' : 'disabled'">
+                      <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<hr/>

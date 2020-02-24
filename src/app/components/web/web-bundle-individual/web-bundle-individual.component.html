@@ -1,0 +1,144 @@
+<app-topnavnofilter></app-topnavnofilter>
+
+<div id="main-content">
+    <div class="wrapper">
+      <div class="container premium-border">
+        <div class="row margin-bottom15">
+            <div class="blog-content paddingNo">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div *ngIf="bundle">
+                  <h1 class="noOverflow font-bolder title-header main-top-title">{{bundle.title}}</h1>
+                 
+                  <a *ngFor="let cat of bundle.category_details; let i=index" routerLink="/categorywise-article/{{cat.id}}" >
+                    <span class="ion-android-data light-blue-button all-caps" style="background-color: grey;font-weight:bold" [innerHTML]="cat.category_name"></span>&nbsp;
+                    <!-- <br *ngIf="((i+1)%7)==0">
+                    <br *ngIf="((i+1)%7)==0"> -->
+                  </a>
+
+               
+              </div>
+              <div class="three-by-two-image-container-new position-relative margin-top bundle-image-ratio margin-bottom15px" *ngIf="bundle">
+                <img class="" src="{{bundle.image_or_video_path.substring(0,bundle.image_or_video_path.lastIndexOf('/')) + '/w_350' + bundle.image_or_video_path.substring(bundle.image_or_video_path.lastIndexOf('/'),bundle.image_or_video_path.length)}}" alt="" *ngIf="bundle.type == 0">
+                <div class="bundle-video-ratio"  *ngIf="bundle.type == 1">
+                  <iframe [src]='safeUrl(bundle.image_or_video_path)' style="width:100%" height="300" frameborder="0"
+                  webkitallowfullscreen mozallowfullscreen allowfullscreen> 
+                  </iframe>
+                </div>
+                <span class="magnify-icon" *ngIf="bundle.type == 0"> 
+                  <img (click)="clickMagnify($event)" src="assets/images/white-search.svg">
+                </span>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="bundle">
+                <div class="margin-bottom15 margin-top" *ngIf="!_apiService.loggedIn() && bundle">
+                  <div class="green-bar">
+                    <div class="main-bordernone pull-left">
+                      <div class="main-title btn-white-elli"> <i class="fa" aria-hidden="true">
+                        <img src="assets/images/icon-us.png" width="35" height="36" alt=""></i>
+                        Get weekly stories in your inbox
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             
+              
+              <!-- Advertisement goes here -->
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top15 art-paddingNo no-padding-lr" *ngIf="bundle">
+                <div class="main-title-outer2 pull-left border-bottom0">
+                  <div class="col-md-7 col-lg-7 col-sm-6 col-xs-6 pull-left paddingNo">
+                    <div class="media-left pull-left" >
+                      <a routerLink="/authorwise-posts/{{bundle.creator_id}}">
+                        <app-round-pic [picPath]="bundle.author_image" [userName]="bundle.author_name" [width]="'40px'" [height]="'40px'" [className]="'padding-top2px'"></app-round-pic>
+                      </a>
+                    </div>
+                    <div class="media-body pull-left" style="width: 50% !important;">
+                      <a  routerLink="/authorwise-posts/{{bundle.creator_id}}" class="anchor-username">
+                      <h4 class="media-heading margin-top1per color-black">{{bundle.author_name}}</h4>
+                      </a>
+                      <span class="anchor-time">{{_commonService.setDateFormat(bundle.published_date) | date:'yMMMd'}} <!--| 3 MIN READ--></span>
+                    </div>   
+                    
+                    <div class="media-body">
+                    
+                    </div>  
+  
+                  </div>                           
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo bottom-gap">
+                  <span class="font-size14 article-content-style display-block" [innerHTML]="bundle.content"></span>
+                </div>
+                
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" >
+                  <div class="guest-content-wrapper" *ngIf="!_apiService.loggedIn()">
+                    <div class="guest-content">
+                      <p><strong class="font-size18">You need to be logged-in to be able to see this content.</strong></p>
+                      <p></p>
+                      <p class="color-pink"><strong><a class="color-pink font-size16" routerLink="/login" (click)="setNavigationUrl()">Login</a> / <a class="color-pink font-size16" [routerLink]="['/signup', {c: 'article-'+bundle.id}]" (click)="setNavigationUrl()">Register</a></strong></p>
+                    </div>
+                  </div>
+                  <img src="assets/images/blur-content.png" class="img-responsive" style="width: 100%;" *ngIf="!_apiService.loggedIn()"/>
+                  <!-- <p class="font-size14 width-100per article-content-style" [innerHTML]="bundle.restricted_content" *ngIf="_apiService.loggedIn()"></p> -->
+                </div>
+              
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                  <div class="guest-content-wrapper" *ngIf="_apiService.loggedIn() && checkStatus == 0">
+                    <div class="guest-content">
+                      <p><strong class="font-size18">You need to buy plan to continue reading.</strong></p>
+                      <p></p>
+                      <p class="color-pink" ><strong><a class="color-pink font-size16 cursor_poi" (click)="submitPaymentDet(bundle.id,bundle.price)">Buy Now</a></strong></p>
+                      
+                    </div>
+                  </div>
+                  <img src="assets/images/blur-content.png" class="img-responsive" style="width: 100%;" *ngIf="_apiService.loggedIn() && checkStatus == 0" />
+                  <!-- <p class="font-size14 width-100per article-content-style" [innerHTML]="bundle.restricted_content" *ngIf="_apiService.loggedIn()"></p> -->
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngFor="let item of bundle.item_details; let i=index"  [attr.data-index]="i" >
+                  <div class="" *ngIf="_apiService.loggedIn() && checkStatus == 1">
+                    <h1 class="noOverflow font-bolder title-header">{{i+1}}. &nbsp;{{item.title}}</h1>
+                    <div class="three-by-two-image-container-new position-relative margin-top bundle-image-ratio margin-bottom15px" *ngIf="item && item.image_or_video_path !== null">
+                      <!-- <img class="three-by-two-sectionimage" src="{{item.image_or_video_path}}" alt="" *ngIf="bundle.type == 0"> -->
+                      <img class="" src="{{item.image_or_video_path.substring(0,item.image_or_video_path.lastIndexOf('/')) + '/w_750' + item.image_or_video_path.substring(item.image_or_video_path.lastIndexOf('/'),item.image_or_video_path.length)}}" alt="" *ngIf="item.type == 0">
+                      <div class="bundle-video-ratio"  *ngIf="item.type == 1">
+                        <iframe [src]='safeUrl(item.image_or_video_path)' style="width:100%" height="300" frameborder="0"
+                        webkitallowfullscreen mozallowfullscreen allowfullscreen>  
+                        </iframe>
+                      </div>
+                      <span class="magnify-icon" *ngIf="item.type == 0"> 
+                        <img (click)="clickMagnify($event)" src="assets/images/white-search.svg">
+                      </span>        
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo bottom-gap">
+                      <span class="font-size14 article-content-style display-block" [innerHTML]="item.description"></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- meal plan banner  -->
+                  <!-- <div class="col-md-12 paddingNo" *ngIf='mealPlan'>
+                    <div class="green-bar font-Raleway-SemiBold">
+                        <div class="col-md-6 paddingNo">
+                          <img src='assets/images/Mac-and-Cheese-Boston2.jpg' style="width: 100%;height: 124px;object-fit:  cover;object-position: center;" />
+                        </div>
+                        <div class="col-md-6" style="text-align: center;padding: 40px">
+                          <span class="meal-header">Get 100 meal plans and be worry free for 2 years!</span><br />
+                          <span class="meal-yes-button subscribe-button" data-toggle="modal" data-target="#mealBannerModal">Yes! Show me those plans now!</span><br />
+                        </div>
+                    </div>
+                  </div> -->
+                <!-- meal plan banner -->
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" [vp-in-view-config]="{infinite: true}" (vp-in-view)="articleEnd = true;"></div>
+                <app-web-inline-share [shareCount]="shareCount"></app-web-inline-share>
+              </div>
+            </div>
+           
+          </div>
+      </div>
+      </div>
+
+      <div class="img-pop-modal" *ngIf="openImgPop">
+        <div class="img-pop-content position-relative">
+          <img (click)="closeImgPop()" class="imgPopClose" src="assets/images/cat-cross.png">
+          <img id="img-pop-src" src="">
+        </div>
+      </div>
+    
+    </div>
+  </div>

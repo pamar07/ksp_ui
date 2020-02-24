@@ -1,0 +1,112 @@
+span.item {
+    width: 10em;
+    text-align: left;
+    border-bottom: 1px solid #d1d1d1;
+    float: left;
+    font-size: 12px;
+    font-weight: 600;
+}
+.category{
+  border:1px solid #d05a8e;
+  color: #d05a8e;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 5px;
+  font-size: 14px;
+  
+}
+.reset{
+  width: 100%;
+}
+.reset button{
+  margin: 10px auto;
+  border: 1px solid #c5c5c5;
+  padding: 8px;
+  border-radius: 55px;
+  display: block;
+}
+.selected{
+  background:#d05a8e;
+  color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 5px;
+  font-size: 14px;
+  
+}
+.selected span{
+  color: rgb(255, 255, 255) !important;
+}
+.category span{
+  color: rgb(77, 75, 75);
+}
+.caret{
+  margin-left: 5px!important;
+  float: right;
+  margin-top: 10px;
+}
+.dropdown-filter{
+    cursor:pointer;
+}
+.dropdown-filter:hover{
+    color:#e35b7f!important;
+}
+.color-pink-dropdown{
+  color:#e35b7f!important;
+}
+.no-border-bottom{
+  border-bottom: none!important;
+}
+.bg-gray-dropdown{
+  background-color: rgb(240,240,240)!important;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background: rgb(240,240,240)!important;
+    color: #333333 !important;
+}
+.ellipsis-event-title{
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 18px;
+  width: 100%;
+}
+
+.blog-content h3{
+  /*font-family: Raleway!important;*/
+  font-weight: bold!important;
+  color:#333333!important;
+  margin-bottom: 5px!important;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+  width: 95%!important;
+  top: 0!important;
+	font-weight: 600!important;
+	font-size: 16px!important;
+	text-transform: none!important;
+}
+
+.trending-tag-button{
+  width: auto;
+  padding: 5px 25px;
+  border-radius: 50px;
+  margin: 8px;
+  color:#fff;
+  font-weight:400;
+}
+.trending-tag-button:hover{
+  background-color: #d5d5d5!important;
+  color: #000!important;
+}
+.trending-tag-selected{
+  outline: none;
+  background-size: 12px 12px!important;
+  background-repeat: no-repeat;
+  background-position-x: 9px;
+  background-position-y: 9px;
+  background-color: #d5d5d5!important;
+  color: #000!important;
+}

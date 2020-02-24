@@ -1,0 +1,375 @@
+<div class="agile-main">
+  <div class="content-wrap" >
+    <div class="pink-profile" *ngIf="user_profile_details">
+      <div class="outter"><img src="{{ user_profile_details.image_path ? (user_profile_details.image_path.substring( 0, user_profile_details.image_path.lastIndexOf('/')) + '/w_200' + user_profile_details.image_path.substring( user_profile_details.image_path.lastIndexOf('/'), user_profile_details.image_path.length)) : 'assets/images/blank-profile-picture.png'}}" class="image-circle" alt=""/></div>
+      <h3 class="font-Raleway-SemiBold" [innerHtml]="user_profile_details.name"></h3>
+      <p *ngIf="child_details">
+        <span *ngIf="child_details.length == 1">1 Child</span>
+        <span *ngIf="child_details.length > 1">{{child_details.length}} Children</span>
+      </p>
+    </div>
+    <div class="container gry-background" *ngIf="user_profile_details">
+      <div class="row event-details-card">
+        <div class="col-sm-10 col-xs-10 pull-left paddingNo">
+          <h3 class="font-size16 font-Raleway-SemiBold">Profile Details</h3>
+        </div>
+        <div class="col-sm-2 col-xs-2 pull-right paddingNo">
+          <a class="pull-right" href="javascript:void(0);" data-toggle="modal" data-target="#profile-left">
+            <i class="fa fa-pencil color-pink" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+          <div class="color-gray font-size13" [innerHtml]="user_profile_details.timeline_tag"></div>
+        </div>
+        <span *ngIf="showMoreDetail">
+          <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+            <label for="exampleInputUsername" class="col-xs-4 col-sm-4 paddingNo color-black"><strong>City:</strong></label>
+            <label for="exampleInputUsername" class="col-xs-8 col-sm-8 paddingNo color-gray font-size11">
+              {{user_profile_details.city == 'National' ? (user_profile_details.cityOther ?  user_profile_details.cityOther : user_profile_details.city) : user_profile_details.city}}
+            </label>
+          </div>
+          <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+            <label for="exampleInputUsername" class="col-xs-4 col-sm-4 paddingNo color-black"><strong>Email:</strong></label>
+            <label for="exampleInputUsername" class="col-xs-8 col-sm-8 paddingNo color-gray font-size11" [innerHtml]="user_profile_details.email"></label>
+          </div>
+          <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+            <label for="exampleInputUsername" class="col-xs-4 col-sm-4 paddingNo color-black"><strong>Date of Birth:</strong></label>
+            <label for="exampleInputUsername" class="col-xs-8 col-sm-8 paddingNo color-gray font-size11" [innerHtml]="setDateFormat(user_profile_details.dateofbirth) | date:'yMMMd'"></label>
+          </div>
+          <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+            <label for="exampleInputUsername" class="col-xs-4 col-sm-4 paddingNo color-black"><strong>Phone No:</strong></label>
+            <label for="exampleInputUsername" class="col-xs-8 col-sm-8 paddingNo color-gray font-size11" [innerHtml]="user_profile_details.phone"></label>
+          </div>
+          <div class="col-xs-12 col-sm-12 paddingNo margin-top10px">
+            <label for="exampleInputUsername" class="col-xs-4 col-sm-4 paddingNo color-black"><strong>Occupation:</strong></label>
+            <label for="exampleInputUsername" class="col-xs-8 col-sm-8 paddingNo color-gray font-size11" [innerHtml]="user_profile_details.occupation ? user_profile_details.occupation : 'Not Mentioned'"></label>
+          </div>
+        </span>
+        <!-- <div class="col-xs-12 col-sm-12 paddingNo center margin-top10px">
+          <ul class="social-network social-circle">
+            <li><a class="icoFacebook" href="#" title="Facebook"><i class="fa"><img alt="" height="auto" src="assets/images/fac.png" width="80%"></i></a></li>
+            <li><a class="icoInstagram" href="#" title="Instagram"><i aria-hidden="true" class="fa"><img alt="" height="auto" src="assets/images/ints.png" width="80%"></i></a></li>
+            <li><a class="icoTwitter" href="#" title="Twitter"><i class="fa"><img alt="" height="auto" src="assets/images/twt.png" width="80%"></i></a></li>
+          </ul>
+        </div> -->
+        <!-- <div class="col-xs-12 col-sm-12 paddingNo">
+          <hr style="margin: 10px 0;"/>
+        </div>
+        <div class="col-xs-12 col-sm-12 paddingNo">
+          <h3 *ngIf="!showMoreDetail" class="font-size12 font-Raleway-SemiBold color-pink" (click)="showMoreDetail = true">Show More</h3>
+          <h3 *ngIf="showMoreDetail" class="font-size12 font-Raleway-SemiBold color-pink" (click)="showMoreDetail = false">Show Less</h3>
+        </div> -->
+      </div>
+      <span *ngIf="child_details">
+      <div class="row event-details-card margin-top10px" *ngIf="child_details.length>0">
+        <div class="child-menu-scroll-box">
+          <a *ngFor="let child of child_details; let i=index" (click)="childTabSelected = i" [ngClass]="{'child-mobile-tab-selected':i==childTabSelected}" href="javascript:void(0);" class="child-menu-tab-mobile">{{getFirstName(child.name) | capitalize}}</a>
+        </div>
+        <span *ngFor="let child of child_details; let i=index">
+          <span *ngIf="childTabSelected == i">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 paddingNo pull-left margin-top-bottom-10px">
+            <div class="media-left">
+              <img src="{{ child.img_path ? (child.img_path.substring( 0, child.img_path.lastIndexOf('/')) + '/w_200' + child.img_path.substring( child.img_path.lastIndexOf('/'), child.img_path.length)) : 'assets/images/blank-profile-picture.png'}}" class="child-pic" alt=""/>
+            </div>
+            <div class="media-body">
+              <div class="col-xs-12 col-sm-12 paddingNo">
+                <div class="col-sm-11 col-xs-11 paddingNo">
+                  <span class="user-name color-black capitalize"><b>{{child.name | capitalize}}</b> </span>
+                </div>
+                <div class="col-sm-1 col-xs-1 paddingNo">
+                  <a href="javascript:void(0);" class="pull-right"  data-toggle="modal" data-target="#child-detail">
+                    <i class="fa fa-pencil color-pink" aria-hidden="true" (click)="current_child_edit=i"></i>
+                  </a>
+                </div>
+                <br/>
+                <span class="font-size11 pink-color font-Raleway-SemiBold">
+                  <span>{{child.gender=='Male' ? 'Son' : 'Daughter'}}</span>
+                </span>
+                <br/>
+                <span class="font-size11 color-gray font-Raleway-SemiBold">
+                  <strong>DOB</strong>
+                  <span class="text-capitalize">: {{setDateFormat(child.dateofbirth) | date:'yMMMd'}}</span>
+                </span>
+                <br/>
+                <span class="font-size11 color-gray font-Raleway-SemiBold" *ngIf="child.school">
+                  <strong>School</strong>
+                  <span class="text-capitalize">: {{child.school}}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          </span>
+        </span>
+      </div>
+      </span>
+
+      <div class="col-sm-12 col-xs-12">
+        <div class="col-sm-6 col-xs-12 back-color-blue">
+          <h4 class="white-color font-Raleway-SemiBold text-center">Have a baby on the way?</h4>
+          <p class="white-color text-center">Introduce baby to us!</p>
+          <p class="margin0 text-center"><button data-toggle="modal" data-target="#onboard-child">Click Here</button></p>
+        </div>
+        <div class="col-sm-6 col-xs-12 back-color-green">
+          <h4 class="white-color font-Raleway-SemiBold text-center">Change Password</h4>
+          <p class="white-color text-center">Here you can change your password.</p>
+          <p class="margin0 text-center"><button data-toggle="modal" data-target="#change-password">Click Here</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Popup -->
+
+<div id="profile-left" class="modal fade" role="dialog" *ngIf="tmp_user_profile_details">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-xs-6 col-sm-6 paddingNo">
+                <h4><a class="color-pink">Profile Details</a>  </h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-sm-4 col-xs-offset-4 col-sm-offset-4">
+              <div class="fileUpload-edit btn btn-primary user-image-upload-btn" [ngStyle]="{'background-image': tmp_user_profile_details.image_path ? 'url(' + tmp_user_profile_details.image_path + ')' : 'url(assets/images/blank-profile-picture.png)'}">
+                <input type="file" class="upload img-responsive user_pic" (change)="userProfilePicChange($event)"/>
+              </div>
+              <!-- <div>
+                <img [src]="tmp_user_profile_details.image_path ? tmp_user_profile_details.image_path : 'assets/images/blank-profile-picture.png'" class="img-responsive user_pic" alt="" >
+              </div> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.name">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 " *ngIf="cityList">
+              <label for="exampleInputUsername" class="color-black"><b>City</b></label>
+              <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_user_profile_details.city">
+                <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6" *ngIf="tmp_user_profile_details.city == 'National'">
+                <label for="exampleInputUsername" class="color-black"><b>Other city</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.cityOther">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+                <label for="exampleInputUsername" class="color-black"><b>Email</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.email">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-bottom15px">
+                <label for="exampleInputUsername" class="color-black"><b>Date of Birth</b></label>
+                <input type="date" class="form-control input-sm bg-white margin0" [(ngModel)]="tmp_user_profile_details.dateofbirth" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="tmp_user_profile_details.dateofbirth" mode="date" name="tmp_user_profile_details.dateofbirth" readonly></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <label for="exampleInputUsername" class="color-black"><b>Phone Number</b></label>
+                <input type="text" class="form-control  input-sm" [(ngModel)]="tmp_user_profile_details.phone">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <label for="exampleInputUsername" class="color-black"><b>Occupation</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_user_profile_details.occupation">
+                  <option value="No Occupation">No Occupation</option>
+                  <option value="Govt.Employee">Govt. Employee</option>
+                  <option value="Private Employee">Private Employee</option>
+                  <option value="Self Employed">Self Employed</option>
+                  <option value="Business">Business</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <label for="exampleInputUsername" class="color-black"><b>Timeline Tag</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="tmp_user_profile_details.timeline_tag">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="text-center"> <a href="javascript:void(0);" (click)="updateUserProfileDetails()" class="btn green-background blue-green font-size13 padding-left-right40px"  data-dismiss="modal">Save</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="child-detail" class="modal fade" role="dialog" *ngIf="tmp_child_details">
+  <div class="modal-dialog" *ngIf="tmp_child_details[current_child_edit]">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-xs-6 col-sm-6 paddingNo">
+                <h4><a class="color-pink">Child Details</a>  </h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-sm-4 col-xs-offset-4 col-sm-offset-4">
+              <div class="fileUpload-edit btn btn-primary user-image-upload-btn" [ngStyle]="{'background-image': tmp_child_details[current_child_edit].img_path ? 'url(' + tmp_child_details[current_child_edit].img_path + ')' : 'url(assets/images/blank-profile-picture.png)'}">
+                <input type="file" class="upload img-responsive user_pic" (change)="childPicChange($event)"/>
+              </div>
+              <!-- <div>
+                <img [src]="tmp_user_profile_details.image_path ? tmp_user_profile_details.image_path : 'assets/images/blank-profile-picture.png'" class="img-responsive user_pic" alt="" >
+              </div> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="tmp_child_details[current_child_edit].name">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Gender</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="tmp_child_details[current_child_edit].gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Date of Birth</b></label>
+                <input type="date" class="form-control margin-top input-sm bg-white" [(ngModel)]="tmp_child_details[current_child_edit].dateofbirth" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="tmp_child_details[current_child_edit].dateofbirth" mode="date" name="tmp_child_details[current_child_edit].dateofbirth" readonly></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>School</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="tmp_child_details[current_child_edit].school">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top">
+              <div class="text-center"> <a href="javascript:void(0);" (click)="updateChildDetails()" class="btn green-background blue-green font-size13 padding-left-right40px"  data-dismiss="modal">Save</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="onboard-child" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-xs-6 col-sm-6 paddingNo">
+                <h4><a class="color-pink">Onboard Child</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top center-block">
+                <label for="exampleInputUsername" class="color-black"><b>Name</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="onboardChild_name">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Gender</b></label>
+                <select class="form-control col-lg-12 gray-bg height40 bg-white" [(ngModel)]="onboardChild_gender">
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black margin-bottom6"><b>Date of Birth</b></label>
+                <input type="date" class="form-control input-sm bg-white" [(ngModel)]="onboardChild_dob" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                <!-- <date-picker [showClearButton]="false" [(ngModel)]="onboardChild_dob" mode="date" name="onboardChild_dob"></date-picker> -->
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 margin-top center-block">
+                <label for="exampleInputUsername" class="color-black"><b>School</b></label>
+                <input type="text" class="form-control input-sm" [(ngModel)]="onboardChild_school">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top">
+              <div class="text-center"> <a href="javascript:void(0);" (click)="onboardChild()" class="btn green-background blue-green font-size13 padding-left-right40px"  data-dismiss="modal">Onboard</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="change-password" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+
+          <div class="profile-sidebar">
+            <div class="col-xs-6 col-sm-6 paddingNo">
+                <h4><a class="color-pink">Change Password</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div class="row">
+
+            <div class="col-xs-12 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>New Password</b></label>
+                <input type="password" class="form-control input-sm" [(ngModel)]="password">
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Confirm Password</b></label>
+                <input type="password" class="form-control  input-sm" [(ngModel)]="confirm_password">
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-top">
+              <div class="text-center"> <a href="javascript:void(0);" (click)="updatePassword()" class="btn green-background blue-green font-size13 padding-left-right40px"  data-dismiss="modal">Change</a> </div>
+            </div>
+           </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Popup Ends -->

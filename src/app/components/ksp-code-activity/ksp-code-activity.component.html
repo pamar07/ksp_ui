@@ -1,0 +1,216 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+	<!--tabs start here-->
+			<div class="row">
+				<div class="col-md-12"> 
+					<!-- Nav tabs -->
+						<ul class="nav nav-tabs container" role="tablist">
+							<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Activity Kits</a></li>
+							<li role="presentation"><a href="#merchandise" aria-controls="settings" role="tab" data-toggle="tab"><span>KSP Merchandise</span></a></li>
+						</ul>
+						
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="home">
+									<section class="monsoon-banner" *ngIf="boxArray[0]">
+											<div class="banner-side-img">
+												<div *showItDevice="['desktop']">
+													<img *ngIf="!boxArray[0].box_video" [src]=boxArray[0].box_image style="height:420px;object-fit: contain;" >
+													<div class="video" *ngIf="boxArray[0].box_video" >
+														<video controls style="width:100%;margin: 0 auto">
+																<source src="{{boxArray[0].box_video}}" type="video/mp4">
+														</video>
+												</div>
+												</div>
+												<div *showItDevice="['mobile','tablet']">
+													<img *ngIf="!boxArray[0].box_video"  [src]=src >
+													<div class="video" *ngIf="boxArray[0].box_video" >
+														<video controls style="width:100%;margin: 0 auto">
+																<source src="{{boxArray[0].box_video}}" type="video/mp4">
+														</video>
+												</div>
+												</div>
+												
+											</div>
+											<div class="knife-bar" >
+												<div class="middle">
+													<div class="inner">
+														<div class="img-btn-content clearfix">  
+															<div class="img-content-cont-wrapper">
+																<h1 style="text-align: center;color: #e25b82;font-weight: 600;	margin: 10px;"> 
+																{{boxArray[0].box_name}}
+																</h1>
+																<h4 style="text-align: center">{{boxArray[0].box_description}}</h4>
+																<div style="text-align: center;">
+																	<a routerLink="/{{boxArray[0].box_name}}/{{boxArray[0].Id}}/{{boxArray[0].total_cost}}" (click)="payLink(boxArray[0].payment_link)"><button class="buy-pink-btn" style="display: initial;">BUY NOW</button></a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="mob-buy-now-content clearfix">
+												<div class="mob-banner-title">
+												<b>{{boxArray[0].box_name}}</b>
+												</div>
+											<h4 style="text-align: center">{{boxArray[0].box_description}}</h4>
+												<a routerLink="/{{boxArray[0].box_name}}/{{boxArray[0].Id}}/{{boxArray[0].total_cost}}" (click)="payLink(boxArray[0].payment_link)"><button class="buy-pink-btn">BUY NOW</button></a>
+											</div>
+									</section>
+									<section class="kit-wrapper clearfix gry-background" [ngClass]="{'gry-background':i%2!=0}" style="padding: 0px;border-bottom: 2px solid #c25b98;" *ngFor="let box of boxArray;index as i ">
+										<h3><span style="color: #e25b82;font-size: 30px;">{{ box.box_name }}</span> </h3>
+										<div class="video" *ngIf="box.box_video">
+											<video controls  >
+													<source src="{{box.box_video}}" type="video/mp4">
+											</video>
+									</div>
+									<div class="video" *ngIf="!(box.box_video)">
+							 <img class="img-body" *ngIf="box.box_image" src="{{box.box_image}}" />
+								</div>
+								<h3 style="    margin-top: 15px;margin-bottom: 30px;color: #929090;font-size: 18px;margin-right: 20%;margin-left: 20%">{{box.box_description}}</h3>
+								<h3 style="margin-top:0" *ngIf="box.item_details.length > 0">About {{box.box_name}}</h3>
+										<div class="container d-flex">
+											<div class="each-kit "  *ngFor="let item of box.item_details">
+												<div class="kit-img-wrapper">
+													<img src="{{item.image_path.substring( 0, item.image_path.lastIndexOf('/'))+ '/w_250' +item.image_path.substring( item.image_path.lastIndexOf('/'), item.image_path.length)}}"> 
+												</div>
+												<h5> {{item.name}} </h5>
+												<h4>{{item.description}} <br/>MRP &#x20B9;{{item.cost}}/-</h4>
+												<h4 style="font-size: 12px">Age {{item.age_range}}+</h4>
+											</div>
+										</div>
+										<h4 style="font-size: 20px;text-align: center;font-weight: 600;margin-top:15px; margin-bottom: 10px;">Price: &#x20B9;{{box.total_cost}}/-</h4>
+										<div class="buy-button-div"><a routerLink="/{{box.box_name}}/{{box.Id}}/{{box.total_cost}}" (click)="payLink(box.payment_link)"><button class="buy-pink-btn" style="text-transform: uppercase;" *ngIf="box.status=='1'">
+												
+											BUY	{{ box.box_name }}
+											</button></a></div>
+												<div class="buy-button-div"><button class="buy-pink-btn" style="background-color: red;"  *ngIf="box.status=='2'" (click)="showNotifyPopup('ksp-code-monsoon-kit')">SOLD OUT <small>(Notify me when it's back</small>)</button></div>
+									</section>		
+							</div>
+							<div role="tabpanel" class="tab-pane" id="merchandise">
+								<section class="monsoon-banner" *ngIf="merchantArray[0]">
+									<div class="banner-side-img">
+										<div *showItDevice="['desktop']">
+											<img *ngIf="!merchantArray[0].box_video" [src]=merchantArray[0].box_image style="height:420px;object-fit: contain;" >
+											<div class="video" *ngIf="merchantArray[0].box_video" >
+												<video controls style="width:100%;margin: 0 auto">
+														<source src="{{merchantArray[0].box_video}}" type="video/mp4">
+												</video>
+										</div>
+										</div>
+										<div *showItDevice="['mobile','tablet']">
+											<img *ngIf="!merchantArray[0].box_video"  [src]=merchantArray[0].box_image >
+											<div class="video" *ngIf="merchantArray[0].box_video" >
+												<video controls style="width:100%;margin: 0 auto">
+														<source src="{{merchantArray[0].box_video}}" type="video/mp4">
+												</video>
+										</div>
+										</div>
+										
+									</div>
+									<div class="knife-bar">
+										<div class="middle">
+											<div class="inner">
+												<div class="img-btn-content clearfix">  
+													<div class="img-content-cont-wrapper">
+														<h1 style="text-align: center;color: #e25b82;font-weight: 600;	margin: 10px;"> 
+														{{merchantArray[0].box_name}}
+														</h1>
+														<h4 style="text-align: center">{{merchantArray[0].box_description}}</h4>
+														<div style="text-align: center;">
+															<a routerLink="/{{merchantArray[0].box_name}}/{{merchantArray[0].Id}}/{{merchantArray[0].total_cost}}" (click)="payLink(merchantArray[0].payment_link)"><button class="buy-pink-btn" style="display: initial;">BUY NOW</button></a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="mob-buy-now-content clearfix">
+										<div class="mob-banner-title">
+										<b>{{merchantArray[0].box_name}}</b>
+										</div>
+									<h4 style="text-align: center">{{merchantArray[0].box_description}}</h4>
+										<a routerLink="/{{merchantArray[0].box_name}}/{{merchantArray[0].Id}}/{{merchantArray[0].total_cost}}" (click)="payLink(merchantArray[0].payment_link)"><button class="buy-pink-btn">BUY NOW</button></a>
+									</div>
+							</section>
+							<section class="kit-wrapper clearfix gry-background" [ngClass]="{'gry-background':i%2!=0}" style="padding: 0px;border-bottom: 2px solid #c25b98;" *ngFor="let box of merchantArray;index as i ">
+								<h3><span style="color: #e25b82;font-size: 30px;">{{ box.box_name }}</span> </h3>
+								<div class="video" *ngIf="box.box_video">
+									<video controls  >
+											<source src="{{box.box_video}}" type="video/mp4">
+									</video>
+							</div>
+							<div class="video" *ngIf="!(box.box_video)">
+					 <img class="img-body" *ngIf="box.box_image" src="{{box.box_image}}" />
+						</div>
+						<h3 style="    margin-top: 15px;margin-bottom: 30px;color: #929090;font-size: 18px;margin-right: 20%;margin-left: 20%">{{box.box_description}}</h3>
+						<h3 style="margin-top:0" *ngIf="box.item_details.length > 0">About {{box.box_name}}</h3>
+								<div class="container d-flex">
+									<div class="each-kit "  *ngFor="let item of box.item_details">
+										<div class="kit-img-wrapper">
+											<img src="{{item.image_path.substring( 0, item.image_path.lastIndexOf('/'))+ '/w_250' +item.image_path.substring( item.image_path.lastIndexOf('/'), item.image_path.length)}}"> 
+										</div>
+										<h5> {{item.name}} </h5>
+										<h4>{{item.description}}</h4>
+										
+									</div>
+								</div>
+							<h4 style="font-size: 20px;text-align: center;font-weight: 600;margin-top:15px; margin-bottom: 10px;">Price: &#x20B9;{{box.total_cost}}/-</h4>
+								<div class="buy-button-div"><a routerLink="/{{box.box_name}}/{{box.Id}}/{{box.total_cost}}" (click)="payLink(box.payment_link)"><button class="buy-pink-btn" style="text-transform: uppercase;" *ngIf="box.status=='1'">
+										
+									BUY	{{ box.box_name }}
+									</button></a></div>
+							
+										<div class="buy-button-div"><button class="buy-pink-btn" style="background-color: red;"  *ngIf="box.status=='2'" (click)="showNotifyPopup('ksp-code-monsoon-kit')">SOLD OUT <small>(Notify me when it's back</small>)</button></div>
+							</section>
+							</div>
+						</div>
+				</div>
+			</div>
+
+
+	<!--tabs end here-->
+
+<div id="code-con" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <form [formGroup]="codeForm" (ngSubmit)="codeForm.valid && submitCodePopup(codeForm.value)" #formCode="ngForm">
+	      <div class="modal-body">
+	        <div class="pull-right">
+	          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+	        </div>
+	        <div class="profile-sidebar">
+	          <div class="col-md-12 paddingNo">
+	              <h4><a class="color-pink">Enter email or mobile to get notified</a></h4>
+	          </div>
+	          <br>
+	          <hr>
+	        </div>
+	        
+	        <div class="row text-center">
+	          <div class="col-md-12 col-lg-12" style="text-align: left">
+	            <input class="form-control" type="text" placeholder="Enter your email" style="width:100%" [formControl]="codeForm.controls['email']" (keyup)="checkEmailOrPhone('email')"/>
+	            
+	            <div *ngIf="((codeForm.controls['email'].hasError('pattern') && codeForm.controls['email'].dirty) || (codeForm.controls['email'].hasError('pattern') && formCode.submitted))" class="error-survey-form">Please enter a valid email</div>
+	          </div>
+	          
+	          <div class="col-md-12 col-lg-12" style="text-align: left">
+	            <input class="form-control" type="number" placeholder="Enter your mobile" style="width:100%" [formControl]="codeForm.controls['mobile']" (keyup)="checkEmailOrPhone('phone')"/>
+
+	            <div *ngIf="((codeForm.controls['mobile'].hasError('pattern') && codeForm.controls['mobile'].dirty) || (codeForm.controls['mobile'].hasError('pattern') && formCode.submitted))" class="error-survey-form">Please enter a valid mobile no</div>
+	          </div>
+
+	          <div *ngIf="(codeForm.controls['email'].hasError('required') && formCode.submitted) && (codeForm.controls['mobile'].hasError('required') && formCode.submitted)" class="error-survey-form">Please enter email or mobile no.</div>
+	          
+	          <div class="col-md-12 col-lg-12 margin-top">
+	            <div class="paddingNo" style="width:auto;">
+	              <button type="submit" class="btn green-background blue-green font-size13">Notify Me</button> 
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+</div>

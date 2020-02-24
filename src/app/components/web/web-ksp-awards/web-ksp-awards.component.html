@@ -1,0 +1,82 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+ <section class="wrapper">
+   <div class="row">
+     <div class="text-center padding30">
+       <img src="assets/images/ksp-awards-2016-logo.png" style="width: auto;height: auto;">
+       <span class="font-size25 font-Raleway-Bold">Godrej presents KSP Awards 2016</span>
+     </div>
+   </div>
+   <div class="row">
+     <a href="https://www.youtube.com/watch?v=IaamcRmDj_o&index=1&list=PLKM87SC0dlFvL9GvSUZx67OUjA0AUK0bo" target="_blank">
+      <img src="assets/images/ksp-awards-2016-highlight.jpg" style="width: 100%; height: auto;">
+     </a>
+   </div>
+
+   <div class="row gry-background" style="padding:20px 0!important;">
+     <div class="text-center">
+       <span class="font-size21 font-Raleway-SemiBold">WINNERS ANNOUNCED! BEST OF 2016</span>
+     </div>
+   </div>
+   <div class="row">
+     <div class="container">
+       <div class="col-md-3 col-lg-3 col-xlg-3 col-sm-3" *ngFor="let winner of winner_list" style="padding-top:20px; padding-bottom:20px;">
+         <img src="assets/images/winner_list/{{winner}}" style="width:265px; height:270px; object-fit:contain; object-position:center;">
+       </div>
+     </div>
+   </div>
+   <div class="row gry-background" style="padding:20px 0 0 0!important;">
+     <div class="text-center">
+       <span class="font-size25 font-Raleway-SemiBold">Highlights from KSP Awards 2016</span>
+     </div>
+   </div>
+   <div class="row gry-background">
+   <div class="container margin-bottom15">
+     <!-- <div id="myCarousel" class="carousel slide" data-ride="carousel">
+       <div class="carousel-inner carousel-div">
+         <div *ngFor="let image of images; let i=index" class="item" [ngClass]="{'active':(i==0)}">
+           <div class="carousel-caption">
+             {{image.title}}
+           </div>
+           <div class="image-div">
+           <img src="{{image.img_url}}" alt="{{image.title}}">
+           </div>
+         </div>
+       </div>
+       <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+         <span class="glyphicon glyphicon-chevron-left left-pad"></span>
+         <span class="sr-only">Previous</span>
+       </a>
+       <a class="right carousel-control" href="#myCarousel" data-slide="next">
+         <span class="glyphicon glyphicon-chevron-right right-pad"></span>
+         <span class="sr-only">Next</span>
+       </a>
+     </div> -->
+
+
+     <ngx-carousel
+      [inputs]="carouselOne"
+      (carouselLoad)="myfunc($event)">
+        <ngx-item NgxCarouselItem *ngFor="let image of images; let i=index">
+            <div class="box" style="background-color:#000;">
+               <img class="" [src]="image.img_url" style="width:100%; height: 500px; object-position:top center; object-fit:contain; padding:50px 0;" alt="" >
+             <div class="carousel-caption2 min-height-66">
+               <div class="text-middle text-index">
+               <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top10px paddingNo" style="width:50%; margin-left: 23%;">
+                   <h4 class="banner-ellipsis-title margin-top0 font-Raleway-SemiBold white-color">{{image.title}}</h4>
+               </div>
+               <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo">
+               </div>
+             </div>
+             </div>
+             </div>
+          <div class="clearfix"></div>
+        </ngx-item>
+        <button NgxCarouselPrev class='leftRs'><i class="fa fa-angle-left paddingNo font-size25 font-bolder" aria-hidden="true"></i></button>
+        <button NgxCarouselNext class='rightRs'><i class="fa fa-angle-right paddingNo font-size25 font-bolder" aria-hidden="true"></i></button>
+     </ngx-carousel>
+   </div>
+   </div>
+ </section>
+</section>

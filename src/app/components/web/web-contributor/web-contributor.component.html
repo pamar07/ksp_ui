@@ -1,0 +1,32 @@
+<app-topnavnofilter></app-topnavnofilter>
+<section>
+    <div class="w3_agile_banner_topWhite">
+      <div class="container">
+        <div class="main-title-outer-none pull-left">
+          <div class="main-title margin0 thin-large-header">Contributors
+          </div>
+        </div>
+         <hr class="col-md-12">
+      </div>
+    </div>
+</section>
+<section id="main-content" *ngIf="members">
+  <section class="wrapper margin0">
+    <div class="container">
+      <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-bottom15">
+        <div class="col-md-4 center-block padding-bottom25px" *ngFor="let member of members">
+          <div class="member-card" id="crop-member-image">
+            <figure>
+              <h3 class="font-size21">{{member.name}}</h3>
+              <p class="font-size15 text-italic">{{member.role}}</p>
+              <p class="about-ellipsis font-size13" [innerHTML]="member.desc"></p>
+              <div class="text-center margin-top"><a routerLink="/authorwise-posts/{{member.id}}" class="btn btn-read font-size16">View Profile</a></div>
+            </figure>
+            <img [src]="member.path==''? 'assets/images/blank-profile-picture.png' : member.path" class="img-responsive" style="object-fit:contain!important; object-position:center!important;"/>
+          </div>
+        </div>
+      </div>
+   </div>
+ </section>
+</section>
+<hr>

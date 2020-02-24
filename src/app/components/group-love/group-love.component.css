@@ -1,0 +1,9 @@
+.like-comment-img{
+  /*width:21px;
+  height:21px;*/
+  width: 18px;
+  /*height: 31px;*/
+  font-size:18px;
+  float: left;
+  line-height: 20px;
+}

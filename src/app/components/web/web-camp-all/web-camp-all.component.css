@@ -1,0 +1,369 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#e35b7f!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.all-caps{
+  text-transform: uppercase;
+}
+.bg-white{
+  background-color: #fff;
+}
+.capitalize{
+  text-transform: capitalize!important;
+}
+.search-category-div{
+  max-height:200px!important;
+  overflow-y: scroll;
+}
+.search-other-div{
+  /*max-height:200px!important;
+  overflow-y: scroll;*/
+}
+.main-title-outer-nobr {
+    border-bottom: none!important;
+}
+.top0{
+  top:0!important;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+      background-color: #fff!important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.padding-all-5px{
+  padding: 5px 5px!important;
+}
+
+.font-size16px{
+  font-size:16px!important;
+}
+
+.today-selected{
+  background-color: #ac2925;
+  border-color: #761c19;
+}
+
+.tomorrow-selected{
+  background-color: #d58512;
+  border-color: #985f0d;
+}
+
+.saturday-selected{
+  background-color: #204d74;
+  border-color: #122b40;
+}
+
+.sunday-selected{
+  background-color: #398439;
+  border-color: #255625;
+}
+
+
+.master-cat-btn{
+  height:40px!important;
+  width:auto!important;
+  font-size:16px!important;
+  font-weight:bolder!important;
+  line-height: 0!important;
+  border: none;
+  outline: none;
+  margin-bottom: 12px;
+  /*border-radius: 3px 3px 0px 0px;*/
+  /*background-color: #777!important;*/
+
+  border-radius: 0px;
+  background-color: transparent!important;
+  color: black;
+
+}
+.master-cat-selected{
+  /*background-color: #e45b80!important;*/
+  outline: none;
+
+  border-bottom: 3px solid red;
+  /*background-color: rgba(255, 164, 164, 0.36)!important;*/
+}
+
+.master-cat-btn:hover{
+  border-bottom: 3px solid red;
+  /*background-color: rgba(255, 164, 164, 0.36)!important;*/
+  /*text-decoration: none!important;*/
+}
+.master-cat-btn:active{
+  outline: none!important;
+  border: none!important;
+  border-style: none!important;
+  background-color: transparent!important;
+
+  box-shadow: none!important;
+}
+
+
+.filter-cat-box{
+  /*border-top: 1px solid #e45b80;*/
+  /*padding: 0 15px 15px 15px !important;*/
+
+  border-bottom: 1px solid rgba(255, 0, 0, 0.17);
+  text-align: left;
+}
+
+.trending-tag-button{
+     color:#fff!important;
+     white-space: nowrap;
+     font-size: 10px!important;
+     padding: 7px 17px!important;
+     border-radius: 0!important;
+     width: auto;
+     margin: 1px;
+     font-weight: 600;
+     line-height: 20px;
+}
+.trending-tag-button:hover{
+  background-color: #d5d5d5!important;
+  color: #000!important;
+}
+.trending-tag-selected{
+  background-color: #d5d5d5!important;
+  color:#000!important;
+  outline: none;
+  background-size: 9px 9px!important;
+  background-repeat: no-repeat;
+  background-position-x: 5px;
+  background-position-y: 8px;
+}
+
+.ellipsis-event-title{
+  font-size: 12px!important;
+  font-weight: 500;
+  margin-bottom: 5px!important;
+  margin-top: 2%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 42px;
+  width: 100%;
+  line-height: 1.2;
+}
+
+
+/* New css For Banner Image*/
+
+.summer-banner-container {
+
+  height: 475px;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.summer-banner-container .carousel {
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner {
+  height: 100%;
+}
+
+.carousel-control {
+  display: none;
+}
+
+.summer-banner-container .carousel-inner .item, .banner-container .carousel-inner .item img {
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner .item {
+  position: relative;
+  background-color: #ff5163;
+}
+
+.summer-banner-container .carousel-inner .item:after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(93deg, #ff5163 0%, #ff6668 40%, transparent);
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.summer-banner-container .carousel-inner .item img {
+  width: 60% !important;
+  height: 100%;
+    margin-left: auto;
+}
+
+.summer-banner-container .carousel-caption {
+    position: absolute;
+    width: 70%;
+    left: 50px;
+    text-align: left;
+    top: 30%;
+    text-shadow: none;
+    bottom: initial;
+    background: none;
+    border-left: none;
+}
+
+.summer-banner-container .carousel-caption p {
+  font-size: 62px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.summer-banner-container .carousel-caption h2 {
+    font-weight: bold;
+    font-size: 21px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: #fff;
+}
+
+.summer-banner-container .carousel-caption h3 {
+  font-weight: normal;
+    font-size: 38px;
+    text-shadow: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.carousel-caption .bottom-title {
+  font-size: 18px;
+}
+
+.carousel-caption .bottom-title span {
+  vertical-align: text-bottom;
+}
+
+.carousel-caption .bottom-title .fa-caret-right {
+  margin-left: 5px;
+    font-size: 34px;
+    color: #ff939f;
+    display: inline;
+}
+
+@media (max-width: 1920px) {
+  .summer-banner-container {
+      height: 550px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .summer-banner-container {
+    height: 475px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .summer-banner-container {
+      height: 430px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .summer-banner-container {
+      height: 430px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .summer-banner-container {
+      height: 400px;
+  }
+}
+
+@media (max-width: 800px) {
+
+  .summer-banner-container {
+      height: 260px;
+
+  }
+
+  .summer-banner-container .carousel-caption {
+    left: 25px;
+    top: 25%;
+  }
+
+  .summer-banner-container .carousel-caption h3 {
+    font-size: 22px;
+  }
+
+  .summer-banner-container .carousel-caption p {
+    font-size: 38px;
+  }
+
+  .summer-banner-container .carousel-caption h2 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .summer-banner-container .carousel-inner .item .carousel-caption {
+    display: block;
+    bottom: 22px;
+    width: 95%;
+  }
+
+  .summer-bg-pattern:before { 
+    background-size: 500px 500px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .summer-banner-container {
+      height: 130px;
+  }
+
+  .summer-banner-container .carousel-caption {
+    left: 15px;
+      top: 5%;
+  }
+
+  .summer-banner-container .carousel-caption p {
+      font-size: 16px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+
+  .summer-banner-container .carousel-caption h2 {
+      font-size: 10px;
+  }
+
+  .summer-banner-container .carousel-caption h3 {
+      font-size: 12px;
+  }
+  
+}
+
+@media (width: 600px) {
+  .summer-banner-container {
+      height: 180px;
+  }
+}
+
+@media (max-width: 360px) {
+  .summer-banner-container {
+      height: 130px;
+  }
+}
+
+@media (max-width: 320px) {
+  .summer-banner-container {
+      height: 110px;
+  }
+}
+
+.main-title-outer:after {
+  width: 250px;
+}
+/* New css For Banner Image*/
