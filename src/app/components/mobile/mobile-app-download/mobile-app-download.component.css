@@ -1,0 +1,78 @@
+/*content */
+.content_main{
+  font-size: 1em;
+  font-weight: 500;
+  padding:0.5em 0.5em;
+}
+
+/*logo in dark background*/
+.content_logo{
+  display: flex;
+  justify-content: center;
+
+}
+
+/*content in dark background*/
+.content_darkBg{
+  background: #4f453b;
+  padding: 1.1em 0.5em;
+}
+
+/*content in white background*/
+.content_whiteBg{
+  background: white;
+  padding: 1.1em 0.5em;
+  margin: 20px 0;
+}
+
+/*image for paly store*/
+.appStore{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+/*.appStore img{
+  width: 120px;
+}*/
+
+.text-white{
+  color: white;
+}
+
+area{
+  outline: none;
+}
+
+.comingSoonText{
+  color:#fff;
+  font-size: 0.6em;
+  font-weight: 600;
+}
+
+.comingSoon{
+  position: absolute;
+  top:40%;
+  right: 10%;
+}
+
+.applePhone{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(90deg,#B905A0 ,#6F0D97);
+  padding:20px 0;
+}
+
+.error-survey-form {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  margin:10px;
+}
+
+.text-white{
+  color:#fff;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: 5px 0;
+}

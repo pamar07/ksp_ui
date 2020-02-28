@@ -1,0 +1,6 @@
+<div [style.width]="width" [style.height]="height" class="round" *ngIf="picPath">
+  <img src="{{picPath.substring( 0, picPath.lastIndexOf('/')) + '/w_150' + picPath.substring( picPath.lastIndexOf('/'), picPath.length)}}" [style.width]="width" [style.height]="height" class="round" alt="..." *ngIf="picPath">
+</div>
+<div [style.width]="width" [style.height]="height" class="round bg-color" *ngIf="!picPath">
+  <div [ngClass]="className" class="user-pic-text">{{userName}}</div>
+</div>

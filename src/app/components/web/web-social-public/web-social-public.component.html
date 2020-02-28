@@ -1,0 +1,148 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--gray social area-->
+<section>
+  <div class="w3_agile_banner_topWhite">
+    <div class="container">
+      <div class="main-title-outer-none pull-left">
+        <div class="main-title margin0 font-size21"> <i class="fa" aria-hidden="true"><img src="assets/images/my group.svg" width="30" height="30" alt=""/></i>GROUPS</div>
+        <!--div class="pull-left col-md-12 font-size11">Simple dummy text of the printing and typesetting industry.</div-->
+      </div>
+    </div>
+  </div>
+</section>
+<!--main content start-->
+<section id="main-content">
+ <div class="container">
+  <section class="wrapper margin0">
+    <div class="row">
+
+      <!-- <div class="green-bar">
+        <div class="main-bordernone pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/icon-us.png" width="35" height="36" alt=""></i>Sign up today and start browsing through thousands of our featured articles.</div>
+          <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/signup"><span class="ion-android-data icon"></span>SIGN UP NOW<i class="fa fa-caret-right" aria-hidden="true"></i></a></span> </div>
+        </div>
+      </div> -->
+
+      <div class="green-bar">
+        <div class="main-bordernone pull-left">
+          <div class="main-title btn-white-elli"> <i aria-hidden="true" class="fa"><img alt="" height="36" src="assets/images/icon-us.png" width="35"></i>Sign up today for free and start building your own network.</div>
+          <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerlink="/signup" ng-reflect-router-link="/signup" href="/signup"><span   class="ion-android-data icon"></span>SIGN UP NOW<i aria-hidden="true" class="fa fa-caret-right"></i></a></span> </div>
+        </div>
+      </div>
+    </div>
+    <div class="row margin-top margin-bottom15 paddingNo">
+      <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 paddingNo" *ngIf="groups">
+        <div>
+          <div class="single-blog-item margin0">
+            <div class="blog-thumnail">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 padding-left0">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment" *ngFor="let group of groups; let i=index">
+                      <div class="media">
+                        <div class="blog-content paddingNo">
+                          <div class="col-md-1 col-lg-1 col-sm-2 col-xs-2 paddingNo"> <a routerLink="/social-individual/{{group.id}}"><img src="{{group.img.substring( 0, group.img.lastIndexOf('/')) + '/w_200' + group.img.substring( group.img.lastIndexOf('/'), group.img.length)}}" width="80px" height="80px" alt="{{group.title}}" style="border-radius: 50%; object-fit:cover; object-position:center;"></a> </div>
+                          <div class="col-md-11 col-lg-11 col-sm-10 col-xs-10 paddingLeft-40">
+                            <h3><a routerLink="/social-individual/{{group.id}}" class="color-black font-bolder font-size18">{{group.title}}</a></h3>
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 paddingNo">
+                             <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps margin-top5px anchor-time font-bolder">  BY {{group.author}} </div>
+                              <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps pink-color margin-top5px font-bolder"><b>{{group.members}} MEMBERS &nbsp;&nbsp;|&nbsp;&nbsp; {{group.posts}} POSTS</b>
+                              </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12 join pull-right font-size11">
+                              <a href="javascript:void(0);" (click)="_commonService.setNavigationUrl('social-group',group.id,'')"> <span class="ion-android-data red-pink-button">JOIN</span> </a>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <p class="margin-top" [innerHtml]="safeHtml(group.excerpt)"></p>
+
+                            <section class="post-footer footerlike">
+                              <div class="post-footer-option">
+                                <ul class="list-unstyled">
+                                  <!--app-group-love [loveData]="group.liked" [entityType]="group.post_type" [entityId]="group.id" [loveCount]="group.likes"></app-group-love-->
+                                  <!--li><a routerLink="\login"><i class="fa fa-heart-o" aria-hidden="true"></i> Love</a></li>
+                                  <li><a routerLink="\login"><i class="glyphicon glyphicon-comment"></i> Comment</a></li-->
+                                </ul>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                      <!-- <hr *ngIf="i<groups.length-1"> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row margin-bottom15">
+          <div class="container">
+              <div class="pull-left">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                      <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                      <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                    </li>
+                    <li [class]="isNext ? '' : 'disabled'">
+                      <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNo" *ngIf="trendingGroups">
+      <div class="content-widget-sidebar">
+            <ul>
+              <li class="recent-post border1 bg-no-color">
+                <h5 class="font-bolder"><i class="fa " aria-hidden="true"><img src="assets/images/my group.svg" width="30" height="26" alt=""></i>TRENDING GROUPS
+                </h5>
+                <hr>
+                <ul>
+                  <li class="recent-post  recent-post-new" *ngFor="let trendingGroup of trendingGroups">
+                    <div class="post-img"> <img src="{{trendingGroup.path.substring( 0, trendingGroup.path.lastIndexOf('/')) + '/w_200' + trendingGroup.path.substring( trendingGroup.path.lastIndexOf('/'), trendingGroup.path.length)}}" width="60px" height="60px" alt="{{trendingGroup.name}}" style="border-radius: 50%; object-fit:cover; object-position:center;"> </div>
+                    <a routerLink="/social-individual/{{trendingGroup.id}}">
+                    <h5 class="font-size13 ">{{trendingGroup.title}}</h5>
+                    </a>
+                    <div class="pull-left paddingNo font-size11 margin-top5px"> <small> {{trendingGroup.noOfMembers}} MEMBERS | {{trendingGroup.postCount}} POSTS</small> </div>
+                    <!--div class="pull-left font-size11"> <a class="ion-android-data green-light-button">2 NEW</a> </div><p></p>
+                    <p> </p><div class="col-sm-6 pull-left paddingNo font-size11"> <small>Last Active 2 hours ago</small> </div><p></p-->
+                    <div class="clearfix"></div>
+                  </li>
+                  <li class="recent-post recent-post-new paddingNo margin0 text-center">
+                    <hr>
+                    <p><a href="javascript:void(0);" class="font-Raleway-SemiBold" routerLink="/social-all">SEE ALL GROUPS</a></p>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+ </div>
+ <div class="clearfix"></div>
+ <div class="container" *ngIf="allPageBanners.length>0">
+   <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image}}" width="100%"></a>
+ </div>
+ <div class="clearfix"></div>
+ <div class="container margin-top" *ngIf="allPageBanners.length>1">
+   <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img src="{{allPageBanners[1].image}}" width="100%"></a>
+ </div>
+</section>
+<hr>

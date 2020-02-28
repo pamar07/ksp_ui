@@ -1,0 +1,203 @@
+.left-pad{
+  left:30px!important;
+}
+.right-pad{
+  right:30px!important;
+}
+.carousel img{
+  width:100%;
+  height:400px;
+  object-fit: cover!important;
+  object-position: center;
+}
+
+.carousel-div{
+  background-color: #000;
+  text-align: center;
+}
+.font-size16{
+  font-size: 16px;
+  font-weight: 600;
+}
+.line-height-16{
+  line-height: 1.6;
+}
+
+.carousel-caption-mobile{
+  left: 0px!important;
+  right: 0px!important;
+  bottom: 0px!important;
+  font-size: 12px!important;
+  z-index: 10;
+  padding: 20px;
+  color: #ffffff;
+  text-align: left;
+  text-shadow: none;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 24px;
+  width: auto;
+  position: absolute;
+}
+
+.side-arrow-rapper {
+    position: -webkit-sticky;
+    position: absolute;
+    width: 5%;
+    /*height: 100%;*/
+    z-index: 9;
+    top: 0px;
+
+}
+
+.side-arrow-rapper span {
+    display: inline-block;
+    /*border:solid 1px #eee;*/
+    /*box-shadow: 0px 2px 7px 2px #ccc*/
+}
+
+.side-arrow-rapper .fa-chevron-left, .side-arrow-rapper .fa-chevron-right {
+    color: #ee4777;
+    background-color: #fff;
+    padding:8px 10px;
+    margin: 0px;
+    border-radius: 50%;
+}
+
+.side-arrow-rapper.left {
+    left: 5%;
+    padding: 0px;
+    padding-right: 10px;
+    top: 43%;
+}
+
+.side-arrow-rapper.left > span {
+    position: absolute;
+    right: 10px;
+    top:40%;
+}
+.side-arrow-rapper.right > span {
+    position: absolute;
+    top:40%;
+}
+
+.side-arrow-rapper.right {
+    right: 5%;
+    padding: 0px;
+    padding-right: 10px;
+    top: 43%;
+}
+
+.side-arrow-outer-rapper {
+    position: sticky;
+    height: 200px;
+    width: 200px;
+    background-color: #000;
+}
+
+::ng-deep .ngxcarouselPointDefault {
+    display: none !important;
+}
+
+.each-award-flex {
+  position: relative;
+}
+
+.article-title {
+  font-weight: bold;
+  position: absolute;
+  bottom: 0px;
+  padding: 10px;
+  background: #fff;
+  opacity: 0.8;
+  width: 100%;
+  min-height: 50px;
+}
+
+
+.sponser-carousel .each-award-flex img {
+    height: 100% !important;
+    /*border-radius: 50%;*/
+    object-fit: initial !important;
+    object-position: initial !important;
+}
+
+.sponser-carousel .each-award-flex {
+    height: 160px !important;
+    width: 100% !important;
+} 
+
+.sponser-carousel .item {
+    height: 100%;
+    border-radius: 50%;
+    padding: 0px;
+    padding-right: 7px;
+}
+
+.sponser-carousel ::ng-deep .tile {
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: initial;
+    border: 6px solid #ccc;
+}
+
+@media (max-width: 800px) {
+  .sponser-carousel .each-award-flex {
+    height: 350px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .no-xs-padding-lr {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .no-xs-padding-ngx-tile ngx-tile {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .carousel-xs-arrow .side-arrow-rapper.left {
+    /*padding: 62px;*/
+    left: 8%;
+    padding-right: 10px;
+  }
+  .carousel-xs-arrow .side-arrow-rapper.right {
+    /*padding: 62px;*/
+  }
+
+  .sponser-carousel .each-award-flex {
+    height: 145px !important;
+    width: 100% !important;
+  }
+
+  .sponser-carousel .item {
+    margin-right: 0px;
+    padding-right: 10px !important;
+  }
+}
+
+@media (max-width: 412px) {
+
+  .sponser-carousel .each-award-flex {
+    height: 164px !important;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  .sponser-carousel .each-award-flex {
+    height: 142px !important;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .sponser-carousel .each-award-flex {
+    height: 115px !important;
+  }
+
+}

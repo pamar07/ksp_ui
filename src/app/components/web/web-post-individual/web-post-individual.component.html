@@ -1,0 +1,401 @@
+
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="container" *ngIf="article">
+      <div class="row margin-bottom15">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 margin-top2per art-paddingNo">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+            <div class="single-blog-item margin0">
+              <div class="blog-thumnail">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment">
+                      <div class="media">
+                        <div class="blog-content paddingNo">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <div class="main-title-oute pull-left">
+                              <div class="col-md-11 col-lg-11 col-sm-6 col-xs-5 pull-left border-righ paddingNo">
+                              <div class="media-left ">
+                                <a href="#">
+                                  <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'40px'" [height]="'40px'" [className]="'padding-top2px'"></app-round-pic>
+                                </a>
+                              </div>
+                              <div class="media-body">
+                                <a href="#" class="anchor-username">
+                                <h4 class="media-heading color-black margin-top5px">{{article.author_name}}</h4>
+                                </a>
+                                <span class="anchor-time">{{_commonService.setDateFormat(article.created_at) | date:'yMMMd'}} <!--| 3 MIN READ--></span>
+                              </div>
+                              </div>
+                              <div class="col-md-1 col-lg-1 col-sm-6 col-xs-7 pull-right paddingNo">
+                                <div class="post-footer-option margin-lft pull-right">
+                                <ul class="list-unstyled text-left">
+                                <!-- <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [loveCount]="article.likes" [commentCount]="article.comment_count" [isBlack]="'true'"></app-likecomment> -->
+                                <li class="social-ind width-100per">
+                                  <a href="javascript:void(0);" (click)="doBookmark(article.post_type,article.id)">
+                                    <i class="fa fa-bookmark-o color-black like-comment-img" aria-hidden="true" *ngIf="!isBookmarked"></i>
+                                    <i class="fa fa-bookmark color-pink like-comment-img" aria-hidden="true" *ngIf="isBookmarked"></i>
+                                    <p class="paddingNo margin0">{{article.bookmark_count}}</p>
+                                  </a>
+                                 </li>
+                                </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 paddingNo">
+                            <h4 class="font-bolder noOverflow font-size18">{{article.title}}</h4>
+                          </div>
+                          <span *ngIf="_apiService.loggedIn()">
+                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 margin-top5px paddingNo" *ngIf="loggedInUserId == article.creator_id">
+                              <a data-toggle="dropdown" class="dropdown-toggle">
+                                <i class="fa fa-ellipsis-v margin-top10px pull-right post-delete-menu-padding hand-cursor"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li>
+                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#edit-post" (click)="editSocialPost(i,article.id,article.title)">Edit Post</a>
+                                  <hr class="margin0"/>
+                                  <a href="javascript:void(0);" (click)="deleteSocialPost(article.id,article.title)">Delete Post</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </span>
+                          <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="promotionInsideContentTop">
+                            <app-advertise [add]="promotionInsideContentTop"></app-advertise>
+                          </div> -->
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                            <span class="margin-top font-size14 article-content-style" [innerHTML]="safeHtml(urlify(article.content))">
+                            </span>
+                            <div class="post-footer-option margin-lft pull-left margin-top5px width25p">
+                              <ul class="list-unstyled text-left">
+                                <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [permaLink]="article.perma_link" [loveCount]="article.likes" [commentCount]="article.comment_count" [isBlack]="'true'"></app-likecomment>
+                              </ul>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" [vp-in-view-config]="{infinite: true}" (vp-in-view)="articleEnd = true;"></div>
+                          </div>
+                          <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="promotionInsideContentBottom">
+                            <app-advertise [add]="promotionInsideContentBottom"></app-advertise>
+                          </div> -->
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments -->
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" id="responses">
+            <div class="blog-thumnail">
+              <section class="post-footer footer-im">
+                <div class="post-footer-comment-wrapper">
+                  <div class="comment-form"> </div>
+                  <div class="comment">
+                    <div class="media">
+                      <div class="main-title-outer pull-left">
+                        <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30" height="30" alt=""></i>RESPONSES</div>
+                      </div>
+                      <div *ngIf="article.comments.length==0">
+                        <div class="blog-content paddingNo">
+                          No comment posted yet.
+                        </div>
+                      </div>
+                      <div *ngIf="article.comments.length!=0">
+                        <div class="blog-content" *ngFor="let comment of article.comments.slice().reverse(); let i=index" style="padding: 5px 0px;">
+                          <div [style.display]="(i<2 || showAll) ? '':'none'">
+                            <div class="col-md-1 col-lg-1 col-sm-12 col-xs-1">
+                              <a href="#">
+                                <app-round-pic [picPath]="comment.user_profile" [userName]="comment.user_name" [width]="'40px'" [height]="'40px'"></app-round-pic>
+                              </a>
+                            </div>
+                            <div class="col-md-11 col-lg-11 col-sm-12 col-xs-11 paddingNo">
+                              <h4 class="capitalize margin0 padding-bottom10px">
+                                <a href="#" *ngIf="getUserName()==null || getUserName()!=comment.user_name">{{comment.user_name}}</a>
+                                <a href="#" *ngIf="getUserName()!=null && getUserName()==comment.user_name">You</a>
+                              </h4>
+                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                <p class="margin0" [innerHTML]="safeHtml(urlify(comment.content))"></p>
+                              </div>
+                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo padding-top10px" style="padding-top:5px !important;">
+                                <div class="pull-left paddingNo font-size11 col-md-10">
+                                  {{_commonService.setDateFormat(comment.created_at) | date:'yMMMd'}}
+                                  <app-comments-like [isLoved]="comment.isLoved" [loveCount]="comment.likes" [entityType]="comment.type" [commentId]="comment.id" [entityId]="article.id" ></app-comments-like>
+                                  <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(comment.id, i)">Reply</span>
+                                </div>
+                              </div>
+
+                              <!-- reply Comment -->
+                              <div *ngIf="comment.commentReplies.length" class="col-md-12 paddingNo" style="margin-top: 10px">
+                                <div class="col-md-1 text-center paddingNo">
+                                  <img src="assets/images/arrow-down-right.png" width="20px" height="20px">
+                                </div>
+                                <div class="col-md-11 paddingNo">
+                                  <div *ngFor="let reply of comment.commentReplies; let j=index"  [ngClass]="(j<2 || replyComment ==  comment.id || showReply[comment.id]) ? 'show' : 'hide'">
+                                    <div class="col-md-1 col-lg-1 col-sm-12 col-xs-12">
+                                      <app-round-pic [picPath]="reply.user_profile" [userName]="reply.user_name" [width]="'40px'" [height]="'40px'"></app-round-pic>
+                                    </div>
+                                    <div class="col-md-10 col-lg-11 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                                      <h4 class="capitalize margin0 padding-bottom10px" style="padding-bottom: 5px;">
+                                        <span *ngIf="getUserName()==null || getUserName()!=reply.user_name" style="font-size:15px; font-weight:600;">{{reply.user_name}}</span>
+                                        <span *ngIf="getUserName()!=null && getUserName()==reply.user_name" style="font-size:15px; font-weight:600;">You</span>
+                                      </h4>
+                                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                        <p class="margin0"[innerHTML]="safeHtml(reply.content)"></p>
+                                      </div>
+                                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" style="padding-top:5px !important;">
+                                        <div class="pull-left paddingNo font-size11 col-md-10"> {{_commonService.setDateFormat(reply.created_at) | date:'yMMMd'}}
+                                        <app-comments-like [isLoved]="reply.isLoved" [loveCount]="reply.likes" [entityType]="'event'" [commentId]="reply.id" [entityId]="article.id" ></app-comments-like>
+                                        <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(reply.parent_id, i)">Reply</span></div>
+                                      </div>
+                                    </div>
+                                    <hr *ngIf="j<comment.commentReplies.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">
+                                  </div>
+                                  <div class="col-md-11 paddingNo" style="cursor: pointer;">
+                                    <span *ngIf="comment.commentReplies.length > 2 && !showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = true">
+                                      {{comment.commentReplies.length -2 }} More {{comment.commentReplies.length -2 > 1 ? 'Replies' : 'Reply'}}
+                                    </span>
+                                    <span *ngIf="showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = false">
+                                      Show less
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- reply Comment Box -->
+                              <div id="comment_id_{{comment.id}}" class="col-md-11 col-md-offset-1" style="margin-top: 10px">
+                                <div *ngIf="replyComment ==  comment.id">
+                                  <ckeditor
+                                    [(ngModel)]="user_comment_reply"
+                                    [config]="{
+                                      uiColor: '#c1c1c1',
+                                      toolbar:[
+                                       { name: 'insert',items: [ 'Smiley'] }
+                                      ],
+                                      toolbarLocation: 'bottom',
+                                      contentsCss: '../assets/css/ckeditor-custom.css',
+                                      height:'100px'
+                                    }"
+                                    [readonly]="false"
+                                    debounce="500">
+                                  </ckeditor>
+                                  <p *ngIf="user_comment_reply_error" style="color:red; font-size:13px;">{{user_comment_reply_error}}</p>
+                                  <button id="submit" name="submit" class="btn font-size13 margin-top" (click)="doCommentReply()">POST YOUR REPLY</button>
+                                </div>
+                              </div>
+                            </div>
+                            <hr *ngIf="i<article.comments.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" *ngIf="article.comments.length>2">
+            <label class="col-md-5 control-label" for="submit"></label>
+              <div class="col-md-3">
+                <button id="submit" name="submit" class="btn font-size13" *ngIf="!showAll" (click)="showAll=!showAll">LOAD ALL RESPONSES</button>
+                <button id="submit" name="submit" class="btn font-size13" *ngIf="showAll" (click)="showAll=!showAll">SHOW LESS</button>
+              </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top">
+            <div class="main-title-outer pull-left">
+              <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30" height="30" alt=""></i>YOUR RESPONSE</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="!_apiService.loggedIn()">
+            <a routerLink="/login" style="color:#e35b7f;">Please Login to comment</a>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="_apiService.loggedIn()">
+              <ckeditor
+                [(ngModel)]="user_comment"
+                [config]="{
+                  uiColor: '#c1c1c1',
+                  toolbar:[
+                   { name: 'insert',items: [ 'Smiley'] }
+                  ],
+                  toolbarLocation: 'bottom',
+                  contentsCss: '../assets/css/ckeditor-custom.css',
+                  height: '100px'
+                }"
+                [readonly]="false"
+                debounce="500">
+              </ckeditor>
+              <p *ngIf="user_comment_error" style="color:red; font-size:13px;">{{user_comment_error}}</p>
+              <button id="submit" name="submit" class="btn font-size13 margin-top" (click)="doComment()">POST YOUR RESPONSE</button>
+          </div>
+        </div>
+        <!-- Advertisement goes here -->
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top2per art-paddingNo" *ngIf="promotions">
+          <!-- <div class="content-widget-sidebar">
+            <iframe name="f37f8c3d1ab2838" width="500px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:post Facebook Social Plugin" src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FKidsstoppress%2Fposts%2F1429627087114388&width=500&show_text=true&appId=478245675520343&width=50" style="width: 350px; height: 400px;" class=""></iframe>
+          </div> -->
+          <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index" [ngClass]="{'hide':advertisement < i}">
+            <app-advertise [add]="promotion"></app-advertise>
+          </div>
+          <div class="content-widget-sidebar" [vp-in-view-config]="{infinite: true}" (vp-in-view)="getAdvertisement();" ></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--div class="row gry-background margin-top7per">
+      <div class="container" *ngIf="relatedArticles">
+        <div class="col-md-12 col-lg-12 main-title-outerN pull-left margin-bottom2">
+          <div class="main-title-outer pull-left">
+            <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/grp.png" width="30" height="30" alt=""></i>RELATED ARTICLES</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" *ngFor="let article of relatedArticles">
+          <div class="single-blog-item white-backgrund">
+            <div class="blog-thumnail">
+              <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 paddingNo"> <a href="/details/{{article.id}}" onclick="window.scrollTo(0,0)">
+                <img src="{{article.img[0].path}}" style="height:150px;width:225px;" alt="blog-img"></a>
+              </div>
+              <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment">
+                      <div class="media">
+                        <div class="blog-content paddingNo">
+                          <h4 class="blog-ellipsis"><a href="/details/{{article.id}}"  onclick="window.scrollTo(0,0)">{{article.title}}</a></h4>
+                          <a routerLink="/categorywise-article/{{article.category[0].id}}"><span class="ion-android-data light-blue-button all-caps"  [style.background-color]="safeStyle(article.category[0].colour_code)" style="border-radius:6px;" [innerHTML]="article.category[0].name"></span></a>&nbsp;
+                          <div class="media-body"> <a href="#" class="anchor-time">{{_commonService.setDateFormat(article.created_at) | date:'yMMMd'}}</a> </div>
+                          <p class="margin-top" [innerHtml]="article.excerpt"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div-->
+    <div class="clearfix"></div>
+  </section>
+</section>
+<hr>
+
+<div id="edit-post" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Edit Post</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div *ngIf="_apiService.loggedIn()">
+            <div class="row text-center">
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <b class="font-size13 margin-bottom15">Title</b><br/>
+                <input type="text" [(ngModel)]="editedPostTitle" [ngModelOptions]="{standalone: true}" class="form-control height40 margin-top2per font-Raleway" style="text-align: left;font-size:14px;">
+                <div *ngIf="editedPostTitle==''" class="error-survey-form">Please enter the title.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top20px" style="text-align: left">
+                <b class="font-size13">Content</b><br/><br/>
+                <ckeditor
+                  [(ngModel)]="editedPostContent"
+                  [ngModelOptions]="{standalone: true}"
+                  [config]="{
+                    uiColor: '#c1c1c1',
+                    filebrowserBrowseUrl: 'image-browser',
+                    filebrowserUploadUrl: uploadUrl,
+                    toolbarGroups: [
+                    {'name':'basicstyles','groups':['basicstyles']},
+                    {'name':'links','groups':['links']},
+                    {'name':'paragraph','groups':['list','blocks']},
+                    {'name':'insert','groups':['insert']},
+                    {'name':'styles','groups':['styles']}
+                    ]
+                  }"
+                  [readonly]="isReadonly"
+                  debounce="500">
+                </ckeditor>
+                <div *ngIf="editedPostContent==''" class="error-survey-form margin-top">Please enter your content.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13" (click)="saveEditedPost()" data-dismiss="modal">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="edit-post" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Edit Post</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div *ngIf="_apiService.loggedIn()">
+            <div class="row text-center">
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <b class="font-size13 margin-bottom15">Title</b><br/>
+                <input type="text" [(ngModel)]="editedPostTitle" [ngModelOptions]="{standalone: true}" class="form-control height40 margin-top2per font-Raleway" style="text-align: left;font-size:14px;">
+                <div *ngIf="editedPostTitle==''" class="error-survey-form">Please enter the title.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top20px" style="text-align: left">
+                <b class="font-size13">Content</b><br/><br/>
+                <ckeditor
+                  [(ngModel)]="editedPostContent"
+                  [ngModelOptions]="{standalone: true}"
+                  [config]="{
+                    uiColor: '#c1c1c1',
+                    filebrowserBrowseUrl: 'image-browser',
+                    filebrowserUploadUrl: uploadUrl,
+                    toolbarGroups: [
+                    {'name':'basicstyles','groups':['basicstyles']},
+                    {'name':'links','groups':['links']},
+                    {'name':'paragraph','groups':['list','blocks']},
+                    {'name':'insert','groups':['insert']},
+                    {'name':'styles','groups':['styles']}
+                    ]
+                  }"
+                  [readonly]="isReadonly"
+                  debounce="500">
+                </ckeditor>
+                <div *ngIf="editedPostContent==''" class="error-survey-form margin-top">Please enter your content.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13" (click)="saveEditedPost()" data-dismiss="modal">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

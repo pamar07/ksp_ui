@@ -1,0 +1,22 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="23.76" height="23.76" viewBox="0 0 23.76 23.76">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7664f4;
+      }
+    </style>
+  </defs>
+  <title>Event</title>
+  <g id="calendar">
+    <path class="cls-1" d="M24.63,2.26H21.41V.78a.74.74,0,1,0-1.49,0V2.26H15.47V.78A.74.74,0,0,0,14,.78V2.26H9.53V.78A.74.74,0,0,0,8,.78V2.26H4.83a2,2,0,0,0-2,2V21.82a2,2,0,0,0,2,2h19.8a2,2,0,0,0,2-2V4.24A2,2,0,0,0,24.63,2.26Zm.49,19.55a.5.5,0,0,1-.49.5H4.83a.5.5,0,0,1-.5-.5V4.24a.5.5,0,0,1,.5-.49H8V5.23a.74.74,0,1,0,1.49,0V3.75H14V5.23a.74.74,0,0,0,1.49,0V3.75h4.46V5.23a.74.74,0,1,0,1.49,0V3.75h3.22a.5.5,0,0,1,.49.49Z" transform="translate(-2.85 -0.04)"/>
+    <rect class="cls-1" x="5.2" y="8.91" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="5.2" y="12.62" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="5.2" y="16.34" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="10.4" y="16.34" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="10.4" y="12.62" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="10.4" y="8.91" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="15.59" y="16.34" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="15.59" y="12.62" width="2.97" height="2.23"/>
+    <rect class="cls-1" x="15.59" y="8.91" width="2.97" height="2.23"/>
+  </g>
+</svg>

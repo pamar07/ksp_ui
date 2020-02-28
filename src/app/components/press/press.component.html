@@ -1,0 +1,123 @@
+<app-topnavnofilter></app-topnavnofilter>
+<section id="main-content">
+  <section class="wrapper">
+    <div class="container">
+      <div class="row margin-top margin-bottom15 col-md-8 col-lg-8 col-sm-12 col-xs-12 no-xs-padding-lr no-xs-padding-ngx-tile carousel-xs-arrow">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingNo">
+          <div class="main-title-outer-none pull-left">
+            <div class="main-title margin0"> <i class="fa" aria-hidden="true"><img src="assets/images/journal.svg" width="30" height="30" alt=""></i>PRESS</div>
+            <div class="pull-left col-sm-12 col-xs-12 col-lg-12 col-md-12 font-size16 margin-top line-height-16" *ngIf="title" [innerHTML]="title"></div>
+          </div>
+        </div>
+        <hr class="pull-left width-100per"/>
+        <div id="myCarousel" class="carousel slide margin-top" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <span>
+            <div class="award-sec chal-award">
+              <ngx-carousel [inputs]="carouselTile" style="width:100%; margin:0px auto;" >
+                <span class="side-arrow-rapper left" NgxCarouselPrev>
+                  <span><i class="fa fa-chevron-left"></i></span>
+                </span>
+                <!-- Article Caarousel -->
+                <ngx-tile NgxCarouselItem *ngFor="let article of articles; let i=index" style="cursor:pointer;">
+                  <div class="each-award-flex">
+                    <a href="/details/{{article.perma_link}}/{{article.id}}" target="_blank"><img src="{{article.path}}" class="img-responsive center-block"></a>
+                    <div class="article-title">{{article.press_caption ? article.press_caption : article.title}}</div>
+                  </div> 
+                </ngx-tile>
+
+                <!-- Images and Video Carousel -->
+                <ngx-tile NgxCarouselItem *ngFor="let press of pressData; let i=index" style="cursor:pointer;">
+                  <div class="each-award-flex" *ngIf="press.type == 'image'">
+                    <a href="press.link ? safeUrl(press.link) : 'javascript:void(0)'" target="_blank">
+                      <img src="{{press.path}}" class="img-responsive center-block">
+                    </a>
+                    <div class="article-title">{{press.title}}</div>
+                  </div>
+                  <div class="each-award-flex" *ngIf="press.type == 'video'">
+                    <iframe width="100%" height="400px" [src]="press.path" frameBorder="0" style="padding-bottom: 50px;"></iframe>
+                    <div class="article-title">{{press.title}}</div>
+                  </div> 
+                </ngx-tile>
+                <span class="side-arrow-rapper right" NgxCarouselNext>
+                  <span><i class="fa fa-chevron-right"></i></span>
+                </span>
+              </ngx-carousel>
+            </div>
+
+            <img src="assets/images/press_partners.jpg" style="width:100%; height:auto" *isDesktop>
+            <img src="assets/images/press_partners_mobile.jpg" *showItDevice="['mobile','tablet']" style="width:100%; height:auto">
+            <!-- <div class="award-sec chal-award sponser-carousel">
+              <ngx-carousel [inputs]="carouselLogo" style="width:100%; margin:0px auto;" >
+                <span class="side-arrow-rapper left" NgxCarouselPrev>
+                  <span><i class="fa fa-chevron-left"></i></span>
+                </span>
+                <ngx-tile NgxCarouselItem *ngFor="let logo of mediaPartners; let i=index" style="cursor:pointer;">
+                  <div class="each-award-flex">
+                    <img src="{{logo.path}}" class="img-responsive center-block">
+                  </div> 
+                </ngx-tile>
+                <span class="side-arrow-rapper right" NgxCarouselNext>
+                  <span><i class="fa fa-chevron-right"></i></span>
+                </span>
+              </ngx-carousel>
+            </div> -->
+          </span>
+        </div>
+      </div>
+      <!-- Advertisement goes here -->
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top2per art-paddingNo" *ngIf="promotions && mobilePromo">
+        <span *isDesktop>
+          <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index">
+            <app-advertise [add]="promotion"></app-advertise>
+          </div>
+        </span>
+        <!-- <span *showItDevice="['mobile','tablet']">
+          <div class="content-widget-sidebar" *ngFor="let promotion of mobilePromo;">
+            <app-advertise [add]="promotion"></app-advertise>
+          </div>
+        </span> -->
+      </div>
+   </div>
+ </section>
+</section>
+<hr>
+
+
+<!--img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/ndtv-unicorn-kidsstoppress.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/what-it-takes-to-be-an-entreprenuer_mansi-zaveri_kidsstoppress.png?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/“Mansi-Zaveri’s-Message-For-Women-Enterpreneurs”.png?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/KSP-on-ET-Now_kidsstoppress.png?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i2.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/ksp-in-the-press_kidsstoppress.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/MANSI-ZAERI.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/child-magazine-Jan-2012-scan-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/your-story-Copy.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/entrepreneurindia-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/idiva-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Kidsstoppress.com-in-Time-Out-Mumbai-12-th-april-Food-for-tots-2-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Kidsstoppress-in-sunday-midday-press-coverage-150x150.png?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/KSP-in-Entrepreneurs-Mingle.com_1-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i2.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/mail-today-3rd-Nov-2011-150x150.png?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Mid-Day-Travel-with-kids-article-29th-april-2012-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Mumbai-Boss-kids-Not-all-right-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Robin-age-article-18th-October-2013-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i1.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Sunday-Mid-Day-Outdoor-vs.-Indoor-play-areas-2nd-Dec-part-1-150x150.jpg?resize=96%2C72" alt="" width="96" height="72">
+
+<img src="https://i0.wp.com/www.kidsstoppress.com/wp-content/uploads/2017/08/Times-Life-Kids-not-allowed-150x150.png?resize=96%2C72" alt="" width="96" height="72"-->

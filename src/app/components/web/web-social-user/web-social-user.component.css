@@ -1,0 +1,25 @@
+
+.all-caps{
+  text-transform: uppercase!important;
+}
+.font-size11 {
+	font-size: 11px!important;
+}
+.border1 {
+	border: 1px solid #eee;
+}
+.green-button{
+
+    display: inline-block;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 6px 8px;
+    color: white;
+    width: 85%;
+    border-radius: 4px;
+background: rgb(30,197,143); /* Old browsers */
+background: -moz-linear-gradient(left, rgba(30,197,143,1) 0%, rgba(0,211,202,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, rgba(30,197,143,1) 0%,rgba(0,211,202,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, rgba(30,197,143,1) 0%,rgba(0,211,202,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1ec58f', endColorstr='#00d3ca',GradientType=1 ); /* IE6-9 */
+}

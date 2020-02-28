@@ -1,0 +1,35 @@
+
+.height-30{
+  height: 30px;
+}
+
+.b-select-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.b-select-wrap:after {
+    content: "\25BE";
+    position: absolute;
+    right: 8px;
+    top: 0;
+    z-index: 1;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+    pointer-events: none;
+    font-size: 10px;
+}
+
+.b-select {
+    padding: 0px 15px;
+    outline: none;
+    -webkit-appearance: none; /* for webkit browsers */
+    -moz-appearance: none; /* for firefox */
+    appearance: none; /* for modern browsers */
+}
+
+/* remove default caret for ie */
+.b-select::-ms-expand {
+   display:none;
+}

@@ -1,0 +1,305 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+	<div class="wrapper div-color">
+		<a routerLink="/KSPAwards2018"><h4 class="top-wrapper" style="color: gold"><img src="../../v1/assets/images/ksp_awards2019.png">        KSPAWARDS 2018 IS HERE</h4></a>
+	</div>
+ <section class="paddingNo" style="background-color:#000;">
+   <div id="content-wrapper" class="container-fluid no-padding-lr positin-relative padding-top30px">
+ 		<div class="mob-banner">
+ 			<img src="assets/award2017/img/mobBanner.png">
+ 		</div>
+ 		<div class="banner-wrapper clearfix padding-right15px">
+ 			<div class="col-sm-3 no-padding- img-full-width img-full-height side-img-ipad-height">
+ 				<div class="banner-top-img">
+ 					<img src="assets/award2017/img/side-img.png" width="100%" height="auto">
+ 				</div>
+ 				<div class="banner-top-capti">
+ 					#SimplifyingParenting
+ 				</div>
+ 			</div>
+ 			<div class="col-sm-9 no-padding-lr" *ngIf="banners.length>0">
+ 				<div id="myCarousel" class="carousel slide forMachine" data-ride="carousel" >
+ 				    <!-- Indicators -->
+ 				    <ol class="carousel-indicators">
+ 				      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1" *ngIf="banners.length>1"></li>
+              <li data-target="#myCarousel" data-slide-to="2" *ngIf="banners.length>2"></li>
+              <li data-target="#myCarousel" data-slide-to="3" *ngIf="banners.length>3"></li>
+              <li data-target="#myCarousel" data-slide-to="4" *ngIf="banners.length>4"></li>
+ 				    </ol>
+ 				    <!-- Wrapper for slides -->
+ 				    <div class="carousel-inner">
+
+ 				      <div class="item" *ngFor="let banner of banners; let i=index" [ngClass]="{'active':i==0}">
+ 				        <img src="{{banner.path}}" alt="{{banner.title}}" style="width:100%;">
+ 				        <div class="carousel-caption" *ngIf="banner.title!='' && banner.title!=NULL">
+ 				          <h3>{{banner.title}}</h3>
+ 				          <!-- <p>LA is always so much fun!</p> -->
+ 				        </div>
+ 				      </div>
+
+ 				    </div>
+ 				    <!-- Left and right controls -->
+ 				    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+ 				      <span class="glyphicon glyphicon-chevron-left"></span>
+ 				      <span class="sr-only">Previous</span>
+ 				    </a>
+ 				    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+ 				      <span class="glyphicon glyphicon-chevron-right"></span>
+ 				      <span class="sr-only">Next</span>
+ 				    </a>
+ 	  			</div>
+
+ 	  			<div class="col-sm-3 no-padding-lr margin-top">
+ 	  				<div class="banner-sm-img">
+ 	  					<img src="assets/award2017/img/side-sm-img.png" width="100%" height="auto">
+ 	  				</div>
+ 	  			</div>
+ 	  			<div class="col-sm-9 no-padding-r">
+ 					<div class="aw-descrp" style="width:95%;">
+ 						<h3 class="margin-top0"> KSP Awards is Kidsstoppress’ flagship event. </h3>
+
+ 						<p class="text-justify"> Now in its fifth year, this is the only award of its kind to celebrate excellence in parenting and baby care. Not just that, KSP awards unites key players — fraternity, influencers, and the readers — under one roof.  </p>
+
+ 						<p class="text-justify"> This year, KSP Awards has 40 categories and over 300 nominees! For the first time, brands were nominated by readers and peers and only the top names made it to the final list. An extensive social media campaign followed and the results are finally here!  </p>
+ 					</div>
+ 				</div>
+
+ 			</div>
+
+ 		</div>
+ 		<div class="award-sec-wrapper clearfix" *ngIf="categories" style="width:87%;margin:0 auto;">
+      <h3 style="text-align: left;margin-left: 15px;margin-right: 15px;color: #fff;padding-bottom: 15px;border-bottom: 1px solid #fff;font-size: 18px; margin-top: 15px;">KSP AWARDS 2017 WINNERS</h3>
+ 			<div class="col-md-3 col-sm-6" *ngFor="let category of categories">
+ 				<div class="each-awrad" style="min-height: 330px!important;">
+ 					<p class="font-size18 font-Raleway-SemiBold margin0"> {{category.category_name}} </p>
+ 					<h5 class="margin0"> {{category.winners[0].option_name}} </h5>
+ 					<div class="logo-wrapper" style="min-height:auto!important;">
+ 						<img [src]="category.winners[0].option_image">
+ 					</div>
+ 					<!-- <h6> <img src="assets/award2017/img/trophy.png"> Tanya Sharma </h6> -->
+ 				</div>
+ 			</div>
+ 			<div class="col-md-3 col-sm-6">
+ 				<div class="each-awrad no-padding" style="min-height: 330px!important;">
+ 					<div class="img-wrapper">
+ 						<img src="assets/award2017/img/view-more-img.jpg" width="100%" height="auto">
+ 					</div>
+ 					<a routerLink="/Awards2017-Result" class="view-more">
+ 						VIEW ALL WINNERS <i class="fa fa-arrow-right"></i>
+ 					</a>
+ 				</div>
+ 			</div>
+ 		</div>
+ 		<div class="gift-partner-sec clearfix">
+ 			<div class="col-sm-12 no-padding-lr">
+        <div style="background-color:#fff;">
+          <div class="container" style="padding: 0px 100px;">
+            <app-web-inline-share [shareCount]="mainPageShareCount"></app-web-inline-share>
+          </div>
+        </div>
+ 				<div class="partner-sec clearfix">
+ 					<div class="our-partner text-center" style="width:50%;float:left;margin-bottom:0px!important;">
+ 						<h5 style="margin-top:10px!important;"> OUR SPONSORS </h5>
+ 						<div class="partner-logo-wrapper">
+ 							<div class="partner-logo main-spons" style="width:25%!important;margin-right:0px!important;">
+ 								<img src="assets/award2017/img/Simmom-IQ.png" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo main-spons" style="width:25%!important;margin-right:0px!important;">
+ 								<img src="assets/award2017/img/Himalaya-logo.png" style="width:80%;">
+ 							</div>
+ 						</div>
+ 					</div>
+          <div class="col-sm-4 text-center" style="width:50%;float:left;">
+ 						<h5 style="margin-top:10px!important;"> BEVERAGE PARTNER </h5>
+ 						<div class="partner-logo-wrapper text-center">
+ 							<div class="partner-logo no-margin-r" style="width:20%!important;margin-bottom:0px!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/kingfisher.png" style="width:80%;">
+ 							</div>
+ 						</div>
+ 					</div>
+ 					<div class="col-sm-8 text-center" style="width:100%;float:left;">
+ 						<h5 style="margin-top:10px!important;"> GIFTING PARTNERS </h5>
+ 						<div class="partner-logo-wrapper text-center text-xs-center">
+ 							<div class="partner-logo gif-partner-one" style="width:8%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/bombay vintage.png" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo gif-partner-two" style="width:8%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/SHM Final.jpeg" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo gif-partner-three" style="width:8%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/TBC - Logo.jpg" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo gif-partner-four" style="width:8%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/organice.jpg" style="width:80%;">
+ 							</div>
+              <div class="partner-logo gif-partner-four" style="width:8%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/tea_trunk_gift_partner.jpeg" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo gif-partner-five" style="width:14%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/pressToCo.jpeg" style="width:80%;">
+ 							</div>
+ 							<div class="partner-logo gif-partner-six" style="width:14%!important;">
+ 								<img src="assets/award2017/img/GiftingPartner/TLL.png" style="width:80%;">
+ 							</div>
+ 						</div>
+ 					</div>
+
+ 				</div>
+ 			</div>
+ 		</div>
+ 		<div class="gallery-upper-wrapper clearfix" *ngIf="images.length>0">
+
+ 		<div class="gallery-wrapper" id="clickme">
+ 			<h3>Photo Gallery</h3>
+ 			<div class="owl-carousel owl-theme gallery-container">
+ 				<a class="swipebox" *ngFor="let image of images" href="{{image.path}}" title="{{image.title}}">
+ 				     <img src="{{image.path}}" alt="{{image.title}}">
+             <div class="playpause-wrapper width-100per" *ngIf="image.title!='' && image.title!=NULL">
+               <p class="font-Raleway-SemiBold">
+                 {{image.title}}
+               </p>
+             </div>
+ 				</a>
+ 			</div>
+ 		</div>
+ 		</div>
+ 		<div class="video-gallery-wrapper clearfix" *ngIf="videos.length>0">
+ 			<h3>Video Gallery</h3>
+ 			<div class="video-gallery-container clearfix">
+ 				<div class="col-sm-8 jumbo-video no-padding-lr">
+ 					<div class="video-container jumbo-video-child item">
+ 						<video preload="metadata" src="{{videos[0].path}}" class="swipebox video" id="video-{{videos[0].id}}">
+ 							<source src="{{videos[0].path}}" type="video/mp4">
+ 					  		Your browser does not support HTML5 video.
+ 						</video>
+ 						<div class="playpause-wrapper width-100per"  *ngIf="videos[0].title!='' && videos[0].title!=NULL">
+ 							<div class="playpause">
+ 							</div>
+ 							<p>
+ 								{{videos[0].title}}
+ 							</p>
+ 						</div>
+ 					</div>
+ 				</div>
+ 				<div class="col-sm-4 position-relative text-center" *ngIf="videos.length>1">
+ 					<div class="scroll-style scroll-top" id="upClick">
+ 							<i class="fa fa-chevron-up"></i>
+ 					</div>
+ 					<div class="scroll-style scroll-down" id="downClick">
+ 							<i class="fa fa-chevron-down"></i>
+ 					</div>
+ 					<div class="video-thumb-container">
+ 						<div class="video-thumb item" *ngFor="let video of videos.slice(1)">
+ 							<video class="swipebox video" preload="metadata" src="{{video.path}}">
+ 								<source src="{{video.path}}" type="video/mp4">
+ 						  		Your browser does not support HTML5 video.
+ 							</video>
+ 							<div class="playpause-wrapper width-100per" *ngIf="videos.title!='' && videos.title!=NULL">
+ 								<div class="playpause">
+ 								</div>
+ 								<p>
+ 									{{video.title}}
+ 								</p>
+ 							</div>
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 		<div class="mob-video-sec clearfix">
+ 			<h3>Video Gallery</h3>
+ 			<div class="mob-video-wrapper clearfix">
+        <span *ngFor="let video of videos">
+ 				<div class="col-xs-7 no-padding-l">
+ 					<div class="mob-videocontainer">
+ 						<video width="400" class="video" src={{video.path}}>
+ 						  <source src={{video.path}} type="video/mp4">
+ 						  Your browser does not support HTML5 video.
+ 						</video>
+ 						<div class="mob-play-pause"> <i class="fa fa-play" aria-hidden="true"></i> </div>
+ 					</div>
+ 				</div>
+ 				<div class="col-xs-5 no-padding-lr">
+ 					<div class="video-content">
+ 						<h5 class="margin0"> {{video.title}} </h5>
+ 					</div>
+ 				</div>
+        </span>
+ 			</div>
+ 		</div>
+ 		<div class="testimonials-upper-wrapper clearfix">
+
+ 			<!-- <div class="gallery-wrapper" id="clickme">
+ 				<h3> TESTIMONIALS </h3>
+ 				<div class="owl-carousel owl-theme testimonial-gallery-container">
+
+ 					<div class="swipebox each-testimon" title="My Caption">
+ 						<i class="fa fa-quote-left"></i>
+ 						<p>
+ 							Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet
+ 						</p>
+ 						<div>
+ 							<div class="person-wrapper">
+ 								<img src="assets/award2017/img/testimony/person1.jpg">
+ 							</div>
+ 							<div class="name-wrapper">
+ 								<h4> AJAY NAQVI </h4>
+ 								<p> PARENT </p>
+ 							</div>
+ 						</div>
+ 					</div>
+          <div class="swipebox each-testimon" title="My Caption">
+ 						<i class="fa fa-quote-left"></i>
+ 						<p>
+ 							Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet ipsum Dolor Amet Lorem ipsum Dolor Amet ipsum Dolor Amet Lorem ipsum Dolor Amet ipsum Dolor Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet
+ 						</p>
+ 						<div>
+ 							<div class="person-wrapper">
+ 								<img src="assets/award2017/img/testimony/person1.jpg">
+ 							</div>
+ 							<div class="name-wrapper">
+ 								<h4> AJAY NAQVI </h4>
+ 								<p> PARENT </p>
+ 							</div>
+ 						</div>
+ 					</div>
+ 					<div class="swipebox each-testimon" title="My Caption">
+ 						<i class="fa fa-quote-left"></i>
+ 						<p>
+ 							Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet Lorem ipsum Dolor Amet
+ 						</p>
+ 						<div>
+ 							<div class="person-wrapper">
+ 								<img src="assets/award2017/img/testimony/person1.jpg">
+ 							</div>
+ 							<div class="name-wrapper">
+ 								<h4> AJAY NAQVI </h4>
+ 								<p> PARENT </p>
+ 							</div>
+ 						</div>
+ 					</div>
+
+ 				</div>
+ 			</div> -->
+ 			<div class="gallery-wrapper" id="clickme">
+ 				<h3> LAST YEAR'S HIGHLIGHTS </h3>
+ 				<div class="col-sm-7 no-padding-lr bottom-xs-gap margin-bottom20px">
+ 					<div class="hight-img">
+ 						<img src="assets/award2017/img/bottomSideOne.jpg" width="100%" height="auto">
+ 					</div>
+ 				</div>
+ 				<div class="col-sm-5 no-padding-r clearfix no-padding-xs-l margin-bottom20px">
+ 					<div class="hight-img right">
+ 						<img src="assets/award2017/img/bottomSideTwo.jpg" width="100%" height="auto">
+ 						<a routerLink="/ksp-awards" class="view-more">
+ 							<span> CLICK HERE TO VIEW LAST YEAR HIGHLIGHTS </span> <i class="fa fa-arrow-right"></i>
+ 						</a>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ </div>
+ </section>
+</section>

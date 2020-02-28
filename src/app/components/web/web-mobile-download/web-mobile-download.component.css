@@ -1,0 +1,131 @@
+/*content */
+.content_main{
+  font-size: 1em;
+  font-weight: 500;
+  padding:0.5em 0.5em;
+  display: block
+}
+
+.dowloadApp{
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(90deg,#B905A0 ,#6F0D97);
+  padding-top:2em;
+}
+
+.overlay-div1 {
+  width: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: -50px;
+  left: -38px;
+  bottom: 0;
+}
+
+.overlay-div2 {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  top: -70px;
+  left: -62px;
+  bottom: 0;
+}
+
+.overlay-div3 {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  position: absolute;
+  top: -90px;
+  left: -87px;
+  bottom: 0;
+}
+
+.appDownload{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.downloadText{
+  display: block;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin:10px 0; 
+  padding:10px 0;
+}
+
+.playStoreLogo{
+  display: flex;
+  justify-content: space-between;
+}
+
+.kspLogo{
+  position: relative; 
+  margin-top: auto;
+}
+
+.parentingText{
+  display: flex;
+  justify-content: center;
+  background: #4f453b;
+}
+
+.parentingText span{
+  display: block;
+  font-size: 1.3em;
+  padding:2em 0;
+}
+
+.text-white{
+  color:white;
+}
+
+.applePhone{
+  width: 20%;
+  display: flex;
+  position: relative;
+}
+@media only (min-width: 900px) and (max-width: 1024px) {
+    .applePhone {
+        width:28%;
+    }
+}
+
+.comingSoonText{
+  font-weight: 600;
+  font-size: 1em;
+  color: #fff
+}
+
+.error-survey-form {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  margin:10px;
+}
+
+.comingSoon{
+  position: absolute;
+  top:18%;
+  left:6%;
+}
+
+.comingSept{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.notify{
+  display: block;
+  margin-top:20px
+}
+
+.flex-direction{
+  flex-direction: column;
+}

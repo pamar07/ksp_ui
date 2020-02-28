@@ -1,0 +1,164 @@
+<app-topnavnofilter></app-topnavnofilter>
+
+<div class="container-fluid no-padding-lr black-bg">
+  <section class="position-relative text-center clear clearfix">
+    <div class="group_pic">
+      <img src="{{bannerImage}}" class="image">
+    </div>
+    <div class="banner award_banner mob">
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <img style="margin-top: 20px;width: 72%;" src="https://d2riyb99hqtj11.cloudfront.net/1582088990.output-onlinepngtools.png">
+        </div>
+        <div class="col-md-6">
+          <div class="main_caption pull-left">
+            <p style="color:#fff">KSP awards {{id}}</p>
+            <h3 style="text-align: left">Winners announced for all categories </h3>
+            <button (click)="scroll(target)" class=""> See winners </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <img style="width: 83%; margin-bottom: 17px;" src="assets/images/awards2018_stay_tuned/group_11.png">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="black-bg carousel-wrapper clearfix clear">
+    <div>
+      <h2 class="text-center" style="color: #fff;margin: 20px 20px 20px 20px;font-weight: 600;"> Highlights from KSP
+        Awards {{id}} </h2>
+      <div class="container" *ngIf="logo[0]" style="text-align: center">
+       <div class="col-md-12">
+          <div class="col-md-6">
+              <img style="width: 100%" src="{{logo[0]}}" />
+            </div>
+            <div class="col-md-6">
+              <img style="width: 100%" src="{{logo[1]}}" />
+            </div>
+       </div>
+      </div>
+      <owl-carousel class="container custom-nav" [options]="carouselOptions1" [items]="silderImage"
+        [carouselClasses]="['owl-theme', 'sliding']">
+        <div class="rel" *ngFor="let item of silderImage">
+          <img class="img"  src="{{item.image}}" />
+          <div class="label-for-image" *ngIf="item.text">
+            <h2>{{item.text}}</h2>
+          </div>
+        </div>
+      </owl-carousel>
+    </div>
+  </section>
+  <section class="black-bg">
+    <div class="container d-flex flex-wrap clearfix spons-wrapper">
+      <div class="row">
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3>Title Sponsor</h3>
+            <div class="image clearfix">
+              <img src="https://d2riyb99hqtj11.cloudfront.net/1582873300.voot-kids-logo.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3>Associate Sponsor</h3>
+            <div class="image clearfix">
+              <img  src="https://d2riyb99hqtj11.cloudfront.net/1582871977.5.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3> Healthy Ice Cream Partner</h3>
+            <div class="image clearfix">
+              <img src="https://d2riyb99hqtj11.cloudfront.net/1582872004.6.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3>Counselling Partner</h3>
+            <div class="image clearfix">
+              <img src="https://d2riyb99hqtj11.cloudfront.net/1582871897.3.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3> Dessert Partner</h3>
+            <div class="image clearfix">
+              <img src="https://d2riyb99hqtj11.cloudfront.net/1582871921.4.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 padding card-group partner_group">
+          <div class="card">
+            <h3>Refreshment Partner</h3>
+            <div class="image clearfix">
+              <img src="https://d2riyb99hqtj11.cloudfront.net/1582871842.2.png" class="resizeicon">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div #target>
+  </div>
+  <section class="black-bg win-section clearfix clear">
+    <h2 class="text-center" style="color: #fff;margin: 20px 20px 20px 20px;font-weight: 600;"> KSP Award Winners {{id}}
+    </h2>
+    <div class="container award_thumbnail_wrapper clearfix flex-row">
+      <div class="col-md-4 col-sm-6 col-6 thumbs-mobile thumb_inner_wrapper"
+        *ngFor="let winner of winners; let i = index;">
+        <div class="award_thumbnail">
+          <div class="award_thumbnail_header">
+            <span>
+              {{winner.category_name}}
+            </span>
+            <img *ngIf="winner.category_image" [src]="winner.category_image" class="thumb_nail_header" />
+            <div *ngIf="!winner.category_image" class="min-no-img">
+              <span> Brand </span>
+            </div>
+          </div>
+          <div class="award_thumbnail_content">
+            <img *ngIf="winner.winner_image" class="thumb_content_img" [src]="winner.winner_image">
+            <div *ngIf="!winner.winner_image" class="max-no-img">
+              <span> Brand </span>
+            </div>
+            <span class="yellow_text"> Winner </span>
+            <span *ngIf="winner.Winner" class="coname"> {{winner.Winner}} </span>
+            <span *ngIf="!winner.Winner" class="coname"> No Brand Name </span>
+
+            <img *ngIf="winner.winner_image_second" class="thumb_content_img" [src]="winner.winner_image_second">
+            <span *ngIf="winner.winner_image_second" class="yellow_text"> Winner </span>
+            <span *ngIf="winner.Winner_second" class="coname"> {{winner.Winner_second}} </span>
+          </div>
+          <div class="thumbnail_footer">
+            <div class="d-flex">
+              <img *ngIf="winner.runner_image" [src]="winner.runner_image">
+              <!-- <div *ngIf="!winner.runner_image" class="min-no-img">
+                <span> Brand </span>
+              </div> -->
+              <div class="foot_content_wrapper">
+                <p *ngIf="winner.runner"> Runner Up </p>
+                <h4 *ngIf="winner.runner"> {{winner.runner}} </h4>
+                <!-- <h4 *ngIf="!winner.runner"> No RunnerUp </h4> -->
+              </div>
+            </div>
+            <div class="d-flex" *ngIf="winner.runner_second">
+              <img *ngIf="winner.runner_image_second" [src]="winner.runner_image_second">
+              <div *ngIf="!winner.runner_image_second" class="min-no-img">
+                <span> Brand </span>
+              </div>
+              <div *ngIf="winner.runner_second" class="foot_content_wrapper">
+                <h4> {{winner.runner_second}} </h4>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--endpart-->
+    </div>
+  </section>
+</div>

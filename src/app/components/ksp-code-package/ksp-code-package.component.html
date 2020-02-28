@@ -1,0 +1,43 @@
+<app-topnavnofilter></app-topnavnofilter>
+<section id="main-content">
+	<div class="row">
+		<div class="container">
+			<div class="col-md-12 col-sm-12">
+				 <div class="col-sm-12 col-md-3" style="display: flex;max-height: 330px;min-height: 330px" *ngFor='let code of codeData'>
+          			<div class="purple-ksp-code darkblue-ksp-code" style="position: relative;">
+            			<h2 class="text-center">{{ code.name }}</h2>
+            			<ul>
+              				<li>
+                				<a routerLink="/ksp-code-activity" target="_blank">
+                  					<button>&#x20B9; {{ code.cost }}/- </button>
+                				</a>
+                				<small class="activity-pack">
+				                  {{ code.content }}              
+				                </small>
+              				</li>
+            			</ul>
+          			</div>
+        		</div>
+
+        		<!-- <div class="col-sm-12 col-md-3" style="display: flex;max-height: 330px;min-height: 330px">
+          			<div class="purple-ksp-code darkblue-ksp-code" style="position: relative;">
+            			<h2 class="text-center">Play To Learn Box</h2>
+            			<ul>
+              				<li>
+                				<a routerLink="/ksp-code-activity" target="_blank">
+                  					<button>&#x20B9; 999/- </button>
+                				</a>
+                				<small class="activity-pack">
+				                  <b>Kit contains : </b><br>
+				                  CoCoMoco Kids (MRP 499)<br/>
+				                  Prism Edutives Games (MRP 500)<br/>
+				                  Nutty Scientists (MRP 350)<br/>                  
+				                </small>
+              				</li>
+            			</ul>
+          			</div>
+        		</div> -->
+			</div>
+		</div>
+	</div>
+</section>

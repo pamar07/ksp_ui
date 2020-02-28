@@ -1,0 +1,230 @@
+<div class="agile-main gry-background paddingNo">
+  <div class="content-wrap">
+    <div class="container" *ngIf="(articles?.length==0 && tvs?.length==0 && radios?.length==0 && social_posts?.length==0); else showList">
+      <div class="font-size15 color-gray font-bolder margin-top12px margin-bottom15 text-center" style="min-height:200px;">
+          <h4>Looks like you are yet to bookmark any content. <br/>A bookmark is a great way to keep all the content that you like in one place so that you can find them later. <br/>Why don't you go ahead and create your first bookmark?</h4>
+      </div>
+    </div>
+
+    <ng-template #showList>
+      <div class="container padding-left6px" *ngIf="articles?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Articles</div>
+      </div>
+      <div class="social-group" *ngIf="articles?.length!=0">
+        <div class="social-group-card" *ngFor="let article of articles">
+          <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type" [entityId]="article.id" [bookmarkCount]="article.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'" [noCount]="'true'" [isSmall]="'true'" class="bookmark-section-event"></app-bookmark>
+            <a href="/details/{{article.perma_link}}/{{article.id}}">
+              <img class="group-card-img" src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}"  alt="">
+            </a>
+            <div class="color-black card-title social-group-detail">
+              <a href="/details/{{article.perma_link}}/{{article?.id}}">
+                <p class="card-title">{{article.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                  <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                    <span class="media-heading capitalize">{{article.author_name}}</span>
+                  </a>
+                  <span class="anchor-time font-Raleway-SemiBold font-size10 pull-right" [innerHtml]="_commonService.setDateFormat(article.created_at) | date:'yMMMd'"></span>
+                </div>
+              </span>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [loveCount]="article.likes" [commentCount]="article.comment_count" [permaLink]="article.perma_link" [isSmall]="'true'" (loveDone)="updateArticleList()"></app-likecomment>
+                 </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="tvs?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Tv List</div>
+      </div>
+      <div class="widget-sidebar padding-left-right6px">
+        <div class="content-widget-sidebar margin0" *ngIf="tvs?.length!=0">
+          <ul>
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let tv of tvs">
+              <div class="post-img pull-left" style="width:115px;">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <img [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')" width="100px" height="67px" style="border-radius:4px;">
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 167px);">
+                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                  <h5 class="font-size13 small-title-excerpt pull-left" style="width:80%;">{{tv.title}}</h5>
+                </a>
+                <app-bookmark [bookmarkData]="tv.bookmarked" [entityType]="tv.post_type" [entityId]="tv.id" [bookmarkCount]="tv.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'" [noBackground]="'true'" [noCount]="'true'" [isSmall]="'true'" style="width:auto;float:right;"></app-bookmark>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}"><small>BY {{tv.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(tv.created_at) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="tv.liked" [entityType]="tv.post_type" [entityId]="tv.id" [loveCount]="tv.likes" [permaLink]="tv.perma_link" [commentCount]="tv.comment_count" [isSmall]="'true'" (loveDone)="updateTvList()"></app-likecomment>
+                 </ul>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="radios?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Radio List</div>
+      </div>
+      <div class="widget-sidebar padding-left-right6px">
+        <div class="content-widget-sidebar margin0" *ngIf="radios?.length!=0">
+          <ul>
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let radio of radios">
+              <div class="post-img pull-left" style="width:65px;">
+                <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                  <i class="fa fa-play-circle color-baby-pink font-size50"></i>
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 117px);">
+                <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                  <h5 class="font-size13 small-title-excerpt pull-left" style="width:80%;">{{radio.title}}</h5>
+                </a>
+                <app-bookmark [bookmarkData]="radio.bookmarked" [entityType]="radio.post_type" [entityId]="radio.id" [bookmarkCount]="radio.bookmark_count" [className]="''" [classTooltip]="'margin-tooltip-tv-all'" [noBackground]="'true'" [noCount]="'true'" [isSmall]="'true'" style="width:auto;float:right;"></app-bookmark>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{radio.creator_id}}"><small>BY {{radio.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(radio.created_at) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="radio.liked" [entityType]="radio.post_type" [entityId]="radio.id" [loveCount]="radio.likes" [permaLink]="radio.perma_link" [commentCount]="radio.comment_count" [isSmall]="'true'" (loveDone)="updateRadioList()"></app-likecomment>
+                 </ul>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="social_posts?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Social Posts</div>
+      </div>
+      <div class="widget-sidebar padding-left-right6px">
+        <div class="content-widget-sidebar margin0" *ngIf="social_posts?.length!=0">
+          <ul>
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let article of social_posts">
+              <div class="post-img pull-left" style="width:65px;">
+                <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                  <app-round-pic [picPath]="article.author_path" [userName]="article.author_name" [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                </a>
+              </div>
+              <div class="pull-left" style="width: calc(100vw - 117px);">
+                <a routerLink="/post-individual/{{article.id}}">
+                  <h5 class="font-size13 small-title-excerpt pull-left" style="width:80%;">{{article.title}}</h5>
+                </a>
+                <app-bookmark [bookmarkData]="article.bookmarked" [entityType]="article.post_type" [entityId]="article.id" [bookmarkCount]="article.bookmark_count" [className]="'right6px'" [classTooltip]="'margin-tooltip-radio-all1'" [noBackground]="'true'" [noCount]="'true'" [isSmall]="'true'" style="width:auto;float:right;"></app-bookmark>
+                <div class="pull-left paddingNo font-size11 margin-top width-100per">
+                  <a routerLink="/authorwise-posts/{{article.creator_id}}"><small>BY {{article.author_name}}</small></a>
+                  <small class="pull-right">{{_commonService.setDateFormat(article.created_at) | date:'yMMMd'}}</small>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-5 col-xs-5 paddingNo margin-top">
+                 <ul class="list-unstyled text-left pull-right width-100per">
+                    <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [loveCount]="article.likes" [permaLink]="article.perma_link" [commentCount]="article.comment_count" [isSmall]="'true'" (loveDone)="updateSocialPostList()"></app-likecomment>
+                 </ul>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="events?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Events</div>
+      </div>
+      <div class="social-group" *ngIf="events?.length!=0">
+        <div class="social-group-card col-xs-8" *ngFor="let event of events">
+          <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+            <div class="col-xs-12 col-sm-12 slide-n margin-top-bottom-10px paddingNo">
+              <div>
+                <img src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" width="100%" height="150px" alt="" style="object-fit:cover; object-position: top center; border-radius:4px 4px 0 0;"> 
+              </div>
+              <div class="col-xs-12 col-sm-12 margin-top" style="background-color:#ffffff;border-radius: 0 0 4px 4px!important;">
+                <div class="col-sm-12 col-xs-12 paddingNo">
+                  <span *ngFor="let cat of event.category?.slice(0,2); let i=index">
+                    <span class="ion-android-data light-blue-button all-caps event-cat-btn" [innerHTML]="cat.name"></span>&nbsp;
+                  </span>
+                </div>
+                <div class="col-sm-12 col-xs-12 paddingNo font-Raleway-SemiBold font-size18 line-height-15 margin-top">
+                  {{event.title}}
+                </div>
+                <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top">
+                  <span class="line-height-2 font-Raleway-SemiBold pink-color font-size11">
+                    <small *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}},
+                      <span *ngIf="event.start_date==event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}</span>
+                      <span *ngIf="event.start_date!=event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}} - {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</span>
+                    </small>
+                    <small *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}&nbsp; - &nbsp;{{_commonService.setDateFormat(event.end_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</small>
+                  </span>
+                </div>
+                <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top margin-bottom10px">
+                  <span class="line-height-2 font-Raleway-SemiBold pink-color font-size12">{{event.venue_city=='' ? 'All Cities' : event.venue_city}}</span>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo text-right pull-right">
+                    <ul class="list-unstyled text-left pull-right width-100per">
+                      <app-likecomment [loveData]="event.liked" [entityType]="'event'" [entityId]="event.id" [loveCount]="event.likes" [permaLink]="event.perma_link" [commentCount]="event.comment_count"></app-likecomment>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="container padding-left6px" *ngIf="camps?.length!=0">
+        <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">Loved Camps</div>
+      </div>
+      <div class="social-group" *ngIf="camps?.length!=0">
+        <div class="social-group-card col-xs-8" *ngFor="let event of camps">
+          <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+            <div class="col-xs-12 col-sm-12 slide-n margin-top-bottom-10px paddingNo">
+              <div>
+                <img src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}" width="100%" height="150px" alt="" style="object-fit:cover; object-position: top center; border-radius:4px 4px 0 0;"> 
+              </div>
+              <div class="col-xs-12 col-sm-12 margin-top" style="background-color:#ffffff;border-radius: 0 0 4px 4px!important;">
+                <div class="col-sm-12 col-xs-12 paddingNo">
+                  <span *ngFor="let cat of event.category?.slice(0,2); let i=index">
+                    <span class="ion-android-data light-blue-button all-caps event-cat-btn" [innerHTML]="cat.name"></span>&nbsp;
+                  </span>
+                </div>
+                <div class="col-sm-12 col-xs-12 paddingNo font-Raleway-SemiBold font-size18 line-height-15 margin-top">
+                  {{event.title}}
+                </div>
+                <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top">
+                  <span class="line-height-2 font-Raleway-SemiBold pink-color font-size11">
+                    <small *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}},
+                      <span *ngIf="event.start_date==event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}</span>
+                      <span *ngIf="event.start_date!=event.end_date">{{_commonService.setDateFormat(event.start_date) | date:'shortTime'}} - {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</span>
+                    </small>
+                    <small *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.start_date) | date:'shortTime'}}&nbsp; - &nbsp;{{_commonService.setDateFormat(event.end_date) | date:'mediumDate'}}, {{_commonService.setDateFormat(event.end_date) | date:'shortTime'}}</small>
+                  </span>
+                </div>
+                <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top margin-bottom10px">
+                  <span class="line-height-2 font-Raleway-SemiBold pink-color font-size12">{{event.venue_city=='' ? 'All Cities' : event.venue_city}}</span>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo text-right pull-right">
+                    <ul class="list-unstyled text-left pull-right width-100per">
+                      <app-likecomment [loveData]="event.liked" [entityType]="'event'" [entityId]="event.id" [loveCount]="event.likes" [permaLink]="event.perma_link" [commentCount]="event.comment_count"></app-likecomment>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

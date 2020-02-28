@@ -1,0 +1,98 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.dark-gry-background{
+  background-color: #ffffff!important;
+  padding: 14px 0 0;
+}
+
+.master-cat-btn{
+  height:40px!important;
+  width:auto!important;
+  font-size:16px!important;
+  font-weight:bolder!important;
+  line-height: 0!important;
+  border: none;
+  outline: none;
+  margin-bottom: 12px;
+  /*border-radius: 3px 3px 0px 0px;*/
+  /*background-color: #777!important;*/
+
+  border-radius: 0px;
+  background-color: transparent!important;
+  color: black;
+
+}
+.master-cat-selected{
+  /*background-color: #e45b80!important;*/
+  outline: none;
+
+  border-bottom: 3px solid red;
+  /*background-color: rgba(255, 164, 164, 0.36)!important;*/
+}
+
+.master-cat-btn:hover{
+  border-bottom: 3px solid red;
+  /*background-color: rgba(255, 164, 164, 0.36)!important;*/
+  /*text-decoration: none!important;*/
+}
+.master-cat-btn:active{
+  outline: none!important;
+  border: none!important;
+  border-style: none!important;
+  background-color: transparent!important;
+
+  box-shadow: none!important;
+}
+
+
+.category-filter-box{
+  /*border-top: 1px solid #e45b80;*/
+  padding: 0 15px 15px 15px !important;
+
+  border-top: 1px solid rgba(255, 0, 0, 0.17);
+}
+.sub-cat-button {
+    /*font-size: 10px!important;
+    font-weight: bolder!important;
+    padding: 10px 30px!important;
+    width: auto;
+    margin: 1px;
+    line-height: 40px;
+    white-space: nowrap;
+    border-radius: 50px;*/
+
+   white-space: nowrap;
+   font-size: 10px!important;
+   padding: 7px 17px!important;
+   border-radius: 0!important;
+   width: auto;
+   margin: 1px;
+   font-weight: 600;
+   line-height: 30px;
+}
+.sub-cat-button:hover {
+  background-color: #d5d5d5!important;
+  color:#000!important;
+  /*opacity: 0.5;*/
+}
+
+.sub-cat-selected{
+  background-color: #d5d5d5!important;
+  color:#000!important;
+  outline: none;
+  background-size: 9px 9px!important;
+  background-repeat: no-repeat;
+  background-position-x: 5px;
+  background-position-y: 8px;
+}
+.matgin-top-13px{
+  margin-top:-12px;
+}

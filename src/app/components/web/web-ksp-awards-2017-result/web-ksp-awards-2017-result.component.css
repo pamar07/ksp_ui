@@ -1,0 +1,30 @@
+h1,h2,h3,h4,h5,h6{
+  /* color: #222; */
+  font-family: "Lato","Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #000;
+	font-family: 'Raleway', sans-serif;
+}
+.top-wrapper {
+    text-align: center;
+    margin-bottom: 0;
+    color: gold;
+}
+.wrapper img {
+    width: 60px;
+    height: 60px;
+    alignment: center;
+}
+.div-color{
+    background-color: black;
+}

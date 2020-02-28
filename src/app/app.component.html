@@ -1,0 +1,25 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+    <app-topnav *ngIf="headless == false"></app-topnav>
+    <app-mobile-topnav *isMobile></app-mobile-topnav>
+    <app-mobile-topnav *isTablet></app-mobile-topnav>
+    <router-outlet></router-outlet>
+    <app-bottomnav *ngIf="headless == false && _api.showFooter()"></app-bottomnav>
+    <span id="sidenav-overlay"><span>
+
+
+
+
+<!-- Signup Modal -->
+<div class="modal fade" id="SignupModal1" role="dialog">
+  <div class="modal-dialog" style="width: 587px; height: 346px;">
+    <div class="modal-content" style="border-radius:50px;">
+      <div class="modal-body" style="background-image: url(assets/images/signupModal.png); background-repeat: no-repeat; width: 587px; height: 346px;">
+        <div class="topRight" data-dismiss="modal"><span style="vertical-align:middle;">X</span></div>
+        <div class="sign-up-btn signupModalBtn">
+          <a data-dismiss="modal" routerLink="/signup" class="btn btn-white btn-cons font-size">SIGN UP</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

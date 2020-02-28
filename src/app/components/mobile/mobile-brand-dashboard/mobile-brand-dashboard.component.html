@@ -1,0 +1,350 @@
+<section>
+    <div class="wrapper">
+      <div class="container-fluid paddingNo">
+        <div class="row margin20">
+          <div class="col-sm-9">
+              <!-- Nomination -->
+              <div class="col-sm-4 no-padding-l" style="margin: 15px 0px" (click)="nominateMoreCat()">
+                  <div class="tile-content-wrapper" style="cursor: pointer">
+                      <div class="tile-img-wrapper">
+                          <img src="https://d2riyb99hqtj11.cloudfront.net/imagesaug_1521828685.banner.jpeg">
+                      </div>
+                      <div class="overlay-one">
+                          <p> Welcome to
+                              KSP Awards </p>
+                          <small class="banner-desc">Nominate your brand for 2019 KSP Awards</small>
+                      </div>
+                  </div>
+              </div>
+            <div class="col-sm-4 no-padding-l" style="margin: 15px 0px">
+              <div class="tile-content-wrapper" (click)="sendWorkshopMail()" style="cursor: pointer;">
+                <div class="tile-img-wrapper">
+                  <img src="assets/images/tilebannerTwo.png">
+                </div>
+                <div class="overlay-one">
+                  <div class="icon">
+                    <img src="assets/images/27.png">
+                  </div>
+                  <p> Host the event with KSP </p>
+                  <small class="banner-desc">Conduct a workshop exclusively for KSP CODE members- Share it here!</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 no-padding-l" style="margin: 15px 0px">
+              <a routerLink="/event-submit">
+                <div class="tile-content-wrapper">
+                  <div class="tile-img-wrapper">
+                    <img src="assets/images/tilebannerOne.png">
+                  </div>
+                  <div class="overlay-one">
+                    <div class="icon">
+                      <img src="assets/images/26.png">
+                    </div>
+                    <p> Submit an event </p>
+                    <small class="banner-desc">Want us to cover your event in our events guide- submit here!</small>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-4 no-padding-l" style="margin: 15px 0px">
+              <div class="tile-content-wrapper" (click)="sendAdvertiseMail()" style="cursor: pointer;">
+                <div class="tile-img-wrapper">
+                  <img src="assets/images/tilebannerThree.png">
+                </div>
+                <div class="overlay-one">
+                  <div class="icon">
+                    <img src="assets/images/25.png">
+                  </div>
+                  <p> Advertise with us </p>
+                  <small class="banner-desc">Want to Advertise on KSP-Tell us more!</small>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-sm-3 right-contact-det">
+            <div class=" clearfix">
+              <div class="text-right" style="cursor:pointer">
+                <span class="pen-style"> 
+                  <a href="javascript:void(0);" title="Edit Profile Details" data-toggle="modal" data-target="#profile-left"><img src="assets/images/21.png" (click)="initiateProfileForm()"></a>
+                </span>
+              </div>
+              <div class="col-sm-2 col-xs-2 no-padding-lr">
+                <div class="pro-pic">
+                  <img [src]="_apiService.getAuthUser().image_path ? _apiService.getAuthUser().image_path :  'assets/images/32.png'">
+                </div>
+                <!-- <div class="edit-style">
+                  Edit
+                </div> -->
+              </div>
+              <div class="col-sm-10 col-xs-10">
+                <p class="name">  </p>
+                <p class="business-name">{{_apiService.getAuthUser().name+' '+_apiService.getAuthUser().last_name}}</p>
+                <p class="sector-name"><i class="fa fa-briefcase"></i> {{_apiService.getAuthUser().business_name}}</p>
+                <p class="description">{{_apiService.getAuthUser().about_yourself}}</p>
+                <p class="contact-det"> <i class="fa fa-envelope"></i> {{_apiService.getAuthUser().email}}</p>
+                <p class="contact-det" *ngIf="_apiService.getAuthUser().phone"> <i class="fa fa-mobile" style="font-size: 20px; vertical-align: middle;"></i> +{{_apiService.getAuthUser().phone}}</p>
+                <p class="contact-det" *ngIf="_apiService.getAuthUser().website"> <i class="fa fa-globe"></i> {{_apiService.getAuthUser().website}}</p>
+                <p class="contact-det" *ngIf="_apiService.getAuthUser().address"> <i class="fa fa-map-marker vertical-align-top"></i> {{_apiService.getAuthUser().address}} </p>
+                <div class="col-md-7 col-lg-7 paddingNo">
+                  <a href="javascript:void(0);" data-toggle="modal" data-target="#change-password" class="btn light-blue-button font-size13 answer-style" style="background-color: #e35b7f; color:#fff" (click)="initiatePasswordForm()">Change Password</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<div id="profile-left" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="profile-sidebar">
+          <div class="col-md-12 paddingNo">
+              <h4><a class="color-pink">Profile Details</a> </h4>
+          </div>
+          <br>
+          <hr>
+        </div>
+        <form [formGroup]="profileForm" (ngSubmit)="profileForm.valid && updateUserProfileDetails(profileForm.value)" #formProfile="ngForm">
+          <div class="row">
+            <div class="profile-pic-bg">
+              <div class="fileUpload btn btn-primary user-image-upload-btn">
+                <input type="file" class="upload" (change)="userProfilePicChange($event)"/>
+              </div>
+              <div>
+                <img [src]="profileForm.controls.image_path.value ? profileForm.controls.image_path.value : 'assets/images/blank-profile-picture.png'" class="img-responsive user_pic" alt="" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>First Name</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['name']">
+              <div *ngIf="(profileForm.controls['name'].hasError('required') && profileForm.controls['name'].dirty) || (profileForm.controls['name'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter your first name</div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>Last Name</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['last_name']">
+              <div *ngIf="(profileForm.controls['last_name'].hasError('required') && profileForm.controls['last_name'].dirty) || (profileForm.controls['last_name'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter your last name</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>Name of Business</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['business_name']">
+              <div *ngIf="(profileForm.controls['business_name'].hasError('required') && profileForm.controls['business_name'].dirty) || (profileForm.controls['business_name'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter your business name</div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>Description of Business</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['about_yourself']">
+              <div *ngIf="(profileForm.controls['about_yourself'].hasError('required') && profileForm.controls['about_yourself'].dirty) || (profileForm.controls['about_yourself'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please write something about your business</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>Address</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['address']">
+              <div *ngIf="(profileForm.controls['address'].hasError('required') && profileForm.controls['address'].dirty) || (profileForm.controls['address'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter the address of your business</div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 ">
+              <label class="color-black"><b>Website</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['website']">
+               <div *ngIf="(profileForm.controls['website'].hasError('required') && profileForm.controls['website'].dirty) || (profileForm.controls['website'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter the website of your business</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+              <label for="exampleInputUsername" class="color-black"><b>Industry Type</b></label>
+              <select class="form-control col-lg-12 gray-bg height40 bg-white" [formControl]="profileForm.controls['industry_type']" (change)="checkIndustryType()">
+                <option> Advertising/ PR/ MR/ Events </option>
+                <option> Education/ Teaching/ Trainning </option>
+                <option> FMCG/Food/ Beverage </option>
+                <option> Hotels/ Restaurant/ Airlines/ Travel </option>
+                <option> Medical/ Healthcare/ Hospital </option>
+                <option> Publishing </option>
+                <option> Real Estate/Property </option>
+                <option> Wellness/ Fitness/ Sports/ Beauty </option>
+                <option>Others</option>
+              </select>
+              <div *ngIf="(profileForm.controls['industry_type'].hasError('required') && profileForm.controls['industry_type'].dirty) || (profileForm.controls['industry_type'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please select one industry</div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6" *ngIf="profileForm.controls.industry_type.value == 'Others'">
+              <label class="color-black"><b>Other</b></label>
+              <input type="text" class="form-control  input-sm" [formControl]="profileForm.controls['other_industry_type']">
+              <div *ngIf="(profileForm.controls['other_industry_type'].hasError('required') && profileForm.controls['other_industry_type'].dirty) || (profileForm.controls['other_industry_type'].hasError('required') && formProfile.submitted)" class="error-survey-form">Please enter other industry.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="text-center">
+                <button class="btn green-background blue-green font-size13 padding-left-right40px" type="submit">Save</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="change-password" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="pull-right closePopup closeButton-mobile" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="profile-sidebar">
+          <div class="col-md-12 paddingNo">
+              <h4><a class="color-pink">Change Password</a></h4>
+          </div>
+          <br>
+          <hr>
+        </div>
+        <form [formGroup]="passwordForm" (ngSubmit)="passwordForm.valid && updatePassword(passwordForm.value)" #formPassword="ngForm">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>New Password</b></label>
+                <input type="password" class="form-control  input-sm" [formControl]="passwordForm.controls['password']">
+                <div *ngIf="(passwordForm.controls['password'].hasError('required') && passwordForm.controls['password'].dirty) || (passwordForm.controls['password'].hasError('required') && formPassword.submitted)" class="error-survey-form">Please enter new password.</div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 margin-top">
+                <label for="exampleInputUsername" class="color-black"><b>Confirm Password</b></label>
+                <input type="password" class="form-control  input-sm" [formControl]="passwordForm.controls['confirm_password']">
+
+                <div *ngIf="(passwordForm.controls['confirm_password'].hasError('required') && passwordForm.controls['confirm_password'].dirty) || (passwordForm.controls['confirm_password'].hasError('required') && formPassword.submitted)" class="error-survey-form">Please confirm password.</div>
+
+                <div *ngIf="!passwordForm.controls['confirm_password'].hasError('required') && (passwordForm.controls['confirm_password'].hasError('passwordmisMatch') && passwordForm.controls['confirm_password'].dirty)" class="error-survey-form">Confirm password and new password does not match.</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="text-center">
+                <button class="btn green-background blue-green font-size13 padding-left-right40px" type="submit">Change</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- brand nomination popup modal -->
+ <div class="pop-modal-overlay" *ngIf="nomination == true">
+
+    <div class="pop-inner-modal">
+      <h3 style="text-align:center"> Upload your logo and review categories
+          <i style="font-size: 20px;" class="fa fa-times" (click)="closeNominationBrand()"></i>
+      </h3>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <!-- <label>Company Logo</label> -->
+              <!-- <input type="file" id="avatar" formControlName="companyLogo" name="avatar" accept="image/png, image/jpeg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactPersion.errors }"> -->
+              <!-- <input #file type="file" accept="image/*" formControlName="companyLogo" (change)="upload(file)" style="visibility:hidden;height: 0;" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactPersion.errors }">
+               <button #upload (click)="file.click()">Upload file</button> -->
+              <!-- <img style="width: 10%;" src="../../assets/images/upload.png" #upload (click)="file.click()" />
+              <div *ngIf="submitted && f.companyLogo.errors" class="invalid-feedback">
+                  <div *ngIf="f.companyLogo.errors.required">Company logo is required</div>
+              </div> -->
+              <input #fileUpload type="file" (click)="fileUpload.value = null"(change)="importFile($event)" style="display:none"
+accept="image/*"><br/>
+<!-- <button (click)="fileUpload.click()">  </button> -->
+<img style="width: 10%;margin: 0 auto;display: block;" src="{{logo}}" #upload (click)="fileUpload.click()" />
+<div *ngIf="showErrormessage == 1" style="text-align: center;color: #f05b89;">Company logo is required</div>
+<!-- <img *ngIf="imageSrc" style="margin-left: 20px;border-radius: 50%;width: 60px;height: 60px;" id="blah" [src]="imageSrc" alt="your image" /> -->
+<div *ngIf="submitted && f.companyLogo.errors" class="invalid-feedback">
+  
+</div>
+          </div>
+          <div class="form-group">
+              <label>Category</label>
+              <input type="text" placeholder="Type here" formControlName="categoryName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryName.errors }" />
+              <div *ngIf="submitted && f.categoryName.errors" class="invalid-feedback">
+                  <div *ngIf="f.categoryName.errors.required">Category Name is required</div>
+              </div>
+              <!--<div class="morecat" *ngIf="showSelectMore == 1" (click)="nominateMoreCat()">Nominate for more categories<i class="fa fa-angle-right"></i></div>-->
+          </div>
+          <div class="form-group">
+              <label>Company Name</label>
+              <input type="text" disabled (input)="filterCompany($event.target.value)" placeholder="Type here" formControlName="companyName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+              <ul style="overflow-y: scroll;height: 100px;" *ngIf="listCompany == true">
+                <li *ngFor="let company of searchItems" (click)="getCompany(company.business_name,company.id)">
+                  {{company.business_name}}
+                </li>
+              </ul>
+              <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                  <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+              </div>
+          </div>
+
+          <div class="form-group">
+              <button [disabled]="loading" class="btn submitbtn">Submit</button>
+          </div>
+      </form>
+    </div>
+
+  </div>
+                         <!-- nomination more categories popup modal -->
+ <div class="pop-modal-overlay" *ngIf="nomimateMore == true">
+
+    <div class="pop-inner-modal">
+            <!-- <i style="font-size: 20px;float:left" class="fa fa-times" (click)="closeChooseCat()"></i>
+        <button class="btn donebtn" (click)="catSubmit()">Done</button> -->
+        <h3>Nominate your business for the award
+            <i style="font-size: 20px;" class="fa fa-times" (click)="closeNominationBrand()"></i>
+        </h3>
+        <p style="color:#f05b89">Select categories</p>
+      <input type="text" (input)="filterCategories($event.target.value)" placeholder="Search Categories here"  class="form-control"  />
+      <ul style="overflow-y: scroll;height: 400px;">
+        <li *ngFor="let cat of searchItems1"  style="border-bottom: 1px solid #b7b3b3;position: relative;"  [ngClass]="{'active': cat.active}"  (click)="clicked($event,cat)">
+         <span> <img src="{{cat.img_path}}"  onError="this.src='../../v1/assets/images/ksp_logo_big.png'" alt="" style="object-fit:cover!important;width:10%;height:auto;"/></span> <p style="display: inline-block;width: calc(100% - 100px);vertical-align: middle;">{{cat.category}}</p> <span style="position: absolute;right: 0;top: 0;"> <img class="im" style="width: 20px;float: right;margin: 15px;" src="../../v1/assets/images/radio_active.png" /></span>
+        </li>
+      </ul>
+      <button class="btn donebtn" (click)="catSubmit()">Submit</button>
+    </div>
+
+  </div>
+                                                      <!-- Thankyou categories popup modal -->
+                                                      <div class="pop-modal-overlay" *ngIf="thankYou == true">
+
+                                                        <div class="pop-inner-modal" style="background-color: #fff;height: auto;width: 100%;padding: 40px">
+                                                                <h1 style="text-align:center"> Thank You!
+                                                                </h1>
+                                                                <p style="text-align:center">You've successfully nominateed your brand for </p>
+                                                                <ul style="overflow-y: scroll;height: 250px;">
+                                                                  <li *ngFor="let cat of arr"  style="border-bottom: 1px solid #b7b3b3;position: relative;">
+                                                                   <span> <img src="{{cat.img_path}}"  onError="this.src='../../v1/assets/images/ksp_logo_big.png'" alt="" style="object-fit:cover!important;width:10%;height:auto;"/></span> <p style="display: inline-block;width: calc(100% - 100px);vertical-align: middle;">{{cat.category}}</p> <span style="position: absolute;right: 0;top: 0;"> <img class="im" style="width: 20px;float: right;margin: 15px;" src="../../v1/assets/images/radio_active.png" /></span>
+                                                                  </li>
+                                                                </ul>
+                                                                <button class="btn submitbtn" (click)="closeThankyou()">Okay</button>
+                                                        </div>
+
+                                                      </div>
+<!--Social ID Check-->
+<div class="pop-modal-overlay" *ngIf="haveSocal">
+
+    <div class="pop-inner-modal" style="background-color: #fff;height: auto;width: 100%;padding: 40px">
+        <h4 style="text-align:center"> We Don't Have Your Social Details
+        </h4>
+        <p style="text-align:center">Please Enter Your Social Id</p>
+        <p>Facebook</p> <input style="align-item: center" [(ngModel)]="facebook_handle" class="form-control">
+        <p>Twitter</p> <input style="align-item: center" [(ngModel)]="twitter_handle" class="form-control">
+        <p>Instagram</p> <input style="align-item: center" [(ngModel)]="instagram_handle" class="form-control">
+        <p style="color: red" *ngIf="showError">*At Least One Is Required</p>
+        <button class="btn btn-social-popup " (click)="submitSocial()" >OK</button>
+        <button class="btn btn-social-popup" (click)="closeHaveSocial()">Cancel</button>
+    </div>
+
+</div>

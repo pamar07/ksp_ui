@@ -1,0 +1,250 @@
+<div class="container-fluid no-padding-lr black-bg">
+  <section class="position-relative text-center clear clearfix">
+    <div class="group_pic">
+      <img src="{{bannerImage}}" class="image">
+    </div>
+    <div class="banner award_banner">
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <img style="margin-top: 20px;width: 72%;" src="assets/images/awards2018_stay_tuned/2.png">
+        </div>
+        <div class="col-md-6">
+          <div class="main_caption pull-left">
+            <p style="color:#fff">KSP awards 2018</p>
+            <h3 style="text-align: left">Winners announced for all categories </h3>
+            <button (click)="scroll(target)" class=""> See winners </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <img style="width: 83%; margin-bottom: 17px;" src="assets/images/awards2018_stay_tuned/group_11.png">
+        </div>
+      </div>
+      <!-- <img src="assets/images/awards2018_stay_tuned/2.png">
+          <section class="clearfix clear"> 
+            <div class="banner_div container">
+                <div class="caption_icon_wrapper pull-right display-xs">
+                    <img src="assets/images/awards2018_stay_tuned/group_11.png">
+                </div>
+                <div class="main_caption pull-left">
+                  <p>KSP awards 2018</p>
+                  <h3>Winners announced for all categories </h3>
+                  <button class=""> See winners </button>
+                </div>
+                <div class="caption_icon_wrapper pull-right hide-xs">
+                    <img src="assets/images/awards2018_stay_tuned/group_11.png">
+                </div>
+            </div>
+          </section> -->
+    </div>
+  </section>
+  <!-- <section class="black-bg clearfix clear"> 
+    <div class="banner_text">
+        <h2 style="color: #fff;margin: 60px 20px 20px 20px;font-weight: 600;">Celebrating excellence in parenting and baby care</h2>
+    </div>
+
+    <div class="banner_div dark-black-bg container">
+        <div class="caption_icon_wrapper pull-right display-xs">
+            <img src="assets/images/awards2018_stay_tuned/group_11.png">
+        </div>
+        <div class="main_caption pull-left">
+          <p>KSP awards 2018</p>
+          <h3>Winners announced for all categories </h3>
+          <button class=""> See winners </button>
+        </div>
+        <div class="caption_icon_wrapper pull-right hide-xs">
+            <img src="assets/images/awards2018_stay_tuned/group_11.png">
+        </div>
+    </div>
+  </section> -->
+
+
+  <section class="black-bg carousel-wrapper clearfix clear">
+    <div>
+      <h2 class="text-center" style="color: #fff;margin: 60px 20px 20px 20px;font-weight: 600;"> Highlights from KSP
+        Awards 2018 </h2>
+      <div class="container" style="text-align: center">
+       <div class="col-md-12">
+          <div class="col-md-6">
+              <img style="width: 100%" src="https://d2riyb99hqtj11.cloudfront.net/w_600/1566451659.AwardsBanner1.jpg" />
+            </div>
+            <div class="col-md-6">
+              <img style="width: 100%" src="https://d2riyb99hqtj11.cloudfront.net/w_600/1566451723.AwardsBanner2.jpg" />
+            </div>
+       </div>
+      </div>
+      <owl-carousel class="container" [options]="carouselOptions1" [items]="silderImage"
+        [carouselClasses]="['owl-theme', 'sliding']">
+        <div class="rel" *ngFor="let item of silderImage">
+          <img class="img" (click)="goToProduct(item.id)" src="{{item}}" />
+        </div>
+      </owl-carousel>
+    </div>
+  </section>
+
+
+
+  <!-- <ul class="carousel-tab">
+        <li class="active"> Videos </li>
+        <li> Images </li>
+        <div class="display-xs pull-right mobile-carousel-arrow">
+          <a class="mobile-left-arrow" href="#myCarousel" data-slide="prev">
+            <img src="assets/images/awards2018_stay_tuned/left-arrow.svg">
+          </a>
+          <a class="mobile-right-arrow" href="#myCarousel" data-slide="next">
+            <img src="assets/images/awards2018_stay_tuned/right-arrow.svg"> 
+          </a>
+        </div>   
+      </ul> -->
+
+  <!-- <div id="myCarousel" class="custom_carousel_style carousel slide position-relative" data-ride="carousel">
+       Indicators 
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+      
+   
+        <div class="carousel-inner">
+    
+          <div class="item active" >
+            <img src="assets/images/awards2018_stay_tuned/banner_img.JPG" alt="Los Angeles" style="width:100%;">
+          </div>
+    
+          <div class="item">
+            <img src="assets/images/awards2018_stay_tuned/Awards Banner 1.jpg" alt="Chicago" style="width:100%;">
+          </div>
+        
+          <div class="item">
+            <img src="assets/images/awards2018_stay_tuned/Awards Banner 2.jpg" alt="New York" style="width:100%;">
+          </div>
+      
+        </div>
+      
+  
+        <a class="left-arrow hide-xs" href="#myCarousel" data-slide="prev">
+          <img src="assets/images/awards2018_stay_tuned/left-arrow.svg">
+        </a>
+        <a class="right-arrow hide-xs" href="#myCarousel" data-slide="next">
+          <img src="assets/images/awards2018_stay_tuned/right-arrow.svg"> 
+        </a>
+      </div>
+  </section> -->
+  <div #target>
+
+  </div>
+  <section class="black-bg win-section clearfix clear">
+    <h2 class="text-center" style="color: #fff;margin: 60px 20px 20px 20px;font-weight: 600;"> KSP Award Winners 2018
+    </h2>
+    <div class="container award_thumbnail_wrapper clearfix flex-row">
+      <div class="col-md-4 col-sm-6 col-6 thumbs-mobile thumb_inner_wrapper"
+        *ngFor="let winner of winners; let i = index;">
+        <div class="award_thumbnail">
+          <div class="award_thumbnail_header">
+            <span>
+              {{winner.category}}
+            </span>
+            <img *ngIf="winner.img_path" [src]="winner.img_path" class="thumb_nail_header" />
+            <div *ngIf="!winner.img_path" class="min-no-img">
+              <span> Brand </span>
+            </div>
+          </div>
+          <div class="award_thumbnail_content">
+            <img *ngIf="winner.Winnerlogo1" class="thumb_content_img" [src]="winner.Winnerlogo1">
+            <div *ngIf="!winner.Winnerlogo1" class="max-no-img">
+              <span> Brand </span>
+            </div>
+            <span class="yellow_text"> Winner </span>
+            <span *ngIf="winner.Winnerlogo1" class="coname"> {{winner.WinnerName1}} </span>
+            <span *ngIf="!winner.Winnerlogo1" class="coname"> No Brand Name </span>
+
+            <img *ngIf="winner.Winnerlogo2" class="thumb_content_img" [src]="winner.Winnerlogo2">
+            <span *ngIf="winner.Winnerlogo2" class="yellow_text"> Winner </span>
+            <span *ngIf="winner.WinnerName2" class="coname"> {{winner.WinnerName2}} </span>
+          </div>
+          <div class="thumbnail_footer">
+            <div class="d-flex">
+              <img *ngIf="winner.runnerlogo1" [src]="winner.runnerlogo1">
+              <div *ngIf="!winner.runnerlogo1" class="min-no-img">
+                <span> Brand </span>
+              </div>
+              <div class="foot_content_wrapper">
+                <p> Runner Up </p>
+                <h4 *ngIf="winner.runnerName1"> {{winner.runnerName1}} </h4>
+                <h4 *ngIf="!winner.runnerName1"> No RunnerUp </h4>
+              </div>
+            </div>
+            <div class="d-flex" *ngIf="winner.runnerlogo2">
+              <img *ngIf="winner.runnerlogo2" [src]="winner.runnerlogo2">
+              <div *ngIf="winner.runnerName2" class="foot_content_wrapper">
+                <h4> {{winner.runnerName2}} </h4>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--endpart-->
+    </div>
+
+    <div class="ld-more-wrapper" *ngIf="hideLdMore">
+      <button class="ld-more-btn" (click)="loadMore()">
+        <span> Load More </span>
+        <img src="assets/images/white-arrow-down-angle.svg">
+      </button>
+    </div>
+
+  </section>
+  <section class="black-bg">
+    <div class="container d-flex flex-wrap clearfix spons-wrapper">
+      <div class="col-sm-3 padding card-group partner_group">
+        <div class="card">
+          <h3>Sponsors</h3>
+          <div class="image clearfix">
+
+            <img src="assets/images/awards2018_stay_tuned/logo.png" class="resizeicon">
+
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 padding card-group partner_group">
+        <div class="card">
+          <h3>Gifting Patners</h3>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/Pressto_Anniversary_logo.png" class="resizeicon">
+          </div>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/fantasie-logo.png" class="resizeicon">
+          </div>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/Epigamia_logo.jpg" class="light-grey-border resizeicon">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 padding card-group partner_group">
+        <div class="card">
+          <h3>Design Ecosystem Partner</h3>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/dice_logo.png" class="resizeicon">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 padding card-group partner_group">
+        <div class="card">
+          <h3>Refreshment Partner</h3>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/Raw_Pressary_logo-B.png" class="resizeicon">
+          </div>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/delicia_logo.jpeg" class="resizeicon">
+          </div>
+          <div class="image clearfix">
+            <img src="assets/images/awards2018_stay_tuned/ZenTigerLogo.png" class="resizeicon">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,36 @@
+.article-title-style{
+ color: #000000!important;
+ text-transform: capitalize!important;
+}
+.capitalize{
+  text-transform: capitalize!important;
+}
+.article-title-style:hover, .article-title-style:focus, .article-title-style:active{
+ color: #e45b81!important
+}
+.padding15{
+  padding: 15px!important;
+}
+
+.noLinkCursor{
+  cursor: default!important;
+}
+
+.error-survey-form {
+  color: red;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.buy-now-button {
+	text-align: center;
+    min-width: 100px;
+    width: 100px;
+    border: 2px solid #6ec8a7;
+    color: #6ec8a7;
+    border-radius: 50px;
+    padding: 0.5em;
+    display: block;
+    font-size: 13px;
+    margin: 0 auto;
+}

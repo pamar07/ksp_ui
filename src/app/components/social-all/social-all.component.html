@@ -1,0 +1,96 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="row margin-bottom15 ">
+      <div class="container paddingNo margin-top">
+          <div class="main-title margin0 font-size21"> <i class="fa" aria-hidden="true"><img src="assets/images/my group.svg" width="30" height="auto" alt=""></i>GROUPS</div>
+          <!-- <div class="pull-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div> -->
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top-15 margin-bottom15" *ngIf="groups">
+     <div class="container paddingNo">
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <section class="post-footer footer-im">
+          <div class="post-footer-comment-wrapper">
+            <div class="comment-form"> </div>
+            <div class="comment" *ngFor="let group of groups; let i=index">
+              <div class="media">
+                <div class="blog-content paddingNo">
+                  <div class="col-md-2 col-lg-2 col-sm-2 col-xs-12" style="width: 100px;"> <a routerLink="/social-individual/{{group.id}}"><img src="{{group.img.substring( 0, group.img.lastIndexOf('/')) + '/w_80' + group.img.substring( group.img.lastIndexOf('/'), group.img.length)}}" width="80px" height="80px" alt="{{group.title}}" style="border-radius: 50%;object-fit:cover; object-position:center;"></a> </div>
+                  <div class="col-md-10 col-lg-10 col-sm-10 col-xs-12">
+                    <h3><a class="color-black font-bolder font-size18" routerLink="/social-individual/{{group.id}}">{{group.title}}</a></h3>
+                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                   <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps margin-top5px anchor-time font-bolder">  BY {{group.author}} </div>
+                   <!--a href="javascript:void(0);" (click)="join(group.id)"><div class="col-md-2 pull-right font-size11"> <span class="ion-android-data red-pink-button">{{join_status}}</span> </div></a-->
+                    </div>
+                    <div class="pull-left paddingNo font-size10 col-lg-12 col-md-12 col-sm-12 col-xs-12 all-caps pink-color margin-top5px font-bolder"><b>{{group.members}} MEMBERS | {{group.posts}} POSTS</b></div>
+                  </div>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <p class="margin-top" [innerHtml]="safeHtml(group.excerpt)"></p>
+                    <br>
+                    <section class="post-footer footerlike">
+                      <div class="post-footer-option">
+                        <ul class="list-unstyled">
+                          <!--app-group-love [loveData]="group.liked" [entityType]="group.post_type" [entityId]="group.id" [loveCount]="group.likes"></app-group-love-->
+                          <!--li><a routerLink="\login"><i class="fa fa-heart-o" aria-hidden="true"></i> Love</a></li-->
+                          <!--li><a routerLink="\login"><i class="glyphicon glyphicon-comment"></i> Comment</a></li-->
+                        </ul>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+              <hr *ngIf="i<groups.length-1">
+            </div>
+          </div>
+        </section>
+      </div>
+     </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top margin-bottom15">
+      <div class="container paddingNo">
+          <div class="pull-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>

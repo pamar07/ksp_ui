@@ -1,0 +1,13 @@
+<li *ngIf="_apiService.loggedIn()" class="width-100">
+  <a href="javascript:void(0);" (click)="doLove()">
+    <i class="fa fa-heart-o like-comment-img color-black" aria-hidden="true" *ngIf="!isLoved"></i>
+    <i class="fa fa-heart color-pink like-comment-img" aria-hidden="true" *ngIf="isLoved"></i>
+    <p class="paddingNo margin0">{{loveCount}}</p>
+  </a>
+</li>
+<li *ngIf="!_apiService.loggedIn()" class="width-100">
+  <a href="javascript:void(0);" (click)="_commonService.setNavigationUrl(entityType,entityId,'')">
+    <i class="fa fa-heart-o like-comment-img color-black" aria-hidden="true"></i>
+    <p class="paddingNo margin0">{{loveCount}}</p>
+  </a>
+</li>

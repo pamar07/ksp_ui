@@ -1,0 +1,12 @@
+<span *ngFor="let tag of initTags">
+  <span class="tag all-caps" [innerHTML]="tag.name" *ngIf="tag.name!=''"></span>&nbsp;
+</span>
+<a *ngIf="restTags" class="collapsed margin-padding" href="#collapse-{{id}}-{{randomString}}" data-toggle="collapse" (click)="showAll=!showAll">
+  <i class="fa fa-plus-square" aria-hidden="true" [style.display]="!showAll ? '':'none'" title="View all tags"></i>
+  <i class="fa fa-minus-square" aria-hidden="true" [style.display]="showAll ? '':'none'" title="View less tags"></i>
+</a>
+<div id="collapse-{{id}}-{{randomString}}" class="panel-collapse collapse" *ngIf="restTags">
+   <span *ngFor="let tag of restTags">
+      <span class="tag all-caps" [innerHTML]="tag.name"></span>&nbsp;
+   </span>
+</div>

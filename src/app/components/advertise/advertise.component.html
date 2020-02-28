@@ -1,0 +1,175 @@
+<ul *ngIf="(add.type==1 || add.type==6) ">  <!-- Third Party Add: only image(3:2 aspect ratio) -->
+  <a href="add.link==null ? nolink : add.link" target="_blank" [ngClass]="{'noLinkCursor' : add.link==null}" (click)="clickIntentCapture(add.link)">
+  <li class="recent-post border1 margin0 padding15" style="background-color: transparent;">
+    <div class="row">
+      <div class="col-sm-12 col-xs-12 text-right" *isDesktop>
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12 text-right paddingNo" *showItDevice="['mobile','tablet']">
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+      <!-- <span *ngIf="add.type == 6 && add.excerpt" style="padding: 5px 15px; display: inline-block;visibility: hidden">{{add.excerpt}}</span>
+      <a href="add.link==null ? nolink : add.link" target="_blank" *ngIf="add.type == 6">
+        <span class="buy-now-button">Buy now</span>
+      </a> -->
+    </div>
+   </li>
+   </a>
+</ul>
+
+<ul *ngIf="add.type==2">  <!-- Third Party Add: title, content and image(3:2 aspect ratio) -->
+  <a href="add.link==null ? nolink : add.link" target="_blank" [ngClass]="{'noLinkCursor' : add.link==null}" (click)="clickIntentCapture(add.link)">
+  <li class="recent-post border1 margin0 padding15" style="background-color: transparent;">
+    <div class="row">
+      <div class="col-sm-12 col-xs-12 text-right" *isDesktop>
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12 text-right paddingNo" *showItDevice="['mobile','tablet']">
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+    </div>
+    <div class="margin-top9">
+      <span class="font-size18 font-Raleway-SemiBold color-black capitalize" *isDesktop>{{add.title | capitalize}}</span>
+      <div class="font-size13" [innerHtml]="add.content" *isDesktop></div>
+      <span class="font-size14 font-Raleway-SemiBold color-black capitalize" *showItDevice="['mobile','tablet']">{{add.title | capitalize}}</span>
+      <div class="font-size10" [innerHtml]="add.content" *showItDevice="['mobile','tablet']"></div>
+    </div>
+   </li>
+   </a>
+</ul>
+
+<ul *ngIf="add.type==3">  <!-- KSP own content promotion: content id -->
+  <li class="recent-post border1 margin0 padding15" *ngIf="article" style="background-color: transparent;">
+      <div class="row">
+        <div class="col-sm-12 col-xs-12 text-right">
+          <div class="three-by-two-image-container">
+            <img class="three-by-two-image" src="{{article.img[0]?.path.substring( 0, article.img[0]?.path.lastIndexOf('/')) + '/w_400' + article.img[0]?.path.substring( article.img[0]?.path.lastIndexOf('/'), article.img[0]?.path.length)}}" width="100%" height="auto" alt=""/>
+          </div>
+        </div>
+      </div>
+      <div class="margin-top9">
+        <a class="font-size18 font-Raleway-SemiBold article-title-style" href="/details/{{article.perma_link}}/{{article.id}}">{{article.title | capitalize}}</a>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-8 col-xs-5 pull-left margin-top paddingNo">
+        <div class="media-left">
+          <a routerLink="/authorwise-posts/{{article.creator_id}}">
+            <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+          </a>
+        </div>
+        <div class="media-body">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+            <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+              <h4 class="media-heading capitalize font-size13 article-title-style">{{article.author_name}}</h4>
+            </a>
+            <span class="anchor-time all-caps" [innerHtml]="_commonService.setDateFormat(article.created_at) | date:'yMMMd'"></span>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+             <ul class="list-unstyled text-left pull-right width-100per">
+                <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [permaLink] ="article.perma_link" [entityId]="article.id" [loveCount]="article.likes" [commentCount]="article.comment_count"></app-likecomment>
+             </ul>
+          </div>
+        </div>
+      </div>
+   </li>
+</ul>
+
+<div *ngIf="add.type==4">  <!-- Third Party Add: title, content and image(4:1 aspect ratio) -->
+  
+  <!-- for Not logged in user OR add which is not a signup add -->
+  <a href="add.link==null ? nolink : add.link" target="_blank" [ngClass]="{'noLinkCursor' : add.link==null}" (click)="clickIntentCapture(add.link)" *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn && !add.is_signup_banner)">
+    <img src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_728' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+  </a>
+
+  <!-- For logged in user and add which is signup add -->
+  <a href="javascript:void(0)" [ngClass]="{'noLinkCursor' : add.link==null}" (click)="clickIntentCaptureShowPopup(add.link, add.popup_text)" *ngIf="_apiService.loggedIn() && add.is_signup_banner">
+    <img src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_728' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+  </a>
+</div>
+
+<ul *ngIf="add.type==5">
+  <li class="recent-post border1 margin0 padding15" style="background-color: transparent; cursor: pointer" (click)="checkUser(add.link, add.id, add.submission_type)">
+    <div class="row">
+      <div class="col-sm-12 col-xs-12 text-right" *isDesktop>
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12 text-right paddingNo" *showItDevice="['mobile','tablet']">
+        <div class="three-by-two-image-container">
+          <img class="three-by-two-image" src="{{add.img_path.substring( 0, add.img_path.lastIndexOf('/')) + '/w_400' + add.img_path.substring( add.img_path.lastIndexOf('/'), add.img_path.length)}}" width="100%" height="auto" alt="" (load)="viewIntentCapture(add.link)"/>
+        </div>
+      </div>
+      <!-- <span style="padding: 5px 15px; display: inline-block;">{{add.excerpt}}</span> -->
+    </div>
+  </li>
+</ul>
+
+<div id="getEmail{{add.id}}" class="modal fade" role="dialog" *ngIf="add.type==5">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="subForm" (ngSubmit)="subForm.valid && sendLinkMail(subForm.value)" #formSub="ngForm">
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">{{add.excerpt}}</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          
+          <div class="row text-center" [ngClass] = "showSubscribeThanks ? 'hide' : ''">
+            <div class="col-md-12 col-lg-12" style="text-align: left">
+              <input class="form-control" type="email" placeholder="Enter your email" style="width:100%" [formControl]="subForm.controls['email']" />
+
+              <div *ngIf="(subForm.controls['email'].hasError('required') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('required') && formSub.submitted)" class="error-survey-form">Please enter your email id</div>
+              
+              <div *ngIf="!subForm.controls['email'].hasError('required') && ((subForm.controls['email'].hasError('email') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('email') && formSub.submitted))" class="error-survey-form">Please enter a valid email</div>
+            </div>
+            <div class="col-md-12 col-lg-12 margin-top">
+              <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                <button type="submit" class="btn green-background blue-green font-size13">Submit</button> 
+              </div>
+            </div>
+          </div>
+
+          <div class="row text-center" [ngClass] = "showSubscribeThanks ? '' : 'hide'" style="min-height: 100px;">
+            <div class="col-md-12 col-lg-12" style="text-align: center;font-weight: normal;">
+              {{thankText}}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="signupAddPopup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div>
+          <div class="panel panel-default">
+            <div class="text-center small-text">
+              <p class="font-size18">{{popup_text}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

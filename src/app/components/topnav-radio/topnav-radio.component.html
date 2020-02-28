@@ -1,0 +1,43 @@
+<!-- radio dropdown -->
+<div class="topnav-radio">
+<ul class="na navbar-na pull-right radio-dd">
+  <li class="dropdown" style="width:200px; background-color:#4f453b;" [ngClass]="{'lineheight50':!_commonService.radioPlaying}">
+      <a data-toggle="dropdown" class="custom-radio-title">
+        <!-- <marquee direction='left' speed='normal' behavior='loop' *ngIf="_commonService.radioPlaying" class="lineheight44"><i class="fa fa-play-circle font-size22" style="vertical-align:middle;"></i> {{_commonService.currentRadioName}} </marquee> -->
+        <!-- <div *ngIf="_commonService.radioPlaying" class="lineheight44 radio-ellipsis-title"><i class="fa fa-play-circle font-size22" style="vertical-align:middle;"></i> {{_commonService.currentRadioName}} </div>
+        <div *ngIf="!_commonService.radioPlaying" class="text-middle"><i class="fa fa-play-circle font-size22" style="vertical-align:middle;"></i> Play Radio </div> -->
+        <div class="text-middle" style="line-height: 17px;">
+          <p style="margin: 3px 0 0 0;padding-top: 7px;">
+            <i class="fa fa-play-circle font-size22" style="vertical-align:middle;"></i> KSP Radio
+          </p>
+          <span style="font-size: 8px;letter-spacing: 1px;">Tune into your favourite podcasts now</span>
+        </div>
+      </a>
+      <ul class="dropdown-menu radio-dropdown margin0 paddingAll10px border-top-0">
+        <li style="line-height:0;">
+          <iframe class="embed-responsive-item" [src]="_commonService.currentRadioPath" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" width="100%" height="auto" style="border:none!important;"></iframe>
+          <!-- <div class="pull-right" style="padding: 0px 10px; cursor: pointer;"><a >x</a></div><br> -->
+          <ul class="nav nav-tabs margin-top-minus-15px margin-top3px" style="background-color: #ececec;">
+            <li class="custom-tab" *ngFor="let list of lists;let playIndex=index" [ngClass]="{'active':playIndex==currentTab}" [ngStyle]="{'width': (100/lists.length)+'%'}">
+              <a (click)="openTab(playIndex);stopPropagation($event)" data-toggle="tab" >{{ list.name }}</a>
+            </li>
+          </ul>
+
+          <div class="tab-content pull-left" style="width: 100%">
+            <div *ngFor="let list of lists;let playIndex=index" id="tab{{ list.id }}" class="tab-pane fade in agile_phone_mail" [ngClass]="{'active':playIndex==currentTab}" >
+              <ul style="max-height:200px; height:200px; overflow-y:scroll;" class="margin-top5px">
+                <li *ngFor="let track of list.tracks;" class="dropdown-filter pull-left custom-tab-li" [ngClass]="{'bg-gray-active':track.playing}">
+                  <span (click)="setRadio(track.id,track.path,track.title);stopPropagation($event);" title="{{track.title}}" class="playlist-ellipsis">
+                    <i class="fa fa-play-circle color-baby-pink font-size19 margin0" style="vertical-align:middle;" aria-hidden="true"></i>
+                    <span [ngClass]="{'color-baby-pink font-size14':track.playing}"> {{track.title}}</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+  </li>
+</ul>
+</div>
+<!-- radio dropdown -->

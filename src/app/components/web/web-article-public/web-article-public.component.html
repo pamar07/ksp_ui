@@ -1,0 +1,267 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<app-topnav-social (city)="filterCity($event)" (age)="filterAge($event)"></app-topnav-social>
+<section>
+  <div class="w3_agile_banner_topWhite">
+    <div class="container paddingNo">
+      <div class="main-title-outer-none pull-left">
+        <div class="main-title margin0"> <i class="fa" aria-hidden="true"><img src="assets/images/article.svg" width="30" height="30" alt=""></i>ARTICLES</div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!--main content start-->
+  <section id="main-content">
+    <section class="wrapper margin0">
+      <div class="row margin-bottom15 margin0">
+       <div class="container paddingNo"  *ngIf="latestArticles">
+         <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo ">
+           <div class="box-shadow margin-top0 padding-top0px">
+           <ngx-carousel
+            [inputs]="carouselOne"
+            (carouselLoad)="myfunc($event)">
+              <ngx-item NgxCarouselItem *ngFor="let banner of latestArticles.slice(0,3); let i=index">
+                  <div class="box">
+                    <a href="{{resType[banner.post_type]+ banner.perma_link}}/{{banner?.id}}">
+                    <div class="three-by-two-image-container">
+                      <img class="three-by-two-image" src="{{banner.path.substring( 0, banner.path.lastIndexOf('/')) + '/w_750' + banner.path.substring( banner.path.lastIndexOf('/'), banner.path.length)}}" alt="">
+                    </div>
+                    </a>
+                   <div class="carousel-caption2">
+                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top10px">
+                       <span *ngFor="let category of banner.category">
+                         <a routerLink="/categorywise-article/{{category.id}}">
+                           <span class="ion-android-data light-blue-button all-caps" [style.background-color]="safeStyle(category.colour_code)"  [innerHTML]="category.name"></span>
+                         </a>
+                       </span>
+                       <span class="anchor-time all-caps white-color margin-left">{{_commonService.setDateFormat(banner.published_date) | date:'yMMMd'}}</span>
+                     </div>
+                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top paddingNo">
+                       <a href="/details/{{banner.perma_link}}/{{banner?.id}}" >
+                         <h4 class="blog-ellipsis-title margin-top0">{{banner.title}}</h4>
+                       </a>
+                     </div>
+                     <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo">
+                     </div>
+                   </div>
+                   </div>
+
+                  <div class="clearfix"></div>
+              </ngx-item>
+              <button NgxCarouselPrev class='leftRs'><i class="fa fa-angle-left paddingNo font-size25 font-bolder" aria-hidden="true"></i></button>
+              <button NgxCarouselNext class='rightRs'><i class="fa fa-angle-right paddingNo font-size25 font-bolder" aria-hidden="true"></i></button>
+            </ngx-carousel>
+          </div>
+         </div>
+         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 web-view" *ngFor="let article of latestArticles.slice(3,5); let i=index">
+            <div class="box-shadow paddingNo margin0" [ngClass]="{'margin-top18px':i==1}">
+              <div class="box">
+                <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+                  <div class="three-by-two-image-container">
+                    <img src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_400' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}" alt="" class="three-by-two-image">
+                  </div>
+                </a>
+                <div class="carousel-caption2">
+                  <app-category [categories]="article.category" [id]="article.id"></app-category>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                    <span class="anchor-time all-caps white-color margin-top10px">{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}}</span>
+                  </div>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                    <a href="/details/{{article?.perma_link}}/{{article?.id}}"><h4 class="blog-ellipsis-title margin-top0 margin-bottom0">{{article.title}}</h4></a>
+                  </div>
+                </div>
+              </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+		  </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row margin-bottom15">
+       <div class="container paddingNo">
+        <div class="green-bar">
+          <div class="main-bordernone pull-left">
+            <div class="main-title btn-white-elli"> <i class="fa" aria-hidden="true"><img src="assets/images/icon-us.png" width="35" height="36" alt=""></i>Sign up today and start browsing through thousands of our featured articles.</div>
+            <div class="span-outer"><span class="pull-right text-danger last-update">
+              <a [routerLink]="['/signup/']" (click)="_commonService.navUrl='/article-user'"><span class="ion-android-data icon"></span>SIGN UP NOW<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+            </span> </div>
+          </div>
+        </div>
+		  </div>
+      </div>
+    <div class="row margin0">
+      <div class="container paddingNo margin-bottom15" *ngIf="masterCategoryList && categoryList">
+        <div class="text-center">
+        <span *ngFor="let cat of masterCategoryList; let i=index">
+          <span
+                  class="btn all-caps text-bold master-cat-btn"
+                  (click)="checkMasterCategory(cat.id)"
+                  [ngClass]="{'master-cat-selected':(tab_selected == cat.id), 'margin-right44p':(i!=masterCategoryList.length-1)}">{{cat.name}}
+          </span>
+        </span>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 category-filter-box matgin-top-13px">
+          <p class="pull-left text-italic color-pink font-size11 margin0 margin-bottom15px">Click on any category to refine your search</p>
+          <div class="margin-top">
+            <span *ngFor="let cat of categoryList">
+              <a href="javascript:void(0);" *ngIf="cat.parent_id == tab_selected" routerLink="/categorywise-article/{{cat.id}}">
+                <span class="ion-android-data light-blue-button all-caps sub-cat-button"
+                      [ngStyle]="{'background-color':cat.colour_code}"
+                      [innerHTML]="cat.name"></span>&nbsp;
+              </a>
+            </span>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--div class="row radio">
+      <div class="container">
+          <div class="pull-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+      </div>
+    </div-->
+    <div class="clearfix"></div>
+    <div *ngIf="categorywiseArticle">
+      <span *ngFor="let category of categorywiseArticle.slice(0,2)">
+      <div class="row margin0" *ngIf="category?.article?.length>0">
+       <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="{{category.icon}}" width="30" height="30" alt=""/></i><span [innerHtml]="category.name"></span></div>
+          <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/categorywise-article/{{category.id}}"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div>
+        </div>
+        <app-article-carousel [carauselId]="category.id" [articleList]="category.article" ></app-article-carousel>
+		   </div>
+      </div>
+      </span>
+    </div>
+    <div class="clearfix"></div>
+    <div class="container margin-bottom20px paddingNo" *ngIf="allPageBanners.length>0">
+      <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image}}" width="100%"></a>
+    </div>
+      <div class="clearfix"></div>
+      <div class="row gry-background argin-bottom15" *ngIf="popularArticles">
+       <div class="container paddingNo">
+        <div class="col-md-12 col-lg-12 main-title-outerN pull-left">
+          <div class="main-title-outer pull-left">
+            <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/grp.png" width="30" height="30" alt=""/></i>POPULAR ARTICLES</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 arrow-left-right web-view" *ngIf="popularArticles">
+           <a class="pull-left left fa fa-chevron-left btn" href="#popular" data-slide="prev" *ngIf="popularArticles.length>3"></a>
+           <a class="pull-right right fa fa-chevron-right btn" href="#popular" data-slide="next" *ngIf="popularArticles.length>3"></a>
+        </div>
+        <div id="popular" class="carousel slide" data-ride="carousel" data-interval="false">
+
+          <div class="carousel-inner" *ngIf="popularArticles">
+
+            <div class="item" *ngFor="let loop of [0,1,2,3,4]" [ngClass]="{'active':loop==0}">
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 padding5px" *ngFor="let article of popularArticles.slice((4 * loop ),(4 * loop + 4))">
+                  <div class="single-blog-item white-backgrund margin0">
+                    <div class="blog-thumnail">
+                      <div class="col-md-5 col-lg-5 col-sm-5 col-xs-5 paddingNo">
+                        <a href="/details/{{article.perma_link}}/{{article.id}}">
+                          <img src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_200' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}" style="width:100%;height:170px;" alt="blog-img">
+                          <!-- <div class="embed-responsive embed-responsive-4by3">
+                            <img class="embed-responsive-item banner-img" src="{{article.path}}" alt="">
+                          </div> -->
+                        </a>
+                      </div>
+                      <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
+                        <section class="post-footer footer-im">
+                          <div class="post-footer-comment-wrapper">
+                            <div class="comment-form"> </div>
+                            <div class="comment">
+                              <div class="media">
+                                <div class="blog-content">
+                                  <h4 class="related-ellipsis-title font-open-sans"><a href="/details/{{article.perma_link}}/{{article.id}}">{{article.title}}</a></h4>
+                                  <div class="margin-top">
+                                    <div class="pull-left" *ngIf="article.category.length>0">
+                                      <a routerLink="/categorywise-article/{{article.category[0].id}}"><span class="ion-android-data purple-button all-caps" style="border-radius:6px;" [style.background-color]="safeStyle(article.category[0].colour_code)" [innerHtml]="article.category[0].name"></span></a>
+                                    </div>
+                                    <div class="media-body"> <span class="anchor-time all-caps">&nbsp;{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}}</span> </div>
+                                  </div>
+                                  <hr class="related-hr">
+                                  <p class="margin-top font-size13 related-ellipsis-excerpt font-open-sans">{{article.excerpt}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+		  </div>
+      </div>
+    <div class="clearfix"></div>
+    <div class="container margin-top20px margin-bottom15 paddingNo" *ngIf="allPageBanners.length>1">
+      <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img src="{{allPageBanners[1].image}}" width="100%"></a>
+    </div>
+      <div class="clearfix"></div>
+    <div *ngIf="categorywiseArticle">
+      <span *ngFor="let category of categorywiseArticle.slice(2)">
+      <div class="row margin-top margin0 margin-bottom15" *ngIf="category?.article?.length>0">
+       <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="{{category.icon}}" width="30" height="30" alt=""/></i><span [innerHtml]="category.name"></span></div>
+          <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/categorywise-article/{{category.id}}"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div>
+        </div>
+        <app-article-carousel [carauselId]="category.id" [articleList]="category.article" ></app-article-carousel>
+        <div class="clearfix"></div>
+		   </div>
+      </div>
+      </span>
+    </div>
+    <div class="row radio">
+      <div class="container">
+          <div class="pull-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                  <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                  <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                </li>
+                <li [class]="isNext ? '' : 'disabled'">
+                  <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+      </div>
+    </div>
+      <div class="clearfix"></div>
+      <hr>
+    </section>
+  </section>

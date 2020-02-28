@@ -1,0 +1,251 @@
+<app-mobile-inline-share [shareCount]="shareCount"></app-mobile-inline-share>
+<div class="agile-main" style="margin-top:20px"rt>
+  <div class="content-wrap" *ngIf="tvIndividual">
+    <div>
+      <div class="container margin-top-bottom-5px text-center">
+        <h1 class="color-black font-bolder font-size-18 font-Raleway-SemiBold letter-spacing-1px margin-top">{{tvIndividual.title}}</h1>
+        <div class="margin-top" style="margin-bottom: 20px;">
+          <a *ngFor="let cat of tvIndividual.category; let i=index" routerLink="/categorywise-tv/{{cat.id}}">
+            <span class="ion-android-data light-blue-button all-caps" style="background-color:grey" [innerHTML]="cat.name"></span>&nbsp;
+          </a>
+        </div>
+      </div>
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]="tvIndividual.path" allow="autoplay" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></iframe>
+      </div>
+    </div>
+    <div class="container">
+      <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="promotionInsideContentTop">
+        <app-advertise [add]="promotionInsideContentTop"></app-advertise>
+      </div> -->
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+        <span class="margin-top font-size14 width-100per article-content-style" [innerHTML]="safeHtml(tvIndividual.content)" style="word-break: break-word;"></span>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+        <div class="pull-left margin-top ">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo">
+            <div class="media-left pull-left">
+              <a routerLink="/authorwise-posts/{{tvIndividual.creator_id}}">
+                <app-round-pic [picPath]="tvIndividual.author_img" [userName]="tvIndividual.author_name" [width]="'30px'" [height]="'30px'" [className]="'padding-top2px'"></app-round-pic>
+              </a>
+            </div>
+            <div class="media-body pull-left">
+              <a routerLink="/authorwise-posts/{{tvIndividual.creator_id}}" class="anchor-username">
+              <h4 class="media-heading margin-top1per color-black font-size14">{{tvIndividual.author_name}}</h4>
+              </a>
+              <span class="anchor-time font-size11">{{_commonService.setDateFormat(tvIndividual.published_date) | date:'yMMMd'}} <!--| 3 MIN READ--></span>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left margin-top20px paddingNo">
+            <div class="post-footer-optio margin-lft">
+            <ul class="list-unstyled text-left">
+            <app-likecomment [loveData]="tvIndividual.liked" [entityType]="tvIndividual.post_type" [entityId]="tvIndividual.id" [loveCount]="tvIndividual.likes" [commentCount]="tvIndividual.comment_count" [isBlack]="'true'"></app-likecomment>
+            <li class="social-ind width25p">
+              <a href="javascript:void(0);" (click)="doBookmark(tvIndividual.post_type,tvIndividual.id)">
+                <i class="fa fa-bookmark-o color-black like-comment-img" aria-hidden="true" *ngIf="!isBookmarked"></i>
+                <i class="fa fa-bookmark color-pink like-comment-img" aria-hidden="true" *ngIf="isBookmarked"></i>
+                <p class="paddingNo margin0">{{tvIndividual.bookmark_count}}</p>
+              </a>
+             </li>
+            </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span *ngIf="promotionInsideContentBottom">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngFor="let botprom of promotionInsideContentBottom">
+          <app-advertise [add]="botprom"></app-advertise>
+        </div>
+      </span>
+      <div class="row margin-top margin-bottom15">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top20px" id="responses">
+              <div class="blog-thumnail">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment">
+                      <div class="media">
+                        <div class="main-title-outer pull-left">
+                          <div class="main-title paddingNo margin0"> <i class="fa font-size12" aria-hidden="true"><img src="assets/images/tre.png" width="20" height="20" alt=""></i>RESPONSES</div>
+                        </div>
+                        <div *ngIf="tvIndividual.comments.length==0">
+                          <div class="blog-content paddingNo font-size11">
+                            No comment posted yet.
+                          </div>
+                        </div>
+                        <div *ngIf="tvIndividual.comments.length!=0">
+                          <div class="blog-content" *ngFor="let comment of tvIndividual.comments.slice().reverse(); let i=index">
+                            <div class="col-xs-12 col-sm-12 paddingNo" [style.display]="(i<2 || showAll) ? '':'none'">
+                              <div class="col-xs-1 paddingNo">
+                                <a href="javascript:void(0);">
+                                  <app-round-pic [picPath]="comment.user_profile" [userName]="comment.user_name" [width]="'30px'" [height]="'30px'"></app-round-pic>
+                                </a>
+                              </div>
+                              <div class="col-xs-11 col-lg-11 col-sm-12">
+                                <h4 class="capitalize margin0">
+                                  <a href="javascript:void(0);" *ngIf="getUserName()==null || getUserName()!=comment.user_name">{{comment.user_name}}</a>
+                                  <a href="javascript:void(0);" *ngIf="getUserName()!=null && getUserName()==comment.user_name">You</a>
+                                </h4>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top-bottom-5px">
+                                  <p class="margin0"[innerHTML]="safeHtml(comment.content)"></p>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                  <div class="pull-left paddingNo font-size11 col-md-10">
+                                    {{_commonService.setDateFormat(comment.created_at) | date:'yMMMd'}}
+                                    <app-comments-like [isLoved]="comment.isLoved" [loveCount]="comment.likes" [entityType]="comment.type" [commentId]="comment.id" [permaLink]="tvIndividual.perma_link" [entityId]="tvIndividual.id" ></app-comments-like>
+                                    <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(comment.id, i)">Reply</span>
+                                  </div>
+                                </div>
+
+                                <!-- reply Comment -->
+                                <div *ngIf="comment.commentReplies.length" class="col-xs-12 paddingNo" style="margin-top: 10px">
+                                  <div class="col-xs-12 paddingNo">
+                                    <div *ngFor="let reply of comment.commentReplies; let j=index"  [ngClass]="(j<2 || replyComment ==  comment.id || showReply[comment.id]) ? 'show' : 'hide'">
+                                      <div class="col-xs-1 paddingNo">
+                                        <app-round-pic [picPath]="reply.user_profile" [userName]="reply.user_name" [width]="'30px'" [height]="'30px'"></app-round-pic>
+                                      </div>
+                                      <div class="col-xs-11" style="margin-bottom: 5px;">
+                                        <h4 class="capitalize margin0 padding-bottom10px" style="padding-bottom: 5px;">
+                                          <span *ngIf="getUserName()==null || getUserName()!=reply.user_name" style="font-size:15px; font-weight:600;">{{reply.user_name}}</span>
+                                          <span *ngIf="getUserName()!=null && getUserName()==reply.user_name" style="font-size:15px; font-weight:600;">You</span>
+                                        </h4>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                          <p class="margin0"[innerHTML]="safeHtml(reply.content)"></p>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" style="padding-top:5px !important;">
+                                          <div class="pull-left paddingNo font-size11 col-md-10">
+                                            {{_commonService.setDateFormat(reply.created_at) | date:'yMMMd'}}
+                                            <app-comments-like [isLoved]="reply.isLoved" [loveCount]="reply.likes" [entityType]="reply.post_type" [commentId]="reply.id" [permaLink]="tvIndividual.perma_link" [entityId]="tvIndividual.id" ></app-comments-like>
+                                            <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(reply.parent_id, i)">Reply</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <hr *ngIf="j<comment.commentReplies.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">
+                                    </div>
+                                    <div class="col-md-11 paddingNo" style="cursor: pointer;">
+                                      <span *ngIf="comment.commentReplies.length > 2 && !showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = true">
+                                        {{comment.commentReplies.length -2 }} More {{comment.commentReplies.length -2 > 1 ? 'Replies' : 'Reply'}}
+                                      </span>
+                                      <span *ngIf="showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = false">
+                                        Show less
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- reply Comment Box -->
+                                <div id="comment_id_{{comment.id}}" class="col-xs-12 paddingNo" style="margin-top: 10px">
+                                  <div *ngIf="replyComment ==  comment.id">
+                                    <ckeditor
+                                      [(ngModel)]="user_comment_reply"
+                                      [config]="{
+                                        uiColor: '#c1c1c1',
+                                        toolbar:[
+                                         { name: 'insert',items: [ 'Smiley'] }
+                                        ],
+                                        toolbarLocation: 'bottom',
+                                        contentsCss: '../assets/css/ckeditor-custom.css',
+                                        height:'50px'
+                                      }"
+                                      [readonly]="false"
+                                      debounce="500">
+                                    </ckeditor>
+                                    <p *ngIf="user_comment_reply_error" style="color:red; font-size:13px;">{{user_comment_reply_error}}</p>
+                                    <button id="submit" name="submit" class="btn font-size10 margin-top btn-padding-8px" (click)="doCommentReply()">REPLY</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12 col-xs-12 paddingNo">
+                                <hr class="margin-top-bottom-10px" *ngIf="i<tvIndividual.comments.length-1">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+          </div>
+
+
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group paddingNo" *ngIf="tvIndividual.comments.length>2">
+            <label class="col-md-5 control-label" for="submit"></label>
+              <div class="col-md-3">
+                <button id="submit" name="submit" class="btn font-size10" *ngIf="!showAll" (click)="showAll=!showAll">LOAD ALL RESPONSES</button>
+                <button id="submit" name="submit" class="btn font-size10" *ngIf="showAll" (click)="showAll=!showAll">SHOW LESS</button>
+              </div>
+          </div>
+
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top20px paddingNo">
+            <div class="main-title-outer pull-left">
+              <div class="main-title paddingNo margin0"> <i class="fa font-size12" aria-hidden="true"><img src="assets/images/tre.png" width="20" height="20" alt=""></i>YOUR RESPONSE</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 font-size11 paddingNo" *ngIf="!_apiService.loggedIn()">
+            <a routerLink="/login" style="color:#e35b7f;">Please Login to comment</a>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="_apiService.loggedIn()">
+              <ckeditor
+                [(ngModel)]="user_comment"
+                [config]="{
+                  uiColor: '#c1c1c1',
+                  toolbar:[
+                   { name: 'insert',items: [ 'Smiley'] }
+                  ],
+                  toolbarLocation: 'bottom',
+                  contentsCss: '../assets/css/ckeditor-custom.css',
+                  height:'50px'
+                }"
+                [readonly]="false"
+                debounce="500">
+              </ckeditor>
+              <p *ngIf="user_comment_error" style="color:red; font-size:13px;">{{user_comment_error}}</p>
+              <button id="submit" name="submit" class="btn font-size10 margin-top btn-padding-8px" (click)="doComment()">POST YOUR RESPONSE</button>
+          </div>
+        </div>
+    </div>
+
+    <hr/>
+    <!-- Advertisement goes here -->
+    <div class="container paddingNo">
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top" *ngIf="promotions">
+        <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index">
+          <app-advertise [add]="promotion"></app-advertise>
+        </div>
+      </div>
+    </div>
+
+    <div class="margin-top20px" style="border-bottom:1px solid #ccc;" *ngIf="relatedTv.length>0">
+      <span class="all-caps font-size13 font-Raleway-SemiBold" style="width:40%; border-bottom: 2px solid #000000; padding-left: 20px;">Related TV</span>
+    </div>
+    <div class="margin-top card-scroll-box margin-bottom15px" *ngIf="relatedTv.length>0">
+      <span>
+        <span *ngFor="let tv of relatedTv">
+            <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+              <img class="border-radius18 card-img" [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+                <p class="white-color card-title">{{tv.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                  <app-round-pic [picPath]="tv.author_img" [userName]="tv.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{tv.author_name}}</span>
+                  </a>
+                  <!-- <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(tvIndividual.created_at) | date:'yMMMd'"></span> -->
+                </div>
+              </span>
+            </span>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+<hr/>

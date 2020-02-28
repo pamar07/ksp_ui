@@ -1,0 +1,794 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+  <section class="wrapper">
+    <div class="container">
+      <div class="row margin-bottom15">
+        <div class="blog-content paddingNo">
+          <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+            <div *ngIf="article">
+              <h1 class="noOverflow font-bolder title-header">{{article.title}}</h1>
+              <a *ngFor="let cat of article.category; let i=index" routerLink="/categorywise-article/{{cat.id}}">
+                <span class="ion-android-data light-blue-button all-caps"
+                  style="background-color: grey;font-weight:bold" [innerHTML]="cat.name"></span>&nbsp;
+                <br *ngIf="((i+1)%7)==0">
+                <br *ngIf="((i+1)%7)==0">
+              </a>
+            </div>
+            <div class="three-by-two-image-container margin-top margin-bottom15px" *ngIf="article">
+              <img class="three-by-two-image"
+                src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_750' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                alt="{{article.img[0].alt_image_tag}}">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="article">
+              <div class="margin-bottom15 margin-top" *ngIf="!_apiService.loggedIn() && article">
+                <div class="green-bar">
+                  <div class="main-bordernone pull-left">
+                    <div class="main-title btn-white-elli"> <i class="fa" aria-hidden="true">
+                        <img src="assets/images/icon-us.png" width="35" height="36" alt=""></i>
+                      Get weekly stories in your inbox
+                    </div>
+                    <div class="span-outer"><span class="pull-right text-danger last-update">
+                        <a [routerLink]="['/signup', {c: 'article-'+article.id}]"
+                          (click)="_commonService.navUrl='/article-individual/'+article.id"><span
+                            class="ion-android-data icon"></span>SIGN UP NOW<i class="fa fa-caret-right"
+                            aria-hidden="true"></i></a>
+                      </span> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top15 art-paddingNo" *ngIf="article">
+              <div class="main-title-outer2 pull-left margin-top border-bottom0">
+                <div class="col-md-7 col-lg-7 col-sm-6 col-xs-6 pull-left border-right">
+                  <div class="media-left pull-left">
+                    <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                      <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'40px'"
+                        [height]="'40px'" [className]="'padding-top2px'"></app-round-pic>
+                    </a>
+                  </div>
+                  <div class="media-body pull-left" style="width: 50% !important;">
+                    <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+                      <h4 class="media-heading margin-top1per color-black">{{article.author_name}}</h4>
+                    </a>
+                    <span class="anchor-time">{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}}
+                      <!--| 3 MIN READ--></span>
+                  </div>
+
+                  <div class="media-body">
+                    <button *ngIf="userFollowing == 0" class="font-regular"
+                      style="background-color:#ffffff; border-radius:3px;color:#e35b7f;border:1px solid #e35b7f"
+                      (click)="follow_author(1)">Follow</button>
+                    <button *ngIf="userFollowing == 1" class="font-regular"
+                      style="background-color:#ffffff; border-radius:3px;color:#e35b7f;border:1px solid #e35b7f"
+                      (click)="follow_author(0)">&#10003;Following</button>
+                  </div>
+
+                </div>
+                <div class="col-md-5 col-lg-5 col-sm-7 col-xs-8 pull-right">
+                  <div class="post-footer-option margin-lft">
+                    <ul class="list-unstyled text-left">
+                      <app-likecomment [loveData]="article.liked" [entityType]="article.post_type"
+                        [entityId]="article.id" [loveCount]="article.likes" [permaLink]="article.perma_link"
+                        [commentCount]="article.comment_count" [isBlack]="'true'"></app-likecomment>
+                      <li class="social-ind width25p">
+                        <a href="javascript:void(0);" (click)="doBookmark(article.post_type,article.id)">
+                          <i class="fa fa-bookmark-o color-black like-comment-img" aria-hidden="true"
+                            *ngIf="!isBookmarked"></i>
+                          <i class="fa fa-bookmark color-pink like-comment-img" aria-hidden="true"
+                            *ngIf="isBookmarked"></i>
+                          <p class="paddingNo margin0">{{article.bookmark_count}}</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                <span class="margin-top font-size14 width-100 article-content-style"
+                  [innerHTML]="article.content"></span>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="article.restrict_flag=='1'">
+                <div class="guest-content-wrapper" *ngIf="!_apiService.loggedIn()">
+                  <div class="guest-content">
+                    <p><strong class="font-size18">You need to be logged-in to be able to see this content.</strong></p>
+                    <p></p>
+                    <p class="color-pink"><strong><a class="color-pink font-size16" routerLink="/login"
+                          (click)="setNavigationUrl()">Login</a> / <a class="color-pink font-size16"
+                          [routerLink]="['/signup', {c: 'article-'+article.id}]"
+                          (click)="setNavigationUrl()">Register</a></strong></p>
+                  </div>
+                </div>
+                <img src="assets/images/blur-content.png" class="img-responsive" *ngIf="!_apiService.loggedIn()" />
+                <p class="font-size14 width-100per article-content-style" [innerHTML]="article.restricted_content"
+                  *ngIf="_apiService.loggedIn()"></p>
+              </div>
+              <!--helo test this goes here-->
+
+
+              <!-- <div style="    box-shadow: 0 5px 15px rgba(132, 128, 128, 0.5);float: left;padding: 20px;margin: 20px auto;border-radius: 5px;">
+  <h4 style=" font-size: 18px;" class="modal-title pink-color">Subscribe to our newsletter</h4>
+  <div class="footer-col-item min-height0">
+    <span style="font-size:14px; line-height:1.5;">Subscribe to get the latest news and updates delivered directly to your inbox.</span>
+    <form class="input-group signUpNewsletter">
+      <div class="input-group-addon border-rightnone"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>
+      <input *ngIf="!_apiService.loggedIn()" class="gt-email form-control" placeholder="Your email address" type="text" name="subscribe_email" [(ngModel)]="subscribe_email">
+      <input *ngIf="_apiService.loggedIn()" class="gt-email form-control" placeholder="{{_apiService.getAuthUser().email}}" type="text" name="subscribe_email" readonly>
+      <input type="button" class="btn-go go-button" style="z-index:2;" value="submit" (click)="subscribe()" data-dismiss="modal">
+    </form>
+    <div class="">
+      <div class="checkbox checkbox-primary capitalize">
+        <input id="mealplan_news" type="checkbox" checked="true" [(ngModel)]="mealplan_news">
+        <label for="mealplan_news">Subscribe to our Meal Plans</label>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+              <!--hello text thing end here-->
+              <!-- meal plan banner  -->
+              <!-- <div class="col-md-12 paddingNo" *ngIf='mealPlan'>
+                <div class="green-bar font-Raleway-SemiBold">
+                  <div class="col-md-6 paddingNo">
+                    <img
+                      src='http://images.ksp.com.s3-website.ap-south-1.amazonaws.com/w_400/Mac-and-Cheese-Boston2.jpg'
+                      style="width: 100%;height: 120px;object-fit:  cover;object-position: center;" />
+                  </div>
+                  <div class="col-md-6" style="text-align: center;">
+                    <span class="meal-header">Get 100 meal plans and be worry free for 2 years!</span><br />
+                    <span class="meal-yes-button subscribe-button" data-toggle="modal"
+                      data-target="#mealBannerModal">Yes! Show me those plans now!</span><br />
+                  </div>
+                </div>
+              </div> -->
+              <!-- meal plan banner -->
+
+
+              <span *ngIf="promotionInsideContentBottom">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top"
+                  *ngFor="let botprom of promotionInsideContentBottom">
+                  <app-advertise [add]="botprom"></app-advertise>
+                </div>
+              </span>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top"
+                [vp-in-view-config]="{infinite: true}" (vp-in-view)="articleEnd = true;"></div>
+              <app-web-inline-share [shareCount]="shareCount"></app-web-inline-share>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="row margin-top margin-bottom15" *ngIf="article">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="responses">
+                <div class="blog-thumnail">
+                  <section class="post-footer footer-im">
+                    <div class="post-footer-comment-wrapper">
+                      <div class="comment-form"></div>
+                      <div class="comment">
+                        <div class="media">
+                          <div class="main-title-outer pull-left">
+                            <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png"
+                                  width="30" height="30" alt=""></i>RESPONSES</div>
+                          </div>
+                          <div *ngIf="article.comments.length==0">
+                            <div class="blog-content paddingNo">
+                              No comment posted yet.
+                            </div>
+                          </div>
+                          <div *ngIf="article.comments.length!=0">
+                            <div class="blog-content paddingNo"
+                              *ngFor="let comment of article.comments.slice().reverse(); let i=index">
+                              <div [style.display]="(i<10 || showAll) ? '':'none'">
+                                <div class="col-md-1 col-lg-1 col-sm-12 col-xs-12">
+                                  <app-round-pic [picPath]="comment.user_profile" [userName]="comment.user_name"
+                                    [width]="'40px'" [height]="'40px'"></app-round-pic>
+                                </div>
+                                <div class="col-md-11 col-lg-11 col-sm-12 col-xs-12 paddingNo">
+                                  <h4 class="capitalize margin0 padding-bottom10px">
+                                    <span *ngIf="getUserName()==null || getUserName()!=comment.user_name"
+                                      style="font-size:15px; font-weight:600;">{{comment.user_name}}</span>
+                                    <span *ngIf="getUserName()!=null && getUserName()==comment.user_name"
+                                      style="font-size:15px; font-weight:600;">You</span>
+                                  </h4>
+                                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                    <p class="margin0" [innerHTML]="safeHtml(comment.content)"></p>
+                                  </div>
+                                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo padding-top10px"
+                                    style="padding-top:5px !important;">
+                                    <div class="pull-left paddingNo font-size11 col-md-10">
+                                      {{_commonService.setDateFormat(comment.created_at) | date:'yMMMd'}}
+                                      <app-comments-like [isLoved]="comment.isLoved" [loveCount]="comment.likes"
+                                        [entityType]="comment.type" [commentId]="comment.id"
+                                        [permaLink]="article.perma_link" [entityId]="article.id"></app-comments-like>
+                                      <span style="margin:10px;color:#337ab7; cursor: pointer;"
+                                        (click)="showReplyComment(comment.id, i)">Reply</span>
+                                    </div>
+
+                                    <!-- reply Comment -->
+                                    <div *ngIf="comment.commentReplies.length" class="col-md-12 paddingNo"
+                                      style="margin-top: 10px">
+                                      <div class="col-md-1 text-center paddingNo">
+                                        <img src="assets/images/arrow-down-right.png" width="20px" height="20px">
+                                      </div>
+                                      <div class="col-md-11 paddingNo">
+                                        <div *ngFor="let reply of comment.commentReplies; let j=index"
+                                          [ngClass]="(j<2 || replyComment ==  comment.id || showReply[comment.id]) ? 'show' : 'hide'">
+                                          <div class="col-md-1 col-lg-1 col-sm-12 col-xs-12">
+                                            <app-round-pic [picPath]="reply.user_profile" [userName]="reply.user_name"
+                                              [width]="'40px'" [height]="'40px'"></app-round-pic>
+                                          </div>
+                                          <div class="col-md-10 col-lg-11 col-sm-12 col-xs-12"
+                                            style="margin-bottom: 5px;">
+                                            <h4 class="capitalize margin0 padding-bottom10px"
+                                              style="padding-bottom: 5px;">
+                                              <span *ngIf="getUserName()==null || getUserName()!=reply.user_name"
+                                                style="font-size:15px; font-weight:600;">{{reply.user_name}}</span>
+                                              <span *ngIf="getUserName()!=null && getUserName()==reply.user_name"
+                                                style="font-size:15px; font-weight:600;">You</span>
+                                            </h4>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                              <p class="margin0" [innerHTML]="safeHtml(reply.content)"></p>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo"
+                                              style="padding-top:5px !important;">
+                                              <div class="pull-left paddingNo font-size11 col-md-10">
+                                                {{_commonService.setDateFormat(reply.created_at) | date:'yMMMd'}}
+                                                <app-comments-like [isLoved]="reply.isLoved" [loveCount]="reply.likes"
+                                                  [entityType]="'post'" [commentId]="reply.id"
+                                                  [permaLink]="article.perma_link" [entityId]="article.id">
+                                                </app-comments-like>
+                                                <span style="margin:10px;color:#337ab7; cursor: pointer;"
+                                                  (click)="showReplyComment(reply.parent_id, i)">Reply</span></div>
+                                            </div>
+                                          </div>
+                                          <hr *ngIf="j<comment.commentReplies.length-1"
+                                            style="width:100%; margin-top:0px; margin-bottom:5px;">
+                                        </div>
+                                        <div class="col-md-11 paddingNo" style="cursor: pointer;">
+                                          <span
+                                            *ngIf="comment.commentReplies.length > 2 && !showReply[comment.id] && replyComment !=  comment.id"
+                                            style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = true">
+                                            {{comment.commentReplies.length -2 }} More
+                                            {{comment.commentReplies.length -2 > 1 ? 'Replies' : 'Reply'}}
+                                          </span>
+                                          <span *ngIf="showReply[comment.id] && replyComment !=  comment.id"
+                                            style="color:#337ab7;font-size:13px"
+                                            (click)="showReply[comment.id] = false">
+                                            Show less
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- reply Comment Box -->
+                                    <div id="comment_id_{{comment.id}}" class="col-md-11 col-md-offset-1"
+                                      style="margin-top: 10px">
+                                      <div *ngIf="replyComment ==  comment.id">
+                                        <ckeditor [(ngModel)]="user_comment_reply" [config]="{
+                                            uiColor: '#c1c1c1',
+                                            toolbar:[
+                                             { name: 'insert',items: [ 'Smiley'] }
+                                            ],
+                                            toolbarLocation: 'bottom',
+                                            contentsCss: '../assets/css/ckeditor-custom.css',
+                                            height:'100px'
+                                          }" [readonly]="false" debounce="500">
+                                        </ckeditor>
+                                        <p *ngIf="user_comment_reply_error" style="color:red; font-size:13px;">
+                                          {{user_comment_reply_error}}</p>
+                                        <button id="submit" name="submit" class="btn font-size13 margin-top"
+                                          (click)="doCommentReply()">POST YOUR REPLY</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <hr *ngIf="i<article.comments.length-1"
+                                  style="width:100%; margin-top:0px; margin-bottom:5px;">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" *ngIf="article.comments.length>2">
+                <label class="col-md-5 control-label" for="submit"></label>
+                <div class="col-md-3">
+                  <button id="submit" name="submit" class="btn font-size13" *ngIf="!showAll"
+                    (click)="showAll=!showAll">LOAD ALL RESPONSES</button>
+                  <button id="submit" name="submit" class="btn font-size13" *ngIf="showAll" (click)="showAll=!showAll"
+                    onclick="document.getElementById('responses').scrollIntoView();">SHOW LESS</button>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top">
+                <div class="main-title-outer pull-left">
+                  <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/tre.png" width="30"
+                        height="30" alt=""></i>YOUR RESPONSE</div>
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="!_apiService.loggedIn()">
+                <a routerLink="/login" style="color:#e35b7f;">Please Login to comment</a>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="_apiService.loggedIn()">
+                <ckeditor [(ngModel)]="user_comment" [config]="{
+                    uiColor: '#c1c1c1',
+                    toolbar:[
+                     { name: 'insert',items: [ 'Smiley'] }
+                    ],
+                    toolbarLocation: 'bottom',
+                    contentsCss: '../assets/css/ckeditor-custom.css',
+                    height:'100px'
+                  }" [readonly]="false" debounce="500">
+                </ckeditor>
+                <p *ngIf="user_comment_error" style="color:red; font-size:13px;">{{user_comment_error}}</p>
+                <button id="submit" name="submit" class="btn font-size13 margin-top" (click)="doComment()">POST YOUR
+                  RESPONSE</button>
+              </div>
+            </div>
+          </div>
+          <!-- Advertisement goes here -->
+          <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top2per art-paddingNo"
+            *ngIf="promotions && relVideo">
+            <!-- <div class="content-widget-sidebar">
+              <iframe [src]='relVideo.video_path' width="100%" height="220" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+            </div> -->
+            <div class="content-widget-sidebar" *ngIf="youtubeVideo">
+              <iframe width="100%" height="300" [src]="youtubeVideo" frameborder="0" allow="autoplay; encrypted-media"
+                allowfullscreen></iframe>
+              <a href="https://www.youtube.com/user/Kidsstoppress?sub_confirmation=1" target="_blank"><span
+                  class="subscribe-button">Subscribe to KSP Youtube Channel</span></a>
+            </div>
+            <div class="content-widget-sidebar" *ngFor="let promotions of promotionsArticle; let i=index"
+              [ngClass]="{'hide':advertisement < i}">
+              <app-advertise [add]="promotions"></app-advertise>
+            </div>
+            <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index"
+              [ngClass]="{'hide':advertisement < i}">
+              <app-advertise [add]="promotion"></app-advertise>
+            </div>
+            <div class="content-widget-sidebar" [vp-in-view-config]="{infinite: true}"
+              (vp-in-view)="getAdvertisement();"></div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <!-- Related Articles -->
+    <div class="row white-background paddingNo padding-top10px line-height-normal" *ngIf="relatedArticles">
+      <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/article.svg" width="30"
+                height="30" alt=""></i>YOU MAY ALSO LIKE</div>
+        </div>
+        <app-article-carousel [carauselId]="'related'" [articleList]="relatedArticles"></app-article-carousel>
+      </div>
+    </div>
+    <!-- Upcoming Events -->
+    <div class="row light-gry-background-event margin-top paddingNo padding-top10px padding-bottom10px"
+      id="mealPlanScroller" (scroll)="scrollHandler($event)">
+      <div class="container" *ngIf="events">
+        <div class="main-title-outer pull-left">
+          <div class="main-title color-black"><i class="font-size18 fa fa-calendar"></i>UPCOMING EVENTS</div>
+          <div class="span-outer">
+            <span class="pull-right text-danger last-update"> <a class="color-black hover-color-black"
+                routerLink="/event-all">VIEW ALL EVENTS<i class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 web-view">
+          <div class="widget-sidebar">
+            <div class="content-widget-sidebar" *ngIf="events.length!=0">
+              <ul>
+                <li class="recent-post" *ngFor="let event of events.slice(0,2)"
+                  style="margin-bottom: 1px;height: 115px; background-color: transparent;">
+                  <div class="post-img">
+                    <div class="red-orangebtn pink-btn-cal all-caps pink-date-box">
+                      <div style="width:100%;height:auto; margin:4px auto;">
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b></h5>
+                        <h3 class="white-color paddingNo" style="font-size:34px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b></h3>
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-left:90px;margin-top:-80px;">
+                    <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                      <h5 class="capitalize">{{event.title | capitalize}}</h5>
+                    </a>
+                    <p class="margin-top6 all-caps gry-color">
+                      <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}} -
+                        {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                      <br /><a href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}" target="_blank">
+                        <small class="pink-color-text all-caps"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{event.venue_city}}, {{event.venue_state}} </small>
+                      </a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 web-view">
+          <div class="widget-sidebar">
+            <div class="content-widget-sidebar" *ngIf="events.length!=0">
+              <ul>
+                <li class="recent-post" *ngFor="let event of events.slice(2,4)"
+                  style="margin-bottom: 1px;height: 115px;background-color: transparent;">
+                  <div class="post-img">
+                    <div class="red-orangebtn pink-btn-cal all-caps pink-date-box">
+                      <div style="width:100%;height:auto; margin:4px auto;">
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b></h5>
+                        <h3 class="white-color paddingNo" style="font-size:34px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b></h3>
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-left:90px;margin-top:-80px;">
+                    <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                      <h5 class="capitalize">{{event.title | capitalize}}</h5>
+                    </a>
+                    <p class="margin-top6 all-caps gry-color">
+                      <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}} -
+                        {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                      <br /><a href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}" target="_blank">
+                        <small class="pink-color-text all-caps"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{event.venue_city}}, {{event.venue_state}} </small>
+                      </a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 web-view">
+          <div class="widget-sidebar">
+            <div class="content-widget-sidebar" *ngIf="events.length!=0">
+              <ul>
+                <li class="recent-post" *ngFor="let event of events.slice(4)"
+                  style="margin-bottom: 1px;height: 115px;background-color: transparent;">
+                  <div class="post-img">
+                    <div class="red-orangebtn pink-btn-cal all-caps pink-date-box">
+                      <div style="width:100%;height:auto; margin:4px auto;">
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b></h5>
+                        <h3 class="white-color paddingNo" style="font-size:34px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b></h3>
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-left:90px;margin-top:-80px;">
+                    <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                      <h5 class="capitalize">{{event.title | capitalize}}</h5>
+                    </a>
+                    <p class="margin-top6 all-caps gry-color">
+                      <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}} -
+                        {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                      <br /><a href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}" target="_blank">
+                        <small class="pink-color-text all-caps"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{event.venue_city}}, {{event.venue_state}} </small>
+                      </a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 mobile-view">
+          <div class="widget-sidebar">
+            <div class="content-widget-sidebar" *ngIf="events.length!=0">
+              <ul>
+                <li class="recent-post" *ngFor="let event of events.slice(0,3)"
+                  style="margin-bottom: 1px;height: 115px;">
+                  <div class="post-img">
+                    <div class="red-orangebtn pink-btn-cal all-caps pink-date-box">
+                      <div style="width:100%;height:auto; margin:4px auto;">
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b></h5>
+                        <h3 class="white-color paddingNo" style="font-size:34px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b></h3>
+                        <h5 class="white-color paddingNo" style="font-size:12px;">
+                          <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-left:90px;margin-top:-80px;">
+                    <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                      <h5 class="capitalize">{{event.title | capitalize}}</h5>
+                    </a>
+                    <p class="margin-top6 all-caps gry-color">
+                      <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}} -
+                        {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                      <br /><a href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}" target="_blank">
+                        <small class="pink-color-text all-caps"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          {{event.venue_city}}, {{event.venue_state}} </small>
+                      </a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- KSP Video -->
+    <div class="row dark-gry-background paddingNo padding-top10px" *ngIf="relatedTvs">
+      <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/television.png" width="30"
+                height="30" alt=""></i>KSP TV</div>
+        </div>
+        <div id="recent" class="carousel slide height-400" data-ride="carousel" data-interval="false">
+          <div class="col-md-12 col-lg-12 arrow-left-right">
+            <a class="pull-left left fa fa-chevron-left btn" href="#recent" data-slide="prev"
+              *ngIf="relatedTvs.length>3"></a>
+            <a class="pull-right right fa fa-chevron-right btn" href="#recent" data-slide="next"
+              *ngIf="relatedTvs.length>3"></a>
+          </div>
+          <div class="carousel-inner">
+            <div class="item" *ngFor="let loop of [0,1,2]" [ngClass]="{'active':loop==0}">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 paddingNo height-400"
+                  *ngFor="let tv of relatedTvs.slice((3 * loop ),(3 * loop + 3))">
+                  <div class="col-item2 box-shadow">
+                    <div class="photo">
+                      <div class="slider-top">
+                        <app-bookmark [bookmarkData]="tv.bookmarked" [entityType]="tv.post_type" [entityId]="tv.id"
+                          [bookmarkCount]="tv.bookmark_count" (update)="updateLatestArticle()"></app-bookmark>
+                      </div>
+                      <div id="crop-feature-image-tv">
+                        <a href="/details/{{tv.perma_link}}/{{tv.id}}" onclick="window.scrollTo(0,0)">
+                          <img width="100%" height="200px" class="image-fit"
+                            src="{{tv.thumbnail.split('0.jpg').join('mqdefault.jpg')}}" alt="{{tv.title}}">
+                        </a>
+                      </div>
+                    </div>
+                    <div class="info-2">
+                      <div class="images-product-old">
+                        <div class="product-old">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top5px paddingNo">
+                            <app-category [categories]="tv.category" [id]="tv.id" [type]="'tv'"></app-category>
+                            <h4 class="blog-ellipsis"><a href="/details/{{tv.perma_link}}/{{tv.id}}"
+                                onclick="window.scrollTo(0,0)"><b>{{tv.title}}</b></a></h4>
+                          </div>
+                          <div class="blog-content">
+                            <div class="">
+                              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left margin-top paddingNo">
+                                <div class="media-left">
+                                  <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                                    <app-round-pic [picPath]="tv.author_img" [userName]="tv.author_name"
+                                      [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                    <a routerLink="/authorwise-posts/{{tv.creator_id}}" class="anchor-username">
+                                      <h4 class="media-heading capitalize font-size13 color-black">{{tv.author_name}}
+                                      </h4>
+                                    </a>
+                                    <span class="anchor-time all-caps"
+                                      [innerHtml]="_commonService.setDateFormat(tv.published_date) | date:'yMMMd'"></span>
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                    <ul class="list-unstyled text-left pull-right width-100per">
+                                      <app-likecomment [loveData]="tv.liked" [entityType]="tv.post_type"
+                                        [entityId]="tv.id" [loveCount]="tv.likes" [commentCount]="tv.comment_count">
+                                      </app-likecomment>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- KSP Radio -->
+    <div *ngIf="relatedRadios">
+      <div class="row dark-gry-background paddingNo padding-top10px line-height-normal" *ngIf="relatedRadios.length>0">
+        <div class="container paddingNo">
+          <div class="main-title-outer pull-left col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/Radio-Color.svg"
+                  width="30" height="30" alt=""></i>KSP RADIO</div>
+          </div>
+          <div id="related" class="carousel slide height-400" data-ride="carousel" data-interval="false">
+            <div class="col-md-12 col-lg-12 arrow-left-right">
+              <a class="pull-left left fa fa-chevron-left btn" href="#related" data-slide="prev"
+                *ngIf="relatedRadios.length>3"></a>
+              <a class="pull-right right fa fa-chevron-right btn" href="#related" data-slide="next"
+                *ngIf="relatedRadios.length>3"></a>
+            </div>
+            <div class="carousel-inner">
+              <div class="item" *ngFor="let loop of [0,1,2]" [ngClass]="{'active':loop==0}">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 paddingNo height-400"
+                    *ngFor="let radio of relatedRadios.slice((3 * loop ),(3 * loop + 3))">
+                    <div class="col-item2 box-shadow">
+                      <div class="photo">
+                        <div class="slider-top">
+                          <app-bookmark [bookmarkData]="radio.bookmarked" [entityType]="radio.post_type"
+                            [entityId]="radio.id" [bookmarkCount]="radio.bookmark_count"
+                            (update)="updateLatestArticle()"></app-bookmark>
+                        </div>
+                        <div id="crop-feature-image-tv">
+                          <!-- <a href="/details/{{radio.id}}" onclick="window.scrollTo(0,0)">
+                                   <iframe  width="100%" height="200px"  [src]="radio.path" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></iframe>
+                                 </a> -->
+                          <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                            <div class="three-by-two-image-container" style="padding-top:56.25%!important;">
+                              <img class="three-by-two-image"
+                                src="{{radio.radio_image? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_400' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}"
+                                style="width:100%;height:100%;" alt="">
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="info-2">
+                        <div class="images-product-old">
+                          <div class="product-old">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top5px paddingNo">
+                              <app-category [categories]="radio.category" [id]="radio.id" [type]="'radio'">
+                              </app-category>
+                              <h4 class="blog-ellipsis"><a
+                                  href="/details/{{radio.perma_link}}/{{radio.id}}"
+                                  onclick="window.scrollTo(0,0)"><b>{{radio.title}}</b></a></h4>
+                            </div>
+                            <div class="blog-content">
+                              <div class="">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left margin-top paddingNo">
+                                  <div class="media-left">
+                                    <a routerLink="/authorwise-posts/{{radio.creator_id}}">
+                                      <app-round-pic [picPath]="radio.author_img" [userName]="radio.author_name"
+                                        [width]="'40px'" [height]="'40px'" [className]="''"></app-round-pic>
+                                    </a>
+                                  </div>
+                                  <div class="media-body">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo">
+                                      <a routerLink="/authorwise-posts/{{radio.creator_id}}" class="anchor-username">
+                                        <h4 class="media-heading capitalize font-size13 color-black">
+                                          {{radio.author_name}}</h4>
+                                      </a>
+                                      <span class="anchor-time all-caps"
+                                        [innerHtml]="_commonService.setDateFormat(radio.published_date) | date:'yMMMd'"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingNo margin-top">
+                                      <ul class="list-unstyled text-left pull-right width-100per">
+                                        <app-likecomment [loveData]="radio.liked" [entityType]="radio.post_type"
+                                          [entityId]="radio.id" [loveCount]="radio.likes"
+                                          [commentCount]="radio.comment_count"></app-likecomment>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- Latest Articles -->
+    <div class="row dark-gry-background paddingNo padding-top10px" *ngIf="recentArticles">
+      <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/article.svg" width="30"
+                height="30" alt=""></i>KSP LATEST ARTICLES</div>
+        </div>
+        <app-article-carousel [carauselId]="'recent'" [articleList]="recentArticles"></app-article-carousel>
+      </div>
+    </div>
+    <div class="row dark-gry-background paddingNo padding-top10px" *ngIf="getRecommended">
+      <div class="container paddingNo">
+        <div class="main-title-outer pull-left">
+          <div class="main-title "> <i class="fa" aria-hidden="true"><img src="assets/images/article.svg" width="30"
+                height="30" alt=""></i>KSP LATEST NEW ARTICLES</div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 paddingNo height-50"
+          *ngFor="let articleRec of getRecommended">
+          <a href="/details/{{articleRec.id}}" class="main-title "> {{articleRec.title}} </a>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+  </section>
+</section>
+<p #dataContainer></p>
+
+<div class="modal fade" id="mealBannerModal" tabindex="-1" role="dialog" aria-labelledby="mealBannerModal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header"
+        style="border: none;display: flex;justify-content: space-between;padding: 15px 30px !important">
+        <span style="color: red;font-size: 0.9em;font-weight: 600">Subscribe to Meal Plan</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="subForm" (ngSubmit)="subForm.valid && mealPlanBannerForm(subForm.value)" #formSub="ngForm">
+          <div class="modal-body">
+            <div class="row text-center">
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <input class="form-control" type="email" placeholder="Enter your email" style="width:100%"
+                  [formControl]="subForm.controls['email']" />
+
+                <div
+                  *ngIf="(subForm.controls['email'].hasError('required') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('required') && formSub.submitted)"
+                  class="error-survey-form">Please enter your email id</div>
+
+                <div
+                  *ngIf="!subForm.controls['email'].hasError('required') && ((subForm.controls['email'].hasError('email') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('email') && formSub.submitted))"
+                  class="error-survey-form">Please enter a valid email</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="thanksSubscribe" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div>
+          <div class="panel panel-default">
+            <div class="text-center small-text">
+              <p class="font-size18">{{subscribeThanaks}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,256 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content">
+    <div class="row">
+        <div class="text-center bannerimage" *ngIf="awardsDetails">
+            <img src="{{awardsDetails.img_path}}">
+            <span class="headingtext font-Raleway-Bold">
+                <img src="{{awardsDetails.logo_path}}" style="width:220px;"><br>
+                <span style="font-size: 0.6em;" [innerHTML]="awardsDetails.description"></span>
+            </span>
+        </div>
+    </div>
+
+
+    <div class="row survey-bg" style="padding-top: 20px;">
+        <div class="container">
+            <div class="row gry-background" style="padding:0px 0!important;" *ngIf="awardsDetails">
+                <h2 style="text-align: center;color: #fff;margin-bottom: 30px;">{{awardsDetails.banner_text}}</h2>
+                <a href="{{awardsDetails.link}}">
+                    <img src="{{awardsDetails.banner_image}}"
+                        style="width: 100%;margin: 15px auto;max-width: 1024px;display: block;">
+                </a>
+                <!--<div class="text-center">-->
+                <!--<span class="font-size21 font-Raleway-SemiBold" style="color: #ff4b88;">Awards has been categorised as follows <i class="fa fa-angle-down"></i></span>-->
+                <!--</div>-->
+            </div>
+            <div class="form-group col-md-12  col-sm-12">
+                <input type="text" class="form-control text-box" [(ngModel)]="searchTerm" (keyup)="filterItems1()"
+                    placeholder="Search category here" id="usr">
+            </div>
+            <div *ngIf="more == false">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xlg-4 min_max"
+                    *ngFor="let category of filterItems | slice:0:12; let i = index">
+
+                    <div class="row awards-wrapper margin-top">
+                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 col each-award-box">
+                            <div class="box">
+                                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo"
+                                    style="border: 1px solid #e5e5e5; border-radius:5px;height: 320px;">
+                                    <img src="{{category.img_path}}"
+                                        onError="this.src='../../v1/assets/images/brand11.jpeg'" alt=""
+                                        style="object-fit:cover!important;width:30%;height:auto;margin-top:3%;" />
+                                    <h2 style="font-weight:600">{{category.category}}</h2>
+                                    <!--<p style="color: #aba3a3;">VIEW {{category.no_submission}} SUBMISSIONS</p>-->
+                                    <div *ngIf="votingFlag == 1">
+                                        <button type="button" *ngIf="category.isVoted == 0" class="btn nomi"
+                                            (click)="submitVote(category,i)">Vote Now</button>
+                                        <button *ngIf="category.isVoted == 1" disabled type="button" class="btn nomi"
+                                            (click)="showNominationBrand(category,i)">Vote Submitted</button>
+                                    </div>
+                                    <h4 *ngIf="votingFlag == 2" class="text-center"
+                                        style="color: #f05b89; margin-top: 60px;">
+                                        Voting is closed. <br><br>
+                                        The list of winners of #KSPAwards2019 will be displayed on 19/02/20.
+                                    </h4>
+
+                                    <!-- <button type="button" class="btn nomi" (click)="showNominationBrand(category,i)">Nominate Now</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div *ngIf="more == true">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xlg-4 min_max"
+                    *ngFor="let category of filterItems; let i = index">
+
+                    <div class="row awards-wrapper margin-top">
+                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 col each-award-box">
+                            <div class="box">
+                                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo"
+                                    style="border: 1px solid #e5e5e5; border-radius:5px;height: 320px;">
+                                    <img src="{{category.img_path}}"
+                                        onError="this.src='../../v1/assets/images/brand11.jpeg'" alt=""
+                                        style="object-fit:cover!important;width:30%;height:auto;margin-top:3%;" />
+                                    <h2 style="font-weight:600">{{category.category}}</h2>
+                                    <!--<p style="color: #aba3a3;">VIEW {{category.no_submission}} SUBMISSIONS</p>-->
+                                    <div *ngIf="votingFlag == 1">
+                                        <button type="button" *ngIf="category.isVoted == 0" class="btn nomi"
+                                            (click)="submitVote(category,i)">Vote Now</button>
+                                        <button *ngIf="category.isVoted == 1" disabled type="button" class="btn nomi"
+                                            (click)="showNominationBrand(category,i)">Vote Submitted</button>
+                                    </div>
+                                    <h4 *ngIf="votingFlag == 2" class="text-center"
+                                        style="color: #f05b89; margin-top: 60px;">
+                                        Voting is closed. <br><br>
+                                        The list of winners of #KSPAwards2019 will be displayed on 19/02/20.
+                                    </h4>
+                                    <!-- <button type="button" class="btn nomi" (click)="showNominationBrand(category,i)">Nominate Now</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <button type="button" *ngIf="more == false" class="btn lmore" (click)="loadMore()">Load more...</button>
+    </div>
+    <!-- brand nomination popup modal -->
+    <div class="pop-modal-overlay" *ngIf="nomination == true">
+
+        <div class="pop-inner-modal">
+            <h3 style="text-align:center"> Nominate your favourite brand
+                <i style="font-size: 20px;" class="fa fa-times" (click)="closeNominationBrand()"></i>
+            </h3>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" placeholder="Type here" formControlName="categoryName" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.categoryName.errors }" />
+                    <div *ngIf="submitted && f.categoryName.errors" class="invalid-feedback">
+                        <div *ngIf="f.categoryName.errors.required">Category Name is required</div>
+                    </div>
+                    <div class="morecat" *ngIf="showSelectMore == 1" (click)="nominateMoreCat()">Nominate for more
+                        categories<i class="fa fa-angle-right"></i></div>
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" (input)="filterCompany($event.target.value)" placeholder="Type here"
+                        formControlName="companyName" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.companyName.errors }" />
+                    <ul style="overflow-y: scroll;height: 100px;" *ngIf="listCompany == true">
+                        <li *ngFor="let company of searchItems" (click)="getCompany(company.business_name,company.id)">
+                            {{company.business_name}}
+                        </li>
+                    </ul>
+                    <div *ngIf="submitted && f.companyName.errors" class="invalid-feedback">
+                        <div *ngIf="f.companyName.errors.required">Company Name is required</div>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label>Company Logo</label>-->
+                <!--&lt;!&ndash; <input type="file" id="avatar" formControlName="companyLogo" name="avatar" accept="image/png, image/jpeg" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactPersion.errors }"> &ndash;&gt;-->
+                <!--&lt;!&ndash; <input #file type="file" accept="image/*" formControlName="companyLogo" (change)="upload(file)" style="visibility:hidden;height: 0;" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contactPersion.errors }">-->
+                <!--<button #upload (click)="file.click()">Upload file</button> &ndash;&gt;-->
+                <!--&lt;!&ndash; <img style="width: 10%;" src="../../assets/images/upload.png" #upload (click)="file.click()" />-->
+                <!--<div *ngIf="submitted && f.companyLogo.errors" class="invalid-feedback">-->
+                <!--<div *ngIf="f.companyLogo.errors.required">Company logo is required</div>-->
+                <!--</div> &ndash;&gt; -->
+                <!--<input #fileUpload type="file" (click)="fileUpload.value = null"(change)="importFile($event)" style="display:none" accept="image/*"><br/>-->
+                <!--&lt;!&ndash; <button (click)="fileUpload.click()">  </button> &ndash;&gt;-->
+                <!--<img style="width: 10%;" src="../../assets/images/upload.png" #upload (click)="fileUpload.click()" />-->
+                <!--<img *ngIf="imageSrc" style="margin-left: 20px;border-radius: 50%;width: 60px;height: 60px;" id="blah" [src]="imageSrc" alt="your image" />-->
+                <!--<div *ngIf="submitted && f.companyLogo.errors" class="invalid-feedback">-->
+                <!--<div *ngIf="f.companyLogo.errors.required">Company logo is required</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                <!--<label>Contact Person</label>-->
+                <!--<input type="text" placeholder="Please give name and contact details" formControlName="contactPersion" class="form-control" />-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label>Why should this brand win ?</label>
+                    <textarea style="border:1px solid red;height: 100px;" placeholder="Write here"
+                        formControlName="description" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn submitbtn">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <!-- nomination more categories popup modal -->
+    <div class="pop-modal-overlay" *ngIf="nomimateMore == true">
+
+        <div class="pop-inner-modal">
+            <!-- <i style="font-size: 20px;float:left" class="fa fa-times" (click)="closeChooseCat()"></i>
+        <button class="btn donebtn" (click)="catSubmit()">Done</button> -->
+            <h3>Nominate your business for the award
+                <i style="font-size: 20px;" class="fa fa-times" (click)="closeNominationBrand()"></i>
+            </h3>
+            <p style="color:#f05b89">Select categories</p>
+            <input type="text" (input)="filterCategories($event.target.value)" placeholder="Search Categories here"
+                class="form-control" />
+            <ul style="overflow-y: scroll;height: 400px;">
+                <li *ngFor="let cat of searchItems1;let i = index" style="border-bottom: 1px solid #b7b3b3;"
+                    [ngClass]="{'active': cat.active}" (click)="clicked(i,cat)" style="position: relative;">
+                    <span> <img src="{{cat.img_path}}" onError="this.src='../../v1/assets/images/brand11.jpeg'" alt=""
+                            style="object-fit:cover!important;width:10%;height:auto;" /></span>
+                    <p style="display: inline-block;width: calc(100% - 100px);vertical-align: middle;">{{cat.category}}
+                    </p> <span style="position: absolute;right: 0;top: 0;"> <img class="im"
+                            style="width: 20px;float: right;margin: 15px;"
+                            src="../../v1/assets/images/radio_active.png" /></span>
+                </li>
+            </ul>
+            <button class="btn donebtn" (click)="catSubmit()">Submit</button>
+        </div>
+
+    </div>
+    <!-- Thankyou categories popup modal -->
+    <div class="pop-modal-overlay" *ngIf="thankYou == true">
+
+        <div class="pop-inner-modal"
+            style="background-color: #fff;height: 40%;width: 30%;padding: 40px;text-align: center;">
+            <h1 style="text-align:center"> Thank You!
+            </h1>
+            <p>You've successfully nominated your brand for <br /><span
+                    style="font-size:14px;font-weight:bold">{{cat}}</span></p>
+            <button class="btn submitbtn" (click)="closeThankyou()">Okay</button>
+        </div>
+
+    </div>
+
+    <!-- Thankyou categories popup modal -->
+    <div class="pop-modal-overlay" *ngIf="kspVotingIsActivePopUp == true">
+
+        <div class="pop-inner-modal"
+            style="background-color: #fff;height: 40%;width: 30%;padding: 40px;text-align: center;">
+            <h1 style="text-align:center">Nomination for #KSPAwards2018 are now closed.
+            </h1>
+            <p>Watch this place for details on voting phase.</p>
+            <button class="btn submitbtn" (click)="closeVoting()">Okay</button>
+        </div>
+
+    </div>
+
+
+    <!-- show barnds for categories -->
+    <div class="pop-modal-overlay" *ngIf="showNomination == true">
+
+        <div class="pop-inner-modal">
+            <ul class="cathead">
+                <li style="width:12% !important"><img src="{{categoriesDetails.img_path}}" /></li>
+                <!--<li>-->
+                <!--{{categoriesDetails.category}}<br/> <span style="color:#ff4b88;font-size:14px;">{{categoriesDetails.no_submission}} Submissions</span>-->
+                <!--</li>-->
+                <li class="close"> <i class="fa fa-times" (click)="closeNominationBrandUser()"></i></li>
+            </ul>
+            <ul style="overflow-y: scroll;height: 400px;">
+                <li *ngFor="let cat of categoriesRelatedCompany"
+                    style="border-bottom: 1px solid #e6e6e6;position: relative;padding: 10px;"
+                    [ngClass]="{'active': cat.active}">
+                    <span> <img src="{{cat.img_path}}" onError="this.src='../../v1/assets/images/brand11.jpeg'" alt=""
+                            style="object-fit:cover!important;width:10%;height:auto;" /></span>
+                    {{cat.companyName}} <span (click)="likeClick(cat)"
+                        style="color:#ff4b88;font-size:16px;float:right;padding: 5px;position: absolute;right: 0;"><img
+                            src="../../v1/assets/images/shape.png" style="width:20px" /> {{cat.LikeCount}}</span>
+                </li>
+                <!-- <li style="color:#ff4b88;font-size:16px;float:right">Nominated</li>  -->
+            </ul>
+            <button class="btn submitbtn"
+                style="margin-bottom: 0px;width: 100%;border-radius: 0px !important; color: #ffffff;"
+                (click)="nominationBrand()">Nominate a Brand</button>
+        </div>
+
+    </div>
+
+
+</section>

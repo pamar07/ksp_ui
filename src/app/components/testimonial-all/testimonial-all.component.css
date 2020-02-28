@@ -1,0 +1,25 @@
+.testimonial-ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 65px; /* fallback */
+    width: 100%;
+}
+.capitalize{
+  text-transform: capitalize!important;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.light-gray-card{
+  background-color: red;
+}
+.gray-card{
+  background-color: blue;
+}
+.padding-top10px{
+  padding-top: 10px!important;
+}

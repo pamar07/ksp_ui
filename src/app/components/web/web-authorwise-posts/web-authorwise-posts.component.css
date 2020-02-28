@@ -1,0 +1,24 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.dark-gry-background{
+  background-color: #ffffff!important;
+  padding: 14px 0 0;
+}
+.capitalize{
+    text-transform: capitalize!important;
+}
+.line-height-normal{
+  line-height: normal!important;
+}
+.member-name{
+  font-size: 40px;
+  font-weight: 400;
+}

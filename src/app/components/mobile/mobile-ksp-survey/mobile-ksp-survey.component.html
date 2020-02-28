@@ -1,0 +1,495 @@
+<div style="margin-bottom: 10px;" *ngIf="currentPage == 'categories'">
+  <img src="assets/images/ksp_awards_live_show_banner.jpg" width="100%" height="auto">
+</div>
+
+<div class="container-fluid padding-left-right0 survey-bg" style="margin-bottom: 10px;" *ngIf="currentPage == 'categories'">
+  <div class="container">
+    <div class="text-justify">
+      <!-- <p style="font-size:11px;">It’s time to vote to make your favourite brand win at KSP awards 2017!</p>
+      <p style="font-size:11px;">Simply click on the category badge, look through the nominees, and cast your vote! Make sure you visit all the categories because your vote counts and your favourite brand is counting on you!</p>
+      <p style="font-size:11px;">On popular demand, voting period to vote for your favourite brand in KSP Awards 2017 has been extended!</p>
+      <p style="font-size:11px;">One extra week to make your favourite brand win!</p>
+      <p style="font-size:11px;">Voting closes 04 March, 2018</p> -->
+      <p class="text-center font-Raleway-SemiBold" style="font-size:15px;">VOTING CLOSED</p>
+      <p class="text-center" style="font-size:13px;">Stay tuned for results.</p>
+    </div>
+  </div>
+   <div class="clearfix boxes-wrapper">
+      <!-- <div class="col-xs-6 category-box" *ngFor="let category of categories;let i=index" routerLink="/Awards2017/{{category.id}}"> -->
+      <div class="col-xs-6 category-box" *ngFor="let category of categories;let i=index" routerLink="/Awards2017-Voting-Ended">
+        <div class="clearfix" [ngClass] = "userVoteCategory.indexOf(category.id) == -1 ? '' : 'already-voted'">
+            <!-- <div class="img-size">
+               <img src="{{category.img_path}}">
+            </div> -->
+            <div class="square-thumbnail-image-container">
+              <img class="square-thumbnail-image" src="{{category.img_path}}" alt=""/>
+            </div>
+         </div>
+      </div>
+   </div>
+   <button class="ksp-prev-btn" routerLink="/ksp-awards"> HIGHLIGHTS OF KSP AWARDS 2016 </button>
+</div>
+
+<div class="container-fluid padding-left-right0 second-choice-page survey-bg" *ngIf="currentPage == 'categoryOptions'">
+   <div class="award-img-wrapper">
+      <div class="award-img">
+         <img src="{{currentCategory.img_path}}">
+      </div>
+   </div>
+   <div class="question-sec">
+      <span class="quest">{{currentCategory.category_text}}</span>
+   </div>
+   <div class="choices">
+      <div class="each-choice" [ngClass] = "(selectedOption == option.id || userVoteOption.indexOf(option.id) > -1) ? 'selected-choice' : ''" *ngFor="let option of currentCategory.options; let i=index" (click)="selectOption(option)">
+         <!-- <img src="{{option.img_path}}" *ngIf="option.img_path">
+         <p *ngIf="!option.img_path">{{option.opt}}</p> -->
+         <div style="width:20%; float:left;">
+           <img src="{{option.img_path}}" *ngIf="option.img_path" style="width:100%; height:auto; max-height:70px;">
+         </div>
+         <div style="width:80%; float:right;">
+           <p *ngIf="option.opt" class="font-Raleway-SemiBold">{{option.opt}}</p>
+         </div>
+         <span class="selected" *ngIf = "selectedOption == option.id || userVoteOption.indexOf(option.id) > -1"><i class="fa fa-check"></i></span>
+      </div>
+   </div>
+   <div class="col-xs-12" style="margin-bottom:20px;">
+      <div class="row" style="text-align: center">
+         <div><span *ngIf="showOptionError && !selectedOption" class="error-survey">Please select one of the option</span></div>
+         <div class="col-xs-6" [ngClass] = "userVoteCategory.indexOf(currentCategory.id) > -1 ? 'margin-left' : ''">
+            <a routerLink="/Awards2017"><button class="another-poll-btn" style="background: #e35b7f"> Back </button></a>
+         </div>
+         <div class="col-xs-6" *ngIf="userVoteCategory.indexOf(currentCategory.id) == -1">
+            <button class="another-poll-btn" style="background: #e35b7f" (click)="saveUserVote()" onclick="window.scrollTo(0,0);"> Vote </button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid padding-left-right0 survey-bg" *ngIf="currentPage == 'authenticate'" style="margin-top: 7px;">
+  <div class="font-size16 font-Raleway-SemiBold text-center" style="
+    padding: 10px 10px 15px 10px;
+    color: #e45b7f;
+    border-top-left-radius:  5px;
+    border-top-right-radius:  5px;
+    background-color: #fff;
+    border-bottom: 1px dashed #e45b7f;">Please login to complete your vote
+  </div>
+   <div class="secondary-nav">
+      <ul>
+         <li [ngClass]="(authTab == 'login' || authTab == 'forgot-password-email' || authTab == 'forgot-password-otp' || authTab == 'forgot-password-newpass') ? 'active' : ''" (click)="authTab = 'login'"><a>Already registered</a></li>
+         <li [ngClass]="authTab == 'register' ? 'active' : ''" (click)="authTab = 'register'"><a>This is my first time</a></li>
+      </ul>
+   </div>
+   <div class="signin-wrapper" *ngIf="authTab == 'login'">
+      <div *ngIf="loginError" class="error-survey">Invalid email or password !</div>
+      <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && submitLoginForm(loginForm.value)" #formLogin="ngForm" style="padding-top:75px;">
+         <div class="email-box">
+            <input type="email" placeholder="Email" [formControl]="loginForm.controls['email']" autocomplete="off" />
+
+            <div *ngIf="(loginForm.controls['email'].hasError('required') && loginForm.controls['email'].dirty) || (loginForm.controls['email'].hasError('required') && formLogin.submitted)" class="error-survey-form">Please enter email.</div>
+
+            <div *ngIf="!loginForm.controls['email'].hasError('required') && ((loginForm.controls['email'].hasError('email') && loginForm.controls['email'].dirty) || (loginForm.controls['email'].hasError('email') && formLogin.submitted))" class="error-survey-form">Invalid email.</div>
+         </div>
+         <div class="password-box">
+            <input type="password" placeholder="Password" [formControl]="loginForm.controls['password']" autocomplete="newPassword"/>
+            <div *ngIf="(loginForm.controls['password'].hasError('required') && loginForm.controls['password'].dirty) || (loginForm.controls['password'].hasError('required') && formLogin.submitted)" class="error-survey-form">Please enter password.</div>
+         </div>
+         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingNo margin-bottom20px">
+           <span style="cursor: pointer; float:right;" class="text-right color-pink" (click)="authTab = 'forgot-password-email'">
+             Forgot Password?
+           </span>
+         </div>
+         <button type-="submit" class="sign-in-btn">SIGN IN</button>
+      </form>
+   </div>
+
+   <div class="signin-wrapper" *ngIf="authTab == 'forgot-password-email'">
+     <h2 style="font-size: 20px;text-align: center;color: #1d64b3;" class="text-center margin-bottom20px">Forgot Password</h2>
+     <span *ngIf="loginError" class="error-survey">Invalid email or password !</span>
+     <form [formGroup]="forgotPassForm" (ngSubmit)="forgotPassForm.valid && sendForgotOtp(forgotPassForm.value)" #formLogin="ngForm" style="margin-top:10px;">
+        <div class="email-box">
+           <input type="email" placeholder="Email" [formControl]="forgotPassForm.controls['email']" autocomplete="off" />
+
+           <div *ngIf="(forgotPassForm.controls['email'].hasError('required') && forgotPassForm.controls['email'].dirty) || (forgotPassForm.controls['email'].hasError('required') && forgotPassForm.submitted)" class="error-survey-form">Please enter email.</div>
+
+           <div *ngIf="!forgotPassForm.controls['email'].hasError('required') && ((forgotPassForm.controls['email'].hasError('email') && forgotPassForm.controls['email'].dirty) || (forgotPassForm.controls['email'].hasError('email') && forgotPassForm.submitted))" class="error-survey-form">Invalid email.</div>
+        </div>
+        <button type="submit" class="sign-in-btn">SEND OTP</button>
+     </form>
+   </div>
+
+   <div class="OTP-wrapper" *ngIf="authTab == 'forgot-password-otp'">
+     <h2> Enter OTP </h2>
+     <div class="input-wrapper" id="divOuter">
+       <div id="divInner">
+         <input type="text" maxLength="4" [(ngModel)]="forgotOtp" class="otp-input">
+       </div>
+     </div>
+     <div style="text-align: center" *ngIf="showOtpError">
+       <div class="error-survey">Invalid OTP.</div>
+     </div>
+     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top20px">
+       <span style="cursor: pointer; float:right;" class="text-right color-pink" (click)="sendForgotOtp(forgotPassForm.value)">
+         Resend OTP
+       </span>
+     </div>
+     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top20px margin-bottom20px">
+       <div>OTP sent to {{forgotPassForm.controls['email'].value}}</div>
+       <div style="cursor: pointer; float:right;" class="text-right color-pink margin-top10px" (click)="authTab = 'forgot-password-email'">
+         Change
+       </div>
+     </div>
+     <button class="confirm-btn" (click)="verifyEmailOTP()"> CONFIRM </button>
+   </div>
+
+   <div class="signin-wrapper" *ngIf="authTab == 'forgot-password-newpass'">
+     <h2 style="font-size: 20px;text-align: center;color: #1d64b3;"  class="text-center margin-bottom20px">Reset Password</h2>
+     <form [formGroup]="resetPassForm" (ngSubmit)="resetPassForm.valid && changePasswordByEmail(resetPassForm.value)" #formLogin="ngForm" style="margin-top:10px;">
+       <div class="password-box">
+          <input type="password" placeholder="Password" [formControl]="resetPassForm.controls['password']" autocomplete="newResetPassword"/>
+          <div *ngIf="(resetPassForm.controls['password'].hasError('required') && resetPassForm.controls['password'].dirty) || (resetPassForm.controls['password'].hasError('required') && resetPassForm.submitted)" class="error-survey-form">Please enter password.</div>
+       </div>
+       <div class="password-box">
+          <input type="password" placeholder="Confirm Password" [formControl]="resetPassForm.controls['confirm_password']" autocomplete="newConfirmPassword"/>
+          <div *ngIf="(resetPassForm.controls['confirm_password'].hasError('required') && resetPassForm.controls['confirm_password'].dirty) || (resetPassForm.controls['confirm_password'].hasError('required') && resetPassForm.submitted)" class="error-survey-form">Please enter password.</div>
+       </div>
+        <button type-="submit" class="sign-in-btn">RESET</button>
+     </form>
+   </div>
+
+   <div class="regi-wrapper" *ngIf="authTab == 'register'">
+      <div *ngIf="authTab == 'register' && !showOtp">
+         <form [formGroup]="regForm" (ngSubmit)="regForm.valid && submitRegForm(regForm.value)" #formReg="ngForm" style="padding-top: 50px;">
+            <div class="input-box">
+               <i class="fa fa-user"></i>
+               <input type="text" placeholder="Name" [formControl]="regForm.controls['name']">
+
+               <div *ngIf="(regForm.controls['name'].hasError('required') && regForm.controls['name'].dirty) || (regForm.controls['name'].hasError('required') && formReg.submitted)" class="error-survey-form">Please enter your name.</div>
+            </div>
+            <div class="input-box">
+               <form class="clearfix">
+                  <label class="gen-radio-container">
+                     <input type="radio" name="radio" value="Male" [formControl]="regForm.controls['gender']">
+                     <span class="gen-radio-checkmark"></span>
+                  </label>
+                  <label class="radio-label"> Male </label>
+                  <label class="gen-radio-container">
+                     <input type="radio" name="radio" value="Female" [formControl]="regForm.controls['gender']">
+                     <span class="gen-radio-checkmark"></span>
+                  </label>
+                  <label class="radio-label"> Female </label>
+               </form>
+            </div>
+
+            <div class="input-box">
+               <i class="fa fa-map-marker"></i>
+               <select [formControl]="regForm.controls['city']">
+                  <option value="">Select City</option>
+                  <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city=='All Cities' ? 'Other' : city.city}}</option>
+               </select>
+               <div *ngIf="(regForm.controls['city'].hasError('required') && regForm.controls['city'].dirty) || (regForm.controls['city'].hasError('required') && formReg.submitted)" class="error-survey-form">Please select your city.</div>
+            </div>
+
+            <div class="input-box select" >
+               <select  style="padding-left:5px;" [formControl]="regForm.controls['family_status']">
+                  <option value="">Choose option</option>
+                  <option value="1">Planing a baby</option>
+                  <option value="2">Expecting a baby</option>
+                  <option value="3">Already a parent</option>
+                  <option value="4">Just browsing</option>
+               </select>
+               <div *ngIf="(regForm.controls['family_status'].hasError('required') && regForm.controls['family_status'].dirty) || (regForm.controls['family_status'].hasError('required') && formReg.submitted)" class="error-survey-form">Please select one option.</div>
+            </div>
+
+            <div class="input-box">
+               <!-- <i class="fa fa-envelope"></i> -->
+               <input style="padding-left: 7px;!important;" type="email" placeholder="Email" [formControl]="regForm.controls['email']">
+
+               <div *ngIf="(regForm.controls['email'].hasError('required') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('required') && formReg.submitted)" class="error-survey-form">Please enter email.</div>
+
+               <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('email') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('email') && formReg.submitted))" class="error-survey-form">Invalid email.</div>
+
+               <div *ngIf="!regForm.controls['email'].hasError('required') && ((regForm.controls['email'].hasError('emailExist') && regForm.controls['email'].dirty) || (regForm.controls['email'].hasError('emailExist') && formReg.submitted))" class="error-survey-form">Email already exist.</div>
+            </div>
+
+            <div class="input-box">
+               <!-- <i class="fa fa-mobile"></i>
+               <input type="number" placeholder="Mobile Number" [formControl]="regForm.controls['phone']"> -->
+
+               <select name="countryCode" id="countryCodeDD" class="country_dd country-isd paddingNo font-size11" [formControl]="regForm.controls['country_code']">
+                 <option data-senderID="KSPSMS" value="91" Selected>India (+91)</option>
+                 <optgroup label="Other countries">
+                   <!-- <option data-senderID="DZ" value="213">Algeria (+213)</option> -->
+                   <!-- <option data-senderID="AD" value="376">Andorra (+376)</option> -->
+                   <!-- <option data-senderID="AO" value="244">Angola (+244)</option> -->
+                   <!-- <option data-senderID="AI" value="1264">Anguilla (+1264)</option> -->
+                   <!-- <option data-senderID="AG" value="1268">Antigua &amp; Barbuda (+1268)</option> -->
+                   <!-- <option data-senderID="AR" value="54">Argentina (+54)</option> -->
+                   <!-- <option data-senderID="AM" value="374">Armenia (+374)</option> -->
+                   <!-- <option data-senderID="AW" value="297">Aruba (+297)</option> -->
+                   <option data-senderID="KSPAUS" value="61">Australia (+61)</option>
+                   <!-- <option data-senderID="AT" value="43">Austria (+43)</option> -->
+                   <!-- <option data-senderID="AZ" value="994">Azerbaijan (+994)</option> -->
+                   <!-- <option data-senderID="BS" value="1242">Bahamas (+1242)</option> -->
+                   <!-- <option data-senderID="BH" value="973">Bahrain (+973)</option> -->
+                   <option data-senderID="KSPBAN" value="880">Bangladesh (+880)</option>
+                   <!-- <option data-senderID="BB" value="1246">Barbados (+1246)</option> -->
+                   <!-- <option data-senderID="BY" value="375">Belarus (+375)</option> -->
+                   <!-- <option data-senderID="BE" value="32">Belgium (+32)</option> -->
+                   <!-- <option data-senderID="BZ" value="501">Belize (+501)</option> -->
+                   <!-- <option data-senderID="BJ" value="229">Benin (+229)</option> -->
+                   <!-- <option data-senderID="BM" value="1441">Bermuda (+1441)</option> -->
+                   <!-- <option data-senderID="BT" value="975">Bhutan (+975)</option> -->
+                   <!-- <option data-senderID="BO" value="591">Bolivia (+591)</option> -->
+                   <!-- <option data-senderID="BA" value="387">Bosnia Herzegovina (+387)</option> -->
+                   <!-- <option data-senderID="BW" value="267">Botswana (+267)</option> -->
+                   <!-- <option data-senderID="BR" value="55">Brazil (+55)</option> -->
+                   <!-- <option data-senderID="BN" value="673">Brunei (+673)</option> -->
+                   <!-- <option data-senderID="BG" value="359">Bulgaria (+359)</option> -->
+                   <!-- <option data-senderID="BF" value="226">Burkina Faso (+226)</option> -->
+                   <!-- <option data-senderID="BI" value="257">Burundi (+257)</option> -->
+                   <!-- <option data-senderID="KH" value="855">Cambodia (+855)</option> -->
+                   <!-- <option data-senderID="CM" value="237">Cameroon (+237)</option> -->
+                   <option data-senderID="KSPCAN" value="1">Canada (+1)</option>
+                   <!-- <option data-senderID="CV" value="238">Cape Verde Islands (+238)</option> -->
+                   <!-- <option data-senderID="KY" value="1345">Cayman Islands (+1345)</option> -->
+                   <!-- <option data-senderID="CF" value="236">Central African Republic (+236)</option> -->
+                   <!-- <option data-senderID="CL" value="56">Chile (+56)</option> -->
+                   <option data-senderID="KSPCHI" value="86">China (+86)</option>
+                   <!-- <option data-senderID="CO" value="57">Colombia (+57)</option> -->
+                   <!-- <option data-senderID="KM" value="269">Comoros (+269)</option> -->
+                   <!-- <option data-senderID="CG" value="242">Congo (+242)</option> -->
+                   <!-- <option data-senderID="CK" value="682">Cook Islands (+682)</option> -->
+                   <!-- <option data-senderID="CR" value="506">Costa Rica (+506)</option> -->
+                   <!-- <option data-senderID="HR" value="385">Croatia (+385)</option> -->
+                   <!-- <option data-senderID="CU" value="53">Cuba (+53)</option> -->
+                   <!-- <option data-senderID="CY" value="90392">Cyprus North (+90392)</option> -->
+                   <!-- <option data-senderID="CY" value="357">Cyprus South (+357)</option> -->
+                   <!-- <option data-senderID="CZ" value="42">Czech Republic (+42)</option> -->
+                   <!-- <option data-senderID="DK" value="45">Denmark (+45)</option> -->
+                   <!-- <option data-senderID="DJ" value="253">Djibouti (+253)</option> -->
+                   <!-- <option data-senderID="DM" value="1809">Dominica (+1809)</option> -->
+                   <!-- <option data-senderID="DO" value="1809">Dominican Republic (+1809)</option> -->
+                   <!-- <option data-senderID="EC" value="593">Ecuador (+593)</option> -->
+                   <!-- <option data-senderID="EG" value="20">Egypt (+20)</option> -->
+                   <!-- <option data-senderID="SV" value="503">El Salvador (+503)</option> -->
+                   <!-- <option data-senderID="GQ" value="240">Equatorial Guinea (+240)</option> -->
+                   <!-- <option data-senderID="ER" value="291">Eritrea (+291)</option> -->
+                   <!-- <option data-senderID="EE" value="372">Estonia (+372)</option> -->
+                   <!-- <option data-senderID="ET" value="251">Ethiopia (+251)</option> -->
+                   <!-- <option data-senderID="FK" value="500">Falkland Islands (+500)</option> -->
+                   <!-- <option data-senderID="FO" value="298">Faroe Islands (+298)</option> -->
+                   <!-- <option data-senderID="FJ" value="679">Fiji (+679)</option> -->
+                   <!-- <option data-senderID="FI" value="358">Finland (+358)</option> -->
+                   <option data-senderID="KSPFRA" value="33">France (+33)</option>
+                   <!-- <option data-senderID="GF" value="594">French Guiana (+594)</option> -->
+                   <!-- <option data-senderID="PF" value="689">French Polynesia (+689)</option> -->
+                   <!-- <option data-senderID="GA" value="241">Gabon (+241)</option> -->
+                   <!-- <option data-senderID="GM" value="220">Gambia (+220)</option> -->
+                   <!-- <option data-senderID="GE" value="7880">Georgia (+7880)</option> -->
+                   <option data-senderID="KSPGER" value="49">Germany (+49)</option>
+                   <!-- <option data-senderID="GH" value="233">Ghana (+233)</option> -->
+                   <!-- <option data-senderID="GI" value="350">Gibraltar (+350)</option> -->
+                   <!-- <option data-senderID="GR" value="30">Greece (+30)</option> -->
+                   <!-- <option data-senderID="GL" value="299">Greenland (+299)</option> -->
+                   <!-- <option data-senderID="GD" value="1473">Grenada (+1473)</option> -->
+                   <!-- <option data-senderID="GP" value="590">Guadeloupe (+590)</option> -->
+                   <!-- <option data-senderID="GU" value="671">Guam (+671)</option> -->
+                   <!-- <option data-senderID="GT" value="502">Guatemala (+502)</option> -->
+                   <!-- <option data-senderID="GN" value="224">Guinea (+224)</option> -->
+                   <!-- <option data-senderID="GW" value="245">Guinea - Bissau (+245)</option> -->
+                   <!-- <option data-senderID="GY" value="592">Guyana (+592)</option> -->
+                   <!-- <option data-senderID="HT" value="509">Haiti (+509)</option> -->
+                   <!-- <option data-senderID="HN" value="504">Honduras (+504)</option> -->
+                   <!-- <option data-senderID="HK" value="852">Hong Kong (+852)</option> -->
+                   <!-- <option data-senderID="HU" value="36">Hungary (+36)</option> -->
+                   <!-- <option data-senderID="IS" value="354">Iceland (+354)</option> -->
+                   <option data-senderID="KSPSMS" value="91">India (+91)</option>
+                   <!-- <option data-senderID="ID" value="62">Indonesia (+62)</option> -->
+                   <!-- <option data-senderID="IR" value="98">Iran (+98)</option> -->
+                   <!-- <option data-senderID="IQ" value="964">Iraq (+964)</option> -->
+                   <!-- <option data-senderID="IE" value="353">Ireland (+353)</option> -->
+                   <!-- <option data-senderID="IL" value="972">Israel (+972)</option> -->
+                   <option data-senderID="KSPITL" value="39">Italy (+39)</option>
+                   <!-- <option data-senderID="JM" value="1876">Jamaica (+1876)</option> -->
+                   <option data-senderID="KSPJAP" value="81">Japan (+81)</option>
+                   <!-- <option data-senderID="JO" value="962">Jordan (+962)</option> -->
+                   <!-- <option data-senderID="KZ" value="7">Kazakhstan (+7)</option> -->
+                   <!-- <option data-senderID="KE" value="254">Kenya (+254)</option> -->
+                   <!-- <option data-senderID="KI" value="686">Kiribati (+686)</option> -->
+                   <!-- <option data-senderID="KP" value="850">Korea North (+850)</option> -->
+                   <!-- <option data-senderID="KR" value="82">Korea South (+82)</option> -->
+                   <!-- <option data-senderID="KW" value="965">Kuwait (+965)</option> -->
+                   <!-- <option data-senderID="KG" value="996">Kyrgyzstan (+996)</option> -->
+                   <!-- <option data-senderID="LA" value="856">Laos (+856)</option> -->
+                   <!-- <option data-senderID="LV" value="371">Latvia (+371)</option> -->
+                   <!-- <option data-senderID="LB" value="961">Lebanon (+961)</option> -->
+                   <!-- <option data-senderID="LS" value="266">Lesotho (+266)</option> -->
+                   <!-- <option data-senderID="LR" value="231">Liberia (+231)</option> -->
+                   <!-- <option data-senderID="LY" value="218">Libya (+218)</option> -->
+                   <!-- <option data-senderID="LI" value="417">Liechtenstein (+417)</option> -->
+                   <!-- <option data-senderID="LT" value="370">Lithuania (+370)</option> -->
+                   <!-- <option data-senderID="LU" value="352">Luxembourg (+352)</option> -->
+                   <!-- <option data-senderID="MO" value="853">Macao (+853)</option> -->
+                   <!-- <option data-senderID="MK" value="389">Macedonia (+389)</option> -->
+                   <!-- <option data-senderID="MG" value="261">Madagascar (+261)</option> -->
+                   <!-- <option data-senderID="MW" value="265">Malawi (+265)</option> -->
+                   <option data-senderID="KSPMLY" value="60">Malaysia (+60)</option>
+                   <!-- <option data-senderID="MV" value="960">Maldives (+960)</option> -->
+                   <!-- <option data-senderID="ML" value="223">Mali (+223)</option> -->
+                   <!-- <option data-senderID="MT" value="356">Malta (+356)</option> -->
+                   <!-- <option data-senderID="MH" value="692">Marshall Islands (+692)</option> -->
+                   <!-- <option data-senderID="MQ" value="596">Martinique (+596)</option> -->
+                   <!-- <option data-senderID="MR" value="222">Mauritania (+222)</option> -->
+                   <!-- <option data-senderID="YT" value="269">Mayotte (+269)</option> -->
+                   <!-- <option data-senderID="MX" value="52">Mexico (+52)</option> -->
+                   <!-- <option data-senderID="FM" value="691">Micronesia (+691)</option> -->
+                   <!-- <option data-senderID="MD" value="373">Moldova (+373)</option> -->
+                   <!-- <option data-senderID="MC" value="377">Monaco (+377)</option> -->
+                   <!-- <option data-senderID="MN" value="976">Mongolia (+976)</option> -->
+                   <!-- <option data-senderID="MS" value="1664">Montserrat (+1664)</option> -->
+                   <!-- <option data-senderID="MA" value="212">Morocco (+212)</option> -->
+                   <!-- <option data-senderID="MZ" value="258">Mozambique (+258)</option> -->
+                   <!-- <option data-senderID="MN" value="95">Myanmar (+95)</option> -->
+                   <!-- <option data-senderID="NA" value="264">Namibia (+264)</option> -->
+                   <!-- <option data-senderID="NR" value="674">Nauru (+674)</option> -->
+                   <option data-senderID="KSPNEP" value="977">Nepal (+977)</option>
+                   <!-- <option data-senderID="NL" value="31">Netherlands (+31)</option> -->
+                   <!-- <option data-senderID="NC" value="687">New Caledonia (+687)</option> -->
+                   <!-- <option data-senderID="NZ" value="64">New Zealand (+64)</option> -->
+                   <!-- <option data-senderID="NI" value="505">Nicaragua (+505)</option> -->
+                   <!-- <option data-senderID="NE" value="227">Niger (+227)</option> -->
+                   <!-- <option data-senderID="NG" value="234">Nigeria (+234)</option> -->
+                   <!-- <option data-senderID="NU" value="683">Niue (+683)</option> -->
+                   <!-- <option data-senderID="NF" value="672">Norfolk Islands (+672)</option> -->
+                   <!-- <option data-senderID="NP" value="670">Northern Marianas (+670)</option> -->
+                   <!-- <option data-senderID="NO" value="47">Norway (+47)</option> -->
+                   <!-- <option data-senderID="OM" value="968">Oman (+968)</option> -->
+                   <option data-senderID="KSPPAK" value="92">Pakistan (+92)</option>
+                   <!-- <option data-senderID="PW" value="680">Palau (+680)</option> -->
+                   <!-- <option data-senderID="PA" value="507">Panama (+507)</option> -->
+                   <!-- <option data-senderID="PG" value="675">Papua New Guinea (+675)</option> -->
+                   <!-- <option data-senderID="PY" value="595">Paraguay (+595)</option> -->
+                   <option data-senderID="KSPPER" value="51">Peru (+51)</option>
+                   <option data-senderID="KSPPHI" value="63">Philippines (+63)</option>
+                   <!-- <option data-senderID="PL" value="48">Poland (+48)</option> -->
+                   <!-- <option data-senderID="PT" value="351">Portugal (+351)</option> -->
+                   <!-- <option data-senderID="PR" value="1787">Puerto Rico (+1787)</option> -->
+                   <!-- <option data-senderID="QA" value="974">Qatar (+974)</option> -->
+                   <!-- <option data-senderID="RE" value="262">Reunion (+262)</option> -->
+                   <!-- <option data-senderID="RO" value="40">Romania (+40)</option> -->
+                   <option data-senderID="KSPRUS" value="7">Russia (+7)</option>
+                   <!-- <option data-senderID="RW" value="250">Rwanda (+250)</option> -->
+                   <!-- <option data-senderID="SM" value="378">San Marino (+378)</option> -->
+                   <!-- <option data-senderID="ST" value="239">Sao Tome &amp; Principe (+239)</option> -->
+                   <!-- <option data-senderID="SA" value="966">Saudi Arabia (+966)</option> -->
+                   <!-- <option data-senderID="SN" value="221">Senegal (+221)</option> -->
+                   <!-- <option data-senderID="CS" value="381">Serbia (+381)</option> -->
+                   <!-- <option data-senderID="SC" value="248">Seychelles (+248)</option> -->
+                   <!-- <option data-senderID="SL" value="232">Sierra Leone (+232)</option> -->
+                   <option data-senderID="KSPSIN" value="65">Singapore (+65)</option>
+                   <!-- <option data-senderID="SK" value="421">Slovak Republic (+421)</option> -->
+                   <!-- <option data-senderID="SI" value="386">Slovenia (+386)</option> -->
+                   <!-- <option data-senderID="SB" value="677">Solomon Islands (+677)</option> -->
+                   <!-- <option data-senderID="SO" value="252">Somalia (+252)</option> -->
+                   <!-- <option data-senderID="ZA" value="27">South Africa (+27)</option> -->
+                   <option data-senderID="KSPESP" value="34">Spain (+34)</option>
+                   <option data-senderID="KSPSRI" value="94">Sri Lanka (+94)</option>
+                   <!-- <option data-senderID="SH" value="290">St. Helena (+290)</option> -->
+                   <!-- <option data-senderID="KN" value="1869">St. Kitts (+1869)</option> -->
+                   <!-- <option data-senderID="SC" value="1758">St. Lucia (+1758)</option> -->
+                   <!-- <option data-senderID="SD" value="249">Sudan (+249)</option> -->
+                   <!-- <option data-senderID="SR" value="597">Suriname (+597)</option> -->
+                   <!-- <option data-senderID="SZ" value="268">Swaziland (+268)</option> -->
+                   <!-- <option data-senderID="SE" value="46">Sweden (+46)</option> -->
+                   <!-- <option data-senderID="CH" value="41">Switzerland (+41)</option> -->
+                   <!-- <option data-senderID="SI" value="963">Syria (+963)</option> -->
+                   <!-- <option data-senderID="TW" value="886">Taiwan (+886)</option> -->
+                   <!-- <option data-senderID="TJ" value="7">Tajikstan (+7)</option> -->
+                   <!-- <option data-senderID="TH" value="66">Thailand (+66)</option> -->
+                   <!-- <option data-senderID="TG" value="228">Togo (+228)</option> -->
+                   <!-- <option data-senderID="TO" value="676">Tonga (+676)</option> -->
+                   <!-- <option data-senderID="TT" value="1868">Trinidad &amp; Tobago (+1868)</option> -->
+                   <!-- <option data-senderID="TN" value="216">Tunisia (+216)</option> -->
+                   <!-- <option data-senderID="TR" value="90">Turkey (+90)</option> -->
+                   <!-- <option data-senderID="TM" value="7">Turkmenistan (+7)</option> -->
+                   <!-- <option data-senderID="TM" value="993">Turkmenistan (+993)</option> -->
+                   <!-- <option data-senderID="TC" value="1649">Turks &amp; Caicos Islands (+1649)</option> -->
+                   <!-- <option data-senderID="TV" value="688">Tuvalu (+688)</option> -->
+                   <!-- <option data-senderID="UG" value="256">Uganda (+256)</option> -->
+                   <option data-senderID="KSPUKB" value="44">UK (+44)</option>
+                   <!-- <option data-senderID="UA" value="380">Ukraine (+380)</option> -->
+                   <option data-senderID="KSPUAE" value="971">United Arab Emirates (+971)</option>
+                   <!-- <option data-senderID="UY" value="598">Uruguay (+598)</option> -->
+                   <option data-senderID="KSPUSA" value="1">USA (+1)</option>
+                   <!-- <option data-senderID="UZ" value="7">Uzbekistan (+7)</option> -->
+                   <!-- <option data-senderID="VU" value="678">Vanuatu (+678)</option> -->
+                   <!-- <option data-senderID="VA" value="379">Vatican City (+379)</option> -->
+                   <!-- <option data-senderID="VE" value="58">Venezuela (+58)</option> -->
+                   <!-- <option data-senderID="VN" value="84">Vietnam (+84)</option> -->
+                   <!-- <option data-senderID="VG" value="84">Virgin Islands - British (+1284)</option> -->
+                   <!-- <option data-senderID="VI" value="84">Virgin Islands - US (+1340)</option> -->
+                   <!-- <option data-senderID="WF" value="681">Wallis &amp; Futuna (+681)</option> -->
+                   <!-- <option data-senderID="YE" value="969">Yemen (North)(+969)</option> -->
+                   <!-- <option data-senderID="YE" value="967">Yemen (South)(+967)</option> -->
+                   <!-- <option data-senderID="ZM" value="260">Zambia (+260)</option> -->
+                   <!-- <option data-senderID="ZW" value="263">Zimbabwe (+263)</option> -->
+                 </optgroup>
+               </select>
+               <input class="mobNo" type="number" placeholder="Mobile Number" [formControl]="regForm.controls['phone']">
+
+               <div *ngIf="(regForm.controls['phone'].hasError('required') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('required') && formReg.submitted)" class="error-survey-form">Please enter Mobile no.</div>
+
+               <div *ngIf="!regForm.controls['phone'].hasError('required') && ((regForm.controls['phone'].hasError('pattern') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('pattern') && formReg.submitted))" class="error-survey-form">Invalid Mobile no.</div>
+
+               <div *ngIf="!regForm.controls['phone'].hasError('required') && ((regForm.controls['phone'].hasError('phoneExist') && regForm.controls['phone'].dirty) || (regForm.controls['phone'].hasError('phoneExist') && formReg.submitted))" class="error-survey-form">Mobile no already exist.</div>
+            </div>
+
+            <div class="text-center">
+               <button class="sign-in-btn" type="submit"> SEND OTP </button>
+            </div>
+         </form>
+      </div>
+
+      <div class="OTP-wrapper" *ngIf="authTab == 'register' && showOtp">
+         <h2> Enter OTP </h2>
+         <div class="input-wrapper margin-top20px" id="divOuter">
+            <div id="divInner">
+               <input type="text" maxLength="4" [(ngModel)]="userOtp" class="otp-input">
+            </div>
+         </div>
+         <div style="text-align: center" *ngIf="showOtpError">
+            <span class="error-survey">Invalid OTP.</span>
+         </div>
+         <div class="text-right resend-text-style">
+            <a (click)="sendOtp()"> Resend OTP </a>
+         </div>
+         <p class="input-wrapper" style="text-align: left; background-color: #e7e7e7; padding: 10px 10px 37px 10px;
+ border-radius: 9px; font-family: 'Raleway-SemiBold'; font-size: 15px;">
+            An OTP has been sent to your email id and mobile number.
+            <br><a style="float: right" (click)="showOtp = 0" >Change</a>
+         </p>
+         <button class="confirm-btn margin-top" (click)="verifyOTP()"> CONFIRM </button>
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid padding-left-right0 greeting-bg survey-bg" *ngIf="currentPage == 'thankyou'">
+   <div class="greeting-content-wrapper">
+      <div class="award-img-wrapper text-center ping-bg">
+         <img class="drop-shadow-black" src="{{currentCategory.img_path}}">
+      </div>
+      <div class="vote-check-mark text-center">
+         <i class="fa fa-check"></i>
+      </div>
+      <h3 class="voter-greeting">Thank you for casting your vote!</h3>
+      <div class="voted-brand text-center"> <h3>{{selectedOptionText}}</h3> </div>
+      <p class="genral-p-style text-center">Since you are here, why not make a few more of your favourite brands win?</p>
+      <button class="another-poll-btn" routerLink="/Awards2017"> Take Another Poll </button>
+   </div>
+   <button class="dashboard-btn" routerLink="/dashboard">No thanks! I’m all voted out!</button>
+   <!-- <a routerLink="/dashboard" class="dashboard-btn">Continue to Dashboard</a> -->
+</div>
+<hr/>
+<app-mobile-inline-share [shareCount]="mainPageShareCount" [ngStyle]="{'display': (currentPage == 'categories') ? '' : 'none'}"></app-mobile-inline-share>
+<app-mobile-inline-share [shareCount]="shareCount" [ngStyle]="{'display': (currentPage == 'categoryOptions' || currentPage == 'thankyou') ? '' : 'none'}"></app-mobile-inline-share>

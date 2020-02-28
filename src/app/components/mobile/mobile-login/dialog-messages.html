@@ -1,0 +1,22 @@
+<style>
+  .dialog-font{
+    font-family: 'Open Sans', sans-serif!important;
+    font-size: 16px!important;
+    text-align:center!important;
+  }
+  .action-button{
+    color:#fff!important;
+    font-weight: bolder;
+    background-color: #F94F61!important;
+  }
+</style>
+
+<p md-dialog-title class="dialog-font" [innerHtml]="data"></p>
+<!--md-dialog-content>Are you sure?</md-dialog-content-->
+<md-dialog-actions class="dialog-font">
+ <!--button md-button [md-dialog-close]="false">No</button-->
+ <!-- Can optionally provide a result for the closing dialog.-->
+ <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+   <button class="action-button center-block" md-button [md-dialog-close]="true">OK</button>
+ </div>
+</md-dialog-actions>

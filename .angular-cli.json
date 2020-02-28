@@ -1,0 +1,104 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "ksp"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "assets/css/bootstrap.min.css",
+        "assets/css/responsive-style.css",
+        "assets/css/style.css",
+        "assets/css/style-responsive.css",
+        "assets/css/font.css",
+        "assets/css/default-tab.css",
+        "assets/css/jquery.dateselect.css",
+        "assets/css/ng-pick-datetime.css",
+        "assets/css/default.css",
+        "assets/css/bootstrap-tour.min.css",
+        "styles.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+        "../node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"
+      ],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "assets/js/bootstrap.js",
+        "assets/js/sidebar1.js",
+        "assets/js/dFormat.js",
+        "assets/js/reg_datepicker.js",
+        "assets/js/map.js",
+        "assets/js/tour.js",
+        "assets/js/addThis.js",
+        "assets/js/bootstrap-tour.min.js",
+        "assets/js/soundcloud-custom-api.js",
+        "assets/js/sc-control.js",
+        "assets/js/signupModal.js",
+        "assets/js/insta_embed.js",
+        "assets/js/twitter_embed.js",
+        "assets/js/award2017Carousel.js",
+        "../node_modules/owl.carousel/dist/owl.carousel.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  },
+  "packages": {
+    "ng2-tag-input": {
+      "main": "dist/ng2-tag-input.bundle.js",
+      "format": "cjs"
+    },
+    "ng2-material-dropdown": {
+      "defaultExtension": "js",
+      "main": "dist/ng2-dropdown.bundle.js",
+      "format": "cjs"
+    },
+    "ng2-tag-input/modules/components/tag-input.template.html": {
+      "defaultJSExtension": false
+    }
+  }
+}

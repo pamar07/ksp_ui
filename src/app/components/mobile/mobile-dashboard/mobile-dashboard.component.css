@@ -1,0 +1,348 @@
+.small-title-excerpt{
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	max-height: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 32px;
+}
+
+.profile-image-fit{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+}
+
+.background-color-event-section{
+	background-color: #f0f1f1;
+}
+.category-menu-scroll{
+	position: relative;
+	width: 100%;
+	/*height: 50px;*/
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	font-size: 14px;
+	padding: 17px 5px 17px 5px;
+	/*background-color: #e35b7f;*/
+}
+
+.group-picture{
+	object-fit:cover;
+	object-position:top center;
+	border-radius:50%;
+	height:70px;
+	width:70px;
+}
+
+.padding-top-bottom-6px{
+	padding-top: 6px!important;
+	padding-bottom: 6px!important;
+}
+
+.grp-join-btn{
+	background-color: #e35b7f!important;
+	color: #ffffff;
+	padding: 5% 9%;
+	float: right;
+}
+
+.capitalize{
+  text-transform: capitalize!important;
+}
+
+.blog-ellipsis-title {
+  font-size: 14px!important;
+  font-family: 'Raleway-SemiBold';
+  font-display: auto;
+  margin-bottom: 6px!important;
+  margin-top: 2%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 38px;
+  width: 100%;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.group-card-img{
+  width:180px;
+	height:130px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 4px 4px 0 0;
+}
+.social-group-card{
+  padding: 6px;
+}
+.social-group-detail{
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 0 0 4px 4px;
+  width:180px;
+}
+.social-group {
+  overflow-x: scroll;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.social-group > .social-group-card {
+  display: inline-block;
+  float: none;
+}
+
+.bg-white{
+  background-color: #ffffff!important;
+}
+
+.scroll-card-group-title-excerpt{
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 34px; /* fallback */
+  width: 100%;
+  line-height: 1.2;
+}
+
+.linear-grad-banner{
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.34) 45%, rgba(0,0,0,0.8) 99%, rgba(0,0,0,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.34) 45%,rgba(0,0,0,0.8) 99%,rgba(0,0,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.34) 45%,rgba(0,0,0,0.8) 99%,rgba(0,0,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+#crop-insta-image img {
+  height: 280px;
+  width: 100%;
+  top: 0;
+  object-fit: cover;
+  object-position: center;
+  left: 0;
+}
+
+.main-title-outer-insta:after {
+  border: none !important;
+}
+
+.error-survey-form {
+  color: red;
+  font-size: 13px;
+}
+
+.recent-post a{
+  color: #fff!important;
+}
+
+.paddingBottom{
+  padding: 10px 0;
+}
+
+.signUpNewsletter .btn-go {
+  position: initial;
+  width: 100%;
+}
+
+.mail-icon {
+  color: darkgrey;
+  position: absolute;
+  border-right: darkgrey 1px solid;
+  top: 0px;
+  z-index: 10;
+  padding: 18px;
+}
+
+.meal-input {
+  position: relative;
+}
+
+/* ksp favorite box*/
+.content {
+  flex: 1;
+  background: #2b273a;
+  padding: 0 20px;
+}
+
+.playPack {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1em 0.6em 1em;
+  letter-spacing: 1px;
+
+}
+
+.monthsButton3 {
+    background: #955ed4;
+    color: white;
+    font-size: 19px;
+    border-radius: 5px;
+    padding: 0.4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textDiv {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+.textDivSpan {
+  font-size: 12px;
+    width: 90%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 200;
+}
+
+.textDivSpan h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 7px;
+}
+
+.textDivSpan ul {
+    width: 70%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.viewOffers {
+  border-top: 2px solid orange;
+  border-bottom: 2px solid orange;
+  margin-top: 0.75rem;
+  width: 55%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 300;
+  font-size: 15px;
+  padding: 3px 0px;
+}
+
+.otherPlans {
+  margin-top: 1.25rem;
+  color: white;
+}
+
+.other_plans {
+  color: white;
+    font-weight: 200;
+    font-size: 15px;
+    /*margin-bottom: 10px;*/
+}
+
+.planDiv {
+  color: white;
+  background: #4da390;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 0px 0 15px 0;
+  box-shadow: 0 5px 15px -7px #070707;
+  min-width: 93%;
+  margin-right: 5%;
+}
+
+.favouritesBoxDiv {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+
+.priceSpan {
+  background: #0f1e1e;
+  width: 100%;
+  font-size: 14px;
+  padding: 7px;
+  text-align: center;
+  color: #e2a44a;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  position: unset;
+  margin-top: auto;
+}
+
+.priceSpan .fa-rupee {
+  color: #e2a44a;
+}
+
+.plan-div-head {
+  padding: 10px 10px;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.plan-div-cont {
+  padding: 0px 10px;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.plan-div-cont ul {
+  padding-left: 15px;
+  text-align: left;
+}
+
+.flex-justify-start {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+
+@media (max-width: 500px) {
+  
+  .textDivSpan ul {
+    width: 60%;
+  }
+  .ksp-firt-banner{
+    margin-top: 50px !important;
+  }
+
+}
+
+@media (max-width: 400px) {
+  .textDivSpan ul {
+    width: 65%;
+  }
+}
+
+@media (max-width: 360px) {
+  .textDivSpan ul {
+    width: 70%;
+  }
+}
+
+@media (max-width: 320px) {
+  .textDivSpan ul {
+    width: 75%;
+  }
+}
+@media (min-width: 600px) and (max-width:1200px) {
+  .ksp-firt-banner{
+    margin-top: 120px !important;
+  }
+
+}

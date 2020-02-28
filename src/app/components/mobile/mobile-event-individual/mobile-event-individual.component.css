@@ -1,0 +1,71 @@
+.event-details-card{
+  height: auto;
+  background: #ffffff;
+  margin: -30px 15px 0 15px;
+  padding: 10px 10px;
+  border-radius: 4px;
+  position: sticky;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 0 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,0.14);
+}
+.event-participate-btn{
+	background-color: #e35b7f!important;
+	color: #ffffff;
+	padding: 8% 13%;
+	float: right;
+  border-radius: 3px;
+  border: none!important;
+}
+.event-participate-btn:focus, .event-participate-btn:hover, .event-participate-btn:active{
+  outline: none!important;
+}
+
+.border-bottom-ededed{
+  border-bottom: 1px solid #ededed;
+}
+
+.line-height-2{
+  line-height: 2;
+}
+
+.line-height-15{
+  line-height: 1.5;
+}
+
+.event-cat-btn{
+  background-color: rgb(219, 219, 219)!important;
+  color: #333!important;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.topRight{
+  position: absolute;
+  top: calc(100vw / 2 + 10px);
+  right: 12px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bolder;
+  z-index: 1000;
+  padding: 6px 15px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 12px;
+}
+
+.no-border-response:after {
+  border-bottom: none!important;
+}
+
+::ng-deep .user-pic-text {
+  font-size: 20px;
+}
+
+.registerBtn{
+  font-size: 16px;
+  font-weight: 550;
+  padding: 5px 5px !important;
+}
+
+.error-survey-form {
+  color: red;
+  font-size: 13px;
+}

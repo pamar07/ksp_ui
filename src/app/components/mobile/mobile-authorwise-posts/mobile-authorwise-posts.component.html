@@ -1,0 +1,91 @@
+<ngx-loading
+  [show]="loading"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<div class="agile-main gry-background paddingNo" *ngIf="author">
+  <div class="content-wrap">
+    <div class="container">
+      <div class="widget-sidebar">
+        <div class="content-widget-sidebar margin0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px white-background" style="border-radius:4px;">
+              <div class="paddingNo col-sm-2 col-xs-2">
+                <div class="square-thumbnail-image-container">
+                  <img [src]="author.image_path" class="square-thumbnail-image" style="border-radius:4px;" alt="{{author.name}}">
+                </div>
+              </div>
+              <div class="col-sm-10 col-xs-10 padding-right0">
+                <div class="col-sm-12 col-xs-12 paddingNo">
+                  <h4 class="font-size18 font-Raleway-SemiBold member-name">{{author.name}}</h4>
+                </div>
+                <div class="col-sm-12 col-xs-12 margin-top paddingNo">
+                  <span class="post-count">{{author.articleCount}} Posts</span>
+                </div>
+              </div>
+              <div class="col-sm-12 col-xs-12 margin-top14px" style="border-bottom: 1px solid #ededed;"></div>
+              <div class="col-sm-12 col-xs-12 paddingNo">
+                <p class="font-size12 margin-bottom0" style="line-height:1.5;" [innerHTML]="author.about_yourself"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px">All Posts By: {{author.name}}</div>
+      <div class="widget-sidebar">
+        <div class="content-widget-sidebar margin0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px white-background" style="border-radius:4px;" *ngFor="let article of articles; let i=index">
+              <div class="paddingNo col-sm-2 col-xs-3">
+                <a href="/details/{{article.perma_link}}/{{article.id}}">
+                  <div class="square-thumbnail-image-container">
+                    <img src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}" class="square-thumbnail-image" style="border-radius:4px;" alt="{{article.title}}">
+                  </div>
+                </a>
+              </div>
+              <div class="col-sm-10 col-xs-9 padding-right0">
+                <div class="col-sm-12 col-xs-12 padding-left-right0">
+                  <a href="/details/{{article.perma_link}}/{{article.id}}">
+                    <h5 class="font-size13 small-title-excerpt paddingNo">{{article.title}}</h5>
+                  </a>
+                </div>
+                <div class="col-sm-12 col-xs-12 margin-top padding-left0" *ngIf="article.category?.length>0">
+                  <a routerLink="/categorywise-article/{{article.category[0].id}}"><span class="ion-android-data light-blue-button currentCategorySelected-btn" [innerHTML]="article.category[0].name"></span></a>
+                </div>
+                <div class="col-sm-12 col-xs-12 paddingNo">
+                  <div class="font-size11 col-sm-8 col-xs-8 font-size10 padding-left-right0"><a routerLink="/authorwise-posts/{{article.creator_id}}"><span class="pull-left">By {{article.author_name}}</span></a></div>
+                  <div class="paddingNo font-size10 col-sm-4 col-xs-4"><span class="pull-right anchor-time margin-left font-size9 font-Raleway-SemiBold">{{_commonService.setDateFormat(article.created_at) | date:'yMMMd'}}</span></div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-xs-12" *ngIf="promotions && i==6">
+                <img *ngIf="promotions.length>0" src="{{promotions[0].img_path.substring( 0, promotions[0].img_path.lastIndexOf('/')) + '/w_300' + promotions[0].img_path.substring( promotions[0].img_path.lastIndexOf('/'), promotions[0].img_path.length)}}" width="100%" height="auto" class="margin-bottom10px"/>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row margin-top-bottom-5px">
+        <div class="pull-right">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+              </li>
+              <li [class]="isNext ? '' : 'disabled'">
+                <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

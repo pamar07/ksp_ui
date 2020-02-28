@@ -1,0 +1,86 @@
+<ngx-loading
+  [show]="!isImageLoaded"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading>
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content" class="" *ngIf="images">
+  <section class="wrapper">
+    <div class="row margin-top margin-bottom15">
+      <div class="container">
+        <div class="main-title-outer pull-left">
+          <div class="main-title ">
+            <i class="fa" aria-hidden="true">
+              <img src="assets/images/go.png" width="30" height="30" alt="">
+            </i>
+            Saved Images
+          </div>
+          <!-- <span class="btn font-size13 pink-color-button padding4-10 pull-right">
+            Add Images
+            <input class="upload event_upload_btn" type="file" id="event_pic" name="event_pic" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="event_pic" (change)="fileChange($event)" [disabled]="isReadonly">
+          </span> -->
+          <div class="fileUpload-lghtgreen btn btn-primary pull-right add-image-btn">
+            Add Image
+            <input class="upload event_upload_btn" type="file" id="event_pic" name="event_pic" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="event_pic" (change)="fileChange($event)" [disabled]="isReadonly">
+          </div> 
+        </div>
+        <div *ngIf="images.length > 0">
+          <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 border-left" *ngFor="let image of images">
+            <div class="single-blog-item">
+              <div class="blog-thumnail">
+                <div id="crop-feature-image">
+                  <img src="{{image.path}}" class="image-fit" alt="blog-img">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" *ngIf="!images.length">
+          <div class="single-blog-item">
+            <div class="blog-thumnail">
+              Sorry, No Images Found.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span-outer margin-top container" *ngIf="images.length">
+        <span class="pull-right text-danger last-update">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+              </li>
+              <li [class]="isNext ? '' : 'disabled'">
+                <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </span>
+      </div>
+    </div>
+    <hr>
+  </section>
+</section>
+
+<!-- Image preview -->
+<div id="image-error" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="row">
+          <p class="text-center" style="color:#f05050; padding: 10px;">{{imageError}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

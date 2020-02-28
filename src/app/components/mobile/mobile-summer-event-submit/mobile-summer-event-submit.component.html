@@ -1,0 +1,265 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content" class="">
+  <section class="wrapper">
+    <!-- <div class="row margin-bottom15">
+      <div class="container">
+        <a routerLink="/event-all"><div class="col-md-12 main-title-outer-nobr"><i class="fa fa-angle-left" aria-hidden="true"></i> &nbsp; Back to all events</div></a>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="container">
+        <div class="container center-block center-div">
+          <div class="col-md-12 paddingNo paddingNo">
+            <div class="form-group">
+              <h4><span class="color-pink font-size20">Submit a Summer Event</span> </h4>
+
+              <h5><span class="font-size13"><b>Event Title</b>&nbsp;<span class="required-field"><b>*</b></span></span> </h5>
+              <input id="event_title" type="text" class="form-control margin-top height40 font-weight-600" value="" placeholder="Enter the title of the event" [(ngModel)]="event_title">
+              <!--textarea class="form-control margin-top" id="description" placeholder="Enter the title of the event"></textarea-->
+              <div class="form-grou col-md-12 paddingNo">
+                <label for="nt" class="col-md-12 paddingNo">
+                <h5><span class="font-size13"><b>Upload Event Banner Photo</b></span>
+                  <p> (Max. file size: 5 Mb; File formats allowed: .jpg, .jpeg, .png)</p>
+                  <p> Recommended resolution (in pixel): 600 &times; 400</p>
+                </h5>
+                </label>
+                <div class="fileUpload-lghtgreen btn btn-primary">
+                  <input class="upload event_upload_btn" type="file" id="event_pic" name="event_pic" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="event_pic" (change)="fileChange($event)">
+                </div>
+                <span>{{fileUploadMessage}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row  margin-bottom15 gray-bg">
+      <div class="container margin-top">
+        <div class="container center-block center-div paddingNo">
+          <div class="col-md-12 main-title-outer-nobr paddingNo"> Events and Activities Info </div>
+          <div class="col-md-12 col-lg-12 paddingNo">
+            <div class="form-group col-md-9  margin-bottom0 paddingNo">
+              <label for="start_date" class="control-label font-size13"><b>Event Start Date and Time</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <div class="form-control input-sm bg-white height70px">
+                  <app-dd-datetime (dateChange)="onStartDateChange($event)" yearMax="20" yearMin="0" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="start_date" istime="true"></app-dd-datetime>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-9 margin-bottom0 paddingNo">
+              <label for="end_date" class="control-label font-size13"><b>Event End Date and Time</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <div class="form-control input-sm bg-white height70px">
+                  <app-dd-datetime (dateChange)="onEndDateChange($event)" yearMax="20" yearMin="0" dateFormat="dd-mm-yy hh:i:s a" [inputDate]="end_date" istime="true"></app-dd-datetime>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 main-title-outer-nobr padding030"></div>
+            <div class="form-group col-md-6  margin-bottom0">
+              <label for="venue_name" class="control-label font-size13"><b>Event Venue Name</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="venue_name" type="text" class="form-control height40" name="user" value="" [(ngModel)]="venue_name">
+              </div>
+            </div>
+            <div class="form-group col-md-6 margin-bottom0" *ngIf="cityList">
+              <label for="venue_city" class="control-label font-size13"><b>Event Venue City</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group col-md-12 col-lg-12  margin-top6">
+                <select id="venue_city" name="venue_city" class="form-control col-lg-12 height40" [(ngModel)]="venue_city" (ngModelChange)="setState()">
+                  <option value="">Select City</option>
+                  <option *ngFor="let city of cityList" value="{{city.city}}">{{city.city}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-12  margin-bottom0">
+              <label for="google_map" class="control-label font-size13"><b>Event Address</b>&nbsp;<span class="required-field">*</span></label>
+              <i class="fa fa-question-circle-o" aria-hidden="true" mdTooltip="Write the event address and click fetch location button to fetch the latitude and longitude" mdTooltipPosition="after"></i>
+              <br>
+              <br>
+              <div class="col-md-9 col-lg-9 padding0">
+                <input id="google_map" type="text" class="form-control height40 font-weight-600" name="google_map" value="" [(ngModel)]="google_map">
+              </div>
+              <div class="col-md-3 col-lg-3">
+                <button class="height40 btn font-size13 pink-color-button fetch-location-btn" (click)="getLatitudeLongitude()">Fetch Location</button>
+              </div>
+            </div>
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_cost" class="control-label font-size13"><b>Latitude</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_lat" type="text" class="form-control height40" name="event_lat" value="" [(ngModel)]="event_lat" readonly>
+              </div>
+            </div>
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_email" class="control-label font-size13"><b>Longitude</b>&nbsp;<span class="required-field">*</span></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_lng" type="text" class="form-control height40" name="event_lng" value="" [(ngModel)]="event_lng" readonly>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 main-title-outer-nobr padding030"></div>
+
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_cost" class="control-label font-size13"><b>Event Cost</b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_cost" type="text" class="form-control height40" name="event_cost" value="" [(ngModel)]="event_cost">
+              </div>
+            </div>
+            <div class="form-group col-md-6  margin-bottom0">
+              <label for="event_email" class="control-label font-size13"><b>Event Email Id </b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_email" type="text" class="form-control height40" name="event_email" value="" [(ngModel)]="event_email">
+              </div>
+            </div>
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_website" class="control-label font-size13"><b>Event Website Address </b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_website" type="text" class="form-control height40" name="event_website" value="" [(ngModel)]="event_website">
+              </div>
+            </div>
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_fb_link" class="control-label font-size13"><b>Event Facebook Link</b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_fb_link" type="text" class="form-control height40" name="event_fb_link" value="" [(ngModel)]="event_fb_link">
+              </div>
+            </div>
+            <!--div class="form-group col-md-6 margin-bottom0">
+              <label for="event_contact_name" class="control-label font-size13"><b>Event Contact Name</b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_contact_name" type="text" class="form-control height40" name="event_contact_name" value="" [(ngModel)]="event_contact_name">
+              </div>
+            </div-->
+            <div class="form-group col-md-6 margin-bottom0">
+              <label for="event_contact" class="control-label font-size13"><b>Event Contact Number</b></label>
+              <div class="input-group margin-top6 col-md-12 col-lg-12">
+                <input id="event_contact" type="text" class="form-control height40" name="event_contact" value="" [(ngModel)]="event_contact">
+              </div>
+            <!--div class="col-lg-12 paddingNo">
+              <div class="text-right"> <a href="#" tabindex="5" class="forgot-password font-size11 color-orng">Add more Number</a> </div>
+            </div-->
+            </div>
+            <div class="col-lg-12 col-md-12 paddingNo margin-top">
+              <!--div [froalaEditor] [(froalaModel)]="content"></div-->
+              <!--div id="summernote"></div-->
+              <label for="event_contact" class="control-label font-size13 margin-bottom15px"><b>Event Content</b>&nbsp;<span class="required-field">*</span></label>
+              <ckeditor
+                [(ngModel)]="content"
+                [config]="{
+                  uiColor: '#c1c1c1',
+                  filebrowserBrowseUrl: 'image-browser',
+                  filebrowserUploadUrl: uploadUrl,
+                  toolbarGroups: [
+                 	{'name':'basicstyles','groups':['basicstyles']},
+                 	{'name':'links','groups':['links']},
+                 	{'name':'paragraph','groups':['list','blocks']},
+                 	{'name':'insert','groups':['insert']},
+                 	{'name':'styles','groups':['styles']}
+                 	]
+                }"
+                [readonly]="false"
+                debounce="500">
+              </ckeditor>
+            </div>
+            <!--div class="col-lg-12 col-md-12 paddingNo margin-top">
+              <tag-input class="input-group bg-white" [(ngModel)]='event_tags'></tag-input>
+            </div-->
+            <div class="col-md-12 col-lg-12 paddingNo margin-top">
+             <div class="col-md-12 paddingNo">
+          <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+              <ul class="nav nav-tabs">
+                <!--li class="active"><a href="#tab1default" data-toggle="tab">CITIES<i class="fa fa-angle-down" aria-hidden="true"></i></a></li-->
+                <li class="active"><a href="#tab2default" data-toggle="tab">AGE GROUPS&nbsp;<span class="required-field">*</span><i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+                <li><a href="#tab3default" data-toggle="tab">EVENT INTERESTS&nbsp;<span class="required-field">*</span><i class="fa fa-angle-down" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+              <div class="tab-content">
+                <!--div class="tab-pane in active" id="tab1default" *ngIf="cityList">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="col-md-4" *ngFor="let city of cityList">
+                      <div class="checkbox checkbox-primary">
+                        <input id="city{{city.id}}" type="checkbox">
+                        <label for="city{{city.id}}"> {{city.city}} </label>
+                      </div>
+                    </div>
+                  </div>
+                </div-->
+                <div class="tab-pane fade in active" id="tab2default" *ngIf="ageGroups">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="col-md-4" *ngFor="let group of ageGroups">
+                      <div class="checkbox checkbox-primary capitalize">
+                        <input id="age{{group.id}}" type="checkbox" [(ngModel)]="group.checked">
+                        <label for="age{{group.id}}"> {{group.age}} </label>
+                      </div>
+                    </div>
+                    <!--div class="col-md-12 padding-gray gray-bg">
+                      <div class="checkbox checkbox-primary capitalize">
+                        <input id="checkbox19" type="checkbox">
+                        <label for="checkbox19"> Open to all </label>
+                      </div>
+                    </div-->
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="tab3default"  *ngIf="categoryList">
+                  <div class=" col-md-4"  *ngFor="let category of categoryList">
+                    <div class="checkbox checkbox-primary capitalize">
+                      <input id="category{{category.id}}" type="checkbox" [(ngModel)]="category.checked">
+                      <label for="category{{category.id}}"> {{category.name}} </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-12 col-lg-12 margin-top6">
+                  <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="checkbox checkbox-primary capitalize margin0">
+                      <input id="normal_event" type="checkbox" [(ngModel)]="isSummerEvent">
+                      <label for="normal_event" class="font-size14 font-Raleway-SemiBold" style="text-transform: initial;"> Is this a summer event ? </label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-md-12 col-lg-12 margin-top6">
+                    <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" class="btn font-size13 pink-color-button" (click)="validate()">SUBMIT</a> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+</section>
+<hr>
+<!--main content end-->
+
+
+<script>
+
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+
+
+/*function addNow() {
+  nowDate = moment().tz("Europe/London").format('YYYY-MM-DD');
+  nowTime = moment().tz("Europe/London").format('HH:mm:ss');
+  document.getElementById('registration-date').value = nowDate;
+  document.getElementById('registration-time').value = nowTime;
+  set = setTimeout(function () { addNow(); }, 1000);
+}
+
+function stopNow() {
+  clearTimeout(set);
+}*/
+
+
+    (function( $ ) {
+        $.fn.openPopup = function() {
+            alert("called");
+        };
+    }( jQuery ));
+
+</script>

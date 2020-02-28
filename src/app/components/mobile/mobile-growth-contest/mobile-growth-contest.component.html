@@ -1,0 +1,172 @@
+<!-- <ngx-loading
+        [show]="!isLatestLoaded || !isPopularLoaded || !isRadioLoaded || !isTvLoaded"
+        [config]="{ fullScreenBackdrop : true }">
+</ngx-loading> -->
+<app-topnav-social></app-topnav-social>
+<div class="kids_mob_main content-wrap">
+  <div class="mov_versnsec1">
+    <div class="container media">
+      <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo margin0" *ngIf="pageData">
+        <div class="box-shadow margin0 paddingNo">
+          <div class="" style="position:relative">
+            <img class="myimg" src={{myimg}} />
+            <div class="col-lg-3 col-md-3 line-height40 text-center font-size14 font-Raleway-SemiBold cursor_pointer"
+              style="background-color: #e35b7f; color: #fff;    padding: 2px;
+                position: absolute;right: 0;bottom: 0;" (click)="gotoPediaTop()">CLICK TO KNOW MORE</div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top" *ngIf="pageData" style="padding: 0 5px">
+          <span class="margin-top font-size14 width-100per article-content-style" [innerHTML]="content"
+            style="word-break: break-word;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="articles" style="margin-top: 10px;">
+    <div class="col-sm-12 col-xs-12 paddingNo">
+      <p class="font-Raleway-SemiBold font-size13 color-gray">Articles</p>
+      <div class="inn_tab_sec">
+        <div class="tab-content">
+          <div class="inn_media_box margin0">
+            <div class="media">
+              <ul *ngFor="let article of articles; let i=index" style="margin-bottom:3px;">
+                <li class="paddingNo">
+                  <div class="paddingNo col-sm-2 col-xs-3">
+                    <a href="/details/{{article.perma_link}}/{{article.id}}">
+                      <div class="square-thumbnail-image-container">
+                        <img *ngIf="article.post_type != 'videos'"
+                          src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_300' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}"
+                          class="square-thumbnail-image" style="border-radius:4px;">
+                          <img *ngIf="article.post_type == 'videos'"
+                          src="{{article.img[0].path}}"
+                          class="square-thumbnail-image" style="border-radius:4px;">
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-sm-10 col-xs-9 padding-right0">
+                    <div class="col-sm-12 col-xs-12 padding-left-right0">
+                      <a href="/details/{{article.perma_link}}/{{article.id}}">
+                        <h5 class="font-size13 small-title-excerpt font-Raleway-SemiBold">{{article.title}}</h5>
+                      </a>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 margin-top padding-left0">
+                      <span class="ion-android-data light-blue-button currentCategorySelected-btn"
+                        [innerHTML]="categoryName"></span>
+                    </div>
+                    <div class="col-sm-12 col-xs-12 paddingNo">
+                      <div class="font-size11 col-sm-8 col-xs-8 margin-top font-size10 padding-left-right0"><a
+                          routerLink="/authorwise-posts/{{article.creator_id}}"><span class="pull-left">By
+                            {{article.author_name}}</span></a></div>
+                      <div class="paddingNo font-size10 col-sm-4 col-xs-4 margin-top"><span
+                          class="pull-right anchor-time margin-left font-size9 font-Raleway-SemiBold">{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-xs-12 margin-top-bottom-5px" style="border-bottom: 1px solid #ededed;"
+                    *ngIf="i<articles.length-1"></div>
+                  <div class="clearfix"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-xs-12 paddingNo">
+      <div class="left">
+        <h3 class="question">Did you know that 0-5 years are the critical years of growth and development for your child? Undernourishment can really impact their cognitive growth.
+        </h3>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radiobutton" id="" (change)="onSelectionChange('option1')"
+            value="option1">
+          <label class="form-check-label" for="radiobutton1">
+            Yes I do
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2"
+            (change)="onSelectionChange('option2')" value="option2">
+          <label class="form-check-label" for="exampleRadios2">
+            No, I don’t need to
+          </label>
+        </div>
+        <!--<div class="form-check">
+                  <input class="form-check-input" type="radio" name="radiobutton" id="" value="option3" (change)="onSelectionChange('option3')">
+                  <label class="form-check-label" for="radiobutton1">
+                      Vitamin D
+                  </label>
+              </div>
+
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2" (change)="onSelectionChange('option4')"
+                         value="option4">
+                  <label class="form-check-label" for="exampleRadios2">
+                      All above are important
+                  </label>
+              </div>-->
+        <p style="color:red" *ngIf="validAnswer == 1">*please select one option.</p>
+        <button type="button" class="line-height40 text-center font-size14 font-Raleway-SemiBold cursor_pointer" style="background-color: #e35b7f; color: #fff;;display: block;    padding: 15px;
+              margin:20px auto;width: auto;" (click)="polesSubmit()">Submit</button>
+      </div>
+
+
+    </div>
+    <!--<div class="form-check">
+                  <input class="form-check-input" type="radio" name="radiobutton" id="" value="option3" (change)="onSelectionChange('option3')">
+                  <label class="form-check-label" for="radiobutton1">
+                      Vitamin D
+                  </label>
+              </div>
+
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="radiobutton" id="radiobutton2" (change)="onSelectionChange('option4')"
+                         value="option4">
+                  <label class="form-check-label" for="exampleRadios2">
+                      All above are important
+                  </label>
+              </div>-->
+    <!-- <p style="color:red" *ngIf="validAnswer == 1">*please select one option.</p>
+              <div class="line-height40 text-center font-size14 font-Raleway-SemiBold cursor_pointer" style="background-color: #e35b7f; color: #fff;    padding: 15px;
+              margin:20px auto;width: 20%;" (click)="polesSubmit()">Submit</div> -->
+
+    <div class="col-sm-12 col-xs-12">
+      <div>
+        <!-- <h3 class="question">Did you know?</h3>
+        <h4 style="margin-top: 50px;">Ideally your child should be eating 3 of the 5 food groups at each meal. And a
+          snack should comprise of 2 food groups at least.</h4> -->
+          <img class="addimage" src="{{showImage}}">
+      </div>
+    </div>
+  </div>
+  <div class="pediaImage image-container container paddingNo height-300px" style="margin-bottom: 30px">
+    <img (click)="gotoPedia()" src="../../../../assets/images/Pediasure .png" width="100%" class="image-fit">
+    <!-- <div class="">
+      <div class="downloadBtn pedia_mob" style="background: #e35b82!important;" (click)="gotoPedia()"> Go to PediaSure
+      </div>
+    </div> -->
+  </div>
+
+  <div id="code-con" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div class="correct" *ngIf="answerReview == 'correct'">
+          <!-- <h3><img class="popImg" src="assets/images/right.png" />Correct Answer!</h3> -->
+          <p> Your child may not be meeting their nutritional requirements. Know what to watch out for. Click <span class="here" (click)="gotomyarticle()">Here</span> to find out
+            more.</p>
+  
+        </div>
+        <div class="correct" *ngIf="answerReview == 'wrong'">
+          <!-- <h3><img class="popImg" src="assets/images/cross.png" />Wrong Answer!</h3> -->
+          <p> You may have overlooked these things. Learn more about what they are. Click <span class="here" (click)="gotomyarticle()">Here</span></p>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>

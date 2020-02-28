@@ -1,0 +1,23 @@
+<!-- <span class="pull-right" mdTooltip="{{bookmarkHoverText}}" [ngClass]="classTooltip"> -->
+<a href="javascript:void(0);" (click)="doBookmark()" *ngIf="!noBackground">
+  <span class="blog-date blog-date-N color-black" [ngClass]="className">
+    <!-- <img src="assets/images/b-Normal.svg" class="bookmark-img" *ngIf="!isBookmarked"> -->
+    <i [ngClass]="{'font-size16':isSmall, 'font-size22':!isSmall}" class="fa fa-bookmark-o color-black" aria-hidden="true" *ngIf="!isBookmarked"></i>
+    <!-- <img src="assets/images/b-active.svg" class="bookmark-img"> -->
+
+    <i [ngClass]="{'font-size16':isSmall, 'font-size22':!isSmall}" class="fa fa-bookmark color-pink" aria-hidden="true" *ngIf="isBookmarked"></i>
+    <span class="bookmark-count" *ngIf="!noCount">{{bookmarkCount}}</span>
+  </span>
+</a>
+<!-- </span> -->
+
+<a href="javascript:void(0);" (click)="doBookmark()" *ngIf="noBackground">
+  <span [ngClass]="className">
+    <span class="bookmark-count" *ngIf="!noCount">{{bookmarkCount}}</span>
+    <!-- <img src="assets/images/b-Normal.svg" class="bookmark-img" *ngIf="!isBookmarked"> -->
+    <i [ngClass]="{'font-size16':isSmall, 'font-size22':!isSmall}" class="fa fa-bookmark-o color-black margin-right0px" style="vertical-align:text-top;" aria-hidden="true" *ngIf="!isBookmarked"></i>
+    <!-- <img src="assets/images/b-active.svg" class="bookmark-img"> -->
+
+    <i [ngClass]="{'font-size16':isSmall, 'font-size22':!isSmall}" class="fa fa-bookmark color-pink margin-right0px" style="vertical-align:text-top;" aria-hidden="true" *ngIf="isBookmarked"></i>
+  </span>
+</a>

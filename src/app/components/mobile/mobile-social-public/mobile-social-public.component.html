@@ -1,0 +1,108 @@
+<div class="agile-main gry-background paddingNo">
+  <div class="content-wrap">
+    <div class="container">
+      <div class="font-size15 color-gray font-bolder margin-top12px">Trending Groups</div>
+    </div>
+    <div class="social-group" *ngIf="trendingGroups">
+      <div class="social-group-card" *ngFor="let trendingGroup of trendingGroups">
+          <a routerLink="/social-individual/{{trendingGroup?.id}}">
+            <img class="group-card-img" src="{{trendingGroup.path.substring( 0, trendingGroup.path.lastIndexOf('/')) + '/w_300' + trendingGroup.path.substring( trendingGroup.path.lastIndexOf('/'), trendingGroup.path.length)}}"   alt="">
+          </a>
+          <div class="color-black card-title social-group-detail">
+            <div class="font-Raleway-SemiBold font-size14 scroll-card-group-title-excerpt">
+              <a routerLink="/social-individual/{{trendingGroup?.id}}">{{trendingGroup.title}}</a>
+            </div>
+            <div class="anchor-time font-Raleway-SemiBold font-size10 letter-spacing-1px"><b>{{trendingGroup.noOfMembers}} Members &nbsp;&nbsp;|&nbsp;&nbsp; {{trendingGroup.postCount}} Posts</b></div>
+            <button class="ion-android-data social-join-btn-mobile margin-top10px font-size14" (click)="_commonService.setNavigationUrl('social-group',trendingGroup.id)">Join</button>
+          </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top12px" *ngIf="allPageBanners.length>0">
+      <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img src="{{allPageBanners[0].image.substring( 0, allPageBanners[0].image.lastIndexOf('/')) + '/w_300' + allPageBanners[0].image.substring( allPageBanners[0].image.lastIndexOf('/'), allPageBanners[0].image.length)}}" width="100%"></a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row margin-top12px margin-bottom15" *ngIf="allPageBanners.length>1">
+      <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link" target="_blank" [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img  src="{{allPageBanners[1].image.substring( 0, allPageBanners[1].image.lastIndexOf('/')) + '/w_300' + allPageBanners[1].image.substring( allPageBanners[1].image.lastIndexOf('/'), allPageBanners[1].image.length)}}" width="100%"></a>
+    </div>    
+    <div class="container">
+      <div class="font-size15 color-gray font-bolder margin-top12px">All Groups</div>
+      <div class="widget-sidebar">
+        <div class="content-widget-sidebar margin0" *ngIf="groups1.length!=0">
+          <ul>
+            <li class="recent-post bg-white margin-bottom6px event-box-home-page padding11px" *ngFor="let group of groups1">
+              <div class="col-xs-2 col-sm-2 paddingNo" style="width:20%">
+                <a routerLink="/social-individual/{{group.id}}">
+                  <img src="{{group.img.substring( 0, group.img.lastIndexOf('/')) + '/w_60' + group.img.substring( group.img.lastIndexOf('/'), group.img.length)}}" width="60px" height="60px" style="border-radius:4px; object-fit:cover; object-position:top center;">
+                </a>
+              </div>
+              <div class="col-xs-7 col-sm-7" style="width:60%;">
+                <div><a routerLink="/social-individual/{{group.id}}" class="color-black font-bolder font-size14 line-height-1" style="vertical-align: top;">{{group.title}}</a></div>
+                <div class="all-caps anchor-time font-Raleway-Bold letter-spacing-1px font-size10">BY {{group.author}} </div>
+                <div class="all-caps margin-top10px font-Raleway-SemiBold letter-spacing-1px font-size10"><b>{{group.members}} Members &nbsp;&nbsp;|&nbsp;&nbsp; {{group.posts}} Posts</b></div>
+              </div>
+              <div class="col-xs-3 col-sm-3 paddingNo" style="width:20%;">
+                <button class="ion-android-data social-join-btn-mobile font-size12 font-Raleway-SemiBold" style="height:25px;" (click)="_commonService.setNavigationUrl('social-group',trendingGroup.id)">Join</button>
+              </div>
+              <div class="col-xs-12 col-sm-12 paddingNo">
+                <p class="font-size12" [innerHtml]="group.excerpt"></p>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="promotions">
+        <img *ngIf="promotions.length>0" src="{{promotions[0].img_path.substring( 0, promotions[0].img_path.lastIndexOf('/')) + '/w_300' + promotions[0].img_path.substring( promotions[0].img_path.lastIndexOf('/'), promotions[0].img_path.length)}}" width="100%" height="auto" class="margin-bottom10px"/>
+      </div>
+      <div class="widget-sidebar margin0">
+        <div class="content-widget-sidebar" *ngIf="groups2.length!=0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px" *ngFor="let group of groups2">
+              <div class="col-xs-2 col-sm-2 paddingNo" style="width:20%">
+                <a routerLink="/social-individual/{{group.id}}">
+                  <img src="{{group.img.substring( 0, group.img.lastIndexOf('/')) + '/w_60' + group.img.substring( group.img.lastIndexOf('/'), group.img.length)}}" width="60px" height="60px" style="border-radius:4px; object-fit:cover; object-position:top center;">
+                </a>
+              </div>
+              <div class="col-xs-7 col-sm-7" style="width:60%;">
+                <div><a routerLink="/social-individual/{{group.id}}" class="color-black font-bolder font-size14 line-height-1" style="vertical-align: top;">{{group.title}}</a></div>
+                <div class="all-caps anchor-time font-Raleway-Bold letter-spacing-1px font-size10">BY {{group.author}} </div>
+                <div class="all-caps margin-top10px font-Raleway-SemiBold letter-spacing-1px font-size10"><b>{{group.members}} Members &nbsp;&nbsp;|&nbsp;&nbsp; {{group.posts}} Posts</b></div>
+              </div>
+              <div class="col-xs-3 col-sm-3 paddingNo" style="width:20%;">
+                <button class="ion-android-data social-join-btn-mobile font-size12 font-Raleway-SemiBold" style="height:25px;" (click)="_commonService.setNavigationUrl('','','')">Join</button>
+              </div>
+              <div class="col-xs-12 col-sm-12 paddingNo">
+                <p class="font-size12" [innerHtml]="group.excerpt"></p>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row margin-bottom15px">
+        <div class="container paddingNo">
+            <div class="pull-left last-update">
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                    <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                    <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                  </li>
+                  <li [class]="isNext ? '' : 'disabled'">
+                    <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

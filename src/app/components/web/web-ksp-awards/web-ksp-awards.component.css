@@ -1,0 +1,33 @@
+.left-pad{
+  left:30px!important;
+}
+.right-pad{
+  right:30px!important;
+}
+.carousel img{
+  width:auto!important;
+  height:200px!important;
+}
+.image-div{
+  padding:120px;
+  /*margin-left:50%;
+  margin-right:50%;*/
+  /*margin-top:100px;
+  margin-bottom:100px;*/
+}
+.carousel-div{
+  background-color: #000;
+  text-align: center;
+}
+.font-size16{
+  font-size: 16px;
+  font-weight: 600;
+}
+.line-height-16{
+  line-height: 1.6;
+}
+.carousel img{
+  width: 100%!important;
+  height: 500px!important;
+  object-fit: contain!important;
+}

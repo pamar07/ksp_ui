@@ -1,0 +1,119 @@
+<span *ngIf="!istime">
+  <span class="col-xs-3 col-md-3 col-sm-3 col-lg-3 col-xlg-3 paddingNo text-center">
+    <select (ngModelChange)="changeDay($event)" [(ngModel)]="selectedDay" [disabled]="isReadonly" class="date-input-box height-30">
+      <option *ngFor="let day of dayRange();" value="{{day}}" class="date-input-box">{{day}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-5 col-md-5 col-sm-5 col-lg-5 col-xlg-5 paddingNo text-center">
+    <select (ngModelChange)="changeMonth($event)" [(ngModel)]="selectedMonth" [disabled]="isReadonly" class="date-input-box height-30">
+      <option *ngFor="let month of monthRange();" value="{{month}}" class="date-input-box">{{month}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-4 col-md-4 col-sm-4 col-lg-4 col-xlg-4 paddingNo text-center">
+    <select (ngModelChange)="changeYear($event)" [(ngModel)]="selectedYear" [disabled]="isReadonly" class="date-input-box pull-right height-30">
+      <option *ngFor="let year of yearRange();" value="{{year}}" class="date-input-box">{{year}}</option>
+    </select>
+  </span>
+</span>
+
+<span *isDesktop>
+<span *ngIf="istime">
+  <span class="col-xs-2 col-md-2 col-sm-2 col-lg-2 col-xlg-2 text-center">
+    <select (ngModelChange)="changeDay($event)" [(ngModel)]="selectedDay" [disabled]="isReadonly" class="date-input-box height-30">
+      <option *ngFor="let day of dayRange();" value="{{day}}" class="date-input-box">{{day}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-3 col-md-3 col-sm-3 col-lg-3 col-xlg-3 text-center">
+    <select (ngModelChange)="changeMonth($event)" [(ngModel)]="selectedMonth" [disabled]="isReadonly" class="date-input-box height-30">
+      <option *ngFor="let month of monthRange();" value="{{month}}" class="date-input-box">{{month}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-2 col-md-2 col-sm-2 col-lg-2 col-xlg-2 text-center">
+    <select (ngModelChange)="changeYear($event)" [(ngModel)]="selectedYear" [disabled]="isReadonly" class="date-input-box pull-right height-30">
+      <option *ngFor="let year of yearRange();" value="{{year}}" class="date-input-box">{{year}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-2 col-md-2 col-sm-2 col-lg-2 col-xlg-2 text-center font-size16" style="line-height:30px;">:</span>
+
+  <span class="col-xs-1 col-md-1 col-sm-1 col-lg-1 col-xlg-1 text-center">
+    <select (ngModelChange)="changeHour($event)" [(ngModel)]="selectedHour" [disabled]="isReadonly" class="date-input-box pull-right height-30">
+      <option *ngFor="let hour of hourRange();" value="{{hour}}" class="date-input-box">{{hour}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-1 col-md-1 col-sm-1 col-lg-1 col-xlg-1 text-center">
+    <select (ngModelChange)="changeMin($event)" [(ngModel)]="selectedMin" [disabled]="isReadonly" class="date-input-box pull-right height-30">
+      <option *ngFor="let min of minRange();" value="{{min}}" class="date-input-box">{{min}}</option>
+    </select>
+  </span>
+
+  <span class="col-xs-1 col-md-1 col-sm-1 col-lg-1 col-xlg-1 text-center">
+    <select (ngModelChange)="changeAMPM($event)" [(ngModel)]="selectedAMPM" [disabled]="isReadonly" class="date-input-box pull-right height-30">
+      <option value="AM" class="date-input-box">AM</option>
+      <option value="PM" class="date-input-box">PM</option>
+    </select>
+  </span>
+</span>
+</span>
+
+<span *showItDevice="['mobile','tablet']">
+<span *ngIf="istime">
+
+  <span class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo">
+    <span class="text-left margin-top5px font-size14" style="margin-right:10px;">
+      Select Date :
+    </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeDay($event)" [(ngModel)]="selectedDay" [disabled]="isReadonly" class="b-select date-input-box height-30">
+      <option *ngFor="let day of dayRange();" value="{{day}}" class="date-input-box">{{day}}</option>
+    </select>
+  </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeMonth($event)" [(ngModel)]="selectedMonth" [disabled]="isReadonly" class="b-select date-input-box height-30">
+      <option *ngFor="let month of monthRange();" value="{{month}}" class="date-input-box">{{month}}</option>
+    </select>
+  </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeYear($event)" [(ngModel)]="selectedYear" [disabled]="isReadonly" class="b-select date-input-box height-30">
+      <option *ngFor="let year of yearRange();" value="{{year}}" class="date-input-box">{{year}}</option>
+    </select>
+  </span>
+  </span>
+
+  <hr class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 text-center paddingNo" style="margin:5px 0!important;">
+
+  <span class="col-xs-12 col-md-12 col-sm-12 col-lg-12 col-xlg-12 paddingNo">
+    <span class="text-left margin-top5px font-size14" style="margin-right:10px;">
+      Select Time :
+    </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeHour($event)" [(ngModel)]="selectedHour" [disabled]="isReadonly" class="b-select date-input-box pull-righ height-30">
+      <option *ngFor="let hour of hourRange();" value="{{hour}}" class="date-input-box">{{hour}}</option>
+    </select>
+  </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeMin($event)" [(ngModel)]="selectedMin" [disabled]="isReadonly" class="b-select date-input-box pull-righ height-30">
+      <option *ngFor="let min of minRange();" value="{{min}}" class="date-input-box">{{min}}</option>
+    </select>
+  </span>
+
+  <span class="b-select-wrap">
+    <select (ngModelChange)="changeAMPM($event)" [(ngModel)]="selectedAMPM" [disabled]="isReadonly" class="b-select date-input-box pull-righ height-30">
+      <option value="AM" class="date-input-box">AM</option>
+      <option value="PM" class="date-input-box">PM</option>
+    </select>
+  </span>
+  </span>
+
+</span>
+</span>

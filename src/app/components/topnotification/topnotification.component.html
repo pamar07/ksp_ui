@@ -1,0 +1,36 @@
+<span *isDesktop>
+<a (click)="updateNotification()" data-toggle="dropdown" class="dropdown-toggle notification_link ">
+  <span class="icon-tooltip">
+    <i class="fa fa-bell-o font-size20 margin-top3px" >
+      <span *ngIf="notificationCount > 0" class="num ">{{notificationCount}}</span>
+    </i>
+  <span *ngIf="notificationCount > 0" class="icon-tooltiptext">{{notificationCount}} new notification</span>
+  <span *ngIf="notificationCount <= 0" class="icon-tooltiptext">no new notification</span>
+  </span>
+</a>
+
+<ul class="dropdown-menu notification-dropdown" *ngIf="notificationList.length>0">
+  <li *ngFor="let notification of notificationList; let i=index" [ngClass]="{'dropdown-li-border-bottom':i<(notificationList.length-1)}">
+    <a class="white-space-normal notification-dd-padding" routerLink="{{notification.ref_url}}" [innerHtml]="notification.parameters"></a>
+  </li>
+</ul>
+</span>
+
+
+<span *showItDevice="['mobile','tablet']">
+  <a (click)="updateNotification()" data-toggle="dropdown" class="dropdown-toggle notification_link ">
+    <span class="icon-tooltip">
+      <i class="fa fa-bell-o margin-top3px" style="font-size:26px;vertical-align:middle;">
+        <span *ngIf="notificationCount > 0" class="num-mobile ">{{notificationCount}}</span>
+        <span *ngIf="notificationCount <= 0" class="icon-tooltiptext">no new notification</span>
+      </i>
+    <!-- <span class="icon-tooltiptext">Notification</span> -->
+    </span>
+  </a>
+
+  <ul class="dropdown-menu notification-dropdown-mobile" *ngIf="notificationList.length>0">
+    <li *ngFor="let notification of notificationList; let i=index" [ngClass]="{'dropdown-li-border-bottom':i<(notificationList.length-1)}">
+      <a class="white-space-normal notification-dd-padding" routerLink="{{notification.ref_url}}" [innerHtml]="notification.parameters"></a>
+    </li>
+  </ul>
+</span>

@@ -1,0 +1,125 @@
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.blog-content h3{
+  font-family: Raleway!important;
+  font-weight: bold!important;
+  color:#333333!important;
+  margin-bottom: 5px!important;
+  overflow: hidden!important;
+  text-overflow: ellipsis!important;
+  width: 95%!important;
+  margin-top: 2%!important;
+	font-weight: 600!important;
+	font-size: 26px!important;
+	text-transform: none!important;
+}
+.blog-content h4{
+  text-transform: none;
+}
+.padding-top10px{
+  padding-top: 10px!important;
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+h4.lineHeight {
+    line-height: 20px;
+}
+.footerlike{
+  margin-top:15px;
+}
+.blog-ellipsis-title {
+    font-size: 16px!important;
+    font-weight: 700;
+    margin-bottom: 15px!important;
+    margin-top: 2%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*height: 35px;*/
+    height: 18px;
+    width: 100%;
+}
+.channel-header::after{
+    border-bottom: 1px solid #f3f3f2;
+    width: 100%;
+    display: block;
+    position: absolute;
+    content: '';
+}
+
+.radio-card-layout{
+  -webkit-box-shadow: 0 0 7px rgba(0,0,0, .35);
+  -moz-box-shadow: 0 0 7px rgba(0,0,0, .35);
+  box-shadow: 0 0 7px rgba(0,0,0, .35);
+  height:auto;
+  background-color:#fff;
+}
+
+.no-float{
+  float: none!important;
+}
+
+.border-bottom-radio{
+  border-bottom: 2px solid #dadada;
+}
+.padding15{
+  padding: 15px;
+}
+
+.btn-playlist{
+  color: #fff;
+  background-color: gray;
+  border-color: gray;
+  padding: 7px 17px!important;
+  font-size: 18px!important;
+}
+.btn-playlist-active {
+  color: #fff!important;
+  background-color: #e35b82!important;
+  border-color: #e35b82!important;
+}
+.btn-playlist:hover, .btn-playlist:active, .btn-playlist:focus{
+  outline:none!important;
+}
+
+ul.toggleTab{
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+ul.toggleTab li{
+  display: inline-block;
+  vertical-align: top;
+  width: 220px;
+  padding: 15px 20px;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  cursor: pointer;
+  /*margin-left: -30px;*/
+  color: #fff;
+  background: #797979;
+  box-shadow: 0 0 0 #666;
+  z-index: 1;
+  text-align: center;
+  font-size: 13px;
+  font-family: 'Raleway-SemiBold';
+}
+ul.toggleTab li.active{
+  background: #fff;
+  box-shadow: 0 0 10px #000;
+  z-index: 2;
+  position: relative;
+  color: #000
+}

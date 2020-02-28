@@ -1,0 +1,19 @@
+<style>
+  .dialog-font{
+    font-family: 'Open Sans', sans-serif!important;
+    /*font-size: 16px!important;
+    text-align:center!important;*/
+  }
+  .action-button{
+    color:#fff!important;
+    font-weight: bolder;
+    background-color: #F94F61!important;
+  }
+</style>
+
+<h5 class="dialog-font" md-dialog-title [innerHtml]="data"></h5>
+<md-dialog-content class="dialog-font">Are you sure?</md-dialog-content>
+<md-dialog-actions class="dialog-font">
+  <button class="action-button" md-button [md-dialog-close]="true">Yes</button>
+ <button class="action-button" md-button [md-dialog-close]="false">No</button>
+</md-dialog-actions>

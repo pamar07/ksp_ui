@@ -1,0 +1,129 @@
+.custom-radio-title {
+	font-size: 11px;
+	/*padding: 10px 11px;*/
+	color: #fff;
+	/*color: #fff;*/
+	cursor: pointer;
+	font-family: 'Raleway-Bold';
+  letter-spacing: 1.8px;
+}
+.custom-radio-title:hover {
+	color: #fff;
+}
+.radio-dropdown{
+	width:390px;
+}
+
+.custom-tab {
+	/*text-transform: uppercase;*/
+	height: 50px;
+}
+.custom-tab > a {
+	cursor: pointer;
+	text-align: center;
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+.custom-tab > a:hover {
+	color: #e45b80;
+	cursor: pointer !important;
+	height: 47px;
+	text-align: center;
+}
+.custom-tab.active > a  {
+	color: #e45b80;
+	cursor: pointer !important;
+	border-bottom: 3px solid #e45b80!important;
+	height: 47px;
+	text-align: center;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	border: none;
+}
+
+.nav-tabs>li>a {
+    border: none;
+    line-height: 1!important;
+    padding: 15px 0!important;
+}
+.topnav-radio ul.nav.nav-tabs{
+	border-bottom : none;
+}
+.custom-tab-li {
+	width: 100%;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	/*line-height: 37px;*/
+	cursor: pointer;
+}
+
+.custom-tab-li>span:hover {
+	color: #e45b80;
+}
+
+.lineheight50{
+	line-height: 50px;
+}
+.lineheight44{
+	line-height: 44px;
+}
+
+.height50px{
+	height: 50px;
+}
+.playlist-ellipsis {
+    font-size: 12px!important;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 100%;
+    width: 100%;
+}
+.margin-top-minus-15px{
+	/*margin-top: -15px!important;*/
+}
+
+
+/*ul.dropdown-menu.radio-dropdown:before {
+	content: "";
+	position: absolute;
+	right: 0;
+	top: -15px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 15px 15px 15px;
+	border-color: transparent transparent #ffffff transparent;
+	z-index: 9999;
+}*/
+.paddingAll10px{
+	padding: 10px;
+}
+
+.border-top-0{
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.radio-ellipsis-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+    width: 100%;
+}
+
+.topnav-radio .nav-tabs>li>a, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	background-color: #ececec!important;
+}
+
+.bg-gray-active{
+	background-color: #ececec;
+}

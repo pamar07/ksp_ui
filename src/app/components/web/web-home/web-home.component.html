@@ -1,0 +1,1126 @@
+<!-- <ngx-loading [show]="!isLatestLoaded || !isPopularLoaded || !isRadioLoaded || !isTvLoaded"
+             [config]="{ fullScreenBackdrop : true }"></ngx-loading> -->
+<app-topnav-social (city)="filterCity($event)" (age)="filterAge($event)"></app-topnav-social>
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrappe">
+        <div class="row" *ngIf="bannerPath && bannerArticle">
+            <ngx-carousel [inputs]="carouselOne" (carouselLoad)="myfunc($event)">
+                <ngx-item NgxCarouselItem *ngFor="let banner of bannerArticle; let i=index">
+                    <a routerLink="/{{bannerPath[i]}}/{{banner?.article_id}}" *ngIf="banner.bannerContentType == 1"
+                       (click)="bannerClickIntentCapture('/'+bannerPath[i]+'/'+banner?.article_id,banner?.article_id)">
+                        <div class="box">
+                            <img class="" [src]="banner.image"
+                                 style="width:100%; height: calc(100vw / 4); object-position:top center; object-fit:cover;"
+                                 alt=""
+                                 (load)="bannerViewIntentCapture('/'+bannerPath[i]+'/'+banner?.article_id,banner?.article_id)">
+                            <div class="carousel-caption2 min-height-66">
+                                <div class="text-middle text-index">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" style="width:97vw;">
+										<span *ngFor="let category of banner.category">
+											<a routerLink="/categorywise-article/{{category.id}}">
+												<span class="ion-android-data light-blue-button all-caps"
+                                                      [style.background-color]="safeStyle(category.colour_code)"
+                                                      [innerHTML]="category.name"></span>
+											</a>
+										</span>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top10px paddingNo"
+                                         style="width:50%; margin-left: 23%;">
+                                        <h4 class="banner-ellipsis-title margin-top0 font-Raleway-SemiBold">{{banner.title}}</h4>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="banner?.link" target="_blank" *ngIf="banner.bannerContentType == 2"
+                       (click)="bannerClickIntentCapture(banner?.link,0)">
+                        <div class="box">
+                            <img class="" [src]="banner.image"
+                                 style="width:100%; height: calc(100vw / 4); object-position:top center; object-fit:cover;"
+                                 alt="" (load)="bannerViewIntentCapture(banner?.link,0)">
+                            <div class="carousel-caption2 min-height-66" *ngIf="banner.title!='' && banner.title!=null">
+                                <div class="text-middle text-index">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top10px paddingNo"
+                                         style="width:50%; margin-left: 23%;">
+                                        <h4 class="banner-ellipsis-title margin-top0 font-Raleway-SemiBold">{{banner.title}}</h4>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a routerLink="{{bannerPath[i]}}" target="_blank" *ngIf="banner.bannerContentType == 3"
+                       (click)="bannerClickIntentCapture(bannerPath[i],banner.id)">
+                        <div class="box">
+                            <img class="" [src]="banner.image"
+                                 style="width:100%; height: calc(100vw / 4); object-position:top center; object-fit:cover;"
+                                 alt="" (load)="bannerViewIntentCapture(bannerPath[i],banner.id)">
+                            <div class="carousel-caption2 min-height-66" *ngIf="banner.title!='' && banner.title!=null">
+                                <div class="text-middle text-index">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top10px paddingNo"
+                                         style="width:50%; margin-left: 23%;">
+                                        <h4 class="banner-ellipsis-title margin-top0 font-Raleway-SemiBold">{{banner.title}}</h4>
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="clearfix"></div>
+                </ngx-item>
+                <button NgxCarouselPrev class='leftRs'><i class="fa fa-angle-left paddingNo font-size25 font-bolder"
+                                                          aria-hidden="true"></i></button>
+                <button NgxCarouselNext class='rightRs'><i class="fa fa-angle-right paddingNo font-size25 font-bolder"
+                                                           aria-hidden="true"></i></button>
+            </ngx-carousel>
+            <div class="container paddingNo" *ngIf="latestArticles && bannerArticle">
+                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo ">
+                    <div class="box-shadow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Latest Article Section Starts -->
+        <div class="row margin-to margin-bottom15" *ngIf="latestArticles" id="article-section">
+            <div class="container paddingNo ">
+                <div class="main-title-outer pull-left padding-bottom10px">
+                    <div class="main-title thin-large-heade"><i class="fa" aria-hidden="true"><img
+                            src="assets/images/ksp-today.svg" width="30" height="30" alt=""/></i>KSP Today
+                    </div>
+                    <div class="span-outer">
+						<span class="pull-right text-danger last-update">
+							<a routerLink="/ksp-latest">
+								<span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right"
+                                                                                      aria-hidden="true"></i>
+							</a>
+						</span>
+                    </div>
+                </div>
+                <app-generic-carousel [carauselId]="'latest'" [articleList]="latestArticles"></app-generic-carousel>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- App download Banner -->
+        <div class="container-fluid">
+            <div class="box" style="position: relative; margin-bottom: 20px;">
+                <img class="" src="assets/images/white.png"
+                     style="width:100%; height: calc(100vw / 4); object-position:top center; object-fit:cover;" alt=""
+                     (load)="bannerViewIntentCapture('app_download_banner',0)">
+                <div class="banner-div">
+                    <h2>Explore on the go with Kidsstoppress App</h2>
+                    <form [formGroup]="appForm" (ngSubmit)="appForm.valid && submitAppForm(appForm.value)"
+                          #formApp="ngForm">
+                        <p>
+                            <b>Get a link via SMS to download the app</b><br/>
+                            <span class="link-span-class">
+								<input type="number" placeholder="10 digit Mobile number"
+                                       class="form-control link-input-class"
+                                       [formControl]="appForm.controls['mobile']"/>
+								<button class="link-submit-class" type="submit">SEND APP LINK</button>
+							</span>
+                            <span *ngIf="((appForm.controls['mobile'].hasError('required') && appForm.controls['mobile'].dirty) || (appForm.controls['mobile'].hasError('required') && formApp.submitted))"
+                                  class="min-height-div">
+								<span>Please enter Mobile number.</span>
+							</span>
+
+                            <span *ngIf="(!appForm.controls['mobile'].hasError('required') && ((appForm.controls['mobile'].hasError('pattern') && appForm.controls['mobile'].dirty) || (appForm.controls['mobile'].hasError('pattern') && formApp.submitted)))"
+                                  class="min-height-div">
+								<span>Please enter valid Mobile number</span>
+							</span>
+                        </p>
+                    </form>
+                    <p class="margin-top">
+                        <a href="https://tinyurl.com/yaeuuqjq" target="_blank"><img src="assets/images/app_Store.png"
+                                                                                    style="width:120px; margin-right: 10px"></a>
+                        <a href=" https://tinyurl.com/y7b3d9np" target="_blank"><img src="assets/images/google-play.png"
+                                                                                     style="width:120px;"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Subscribe for the Meal Plan -->
+        <div class="row margin-bottom20px">
+            <div class="container">
+                <div class="font-Raleway-SemiBold">
+                    <div class="col-md-6" style="padding:10px; border-right: 3px solid #eee;">
+                        <div class="col-md-12 paddingNo">
+                            <img src='https://d2riyb99hqtj11.cloudfront.net/w_400/1554292894.Mac-and-Cheese-Boston-compressed1.jpg'
+                                 style="width: 100%;height: 140px;object-fit:  cover;object-position: center;"/>
+                            <span style="font-size:15px;">Over 10,000 families have signed up for our weekly Meal plans. Have you ?</span>
+                        </div>
+                        <div class="col-md-12 paddingNo">
+                            <form class="input-group signUpNewsletter"
+                                  style="margin-top: 10px; margin-bottom: 10px; width: 100%	" [formGroup]="mealForm"
+                                  (ngSubmit)="mealForm.valid && submitmealForm(mealForm.value)" #formMeal="ngForm">
+                                <div class="input-group-addon border-rightnone">
+                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                </div>
+
+                                <input class="gt-email form-control" type="text" name="subscribe_email"
+                                       style="background: #fff" [formControl]="mealForm.controls['email']">
+
+                                <input type="submit" class="btn-go go-button" style="z-index:2; width:200px;"
+                                       value="Yes, I want the meal plans"/>
+                            </form>
+                            <div *ngIf="((mealForm.controls['email'].hasError('required') && mealForm.controls['email'].dirty) || (mealForm.controls['email'].hasError('required') && formMeal.submitted))"
+                                 class="error-survey-form">Please enter email.
+                            </div>
+
+                            <div *ngIf="!mealForm.controls['email'].hasError('required') && ((mealForm.controls['email'].hasError('email') && mealForm.controls['email'].dirty) || (mealForm.controls['email'].hasError('email') && formMeal.submitted))"
+                                 class="error-survey-form">Please enter a valid email
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding: 10px;">
+                        <div class="col-md-12 paddingNo">
+                            <img src='https://d2riyb99hqtj11.cloudfront.net/w_400/1554292931.books-club-compressed.jpeg'
+                                 style="width: 100%;height: 140px;object-fit:  cover;object-position: center;"/>
+                            <span style="font-size:15px;">Get curated book lists in your inbox!</span>
+                        </div>
+                        <div class="col-md-12 paddingNo">
+                            <form class="input-group signUpNewsletter"
+                                  style="margin-top: 10px; margin-bottom: 10px; width: 100%	" [formGroup]="bookForm"
+                                  (ngSubmit)="bookForm.valid && submitbookForm(bookForm.value)" #formBook="ngForm">
+                                <div class="input-group-addon border-rightnone">
+                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                </div>
+
+                                <input class="gt-email form-control" type="text" name="subscribe_email"
+                                       style="background: #fff" [formControl]="bookForm.controls['email']">
+
+                                <input type="submit" class="btn-go go-button" style="z-index:2; width:200px;"
+                                       value="Subscribe to Book club"/>
+                            </form>
+                            <div *ngIf="((bookForm.controls['email'].hasError('required') && bookForm.controls['email'].dirty) || (bookForm.controls['email'].hasError('required') && formBook.submitted))"
+                                 class="error-survey-form">Please enter email.
+                            </div>
+
+                            <div *ngIf="!bookForm.controls['email'].hasError('required') && ((bookForm.controls['email'].hasError('email') && bookForm.controls['email'].dirty) || (bookForm.controls['email'].hasError('email') && formBook.submitted))"
+                                 class="error-survey-form">Please enter a valid email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Events and Activities -->
+        <div class="row gry-background" id="event-section">
+            <div class="container paddingNo">
+                <div class="main-title thin-large-heade">
+                    <i class="fa " aria-hidden="true"><img src="assets/images/Event.svg"></i>Events and Activities
+                </div>
+                <div class="span-outer">
+					<span class="pull-right text-danger last-update">
+						<a routerLink="/event-submit" class="btn font-size13 pink-color-button padding4-10">Submit an Event</a>
+					</span>
+                </div>
+
+                <div class="col-md-12 col-lg-12 border-color-black"></div>
+                <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 col-xs-12">
+                    <div class="widget-sideba">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xlg-12 col-sm-12 col-xs-12 paddingNo">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12  paddingNoMobile">
+                                    <button type="button"
+                                            class="btn btn-dange btn-cons red-orangebtn text-bold event-btn"
+                                            (click)="getEventsDatewise(today,1)"
+                                            [ngClass]="{'today-selected':todaySelected}">
+                                        Today
+                                        <small class="all-caps">{{today | date:'EEE'}}&nbsp;{{today | date:'dd'}}&nbsp;{{today | date:'MMMM'}}</small>
+                                    </button>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 paddingNoMobile">
+                                    <button type="button" class="btn btn-warnin btn-cons orangebtn text-bold event-btn"
+                                            (click)="getEventsDatewise(tomorrow,2)"
+                                            [ngClass]="{'tomorrow-selected':tomorrowSelected}">
+                                        Tomorrow
+                                        <small class="all-caps">{{tomorrow | date:'EEE'}}&nbsp;{{tomorrow | date:'dd'}}&nbsp;{{tomorrow | date:'MMMM'}}</small>
+                                    </button>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNoMobile padding-14-25">
+                                    <button type="button"
+                                            class="btn-primary btn-cons blue-light all-caps text-bold event-btn padding-15-25"
+                                            (click)="getEventsDatewise(nextSaturday,3)"
+                                            [ngClass]="{'saturday-selected':saturdaySelected}">
+                                        Saturday
+                                        <small>{{nextSaturday | date:'dd'}}&nbsp;{{nextSaturday | date:'MMMM'}}</small>
+                                    </button>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNoMobile padding-14-25">
+                                    <button type="button"
+                                            class="btn-success btn-cons green-light all-caps text-bold event-btn padding-15-25"
+                                            (click)="getEventsDatewise(nextSunday,4)"
+                                            [ngClass]="{'sunday-selected':sundaySelected}">
+                                        Sunday
+                                        <small>{{nextSunday | date:'dd'}}&nbsp;{{nextSunday | date:'MMMM'}}</small>
+                                    </button>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 paddingNoMobile">
+                                    <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingNo event-btn padding-15-25">
+                                        <input class="form-control pick-date-btn text-bold" (click)="pickedDate.open()"
+                                               (dateInput)="onDateInput($event)" (dateChange)="onDateInput($event)"
+                                               mdInput [mdDatepicker]="pickedDate" placeholder="PICK A DATE"
+                                               [ngClass]="{'pickedDate-selected':pickedDateSelected}">
+                                        <md-datepicker #pickedDate></md-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="cityList">
+                            <div class="col-md-12 paddingNo margin-left5px">
+                                <h5 class="margin0 ">Cities</h5>
+                            </div>
+                            <div class="paddingNo col-md-12 col-lg-12 col-xlg-12 col-sm-12 col-xs-12">
+                                <div *ngFor="let city of cityList; let i=index">
+                                    <div class="col-md-3 paddingNo" *ngIf="city.city != 'Kolkata' && city.city != 'Ahmedabad' && city.city != 'Jaipur' && city.city != 'Goa'">
+                                    <button type="button" class="btn-white btn-cons all-caps btn-white-city"
+                                            (click)="getEventsCitywise(city.city,i)"
+                                            [ngClass]="{'btn-gray-selected':city.checked}">{{city.city}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-widget-sidebar">
+                            <ul>
+                                <div class="span-outer">
+                                    <span class="pull-left text-danger last-update" style="margin-left:-9px;"> <a
+                                            href="javascript:void(0);" (click)="resetEventFilters()">RESET<i
+                                            class="fa fa-refresh" aria-hidden="true"></i></a></span>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 col-xs-12" *ngIf="events">
+                    <div class="widget-sideba">
+                        <div class="content-widget-sideba" *ngIf="events.length!=0">
+                            <ul>
+                                <li class="recent-post margin-bottom3 pull-right" *ngFor="let event of events">
+                                    <div class="post-img pull-left margin-top6px" style="width:20%;" *ngIf="!(currentDate > getOnlyDate(event.end_date))">
+                                        <div class="red-orangebtn pink-btn-cal all-caps pink-date-box margin-bottom8p">
+                                            <div style="width:100%;height:auto; margin:4px auto;" >
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b>
+                                                </h5>
+                                                <h3 class="white-color paddingNo" style="font-size:34px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b>
+                                                </h3>
+                                                <!-- *ngIf="currentDate > getOnlyDate(event.end_date)" -->
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="post-img pull-left margin-top6px" style="width:20%;" *ngIf="currentDate > getOnlyDate(event.end_date)">
+                                        <div class="red-orangebtn all-caps pink-date-box margin-bottom8p" style="background:#9c9c9c!important">
+                                            <div style="width:100%;height:auto; margin:4px auto;" >
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b>
+                                                </h5>
+                                                <h3 class="white-color paddingNo" style="font-size:34px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b>
+                                                </h3>
+                                                <!-- *ngIf="currentDate > getOnlyDate(event.end_date)" -->
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-left" style="width:75%">
+                                        <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                                            <h5 class="capitalize event-title-ellipsis font-size18">{{event.title | capitalize}}</h5>
+                                            <p class="font-size12 event-content-ellipsis color-black"
+                                               [innerHtml]="event.content"></p>
+                                        </a>
+                                        <p class="font-bolder margin0 all-caps gry-color">
+                                            <!-- <span class="ion-android-data light-blue-button all-caps border-radius50px bg-color-green" [innerHTML]="_commonService.setDateFormat(event.start_date) | date:'EEEE'"></span>&emsp; -->
+                                            <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}}
+                                                - {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                                            <a *ngIf="event.venue_city!=null && event.venue_city!=''"
+                                               href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}"
+                                               target="_blank">
+                                                <small class="pull-right pink-color pink-color-text all-caps"><i
+                                                        class="fa fa-map-marker"
+                                                        aria-hidden="true"></i> {{event.venue_city}}</small>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <div class="span-outer">
+                                    <span class="pull-right text-danger last-update padding-top10px"
+                                          style="color:#000000;opacity:0.3;"> <a routerLink="/event-all">VIEW ALL EVENTS<i
+                                            class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="content-widget-sidebar" *ngIf="events.length==0">
+                            <ul>
+                                <li class="recent-post">
+                                    <div class="post-img min-height200px">
+                                        Oops! Looks like there are no events scheduled for your selection!
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="span-outer"><span class="pull-right text-danger last-update padding-top10px"
+                                                          style="color:#000000;opacity:0.3;"> <a
+                                    routerLink="/event-all">VIEW ALL EVENTS<i class="fa fa-caret-right"
+                                                                              aria-hidden="true"></i></a></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- KSP Code -->
+        <div class="row " id="code-section" style="padding: 1em 0;">
+            <div class="container paddingNo">
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="widget-sidebar">
+                        <div class="row">
+                            <div class="welcome welcome1 margin-bottom">
+                                <div class="welcome-to">
+                                    <h1 class="margin-top ksp-code-header-style" style="color:#000">KSP CODE CARD</h1>
+                                </div>
+                            </div>
+                            <p class="font-color-white margin-top" style="color:#000">Get 15% off on the best brands for kids & parents and
+                                exclusive access to curated events.</p>
+                            <div class="col-md-12 paddingNo">
+                                <h5 class="margin0 font-color-white" style="color:#000">Benefits:</h5>
+                            </div>
+                            <div class=" col-md-12 col-lg-12 paddingNo margin-top10px">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 ins-paddingNo padding-left0">
+                                    <a routerLink="/ksp-code">
+                                        <button type="button"
+                                                class="btn btn-white btn-cons all-caps btn-white-city width-100per">
+                                            *Enjoy over 40 events for kids in a year!
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 ins-paddingNo paddingNo">
+                                    <a routerLink="/ksp-code">
+                                        <button type="button"
+                                                class="btn btn-white btn-cons all-caps btn-white-city width-100per">*Get
+                                            15% off at 65 plus partner brands!
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ins-paddingNo padding-left-right0 margin-top6px">
+                                    <a routerLink="/ksp-code">
+                                        <button type="button"
+                                                class="btn btn-white btn-cons all-caps btn-white-city width btn-white-elli width-100per">
+                                            *Works Every Day, Every Visit!
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="partners" style="padding-top: 5px;">
+                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-6 margin-bottom"
+                                 *ngFor="let partner of partners">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 center-block text-center paddingNo">
+                                    <a routerLink="/ksp-code">
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                <div style="padding:25% 2% 2% 2%!important; margin:0 auto;">
+                                                    <h4>
+                                                        <p class="font-Raleway-SemiBold color-white"
+                                                           style="text-align:center!important;">{{partner.title}}</p>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <img src="{{partner.img_path.substring( 0, partner.img_path.lastIndexOf('/')) + '/w_150' + partner.img_path.substring( partner.img_path.lastIndexOf('/'), partner.img_path.length)}}"
+                                                 style="width:100%!important; height:100px!important; object-fit:cover; object-position:center;"
+                                                 lt="..."/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" *ngIf="codeEvents.length!=0">
+                    <div class="widget-sideba">
+                        <div class="content-widget-sideba">
+                            <div class="col-md-12 paddingNo margin-bottom">
+                                <h5 class="margin0 font-color-white">KSP CODE EVENTS</h5>
+                            </div>
+                            <ul>
+                                <li class="recent-post margin-bottom3 pull-right" *ngFor="let event of codeEvents">
+                                    <div class="post-img pull-left margin-top6px" style="width:20%;">
+                                        <div class="red-orangebtn pink-btn-cal all-caps pink-date-box margin-bottom8p">
+                                            <div style="width:100%;height:auto; margin:4px auto;">
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'EEE'}}</b>
+                                                </h5>
+                                                <h3 class="white-color paddingNo" style="font-size:34px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'dd'}}</b>
+                                                </h3>
+                                                <h5 class="white-color paddingNo" style="font-size:12px;">
+                                                    <b>{{_commonService.setDateFormat(event.start_date) | date:'MMM'}}</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pull-left" style="width:75%">
+                                        <a routerLink="/event-individual/{{event.perma_link}}/{{event.id}}">
+                                            <h5 class="capitalize event-title-ellipsis font-size18">{{event.title | capitalize}}</h5>
+                                            <p class="font-size12 event-content-ellipsis color-black"
+                                               [innerHtml]="event.content"></p>
+                                        </a>
+                                        <p class="font-bolder margin0 all-caps gry-color">
+                                            <small> {{_commonService.setDateFormat(event.start_date) | date:'jm'}}
+                                                - {{_commonService.setDateFormat(event.end_date) | date:'jm'}} </small>
+                                            <a *ngIf="event.venue_city!=null && event.venue_city!=''"
+                                               href="//maps.google.com/maps?q={{event.google_map_address.slice(1,-1)}}"
+                                               target="_blank">
+                                                <small class="pull-right pink-color pink-color-text all-caps"><i
+                                                        class="fa fa-map-marker"
+                                                        aria-hidden="true"></i> {{event.venue_city}}</small>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <div class="span-outer">
+                                    <span class="pull-right text-danger last-update padding-top10px"
+                                          style="color:#000000;opacity:0.3;"> <a routerLink="/ksp-code">VIEW MORE<i
+                                            class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- KSP Favourites box -->
+        <div class="row">
+            <div class="container-fluid gry-background">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h1 class="text-center " style="color:#000">KSP's Favourites Box</h1><br/>
+                </div>
+
+                <!--<div class="col-md-12" style="display: flex;justify-content: center;padding:0 5%">-->
+                    <!--<div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;">-->
+                        <!--<div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">-->
+                            <!--<h5 class="text-center small-text">LITTLE TRAVELLER'S BOX</h5>-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<img src="assets/images/activity-kit/little_travellers_box.jpg" style="width:100%"/>-->
+                                    <!--<small class="activity-pack">-->
+                                        <!--<b>Kit contains : </b>-->
+                                        <!--Little Travel Bug (&#x20B9; 699),-->
+                                        <!--Travel Tins (&#x20B9; 800),-->
+                                        <!--My Happy Box (&#x20B9; 550),-->
+                                        <!--Zlife Education (&#x20B9; 299)-->
+                                    <!--</small>-->
+                                    <!--<br/>-->
+                                    <!--<div class="text-center margin-bottom"><b>@ &#x20B9; 999/-</b></div>-->
+                                    <!--<a routerLink="/ksp-code-activity" target="_blank">-->
+                                        <!--<button>SHOP NOW</button>-->
+                                    <!--</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;">-->
+                        <!--<div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">-->
+                            <!--<h5 class="text-center small-text">FESTIVE FUN BOX FOR KIDS</h5>-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<img src="assets/images/activity-kit/main_nov_mobile.jpg" style="width:100%"/>-->
+                                    <!--<small class="activity-pack">-->
+                                        <!--<b>Kit contains : </b>-->
+                                        <!--Slime activator (&#x20B9; 299),-->
+                                        <!--Geoboard (&#x20B9; 800),-->
+                                        <!--Memory & Movement board game (&#x20B9; 645)-->
+                                    <!--</small>-->
+                                    <!--<br/>-->
+                                    <!--<div class="text-center margin-bottom"><b>@ &#x20B9; 999/-</b></div>-->
+                                    <!--<a routerLink="/ksp-code-activity" target="_blank">-->
+                                        <!--<button>SHOP NOW</button>-->
+                                    <!--</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;">-->
+                        <!--<div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">-->
+                            <!--<h5 class="text-center small-text">BUSY BOX FOR KIDS</h5>-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<img src="assets/images/activity-kit/busy_box_main.jpg" style="width:100%"/>-->
+                                    <!--<small class="activity-pack">-->
+                                        <!--<b>Kit contains : </b>-->
+                                        <!--Upcycler's Lab (&#x20B9; 1500),-->
+                                        <!--Desi Toys (&#x20B9; 499),-->
+                                        <!--Play Panda (&#x20B9; 199)-->
+                                    <!--</small>-->
+                                    <!--<br/>-->
+                                    <!--<div class="text-center margin-bottom"><b>@ &#x20B9; 999/-</b></div>-->
+                                    <!--<a routerLink="/ksp-code-activity" target="_blank">-->
+                                        <!--<button>SHOP NOW</button>-->
+                                    <!--</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <div class="col-md-12" style="display: flex;justify-content: center;padding:0 5%" >
+
+                    <div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;"  *ngFor = "let box of boxArray.slice(0,3);">
+                        <div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">
+                            <h5 class="text-center small-text">{{box.box_name}}</h5>
+                            <ul>
+                                <li>
+                                    <img  src="{{box.box_image.substring( 0, box.box_image.lastIndexOf('/'))+ '/w_350' +box.box_image.substring( box.box_image.lastIndexOf('/'), box.box_image.length)}}"
+                                         style="width:100%;height:300px"/>
+                                    <small class="activity-pack" *ngFor="let item of box.item_details">
+                                        <b>Kit contains : {{item.name}}</b>
+                                        <!-- Kaadoo (&#x20B9; 499),
+                                        Clever Cubes (&#x20B9; 445),
+                                        Desi Toys (&#x20B9; 299) -->
+                                       
+                                    </small>
+                                    <br/>
+                                    <div class="text-center margin-bottom"><b>@ &#x20B9; {{box.total_cost}}/-</b></div>
+                                    <a routerLink="/ksp-code-activity" target="_blank">
+                                        <button>SHOP NOW</button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;">
+                        <div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">
+                            <h5 class="text-center small-text">KINDNESS BOX</h5>
+                            <ul>
+                                <li>
+                                    <img src="assets/images/activity-kit/tooing whats inside the bag.jpg"
+                                         style="width:100%"/>
+                                    <small class="activity-pack">
+                                        <b>Kit contains : </b>
+                                        15 unique DIY/art & craft activities, 2 story books, a progress chart & small
+                                        goodies as keepsakes
+                                    </small>
+                                    <br/>
+                                    <div class="text-center margin-bottom"><b>@ &#x20B9; 999/-</b></div>
+                                    <a routerLink="/ksp-code-activity" target="_blank">
+                                        <button>SHOP NOW</button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-3" style="width: 30%;min-width:30%;display: flex;">
+                        <div class="purple-ksp-code redpink-ksp-code" style="position: relative;width: 100%">
+                            <h5 class="text-center small-text">LITTLE TRAVELLER'S BOX</h5>
+                            <ul>
+                                <li>
+                                    <img src="assets/images/activity-kit/little_travellers_box.jpg" style="width:100%"/>
+                                    <small class="activity-pack">
+                                        <b>Kit contains : </b>
+                                        Little Travel Bug (&#x20B9; 699),
+                                        Travel Tins (&#x20B9; 800),
+                                        My Happy Box (&#x20B9; 550),
+                                        Zlife Education (&#x20B9; 299)
+                                    </small>
+                                    <br/>
+                                    <div class="text-center margin-bottom"><b>@ &#x20B9; 999/-</b></div>
+                                    <a routerLink="/ksp-code-activity" target="_blank">
+                                        <button>SHOP NOW</button>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> -->
+
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Banner 1 -->
+        <div class="container margin-top" *ngIf="allPageBanners.length>0">
+            <a href="(allPageBanners[0].link==null || allPageBanners[0].link=='') ? _commonService.nolink : allPageBanners[0].link"
+               target="_blank"
+               [ngClass]="{'noLinkCursor' : (allPageBanners[0].link==null || allPageBanners[0].link=='')}"><img
+                    src="{{allPageBanners[0].image}}" width="100%"></a>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Most Loved Article Section Starts -->
+        <!-- <div class="row margin-top  margin-bottom15" *ngIf="popularArticles">
+            <div class="container paddingNo">
+                <div class="main-title-outer pull-left padding-bottom10px">
+                    <div class="main-title thin-large-heade"> <i class="fa" aria-hidden="true"><img src="assets/images/Go.svg" width="30" height="30" alt=""/></i>Most Shared Articles </div>
+                    <div class="span-outer"><span class="pull-right text-danger last-update"> <a routerLink="/ksp-most-shared"><span class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i></a></span> </div>
+                </div>
+                <app-article-carousel [carauselId]="'popular'" [articleList]="popularArticles" ></app-article-carousel>
+            </div>
+        </div>
+        <div class="clearfix"></div> -->
+
+        <!-- Popular Article Section Starts -->
+        <div class="row margin-top margin-bottom15" *ngIf="recommendedArticles">
+            <div class="container paddingNo">
+                <div class="main-title-outer pull-left padding-bottom10px">
+                    <div class="main-title thin-large-heade"><i class="fa" aria-hidden="true"><img
+                            src="assets/images/Do.svg" width="30" height="30" alt=""/></i>Most Popular Articles
+                    </div>
+                    <div class="span-outer"><span class="pull-right text-danger last-update"> <a
+                            routerLink="/ksp-most-popular"><span class="ion-android-data icon"></span>SEE MORE<i
+                            class="fa fa-angle-right" aria-hidden="true"></i></a></span></div>
+                </div>
+                <app-article-carousel [carauselId]="'recommended'"
+                                      [articleList]="recommendedArticles"></app-article-carousel>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Pdfs -->
+        <div class="row gry-background" id="pdf-section" *ngIf="pdfs.length">
+            <div class="container paddingNo">
+                <div class="main-title thin-large-heade">
+                    <i class="fa " aria-hidden="true"><img src="assets/images/Event.svg"></i>KSP Magazine
+                </div>
+                <div class="col-md-12 col-lg-12 border-color-black"></div>
+                <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 col-xs-12 paddingNo">
+                    <img src="assets/images/pdf_banner.png" style="width:100%">
+                </div>
+                <div class="col-md-6 col-lg-6 col-xlg-6 col-sm-12 col-xs-12">
+                    <div class="widget-sideba">
+                        <div class="content-widget-sideba" *ngIf="pdfs.length!=0">
+                            <ul>
+                                <li class="recent-post margin-bottom3 pull-right" *ngFor="let pdf of pdfs">
+                                    <div class="post-img pull-left margin-top6px" style="width:20%;">
+                                        <div class="post-img">
+                                            <img src="{{pdf.img_path.substring( 0, pdf.img_path.lastIndexOf('/')) + '/w_100' + pdf.img_path.substring( pdf.img_path.lastIndexOf('/'), pdf.img_path.length)}}"
+                                                 class="img-responsive"
+                                                 style="height:70px;width:70px;border-radius:50%;border-width:3px;border-style:solid; border-color:#dedcdc; object-fit:cover; object-position:center;">
+                                        </div>
+                                    </div>
+                                    <div class="pull-left" style="width:75%">
+                                        <a routerLink="/ksp-magazine">
+                                            <h5 class="capitalize event-title-ellipsis font-size18">{{pdf.title | capitalize}}</h5>
+                                            <p class="font-size12 event-content-ellipsis pink-color-text"
+                                               [innerHtml]="pdf.city"></p>
+                                        </a>
+                                    </div>
+                                </li>
+                                <div class="span-outer">
+                                    <span class="pull-right text-danger last-update padding-top10px"
+                                          style="color:#000000;opacity:0.3;"> <a routerLink="/ksp-magazine">VIEW ALL MAGAZINES<i
+                                            class="fa fa-caret-right" aria-hidden="true"></i></a></span>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix" *ngIf="pdfs"></div>
+
+        <!-- Groups -->
+        <!-- <div class="row pink-background-new" id="group-section">
+            <div class="container paddingNo">
+                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                    <div class="widget-sidebar margin-right50px">
+                        <div class="row">
+                            <div class="welcome welcome1 margin-bottom">
+                                <div class="welcome-to">
+                                    <h3><img class="image-fit" src="assets/images/grp-icons.svg"></h3>
+                                    <h1 class="margin-top">Parenting is difficult but fortunately you do not have to do
+                                        it alone</h1>
+                                </div>
+                            </div>
+                            <p class="font-color-white margin-top">At KSP, we have aimed at creating the largest network
+                                of parents for comparing notes and<br>sharing tips that will help you navigate through
+                                your parental voyage.</p>
+                            <div class="span-outer"><span class="pull-left text-danger last-update"> <a
+                                    routerLink="/social-all" class=" view-color view-group text-white">VIEW ALL GROUPS<i
+                                    class="fa fa-caret-right" aria-hidden="true"></i></a></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12" *ngIf="groups">
+                    <div class="widget-sidebar">
+                        <div class="content-widget-sidebar">
+                            <ul>
+                                <li class="recent-post" *ngFor="let group of groups">
+                                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 paddingNo">
+                                        <div class="post-img">
+                                            <img src="{{group?.img[0]?.path}}" class="img-responsive"
+                                                 style="height:70px;width:70px;border-radius:50%;border-width:3px;border-style:solid; border-color:#dedcdc; object-fit:cover; object-position:center;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 paddingNo">
+                                        <a href="javascript:void(0);" routerLink="/social-individual/{{group?.id}}">
+                                            <h5 class="font-size13">{{group?.name}}</h5>
+                                        </a>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo">
+                                                <span class="pull-left pink-color font-size10 margin-top5px font-bolder">{{group?.members}}
+                                                    MEMBERS &nbsp;&nbsp;|&nbsp;&nbsp; {{group?.post_count}}POSTS </span>
+                                            </div>
+                                            <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8 pull-left paddingNo all-caps">
+                                                <span class="anchor-time font-size9 group-auhtor"> BY {{group?.author[0]?.name}}</span>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 pull-right margin-top">
+                                                <a href="javascript:void(0);"
+                                                   (click)="_commonService.setNavigationUrl('social-group',group.id,'')">
+                                                    <button type="button"
+                                                            class="btn-fresh text-capitalize btn-xs pull-right btn-brown font-size10 font-bolder">
+                                                        JOIN
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="clearfix"></div>
+
+        <!-- Categorywise Article -->
+        <div class="row margin-bottom15 light-gry-background padding-bottom0px" *ngIf="categorywiseArticle">
+            <div class="container paddingNo">
+                <div class="main-title-outer pull-left padding-bottom10px capitalize">
+                    <div class="main-title thin-large-heade"><i class="fa" aria-hidden="true"><img
+                            src="{{categorywiseArticle[0]?.icon}}" width="30" height="30" alt=""/></i><span
+                            [innerHtml]="categorywiseArticle[0]?.name | capitalize"></span></div>
+                    <div class="span-outer"><span class="pull-right text-danger last-update"> <a
+                            routerLink="/categorywise-article/{{categorywiseArticle[0]?.id}}"><span
+                            class="ion-android-data icon"></span>SEE MORE<i class="fa fa-angle-right"
+                                                                            aria-hidden="true"></i></a></span></div>
+                </div>
+                <app-article-carousel [carauselId]="'random1'"
+                                      [articleList]="categorywiseArticle[0]?.article"></app-article-carousel>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Categorywise Article 1 -->
+        <div class="row margin0 margin-bottom15 light-gry-background padding-top0px padding-bottom0px"
+             *ngIf="categorywiseArticle">
+            <div class="container paddingNo">
+                <div class="main-title-outer pull-left padding-bottom10px capitalize">
+                    <div class="main-title thin-large-heade">
+                        <i class="fa" aria-hidden="true"><img src="{{categorywiseArticle[1]?.icon}}" width="30"
+                                                              height="30" alt=""/></i>
+                        <span [innerHtml]="categorywiseArticle[1]?.name | capitalize"></span>
+                    </div>
+                    <div class="span-outer">
+						<span class="pull-right text-danger last-update">
+							<a routerLink="/categorywise-article/{{categorywiseArticle[1]?.id}}">
+								<span class="ion-android-data icon"></span>
+								SEE MORE<i class="fa fa-angle-right" aria-hidden="true"></i>
+							</a>
+						</span>
+                    </div>
+                </div>
+                <app-article-carousel [carauselId]="'random2'"
+                                      [articleList]="categorywiseArticle[1]?.article"></app-article-carousel>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Banner 2 -->
+        <div class="container margin-top" *ngIf="allPageBanners.length>1">
+            <a href="(allPageBanners[1].link==null || allPageBanners[1].link=='') ? _commonService.nolink : allPageBanners[1].link"
+               target="_blank"
+               [ngClass]="{'noLinkCursor' : (allPageBanners[1].link==null || allPageBanners[1].link=='')}"><img
+                    src="{{allPageBanners[1].image}}" width="100%"></a>
+        </div>
+
+        <!-- KSP Radio -->
+        <div class="row white-background" id="radio-section">
+            <div class="container paddingNo">
+                <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 margin-to">
+                    <div class="widget-sidebar border-right">
+                        <div class="row center-block text-center">
+                            <div style="width:80%;">
+                                <h3><img src="assets/images/Radio-Color.svg" width="150" height="auto" alt=""/></h3>
+                                <h3 class="margin-top20px"><strong class="thin-large-heade">KSP RADIO</strong></h3>
+                                <h3 class="margin-top35px"><strong class="thin-large-heade font-size21">Subscribe to KSP
+                                    Radio through Whatsapp!</strong></h3>
+                                <br>
+                                <br>
+                                <div class="span6 offset3">
+                                    <div class="col-md-12 text-left">
+                                        <p><span class="pink-color"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;</span>Add
+                                            <a href="tel:9819368429" class="pink-color">9819368429</a> to your contacts
+                                            list</p>
+                                        <p><span class="pink-color"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;</span>Send
+                                            "Add KSP Radio" as a WhatsApp text</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 col-md-offset-1 col-lg-offset-1" *ngIf="radios">
+                    <div class="widget-sidebar">
+                        <div class="content-widget-sidebar">
+                            <ul>
+                                <li class="recent-post gry-bck gry-background margin-bottom6px"
+                                    *ngFor="let radio of radios">
+                                    <div class="col-sm-2 col-lg-2 col-md-2 col-xlg-2">
+                                        <div class="post-img">
+                                            <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                                                <img src="assets/images/play.png" width="55" height="55">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-10 col-lg-10 col-md-10 col-xlg-10">
+                                        <a href="/details/{{radio.perma_link}}/{{radio.id}}">
+                                            <h5 style="line-height:1.5;">{{radio.title}}</h5>
+                                        </a>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                            <span class="color-black font-size11 all-caps-only">{{_commonService.setDateFormat(radio.created_at) | date:'dd'}} {{_commonService.setDateFormat(radio.created_at) | date:'MMMM'}}
+                                                &nbsp;&nbsp;|&nbsp;&nbsp; {{radio.author_name}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="span-outer"><span class="pull-right text-danger last-update"> <a
+                                        routerLink="/radio-all" class="gry-color">VIEW ALL<i class="fa fa-caret-right"
+                                                                                             aria-hidden="true"></i></a></span>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- KSP Tv -->
+        <div class="row light-gry-background" id="tv-section">
+            <div class="container paddingNo">
+                <div class="col-md-12 main-title-outer  center-block borderNo">
+                    <h3>
+                        <div class="thin-large-heade"><i class="fa" aria-hidden="true"><img
+                                src="assets/images/KSP-TV.svg" width="40" height="40" alt=""/></i>&nbsp;&nbsp;KSP TV
+                        </div>
+                    </h3>
+                </div>
+                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 ksp-firt-banner paddingNo" *ngIf="tvs">
+                    <div class="box-shadow tv-big-card paddingNo">
+                        <div class="box">
+                                <div class="embed-responsive embed-responsive-16by9 margin-top margin-bottom15px">
+                                        <iframe class="embed-responsive-item" [src]="tvs.path" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen"></iframe>
+                                      </div>
+                        </div>
+                        <div class="carousel-caption">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+								<span *ngFor="let category of tvs.category">
+									<a routerLink="/categorywise-tv/{{category.id}}">
+										<span class="ion-android-data light-blue-button all-caps"
+                                              [style.background-color]="safeStyle(category.colour_code)"
+                                              [innerHTML]="category.name"></span>
+									</a>
+								</span>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top paddingNo">
+                                <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1 margin-top paddingNo">
+                                    <!-- <i class="fa fa-play-circle font-size50" aria-hidden="true"></i> -->
+                                </div>
+                                <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11 margin-top paddingNo">
+                                    <a href="/details/{{tvs.perma_link}}/{{tvs?.id}}">
+                                        <h4 class="blog-ellipsis-tv margin-top0">{{tvs.title}}</h4>
+                                    </a>
+                                    <span class="white-color font-size11 all-caps">{{_commonService.setDateFormat(tvs.created_at) | date:'dd'}} {{_commonService.setDateFormat(tvs.created_at) | date:'MMMM'}}
+                                        &nbsp;&nbsp;|&nbsp;&nbsp; {{tvs.author_name}}</span>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-8 col-lg-8 col-sm-8 col-xs-5 pull-left paddingNo">
+                            <div class="media-left">
+                            <a routerLink="/authorwise-posts/{{tvs.creator_id}}">
+                            <app-round-pic [picPath]="tvs.author_img" [userName]="tvs.author_name" [width]="'40px'" [height]="'40px'" [className]="'padding-top7px'"></app-round-pic>
+                            </a>
+                            </div>
+                            <div class="media-body">
+                            <a routerLink="/authorwise-posts/{{tvs.creator_id}}" class="anchor-username">
+                            <h4 class="media-heading capitalize font-size13 margin0">{{tvs.author_name}}</h4>
+                            </a>
+                            <span class="anchor-time all-caps">{{_commonService.setDateFormat(tvs.created_at) | date:'yMMMd'}}</span>
+                            </div>
+                        </div> -->
+                            <!-- <div class="col-md-4 col-sm-4 col-xs-7 col-lg-4 pull-right paddingNo">
+                            <div class="post-footer-option margin-lft">
+                            <ul class="list-unstyled text-left pull-right width-100">
+                            <app-likecomment [loveData]="tvs.liked" [entityType]="tvs.post_type" [entityId]="tvs.id" [loveCount]="tvs.likes" [commentCount]="tvs.comment_count"></app-likecomment>
+                            </ul>
+                            </div>
+                        </div> -->
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                    <div class="widget-sidebar" *ngIf="tvs">
+                        <a href="/details/{{tvs.id}}">
+                        <div class="box">
+                            <img class="img-responsive" src="{{tvs.thumbnail.split('0.jpg').join('maxresdefault.jpg')}}" style="" alt="">
+                            <div class="carousel-caption web-view">
+                                <p>
+                                    <span *ngFor="let category of tvs.category">
+                                        <span class="ion-android-data light-blue-button all-caps" [style.background-color]="safeStyle(category.colour_code)"  [innerHTML]="category.name"></span>
+                                    </span>
+                                </p>
+                               {{tvs.title}}
+                            <p class="p-text all-caps">
+                                {{_commonService.setDateFormat(tvs.created_at) | date:'MMM'}} {{_commonService.setDateFormat(tvs.created_at) | date:'dd'}} {{_commonService.setDateFormat(tvs.created_at) | date:'yyyy'}}
+                                | {{tvs.author_name}}
+                            </p>
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="overlay-info">
+                                <div class="info"> </div>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                   </div> -->
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                    <div class="widget-sidebar margin-top6px">
+                        <div class="content-widget-sidebar">
+                            <ul>
+                                <li class="recent-post ">
+                                    <h5 class=" tv-font12"><i class="fa " aria-hidden="true">
+                                        <img src="assets/images/trending-videos.svg" width="24" height="20" alt=""/>
+                                    </i>LATEST VIDEOS</h5>
+                                    <hr>
+                                    <ul>
+                                        <li class="recent-post paddingNo margin0" *ngFor="let tv of tvsList">
+                                            <div class="post-img">
+                                                <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                                                    <img src="{{tv.thumbnail.split('0.jpg').join('mqdefault.jpg')}}"
+                                                         style="width:80px;height:58px;" class="img-responsive">
+                                                </a>
+                                            </div>
+                                            <a href="/details/{{tv.perma_link}}/{{tv.id}}">
+                                                <h5 class="tv-font12">{{tv.title}}</h5>
+                                            </a>
+                                            <div class="margin-top">
+                                                <div class="pull-left paddingNo font-size11 all-caps">
+                                                    <small> BY {{tv.author_name}}</small>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <p></p>
+                                        </li>
+                                        <li class="recent-post paddingNo text-center margin0 ">
+                                            <hr>
+                                            <p class="tv-alignCenter  tv-font12 margin0"><a routerLink="/tv-all"><b>SHOW
+                                                ALL VIDEOS</b></a></p>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- Instagaram -->
+        <div class="row dark-gry-background" *ngIf="instagram">
+            <div class="container paddingNo">
+                <div class="col-md-12 center-block text-center margin-top">
+                    <h3>
+                        <div class="thin-large-heade"><i class="fa fa-instagram" aria-hidden="true"></i>&nbsp;&nbsp;#KSPOnInstagram
+                        </div>
+                    </h3>
+                </div>
+                <div class="col-md-12 main-title-outer center-block text-center margin-bottom5">
+                    <div style="border-bottom: 1px solid black; width: 23%; margin: 0 auto;"></div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12 margin-bottom5" *ngFor="let insta of instagram">
+                    <a href="{{insta.link}}" target="_blank">
+                        <div class="thumbnail" id="crop-insta-image">
+                            <div class="caption">
+                                <div style="padding:42% 0 0!important; margin:0 auto;">
+                                    <h4>
+                                        <i class="fa fa-heart-o font-size30" aria-hidden="true"></i>
+                                        <p class="font-Raleway-SemiBold color-white"
+                                           style="text-align:center!important;">{{insta.likes.count}} likes</p>
+                                    </h4>
+                                </div>
+                            </div>
+                            <img src="{{insta.images.standard_resolution.url}}" class="image-fit" alt="..."/>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12 col-lg-12 center-block text-center ">
+                    <div class="sign-up-btn">
+                        <a routerLink="/signup" class="btn btn-white btn-cons font-size">SIGN UP</a>
+                    </div>
+                    <img src="assets/images/get-start-banner.svg" width="100%" height="auto" class="image-fit" alt=""/>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+</section>
+
+<!-- Signup Modal -->
+<div class="modal fade" id="SignupModal" role="dialog">
+<div class="modal-dialog" style="width: 587px; height: 400px;">
+<div class="modal-content" style="border-radius:50px;">
+<div class="topRight" data-dismiss="modal"><span style="vertical-align:middle;">X</span></div>
+<div class="modal-body signup-background-popup" style="width: 587px; height: 450px; background-color: #f66464; border-radius: 40px; cursor: pointer;" [routerLink]="['/signup', {c: 'home-signup-pop-up'}]">
+</div>
+</div>
+</div>
+</div>
+
+<!-- Voting Modal -->
+
+<div id="thanksSubscribe" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="pull-right">
+                    <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+                </div>
+                <div>
+                    <div class="panel panel-default">
+                        <div class="text-center small-text">
+                            <p class="font-size18">{{subscribeThanaks}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

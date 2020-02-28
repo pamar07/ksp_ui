@@ -1,0 +1,28 @@
+/* Icon when the collapsible content is shown */
+  .toggleIcon:after {
+    font-size: 14px;
+    content: "\FF0D";
+  }
+  /* Icon when the collapsible content is hidden */
+  .toggleIcon.collapsed:after {
+    font-size: 14px;
+    content: "\FF0B";
+  }
+  .all-caps{
+    text-transform: uppercase!important;
+  }
+  .margin-padding{
+    margin-left:15px;
+    padding-top:4px;
+  }
+  .dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+      top: 100%!important;
+      bottom: 0%!important;
+      margin-bottom: 2px;
+      height:100%;
+      padding:10px!important;
+  }
+  button, html input[type=button], input[type=reset], input[type=submit] {
+    -webkit-appearance: media-toggle-closed-captions-button!important;
+    cursor: pointer;
+}

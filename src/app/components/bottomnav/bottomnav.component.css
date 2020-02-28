@@ -1,0 +1,125 @@
+/*.footer-navigation{
+  padding: 0;
+  margin: 0;
+
+}
+
+.footer-navigations ul{
+  padding: 0;
+  margin: 0;
+
+}
+.footer-navigationsli{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  float: left;
+  font-size: 12px;
+
+}
+
+.footer-navigationsli a{
+  padding: 0 15px;
+  margin: 0;
+  color: #000000;
+    font-size: 12px;
+
+
+}
+.footer-navigations li a:hover{
+  padding: 0 15px;
+  margin: 0;
+  color: red;
+
+
+}
+
+.item-contact-n ul{
+  padding: 0;
+  margin: 0;
+}
+.item-contact-n li{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #000000;
+    font-size: 12px;
+}
+.item-contact-n li a{
+    padding: 0 15px;
+  margin: 0;
+  color: #000000;
+    font-size: 12px;
+}
+
+.item-contact-n li a:hover{
+  padding: 0 15px;
+  margin: 0;
+  color: red;
+
+}
+*/
+.footer-navigations ul  {
+  padding: 0;
+  margin: 0;
+}
+
+.footer-navigations  li {
+    float: left;
+    list-style: none;
+    padding: 5px;
+    font-size: 11px;
+    color: #333333;
+    font-family: 'Raleway-SemiBold'!important;
+}
+.footer-navigations  li a:hover {
+    color:#e35b7f!important;
+}
+.min-height0{
+  min-height:auto!important;
+}
+
+.font-style-footer{
+  font-size: 12px;
+  font-family: 'Raleway-SemiBold';
+}
+
+
+.downloadBtn{
+  background: #e35b7f;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.downloadAppBanner{
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  display: flex;
+  padding:10px 10px;
+  width:100%;left: 0;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 999;
+}
+
+.bannerHeading{
+  display: flex;
+  flex-direction: column;
+}
+
+.officialHeading{
+  color: #e35b7f;
+  font-weight: 600;
+  font-size: 0.8em;
+  display: inline-block;
+  margin:5px 0;
+}
+
+.subHeading{
+  font-size: 0.6em;
+  font-weight: 600;
+}

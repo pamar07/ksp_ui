@@ -1,0 +1,68 @@
+.nav-playlist{
+  border: none!important;
+}
+.nav-playlist>li.active>a, .nav-playlist>li.active>a:hover{
+  font-family: 'Raleway-Bold';
+  color: #000000;
+  cursor: default;
+  background-color: transparent!important;
+  border:none!important;
+}
+.nav-playlist>li.active{
+  font-family: 'Raleway-Bold';
+  color: #000000;
+  cursor: default;
+  background-color: transparent!important;
+  border-bottom: 3px solid red!important;
+}
+.nav-playlist>li>a{
+  border:none!important;
+  font-family: 'Raleway-Bold';
+  color: #8b8b8b;
+}
+.mobile-radio-title-ellipsis{
+  font-size: 14px!important;
+  margin-bottom: 5px!important;
+  margin-top: 2%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
+  width: 100%;
+  line-height: 1.4;
+  letter-spacing: 0px;
+  font-family: 'Raleway-Bold';
+}
+.mobile-radio-card{
+  margin: 5px 15px;
+  background: #ffffff;
+  -moz-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 0px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.all-caps{
+  text-transform: uppercase!important;
+}
+.padding15{
+  padding: 15px;
+}
+.margin-top-50per{
+  margin-top: 50%!important;
+}
+
+.radio-layover {
+  position: absolute;background-color: #000; opacity: 0.1; width: 100%;top: 0;bottom: 0;
+}
+
+.pagination > .active > a{
+  background-color:#e35b7f!important;
+  border-color:#ff007b!important;
+}
+.pagination > .disabled > a{
+  //background-color:transparent!important;
+}
+.pagination li>a{
+  font-size: 10px!important;
+}

@@ -1,0 +1,149 @@
+<div class="agile-main">
+  <div class="content-wrap" >
+    <img *ngIf="groupIndividual" src="{{groupIndividual.img.substring( 0, groupIndividual.img.lastIndexOf('/')) + '/w_300' + groupIndividual.img.substring( groupIndividual.img.lastIndexOf('/'), groupIndividual.img.length)}}" alt="" width="100%" height="200px" style="object-fit:cover; object-position:center;" (click)="zoomImageToggle()">
+    <div class="container gry-background" *ngIf="groupIndividual">
+      <div class="row event-details-card">
+        <div class="col-sm-8 col-xs-8 pull-left paddingNo">
+          <h3 class="font-Raleway-SemiBold font-size18 line-height-15">{{groupIndividual.name}}</h3>
+          <div class="pull-left paddingNo font-size11 letter-spacing-1px col-md-10 all-caps margin-top5px anchor-time font-Raleway-SemiBold"> BY {{groupIndividual.author}} </div>
+          <div class="media-body pull-left margin-top5px">
+            <span class="anchor-time font-bolder"><b><span class="pink-color font-size10">{{groupIndividual.members.length}} MEMBERS &nbsp;&nbsp;|&nbsp;&nbsp; {{groupIndividual.posts.length}} POSTS</span></b></span>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-4 pull-right paddingNo">
+          <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" *ngIf="!_apiService.loggedIn()" (click)="_commonService.setNavigationUrl('social-group',groupIndividual.id,'')" style="pointer:cursor;">Join</button>
+          <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 0" (click)="leaveGroup(groupIndividual.id,groupIndividual.name)" style="pointer:cursor;">Leave</button>
+          <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 4" (click)="join(groupIndividual.id,groupIndividual.name)" style="pointer:cursor;">Join</button>
+          <button class="ion-android-data event-participate-btn font-size11 font-bolder letter-spacing-1px font-Raleway-SemiBold padding-top-bottom-6px" *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 1" style="pointer:cursor;" disabled>Pending</button>
+        </div>
+        <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top border-top-ededed">
+          <p>{{groupIndividual.excerpt}}</p>
+        </div>
+        <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top center-aligned-item">
+          <a *ngIf="_apiService.loggedIn() && groupIndividual.user_status == 0" routerLink="/create-social-post/{{groupIndividual.id}}">
+            <div class="pull-right font-size11 ion-android-data red-pink-button" style="border-radius:3px;">
+              <span>CREATE NEW POST</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+        <div class="font-size16 font-Raleway-SemiBold margin-top12px color-gray">Feeds</div>
+        <div class="font-size14 width-100per text-center margin-top12px" *ngIf="groupIndividual.posts.length==0">
+          <p>Oops! sorry, no post have been created till now.</p>
+          <p>Be the first to post in this group.</p>
+        </div>
+        <div *ngIf="groupIndividual.posts.length!=0">
+          <div class="row feed-details-card" *ngFor="let feed of groupIndividual.posts.slice().reverse(); let i=index">
+            <div class="col-sm-12 col-xs-12 pull-left paddingNo">
+              <div class="media-left post-img">
+                <app-round-pic [picPath]="feed.image_path" [userName]="feed.author_name" [width]="'50px'" [height]="'50px'" [className]="'padding-top5px'"></app-round-pic>
+              </div>
+              <div class="media-body" style="vertical-align:middle;">
+                <div class="col-xs-10 col-sm-10 paddingNo">
+                  <h4 class="" *ngIf="getUserName()==null || getUserName()!=feed.name"><a href="javascript:void(0);" class="font-size13 color-black font-bolder">{{feed.name}}</a></h4>
+                  <h4 class="" *ngIf="getUserName()!=null && getUserName()==feed.name"><a href="javascript:void(0);" class="font-size13 color-black font-bolder">You</a></h4>
+                  <div class="pull-left all-caps anchor-time font-size10 font-Raleway-SemiBold margin-top3px"> {{_commonService.setDateFormat(feed.created_at) | date:'yMMMd'}}</div>
+                </div>
+                <div class="col-xs-2 col-sm-2 paddingNo pull-right">
+                  <app-bookmark [bookmarkData]="feed.bookmarked" [entityType]="feed.post_type" [entityId]="feed.id" [bookmarkCount]="feed.bookmark_count" [noBackground]="'true'"></app-bookmark>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-9 col-xs-9 pull-left paddingNo margin-top14px">
+              <h4 class="font-Raleway-SemiBold">
+                <a routerLink="/post-individual/{{feed.id}}" class="font-size16">{{feed.title}}</a>
+              </h4>
+            </div>
+            <span *ngIf="_apiService.loggedIn()">
+              <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 margin-top5px paddingNo" *ngIf="loggedInUserId == feed.creator_id">
+                <a data-toggle="dropdown" class="dropdown-toggle">
+                  <i class="fa fa-ellipsis-v margin-top10px pull-right post-delete-menu-padding hand-cursor"></i>
+                </a>
+                <ul class="dropdown-menu" style="right:0!important;left:initial!important;">
+                  <li>
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#edit-post" (click)="editSocialPost(i,feed.id,feed.title)">Edit Post</a>
+                    <hr class="margin0"/>
+                    <a href="javascript:void(0);" (click)="deleteSocialPost(feed.id,feed.title)">Delete Post</a>
+                  </li>
+                </ul>
+              </div>
+            </span>
+            <div class="col-sm-12 col-xs-12 pull-left paddingNo">
+              <span class="post-ellipsis font-size13" [innerHTML]="feed.safeContent"></span>
+              <a routerLink="/post-individual/{{feed.id}}"><span class="show-more">   ...read more</span></a>
+            </div>
+            <div class="col-sm-12 col-xs-12 pull-left paddingNo margin-top10px">
+              <ul  class="list-unstyled text-left" style="width:220px;">
+                <app-likecomment [loveData]="feed.liked" [entityType]="feed.post_type" [entityId]="feed.id" [loveCount]="feed.likes" [commentCount]="feed.comment_count" [isBlack]="true"></app-likecomment>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div style="position:absulute;" id="zoom-img" class="hide">
+  <img *ngIf="groupIndividual" src="{{groupIndividual.img.substring( 0, groupIndividual.img.lastIndexOf('/')) + '/w_300' + groupIndividual.img.substring( groupIndividual.img.lastIndexOf('/'), groupIndividual.img.length)}}" alt="" width="100%" height="auto" style="top:calc(100vw / 2); z-index:1000; position:absolute;">
+  <div class="topRight" (click)="zoomImageToggle()">X</div>
+</div>
+<span id="zoom-img-dim" class="dim hide" (click)="zoomImageToggle()"></span>
+
+
+<div id="edit-post" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-body">
+          <div class="pull-right">
+            <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+          </div>
+          <div class="profile-sidebar">
+            <div class="col-md-12 paddingNo">
+                <h4><a class="color-pink">Edit Post</a></h4>
+            </div>
+            <br>
+            <hr>
+          </div>
+          <div *ngIf="_apiService.loggedIn()">
+            <div class="row text-center">
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <b class="font-size13 margin-bottom15">Title</b><br/>
+                <input type="text" [(ngModel)]="editedPostTitle" [ngModelOptions]="{standalone: true}" class="form-control height40 margin-top2per font-Raleway" style="text-align: left;font-size:14px;">
+                <div *ngIf="editedPostTitle==''" class="error-survey-form">Please enter the title.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top20px" style="text-align: left">
+                <b class="font-size13">Content</b><br/><br/>
+                <ckeditor
+                  [(ngModel)]="editedPostContent"
+                  [ngModelOptions]="{standalone: true}"
+                  [config]="{
+                    uiColor: '#c1c1c1',
+                    filebrowserBrowseUrl: 'image-browser',
+                    filebrowserUploadUrl: uploadUrl,
+                    toolbarGroups: [
+                    {'name':'basicstyles','groups':['basicstyles']},
+                    {'name':'links','groups':['links']},
+                    {'name':'paragraph','groups':['list','blocks']},
+                    {'name':'insert','groups':['insert']},
+                    {'name':'styles','groups':['styles']}
+                    ],
+                    height:'100px'
+                  }"
+                  [readonly]="isReadonly"
+                  debounce="500">
+                </ckeditor>
+                <div *ngIf="editedPostContent==''" class="error-survey-form margin-top">Please enter your content.</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13" (click)="saveEditedPost()" data-dismiss="modal">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<!-- <ngx-loading
+  [show]="loading"
+  [config]="{ fullScreenBackdrop : true }">
+</ngx-loading> -->
+<div class="agile-main">
+  <div class="content-wrap">
+    <div class="container col-xs-12 col-sm-12" *ngIf="articles">
+      <div class="article-category-scroll-box" *ngIf="masterCategoryList">
+        <a *ngFor="let cat of masterCategoryList"
+            href="javascript:void(0);"
+            class="article-category-tab"
+            aria-selected="true"
+            (click)="tab_selected = cat.id"
+            [ngClass]="{'article-category-tab-selected':(tab_selected == cat.id)}">{{cat.name}}</a>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 category-filter-box matgin-top-13px gry-background" *ngIf="articles">
+      <div class="article-category-scroll-box paddingNo padding-left-right5px" style="height:auto;">
+        <span *ngFor="let cat of categoryList; let i=index">
+          <a *ngIf="cat.parent_id == tab_selected" routerLink="/categorywise-radio/{{cat.id}}">
+            <span class="ion-android-data light-blue-button all-caps mobile-sub-cat-button"
+                  [ngClass]="{'mobile-sub-cat-selected':cat.checked}"
+                  [ngStyle]="{'background-color':cat.colour_code, 'background-image':'url(assets/images/cat-right-black.png)', 'background-size': '0px 0px', 'white-space': 'nowrap'}"
+                  [innerHTML]="cat.name"></span>&nbsp;
+          </a>
+        </span>
+      </div>
+    </div>
+    <div class="container" *ngIf="articles">
+        <div class="col-sm-12 col-xs-12 paddingNo">
+          <p class="font-Raleway-SemiBold font-size13 color-gray">KSP Radio</p>
+          <div class="inn_tab_sec">
+            <div class="tab-content">
+                <div class="inn_media_box margin0">
+                  <div class="media">
+                    <ul *ngFor="let article of articles; let i=index" style="margin-bottom:3px;">
+                      <li class="paddingNo">
+                        <div class="paddingNo col-sm-2 col-xs-3">
+                          <!-- <a href="/details/{{article.id}}"> -->
+                            <div class="text-center">
+                              <!-- <app-soundcloud [path]="article.img[0].path" [id]="article.id"></app-soundcloud>
+                              <i (click)="setRadio(article.img[0].path,article.id,i)" class="toggle{{article.id}} fa square-thumbnail-image color-baby-pink font-size50" [ngClass]="{'fa-play-circle':!article.playing,'fa-pause-circle':article.playing}" style="border-radius:4px;"></i> -->
+                              <div class="square-thumbnail-image-container">
+                                <img class="square-thumbnail-image" src="{{article.radio_image? (article.radio_image.substring( 0, article.radio_image.lastIndexOf('/')) + '/w_300' + article.radio_image.substring( article.radio_image.lastIndexOf('/'), article.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}">
+                              </div>
+                            </div>
+                          <!-- </a> -->
+                        </div>
+                        <div class="col-sm-10 col-xs-9 padding-right0">
+                          <div class="col-sm-12 col-xs-12 padding-left-right0">
+                            <a href="/details/{{article.perma_link}}/{{article.id}}">
+                              <h5 class="font-size13 small-title-excerpt font-Raleway-SemiBold">{{article.title}}</h5>
+                          </a>
+                          </div>
+                          <div class="col-sm-12 col-xs-12 margin-top padding-left0">
+                            <span class="ion-android-data light-blue-button currentCategorySelected-btn" [innerHTML]="categoryName"></span>
+                          </div>
+                          <div class="col-sm-12 col-xs-12 paddingNo">
+                            <div class="font-size11 col-sm-8 col-xs-8 margin-top font-size10 padding-left-right0"><a routerLink="/authorwise-posts/{{article.creator_id}}"><span class="pull-left">By {{article.author_name}}</span></a></div>
+                            <div class="paddingNo font-size10 col-sm-4 col-xs-4 margin-top"><span class="pull-right anchor-time margin-left font-size9 font-Raleway-SemiBold">{{_commonService.setDateFormat(article.created_at) | date:'yMMMd'}}</span></div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-xs-12 margin-top-bottom-5px" style="border-bottom: 1px solid #ededed;" *ngIf="i<articles.length-1"></div>
+                        <div class="clearfix"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row margin-top margin-bottom15">
+          <div class="container paddingNo">
+              <div class="pull-right">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination">
+                    <li [class]="isPrevious ? '' : 'disabled'" class="disabled">
+                      <a href="javascript:void(0);" aria-label="Previous" (click)="getNewPage(currentPage - 1)">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li *ngFor="let i of paginations" [class]="currentPage==i ? 'active' : ''">
+                      <a href="javascript:void(0);" (click)="getNewPage(i)" onclick="window.scrollTo(0,0);">{{i}}</a>
+                    </li>
+                    <li [class]="isNext ? '' : 'disabled'">
+                      <a href="javascript:void(0);" aria-label="Next" (click)="getNewPage(currentPage + 1)">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<hr/>

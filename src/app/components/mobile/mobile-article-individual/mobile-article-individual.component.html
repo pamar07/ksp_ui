@@ -1,0 +1,465 @@
+<app-mobile-inline-share [shareCount]="shareCount"></app-mobile-inline-share>
+<div class="agile-main" style="margin-top:20px">
+  <div class="content-wrap" *ngIf="article">
+    <div>
+      <div class="container margin-top-bottom-5px text-center">
+        <h1 class="color-black font-bolder font-size-18 font-Raleway-SemiBold letter-spacing-1px margin-top">{{article.title}}</h1>
+        <div class="margin-top" style="margin-bottom: 20px;">
+          <a *ngFor="let cat of article.category; let i=index" routerLink="/categorywise-article/{{cat.id}}">
+            <span class="ion-android-data light-blue-button all-caps" style="background-color:grey" [innerHTML]="cat.name"></span>&nbsp;
+          </a>
+        </div>
+        <img src="{{article.img[0].path.substring( 0, article.img[0].path.lastIndexOf('/')) + '/w_300' + article.img[0].path.substring( article.img[0].path.lastIndexOf('/'), article.img[0].path.length)}}" alt="" width="100%" height="200px" style="object-fit:cover; object-position:center;" (click)="zoomImageToggle()">
+      </div>
+    </div>
+    <div class="container">
+      <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngIf="promotionInsideContentTop">
+        <app-advertise [add]="promotionInsideContentTop"></app-advertise>
+      </div> -->
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+        <span class="margin-top font-size14 width-100per article-content-style" [innerHTML]="article.content" style="word-break: break-word;"></span>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="article.restrict_flag=='1'">
+        <div class="guest-content-wrapper" style="padding: 8px!important;" *ngIf="!_apiService.loggedIn()">
+          <div class="guest-content" style="padding: 1px!important;">
+            <p><strong class="font-size14">You need to be logged-in to be able to see this content.</strong></p>
+            <p></p>
+            <p class="color-pink"><strong><a class="color-pink font-size12" routerLink="/login" (click)="setNavigationUrl()">Login</a> / <a class="color-pink font-size12" [routerLink]="['/signup', {c: 'article-'+article.id}]" (click)="setNavigationUrl()">Register</a></strong></p>
+          </div>
+        </div>
+        <img src="assets/images/blur-content.png" class="img-responsive" *ngIf="!_apiService.loggedIn()"/>
+        <p class="font-size14 width-100per article-content-style" [innerHTML]="article.restricted_content" *ngIf="_apiService.loggedIn()" style="word-break: break-word;"></p>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+        <div class="pull-left margin-top ">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo">
+            <div class="media-left pull-left">
+              <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'30px'" [height]="'30px'" [className]="'padding-top2px'"></app-round-pic>
+              </a>
+            </div>
+            <div class="media-body pull-left">
+              <a routerLink="/authorwise-posts/{{article.creator_id}}" class="anchor-username">
+              <h4 class="media-heading margin-top1per color-black font-size14">{{article.author_name}}</h4>
+              </a>
+              <span class="anchor-time font-size11">{{_commonService.setDateFormat(article.published_date) | date:'yMMMd'}} <!--| 3 MIN READ--></span>
+            </div>
+            <div class="media-body pull-right">
+              <button *ngIf="userFollowing == 0" class="font-regular" style="background-color:#ffffff; border-radius:3px;color:#e35b7f;border:1px solid #e35b7f" (click)="follow_author(1)">Follow</button>
+              <button *ngIf="userFollowing == 1" class="font-regular" style="background-color:#ffffff; border-radius:3px;color:#e35b7f;border:1px solid #e35b7f" (click)="follow_author(0)">&#10003;Following</button>
+            </div>             
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left margin-top20px paddingNo">
+            <div class="post-footer-optio margin-lft">
+            <ul class="list-unstyled text-left">
+            <app-likecomment [loveData]="article.liked" [entityType]="article.post_type" [entityId]="article.id" [loveCount]="article.likes" [permaLink]="article.perma_link" [commentCount]="article.comment_count" [isBlack]="'true'"></app-likecomment>
+            <li class="social-ind width25p">
+              <a href="javascript:void(0);" (click)="doBookmark(article.post_type,article.id)">
+                <i class="fa fa-bookmark-o color-black like-comment-img" aria-hidden="true" *ngIf="!isBookmarked"></i>
+                <i class="fa fa-bookmark color-pink like-comment-img" aria-hidden="true" *ngIf="isBookmarked"></i>
+                <p class="paddingNo margin0">{{article.bookmark_count}}</p>
+              </a>
+             </li>
+            </ul>
+            </div>
+          </div>    
+
+        </div>
+      </div>
+
+      <!-- meal plan banner  -->
+        <!-- <div class="col-xs-12 paddingNo" *ngIf='mealPlan'>
+          <div class="green-bar font-Raleway-SemiBold" style="margin: 10px 0px 0px 0px;">
+            <div class="col-md-6 paddingNo">
+              <img src='assets/images/Mac-and-Cheese-Boston2.jpg' style="width: 100%;height: 120px;object-fit:  cover;object-position: center;" />
+            </div>
+            <div class="col-md-6" style="text-align: center;padding-bottom: 10px;">
+              <span class="meal-header">Get 100 meal plans and be worry free for 2 years!</span><br />
+              <span class="meal-yes-button subscribe-button" data-toggle="modal" data-target="#mealBannerModal">Yes! Show me those plans now!</span><br />
+            </div>
+          </div>
+        </div> -->
+      <!-- meal plan banner -->
+
+
+      <span *ngIf="promotionInsideContentBottom">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top" *ngFor="let botprom of promotionInsideContentBottom">
+          <app-advertise [add]="botprom"></app-advertise>
+        </div>
+      </span>
+      <div class="row margin-top margin-bottom15">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top20px" id="responses">
+              <div class="blog-thumnail">
+                <section class="post-footer footer-im">
+                  <div class="post-footer-comment-wrapper">
+                    <div class="comment-form"> </div>
+                    <div class="comment">
+                      <div class="media">
+                        <div class="main-title-outer pull-left">
+                          <div class="main-title paddingNo margin0"> <i class="fa font-size12" aria-hidden="true"><img src="assets/images/tre.png" width="20" height="20" alt=""></i>RESPONSES</div>
+                        </div>
+                        <div *ngIf="article.comments.length==0">
+                          <div class="blog-content paddingNo font-size11">
+                            No comment posted yet.
+                          </div>
+                        </div>
+                        <div *ngIf="article.comments.length!=0">
+                          <div class="blog-content paddingNo" *ngFor="let comment of article.comments.slice().reverse(); let i=index">
+                            <div class="col-xs-12 col-sm-12 paddingNo" [style.display]="(i<10 || showAll) ? '':'none'">
+                              <div class="col-md-1 col-lg-1 col-sm-2 col-xs-1 paddingNo">
+                                <app-round-pic [picPath]="comment.user_profile" [userName]="comment.user_name" [width]="'30px'" [height]="'30px'"></app-round-pic>
+                              </div>
+                              <div class="col-xs-11 col-lg-11 col-sm-10 col-xs-11 padding-right0">
+                                <h4 class="capitalize margin0">
+                                  <a href="javascript:void(0);" class="font-size15" *ngIf="getUserName()==null || getUserName()!=comment.user_name">{{comment.user_name}}</a>
+                                  <a href="javascript:void(0);" class="font-size15" *ngIf="getUserName()!=null && getUserName()==comment.user_name">You</a>
+                                </h4>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top-bottom-5px">
+                                  <p class="margin0 font-size9"[innerHTML]="safeHtml(comment.content)"></p>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                  <div class="pull-left paddingNo font-size11 col-md-10">
+                                    {{_commonService.setDateFormat(comment.created_at) | date:'yMMMd'}}
+                                    <app-comments-like [isLoved]="comment.isLoved" [loveCount]="comment.likes" [entityType]="comment.type" [commentId]="comment.id" [permaLink]="article.perma_link" [entityId]="article.id" ></app-comments-like>
+                                    <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(comment.id, i)">Reply</span>
+                                  </div>
+                                </div>
+
+                                <!-- reply Comment -->
+                                <div *ngIf="comment.commentReplies.length" class="col-xs-12 paddingNo" style="margin-top: 10px">
+                                  <div class="col-xs-12 paddingNo">
+                                    <div *ngFor="let reply of comment.commentReplies; let j=index"  [ngClass]="(j<2 || replyComment ==  comment.id || showReply[comment.id]) ? 'show' : 'hide'">
+                                      <div class="col-xs-1 paddingNo">
+                                        <app-round-pic [picPath]="reply.user_profile" [userName]="reply.user_name" [width]="'30px'" [height]="'30px'"></app-round-pic>
+                                      </div>
+                                      <div class="col-xs-11" style="margin-bottom: 5px;">
+                                        <h4 class="capitalize margin0 padding-bottom10px" style="padding-bottom: 5px;">
+                                          <span *ngIf="getUserName()==null || getUserName()!=reply.user_name" style="font-size:15px; font-weight:600;">{{reply.user_name}}</span>
+                                          <span *ngIf="getUserName()!=null && getUserName()==reply.user_name" style="font-size:15px; font-weight:600;">You</span>
+                                        </h4>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                                          <p class="margin0"[innerHTML]="safeHtml(reply.content)"></p>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" style="padding-top:5px !important;">
+                                          <div class="pull-left paddingNo font-size11 col-md-10">
+                                            {{_commonService.setDateFormat(reply.created_at) | date:'yMMMd'}}
+                                            <app-comments-like [isLoved]="reply.isLoved" [loveCount]="reply.likes" [entityType]="reply.post_type" [commentId]="reply.id" [permaLink]="article.perma_link" [entityId]="article.id" ></app-comments-like>
+                                            <span style="margin:10px;color:#337ab7; cursor: pointer;" (click)="showReplyComment(reply.parent_id, i)">Reply</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <hr *ngIf="j<comment.commentReplies.length-1" style="width:100%; margin-top:0px; margin-bottom:5px;">
+                                    </div>
+                                    <div class="col-md-11 paddingNo" style="cursor: pointer;">
+                                      <span *ngIf="comment.commentReplies.length > 2 && !showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = true">
+                                        {{comment.commentReplies.length -2 }} More {{comment.commentReplies.length -2 > 1 ? 'Replies' : 'Reply'}}
+                                      </span>
+                                      <span *ngIf="showReply[comment.id] && replyComment !=  comment.id" style="color:#337ab7;font-size:13px" (click)="showReply[comment.id] = false">
+                                        Show less
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- reply Comment Box -->
+                                <div id="comment_id_{{comment.id}}" class="col-xs-12 paddingNo" style="margin-top: 10px">
+                                  <div *ngIf="replyComment ==  comment.id">
+                                    <ckeditor
+                                      [(ngModel)]="user_comment_reply"
+                                      [config]="{
+                                        uiColor: '#c1c1c1',
+                                        toolbar:[
+                                         { name: 'insert',items: [ 'Smiley'] }
+                                        ],
+                                        toolbarLocation: 'bottom',
+                                        contentsCss: '../assets/css/ckeditor-custom.css',
+                                        height:'50px'
+                                      }"
+                                      [readonly]="false"
+                                      debounce="500">
+                                    </ckeditor>
+                                    <p *ngIf="user_comment_reply_error" style="color:red; font-size:13px;">{{user_comment_reply_error}}</p>
+                                    <button id="submit" name="submit" class="btn font-size10 margin-top btn-padding-8px" (click)="doCommentReply()">REPLY</button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12 col-xs-12 paddingNo">
+                                <hr class="margin-top-bottom-10px" *ngIf="i<article.comments.length-1">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+          </div>
+
+
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group paddingNo" *ngIf="article.comments.length>2">
+            <label class="col-md-5 control-label" for="submit"></label>
+              <div class="col-md-3">
+                <button id="submit" name="submit" class="btn font-size10" *ngIf="!showAll" (click)="showAll=!showAll">LOAD ALL RESPONSES</button>
+                <button id="submit" name="submit" class="btn font-size10" *ngIf="showAll" (click)="showAll=!showAll" onclick="document.getElementById('responses').scrollIntoView();">SHOW LESS</button>
+              </div>
+          </div>
+
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 margin-top20px paddingNo">
+            <div class="main-title-outer pull-left">
+              <div class="main-title paddingNo margin0"> <i class="fa font-size12" aria-hidden="true"><img src="assets/images/tre.png" width="20" height="20" alt=""></i>YOUR RESPONSE</div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 font-size11 paddingNo" *ngIf="!_apiService.loggedIn()">
+            <a routerLink="/login" style="color:#e35b7f;">Please Login to comment</a>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo" *ngIf="_apiService.loggedIn()">
+              <ckeditor
+                [(ngModel)]="user_comment"
+                [config]="{
+                  uiColor: '#c1c1c1',
+                  toolbar:[
+                   { name: 'insert',items: [ 'Smiley'] }
+                  ],
+                  toolbarLocation: 'bottom',
+                  contentsCss: '../assets/css/ckeditor-custom.css',
+                  height:'50px'
+                }"
+                [readonly]="false"
+                debounce="500">
+              </ckeditor>
+              <p *ngIf="user_comment_error" style="color:red; font-size:13px;">{{user_comment_error}}</p>
+              <button id="submit" name="submit" class="btn font-size10 margin-top btn-padding-8px" (click)="doComment()">POST YOUR RESPONSE</button>
+          </div>
+        </div>
+    </div>
+
+    <hr/>
+    <!-- Advertisement goes here -->
+    <div class="container paddingNo" id="mealPlanScroller" (scroll)="scrollHandler($event)">
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 margin-top" *ngIf="promotions">
+          <div class="content-widget-sidebar" *ngFor="let promotions of promotionsArticle; let i=index">
+              <app-advertise [add]="promotions"></app-advertise>
+            </div>
+        <div class="content-widget-sidebar" *ngFor="let promotion of promotions; let i=index">
+          <app-advertise [add]="promotion"></app-advertise>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="container gry-background" *ngIf="events">
+      <div class="col-sm-12 col-xs-12 paddingNo">
+        <p class="font-size14 font-Raleway-SemiBold container">Upcoming EVENTS</p>
+      </div>
+      <div class="col-sm-12 col-xs-12 paddingNo margin-top5px social-group">
+        <div class="social-group-card" *ngFor="let event of events">
+          <span routerLink="/event-individual/{{event.perma_link}}/{{event.id}}" onclick="window.scrollTo(0,0)">
+            <img class="group-card-img" src="{{event.path.substring( 0, event.path.lastIndexOf('/')) + '/w_300' + event.path.substring( event.path.lastIndexOf('/'), event.path.length)}}"  alt="">
+            <div class="color-black card-title social-group-detail">
+              <div class="font-Raleway-SemiBold font-size16 partner-title-elipsis">
+                {{event.title}}
+              </div>
+              <div class="anchor-time font-Raleway-SemiBold letter-spacing-1px font-size10 partner-tagline-elipsis margin-top5px">
+                <small class="date-color" *ngIf="getOnlyDate(event.start_date)==getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}}</small>
+                <small class="date-color" *ngIf="getOnlyDate(event.start_date)!=getOnlyDate(event.end_date)">{{_commonService.setDateFormat(event.start_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.start_date) | date:'yMMMd'}} - {{_commonService.setDateFormat(event.end_date) | date:'EEEE'}}, {{_commonService.setDateFormat(event.end_date) | date:'yMMMd'}}</small>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="margin-top20px" style="border-bottom:1px solid #ccc;">
+      <span class="all-caps font-size13 font-Raleway-SemiBold" style="width:40%; border-bottom: 2px solid #000000; padding-left: 20px;">Related Articles</span>
+    </div>
+    <div class="margin-top card-scroll-box margin-bottom15px">
+      <span *ngIf="relatedArticles">
+        <span *ngFor="let article of relatedArticles">
+            <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+              <img class="border-radius18 card-img" src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+                <p class="white-color card-title">{{article.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                  <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{article.author_name}}</span>
+                  </a>
+                  <!-- <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(article.created_at) | date:'yMMMd'"></span> -->
+                </div>
+              </span>
+            </span>
+        </span>
+      </span>
+    </div>
+
+    <!-- KSP TV -->
+    <div class="row" *ngIf="relatedTvs">
+      <div class="ontainer">
+        <div class="margin-top20px" style="border-bottom:1px solid #ccc;">
+          <span class="all-caps font-size13 font-Raleway-SemiBold" style="width:40%; border-bottom: 2px solid #000000; padding-left: 20px;">KSP TV</span>
+        </div>
+        <div class="margin-top card-scroll-box margin-bottom15px">
+          <span *ngFor="let tv of relatedTvs">
+            <a href="/details/{{tv.perma_link}}/{{tv?.id}}">
+              <img class="border-radius18 card-img" [src]="tv.thumbnail.split('0.jpg').join('mqdefault.jpg')"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{tv.perma_link}}{{tv?.id}}">
+                <p class="white-color card-title">{{tv.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                    <app-round-pic [picPath]="tv.author_path" [userName]="tv.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                  </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{tv.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{tv.author_name}}</span>
+                  </a>
+                  <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(tv.published_date) | date:'yMMMd'"></span>
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- KSP Radio -->
+    <div class="row" *ngIf="relatedRadios">
+      <div class="ontainer">
+        <div class="margin-top20px" style="border-bottom:1px solid #ccc;">
+          <span class="all-caps font-size13 font-Raleway-SemiBold" style="width:40%; border-bottom: 2px solid #000000; padding-left: 20px;">KSP RADIO</span>
+        </div>
+        <div class="margin-top card-scroll-box margin-bottom15px">
+          <span *ngFor="let radio of relatedRadios; let i=index">
+            <a href="/details/{{radio.perma_link}}/{{radio?.id}}">
+              <img class="border-radius18 card-img" src="{{radio.radio_image? (radio.radio_image.substring( 0, radio.radio_image.lastIndexOf('/')) + '/w_300' + radio.radio_image.substring( radio.radio_image.lastIndexOf('/'), radio.radio_image.length)):'//www.kidsstoppress.com/assets/images/KSP-Logo-main.svg'}}"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{radio.perma_link}}/{{radio?.id}}">
+                <p class="white-color card-title">{{radio.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                  <a routerLink="/authorwise-posts/{{radio.creator_id}}">
+                    <app-round-pic [picPath]="radio.author_path" [userName]="radio.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                  </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{radio.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{radio.author_name}}</span>
+                  </a>
+                  <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(radio.published_date) | date:'yMMMd'"></span>
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Latest Articles -->
+    <div class="margin-top20px" style="border-bottom:1px solid #ccc;">
+      <span class="all-caps font-size13 font-Raleway-SemiBold" style="width:40%; border-bottom: 2px solid #000000; padding-left: 20px;">KSP Latest Articles</span>
+    </div>
+    <div class="margin-top card-scroll-box margin-bottom15px">
+      <span *ngIf="recentArticles">
+        <span *ngFor="let article of recentArticles">
+            <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+              <img class="border-radius18 card-img" src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}"  alt="">
+            </a>
+            <span class="tagLine-m">
+              <a href="/details/{{article?.perma_link}}/{{article?.id}}">
+                <p class="white-color card-title">{{article.title}}</p>
+              </a>
+              <span class="font-size12 color-white">
+                <div class="media-left">
+                <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                  <app-round-pic [picPath]="article.author_img" [userName]="article.author_name" [width]="'30px'" [height]="'30px'" [className]="'font-size21'"></app-round-pic>
+                </a>
+                </div>
+                <div class="media-body" style="vertical-align:middle!important;">
+                  <a routerLink="/authorwise-posts/{{article.creator_id}}">
+                    <span class="media-heading capitalize white-color">{{article.author_name}}</span>
+                  </a>
+                  <!-- <span class="anchor-time white-color pull-right margin-top5px" [innerHtml]="_commonService.setDateFormat(article.created_at) | date:'yMMMd'"></span> -->
+                </div>
+              </span>
+            </span>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+<hr/>
+
+<div style="position:absulute;" id="zoom-img" class="hide">
+  <img *ngIf="article" [src]="article.img[0].path" alt="" width="100%" height="auto" style="top:calc(100vw / 2); z-index:1000; position:absolute;">
+  <div class="topRight" (click)="zoomImageToggle()">X</div>
+</div>
+<span id="zoom-img-dim" class="dim hide" (click)="zoomImageToggle()"></span>
+<p #dataContainer></p>
+
+
+<div class="modal fade" id="mealBannerModal" tabindex="-1" role="dialog" aria-labelledby="mealBannerModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border: none;display: flex;justify-content: space-between;padding: 15px 45px">
+        <span style="color: red;font-size: 0.9em;font-weight: 600">Subscribe to Meal Plan</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 0 15px !important">
+        <form [formGroup]="subForm" (ngSubmit)="subForm.valid && mealPlanBannerForm(subForm.value)" #formSub="ngForm">
+          <div class="modal-body">
+            <div class="row text-center" >
+              <div class="col-md-12 col-lg-12" style="text-align: left">
+                <input class="form-control" type="email" placeholder="Enter your email" style="width:100%" [formControl]="subForm.controls['email']" />
+
+                <div *ngIf="(subForm.controls['email'].hasError('required') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('required') && formSub.submitted)" class="error-survey-form">Please enter your email id</div>
+                
+                <div *ngIf="!subForm.controls['email'].hasError('required') && ((subForm.controls['email'].hasError('email') && subForm.controls['email'].dirty) || (subForm.controls['email'].hasError('email') && formSub.submitted))" class="error-survey-form">Please enter a valid email</div>
+              </div>
+              <div class="col-md-12 col-lg-12 margin-top">
+                <div class="col-md-3 col-lg-3 paddingNo" style="width:auto;">
+                  <button type="submit" class="btn green-background blue-green font-size13">Submit</button> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="thanksSubscribe" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="pull-right">
+          <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+        </div>
+        <div>
+          <div class="panel panel-default">
+            <div class="text-center small-text">
+              <p class="font-size18">{{subscribeThanaks}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

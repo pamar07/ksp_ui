@@ -1,0 +1,37 @@
+<div class="agile-main gry-background paddingNo" *ngIf="members">
+  <div class="content-wrap">
+    <div class="container">
+      <div class="font-size21 font-Raleway-SemiBold margin-top12px text-center">TEAM</div>
+      <div class="font-size15 color-gray font-Raleway-SemiBold margin-top12px text-center">Meet the team that brings their expertise, knowledge, and chutzpah to Kidsstoppress daily.</div>
+      <div class="widget-sidebar">
+        <div class="content-widget-sidebar margin0">
+          <ul>
+            <li class="recent-post margin-bottom6px event-box-home-page padding11px white-background" style="border-radius:4px;"  *ngFor="let member of members; let i=index">
+              <div class="paddingNo col-sm-2 col-xs-3">
+                <a routerLink="/authorwise-posts/{{member.id}}">
+                  <div class="square-thumbnail-image-container">
+                    <img [src]="member.path==''? 'assets/images/blank-profile-picture.png' : member.path" class="square-thumbnail-image" style="border-radius:4px;" alt="{{member.name}}">
+                  </div>
+                </a>
+              </div>
+              <div class="col-sm-10 col-xs-9 padding-right0">
+                <div class="col-sm-12 col-xs-12 padding-left-right0">
+                  <a routerLink="/authorwise-posts/{{member.id}}">
+                    <h5 class="font-size16 font-Raleway-SemiBold paddingNo">{{member.name}}</h5>
+                  </a>
+                </div>
+                <div class="col-sm-12 col-xs-12 padding-left0">
+                  <span class="font-size10 color-pink small-title-excerpt margin-top">{{member.role}}</span>
+                </div>
+                <div class="col-sm-12 col-xs-12 paddingNo">
+                  <span class="small-title-excerpt font-size11 color-gray margin-top font-Raleway-SemiBold" [innerHTML]="member.desc"></span>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

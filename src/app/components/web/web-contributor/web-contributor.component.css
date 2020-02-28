@@ -1,0 +1,85 @@
+.desc-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 75px;
+  width: 100%;
+  color:#000;
+}
+.card-padding{
+  padding: 13px 13px!important;
+}
+.card-width{
+  /*width: 250px!important;*/
+}
+.min-height250px{
+  min-height: 250px!important;
+}
+.min-height300px{
+  min-height: 300px!important;
+}
+a.pink-color{
+  color: #ec0a46;
+}
+
+.about-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  max-height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 73px;
+  width: 100%;
+  margin-bottom: 40px;
+  text-align: justify;
+}
+
+.btn-read {
+   background: transparent;
+   border-radius: 0;
+   border: 1px solid #ffffff;
+   color: #fff;
+   padding: 12px 25px!important;
+   text-align: center!important;
+   margin: 0 auto;
+}
+.btn-read:hover{
+  background: #fff;
+  color: #000;
+}
+
+.member-card{
+   height: 340px;
+   background: radial-gradient(#6e6e6e,#2f2f2f);
+   background: -webkit-radial-gradient(#6e6e6e,#2f2f2f);
+   background: -moz-radial-gradient(#6e6e6e,#2f2f2f);
+   color: #fff;
+   position: relative;
+   overflow:hidden;
+}
+.member-card figure {
+   position: absolute;
+   text-align: left;
+   padding: 10px 19px 19px 19px;
+   width: 100%;
+   height: 100%;
+   border-top: 1px solid #fff;
+   background: rgba(0, 0, 0, 0.71);
+   bottom: -85%;
+   transition: ease-in-out .5s;
+}
+.member-card:hover figure {
+   bottom: 0;
+}
+.member-card figure h3{
+   margin: 0;
+   padding-bottom: 10px;
+   color: #ffffff;
+}
+.member-card img{
+   height: 100%;
+}

@@ -1,0 +1,702 @@
+<app-topnavnofilter></app-topnavnofilter>
+<!--main content start-->
+<section id="main-content" class="">
+  <section class="wrapper">
+    <div class="row margin-bottom15">
+      <div class="container">
+        <a *ngIf="!previewMode" routerLink="/dashboard"><div class="col-md-12 main-title-outer-nobr"><i class="fa fa-angle-left" aria-hidden="true"></i> &nbsp; Back to dashboard</div></a>
+        <a *ngIf="previewMode" href="javascript:void(0);" (click)="previewMode = false"><div class="col-md-12 main-title-outer-nobr"><i class="fa fa-angle-left" aria-hidden="true"></i> &nbsp; Back to Create Mode</div></a>
+
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="previewMode">
+        <div class="single-blog-item">
+          <div class="blog-thumnail">
+            <section class="post-footer footer-im">
+              <div class="post-footer-comment-wrapper">
+                <div class="comment-form"> </div>
+                <div class="comment margin-top ">
+                  <div class="media">
+                    <div class="blog-content paddingNo">
+                      <h3><b>{{article_title}}</b></h3>
+                      <br>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo preview-img-size">
+                        <a href=""><img src="{{image_path}}"  alt=""></a>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                        <div class="main-title-outer pull-left">
+                          <div class="media-left margin-top padding-top10px">
+                            <a href="#">
+                              <app-round-pic [picPath]="_apiService.getAuthUser().image_path" [userName]="_apiService.getAuthUser().name" [width]="'50px'" [height]="'50px'"></app-round-pic>
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <a href="#" class="anchor-username">
+                            <h4 class="media-heading capitalize">{{_apiService.getAuthUser().name | capitalize}}</h4>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 margin-top15 no-xs-padding-lr">
+                            <a class="tag-sm-bottom-gap" *ngFor="let cat of categoryList; let i=index" routerLink="/categorywise-article/{{cat.id}}">
+                              <span *ngIf="cat.checked" class="ion-android-data light-blue-button all-caps" [style.background-color]="safeStyle(cat.colour_code)" style="border-radius:6px;" [innerHTML]="cat.name"></span>
+                            </a>
+                           
+                            <!--div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo">
+                              <span *ngFor="let tag of tags; let i=index">
+                                  <span class="tag all-caps" [innerHTML]="tag">&nbsp;</span>
+                                  <br *ngIf="((i+1)%5)==0">
+                              </span>
+                            </div-->
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo padding-top10px">
+                              <i class="fa fa-map-marker"></i>
+                              <span *ngFor="let city of cityList; let i=index">
+                                  <span *ngIf="city.checked" class="font-size13" [innerHtml]="city.city"></span>
+                              </span>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo padding-top10px" style="margin-bottom:15px;">
+                              <span class="font-size13 color-pink font-bolder">Applicable for : </span>
+                              <span *ngFor="let age of ageGroups; let i=index">
+                                 <span *ngIf="age.checked" class="font-size11" [innerHtml]="age.age"></span>
+                              </span>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingNo margin-top">
+                              <span class="margin-top font-size14 width-100" [innerHTML]="content">
+                              </span>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 <!--  <hr> -->
+                </div>
+              </div>
+                <div class="clearfix"></div>
+            </section>
+          </div>
+        </div>
+        <div class=" col-md-12" style="padding: 0; border-top:1px solid #d3d3d3">
+          <div class="checkbox checkbox-primary" >
+            <input id="checkbox09" type="checkbox" [(ngModel)]="accept" (change)="termspage()">
+            <label for="checkbox09"> I accept Terms & Conditions and Privacy Policy of the website</label>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 margin-top6 text-center-xs no-padding-l">
+            <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" class="btn font-size13 pink-color-button" (click)="submitArticle()">SUBMIT</a> </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!previewMode">
+      <div class="container">
+        <div class="container center-block center-div width-70per full-xs-width">
+          <div class="col-md-12 paddingNo">
+            <div class="form-group">
+              <h4><span class="color-pink font-size20">Submit an Article</span> </h4>
+
+              <h5 class="margin-top-20"><span class="font-size13"><b>Article Title</b></span>&nbsp;<span class="required-field"><b>*</b></span>
+              </h5>
+              <input id="event_title" type="text" class="form-control margin-top height40 font-weight-600" value="" placeholder="Enter the title of the event" [(ngModel)]="article_title">
+              <h5 class="margin-top-20"><span class="font-size13"><b>Article Excerpt</b></span>&nbsp;<span class="required-field"><b>*</b></span>
+                <i class="fa fa-question-circle-o" aria-hidden="true" mdTooltip="A short extract prompting the reader to click on your article (140 characters)" mdTooltipPosition="after"></i>
+              </h5>
+              <textarea class="form-control margin-top" style="max-width:768px;max-height:100px;" id="description" placeholder="A short extract prompting the reader to click on your article (140 characters)" [(ngModel)]="article_excerpt" maxlength="140"></textarea>
+              <div class="form-group	col-md-12 paddingNo">
+                <label for="nt" class="col-md-12 ">
+                  <h5 class="no-top-gap "><span class="font-size13"><b>Upload Article Banner Photo</b></span>
+                    <p> (Max. file size: 5 Mb; File formats allowed: .jpg, .jpeg, .png)</p>
+                  </h5>
+                </label>
+                <div class="fileUpload-lghtgreen btn btn-primary">
+                  <input class="upload event_upload_btn" type="file" id="article_pic" name="article_pic" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="article_pic" (change)="fileChange($event)">
+                </div>
+                <span>{{fileUploadMessage}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container center-block center-div width-70per full-xs-width">
+          <h5><span class="font-size13"><b>Article Content</b></span>&nbsp;<span class="required-field"><b>*</b></span></h5>
+          <div class="col-md-12 col-lg-12 paddingNo">
+            <div class="col-lg-12 col-md-12 paddingNo margin-top margin-bottom6">
+              <ckeditor #ckeditor
+                [(ngModel)]="content"
+                [config]="{
+                  uiColor: '#c1c1c1',
+                  filebrowserBrowseUrl: 'image-browser',
+                  filebrowserUploadUrl: uploadUrl,
+                  toolbarGroups: [
+                 	{'name':'basicstyles','groups':['basicstyles']},
+                 	{'name':'links','groups':['links']},
+                 	{'name':'paragraph','groups':['list','blocks']},
+                 	{'name':'insert','groups':['insert']},
+                 	{'name':'styles','groups':['styles']}
+                 	]
+                }"
+                [readonly]="false"
+                debounce="500">
+                <ckbutton [name]="'imageExplorer'"
+                 [command]="'openImageExplorer'"
+                 (click)="openImageExplorer($event)"
+                 [icon]="'//kidsstoppress.com/assets/images/image-editor.png'"
+                 [label]="'Upload Image'"
+                 [toolbar]="'insert,1'">
+                </ckbutton>
+              </ckeditor>
+            </div>
+            <!--h5><span class="font-size13"><b>Article Tags</b></span>&nbsp;<span class="required-field">*</span></h5>
+            <div class="col-lg-12 col-md-12 paddingNo margin-top">
+              <tag-input class="input-group bg-white" [(ngModel)]='article_tags'></tag-input>
+            </div-->
+            <div class="col-md-12 col-lg-12 paddingNo margin-top min-mob-table-style">
+             <div class="col-md-12 paddingNo">
+          <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab1default" data-toggle="tab">CITIES<i class="fa fa-angle-down" aria-hidden="true"></i>&nbsp;<span class="required-field">*</span></a></li>
+                <li><a href="#tab2default" data-toggle="tab">AGE GROUPS <i class="fa fa-angle-down" aria-hidden="true"></i>&nbsp;<span class="required-field">*</span></a></li>
+                <li><a href="#tab3default" data-toggle="tab">CATEGORIES <i class="fa fa-angle-down" aria-hidden="true"></i>&nbsp;<span class="required-field">*</span></a></li>
+              </ul>
+            </div>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab1default" *ngIf="cityList">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="col-md-4" *ngFor="let city of cityList">
+                      <div class="checkbox checkbox-primary">
+                        <input id="city{{city.id}}" type="checkbox" [(ngModel)]="city.checked">
+                        <label for="city{{city.id}}"> {{city.city}} </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="tab2default" *ngIf="ageGroups">
+                  <div class="col-md-12 col-lg-12">
+                    <div class="col-md-4" *ngFor="let group of ageGroups">
+                      <div class="checkbox checkbox-primary capitalize">
+                        <input id="age{{group.id}}" type="checkbox" [(ngModel)]="group.checked">
+                        <label for="age{{group.id}}"> {{group.age}} </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="tab3default"  *ngIf="categoryList">
+                  <div class=" col-md-4 no-padding-r"  *ngFor="let category of categoryList">
+                    <div class="checkbox checkbox-primary capitalize">
+                      <input id="category{{category.id}}" type="checkbox" [(ngModel)]="category.checked">
+                      <label for="category{{category.id}}"> {{category.name}} </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 margin-top6">
+                    <div class="col-md-3 col-lg-3 paddingNo"> <a href="javascript:void(0);" class="btn font-size13 pink-color-button" (click)="previewArticle()">PREVIEW</a> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+</section>
+<input class="upload event_upload_btn" type="file" id="event_pic_editor" name="event_pic_editor" accept=".jpg, .jpeg, .png, .bmp" [(ngModel)]="event_pic_editor" (change)="fileChangeEditor($event)" style="opacity: 0">
+<hr>
+<!--main content end-->
+
+<div id="termsAndConditionpopup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="pull-right">
+        <a class="closePopup closeButton" href="javascript:void(0);" data-dismiss="modal">×</a>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title text-center" style="font-weight: 600">TERMS OF CONTRIBUTION OF CONTENT</h4>
+        <div class="pull-right">
+      </div>
+      </div>
+      <div class="modal-body" style="height: 500px;overflow: hidden;overflow-y: scroll;margin-bottom: 10px;">
+        <div>
+          <div class="panel panel-default">
+            <div>
+              <p>These Terms of Contribution of Content (“<b>Terms</b>”) constitute a contract between you (the
+                  “Contributor”) and the Kidsstoppress Media Private Limited. (“<b>Company</b>”,
+                    “<b>Kidsstoppress</b>”, “<b>we</b>” or “<b>us</b>”) and apply to content contributed by the Contributor to our online environment accessible through all domains and subdomains under <a href="http://www.kidsstoppress.com/">http://www.kidsstoppress.com/ </a> and  <a href="http://www.kspcode.com/">http://www.kspcode.com/</a> (the “<b>Site</b>”).</p>
+            </div>
+            <div>
+              <span>Contributor</span><br>
+              <span><b>RECITALS</b></span>
+            </div>
+            <div class="my-2">
+              <span><b>WHEREAS:</b></span>
+            </div>
+
+            <div>
+              <div class="d-flex">
+                <span class="mr-4">A.</span>
+                <div>
+                  <span>The Company is engaged in the business of hosting a website for the lifestyle of children.</span>
+                </div>
+              </div>
+              <div class="d-flex">
+                <span class="mr-4">B.</span>
+                <div>
+                    <span>The Contributor is desirous of making contributions on the Company Website.</span>
+                </div>
+              </div>
+              <div class="d-flex">
+                <span class="mr-4">C.</span>
+                <div>
+                  <span>The Company wishes to host the contributions of the Contributor on the terms and conditions contained in this Terms on the Site and the Contributor wishes to contribute content to the Company Site on such Terms.</span>
+                </div>
+              </div>
+            </div>
+            <div class="my-4">
+              <span><b>NOW THEREFORE</b>, BY SUBMITTING THE CONTENT THE PARTIES HEREBY AGREES AS FOLLOWS:</span>
+            </div>
+
+            <div class="d-flex">
+              <span class="mr-4">1.</span>
+              <div>
+                <span>
+                  <b>DEFINITIONS AND INTERPRETATION</b>
+                </span>
+              </div>
+            </div>
+            <div class="ml-4 my-2">
+              <div class="d-flex">
+                <span class="mr-4"><b>1.1.</b></span>
+                <div>
+                  <span><b>Definitions.</b></span>
+                </div>
+              </div>
+
+              <div class="my-4">
+                <span>The following terms and their derivatives, if capitalized, have the following meanings assigned to them under this Agreement</span>  
+              </div>
+
+              <div class="my-3">
+                <div>“<b>Agreement</b>” shall have the meaning set out in the preamble;</div>
+              </div>
+
+              <div class="my-3">
+                <div>“<b>Approval</b>” means the prior written approval of the Company;</div>
+              </div>
+
+              <div class="my-3">
+                <div>“<b>Business</b>” shall mean the business of hosting a website for the lifestyle of children;</div>
+              </div>
+
+              <div class="my-3">
+                <div>“<b>Content</b>” shall mean a compilation of information, ideas, stories and messages which
+                  can be expressed in a variety of forms including through text, images, videos and audios submitted by the Contributor on the Site;</div>
+              </div>
+
+              <div class="my-3">
+                <div>“<b>Effective Date</b>” shall have the meaning set out in the preamble;</div>
+              </div>
+
+              <div class="my-3">
+                <span>“<b>Intellectual Property Rights</b>” shall mean registered and unregistered rights in all forms
+                of intellectual property subsisting under the laws of India and all analogous rights subsisting under the laws of other jurisdictions and shall include any legally protectable product or process of the human intellect whether registrable as patents, trademarks, copyrights, designs or otherwise such as an invention, expression or literary creation, unique name, trade secret, business method, database, industrial process, computer program, source code, process or presentation.</span>
+              </div>
+
+              <div class="my-2">
+                <span>“<b>Person</b>” shall mean an individual, partnership, joint venture, corporation, limited liability company, unincorporated organization, government entity or other entity;</span>
+              </div>
+
+              <div class="my-2">
+                <span>“<b>Representations and Warranties</b>” shall mean the representations and warranties of the
+                Contributor as set out in Clause 4; and</span>
+              </div>
+
+              <div class="my-2">
+                <span><b>“Term”</b>shall mean the period of time the Contributor contributes Content to the Site.</span>
+              </div>
+            </div>
+
+            <div class="my-2">
+              <div class="d-flex my-4">
+                <span class="mr-4"><b>1.2.</b></span>
+                <div>
+                  <span><b>Interpretation.</b></span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.1.</span>
+                <div>
+                  <span>The article headings and sub headings are for convenience only and do not affect the meaning, construction or interpretation of this Agreement.</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.2.</span>
+                <div>
+                  <span>The words “include” and “including” are deemed to be followed by the words “without limitation.”</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.3.</span>
+                <div>
+                  <span>Any reference to a statute, law, rule, regulation, decree, or other legislative, administrative, or executive act is a reference to both the current and any future versions and to any supplements or replacements that may from time to time become effective.</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.4.</span>
+                <div>
+                  <span>This Agreement may be executed in any number of counterparts and each counterpart shall be considered an original of this Agreement. Together all executed counterparts constitute one and the same instrument; however, neither Party is bound to this  Agreement unless and until both Parties have executed a counterpart. A signature page signed by a Party and sent by facsimile machine to the other Party is as valid as an original and is binding between the Parties.</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.5.</span>
+                <div>
+                  <span>Each provision of this Agreement is separable and if any provision is determined to betweeninvalid, unenforceable, or illegal under any existing or future law, the invalidity, unenforceability or illegality does not impair the operation of or affect those portions  of this Agreement that are valid, enforceable, and legal.</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.6.</span>
+                <div>
+                  <span>No modification of or amendment to this Agreement is valid or binding unless provided in a writing that specifically references this Agreement and that has been duly executed by authorized representatives of the Parties.</span>
+                </div>
+              </div>
+
+              <div class="d-flex my-2">
+                <span class="mr-4">1.2.7.</span>
+                <div>
+                  <span>All notices, demands or other communication required or permitted to be given or made under this Agreement, shall be in writing. “Writing”, “written” and comparable terms refer to printing, typing or email.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex my-4">
+              <span class="mr-4"><b>2.</b></span>
+              <div>
+                <span>
+                  <b>APPOINTMENT AND TERM</b>
+                </span>
+              </div>
+            </div>
+            <div class="my-2 d-flex">
+              <span class="mr-4">2.1</span>
+              <div>
+                <span>The Company hereby appoints the Contributor on a non-exclusive basis to contribute Content to the Site. The Contributor agrees that that the promotion of the Content on the Site and the corresponding social amplification constitutes adequate consideration for the contribution of the Content by the Contributor as contemplated under this Agreement.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-4">
+              <span class="mr-4"><b>3.</b></span>
+              <div>
+                <span>
+                  <b>INTELLECTUAL PROPERTY IN THE CONTENT</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">3.1</span>
+              <div>
+                <span>All Intellectual Property Rights in the Content shall belong to and shall be the property of the Company and the Contributor shall not be entitled to claim any rights over such Content or any part thereof. The Contributor acknowledges that the Content shall remain forever as the exclusive property of the Company. All Content contributed by the Contributor shall be “work made for hire” for the purposes of the Indian Copyright Act, 1957 or any superseding law. The Contributor hereby confirms that the social amplification that the Site provides to the Content is sufficient consideration for the transfer of all Intellectual Property Rights in the Content by him/her to the Company.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">3.2</span>
+              <div>
+                <span>The Contributor shall not dispute or contest for any reason whatsoever, directly or indirectly, during the Term of this Agreement and thereafter the validity, ownership or enforceability of any of the Intellectual Property Rights of the Company in the Content contributed by the Contributor during the Term of this Agreement nor directly or indirectly attempt to acquire or damage the value of the goodwill associated with the Intellectual Property Rights of the Company nor counsel, procure or assist any third party to do any of the foregoing. The Contributor shall assign to the Company, without any charge, any rights in the Intellectual Property Rights of the Content that may inure to the benefit of the Contributor pursuant to this Agreement. The Contributor shall execute documents and do such acts as may be required to accomplish the intent of this Agreement.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">3.3</span>
+              <div>
+                <span>The Company shall be entitled to monetize the Content in such manner as it deems fit and all the proceeds arising from the monetization of the Content shall belong solely to the Company. The Contributor shall not make any claim or exercise any right with respect to the Content or the Intellectual Property Rights therein. Any proceeds which arise from the monetization of the Content shall belong exclusively to the Company.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>4.</b></span>
+              <div>
+                <span>
+                  <b>REPRESENTATIONS AND WARRANTIES</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-2 mb-3">
+                <span>The Contributor represents, warrants, and covenants to Company that the statements contained in this Clause 4 are correct and complete as of the date of this Agreement:</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">4.1</span>
+              <div>
+                <span><b>Validity</b>. This Agreement has been duly authorized, executed and delivered by the Contributor and constitutes, a valid and legally binding obligation of the Consultant, enforceable in accordance with its terms; it is not required in order to ensure the validity, effectiveness, performance or enforceability of the Agreement against or by the Contributor that the same be notarized or filed, registered or recorded in a public office or elsewhere, or that any other instrument, document or notice relating thereto be executed, delivered, filed, registered, recorded or served; and</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">4.2</span>
+              <div>
+                <span><b>No Conflict</b>. Neither the making of this Agreement to which the Contributor is a party
+                  <b>nor</b> the compliance with its terms will conflict with or result in a breach of any of the terms, conditions or provisions of, or constitute a default or require any consent under, any indenture, mortgage, agreement or other instrument or arrangement to which the Contributor is a party or by which it is bound, or which is binding upon all or any of its assets or undertakings, or violate any of the terms or provisions of the Consultant’s charter documents or any authorization, judgment, decree or order or any statute, rule
+                  or regulation applicable to the Consultant, or which is binding upon all or any of its assets or undertakings.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">4.3</span>
+              <div>
+                <span><b>Compliance</b>. The Contributor shall at all times comply with all applicable laws when
+                performing the Consultant’s obligations under this Agreement.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">4.4</span>
+              <div>
+                <span><b>Non-Infringement</b>.The Contributor confirms that the Content provided by him will
+                not infringe upon any copyright, patent, trade secret or other Intellectual Property Rights of any third Person.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-4">
+              <span class="mr-4"><b>5.</b></span>
+              <div>
+                <span>
+                  <b>CONFIDENTIALITY</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">5.1</span>
+              <div>
+                <span>The Contributor will at all-time respect the confidentiality of information and data furnished by the Company to the Contributor pursuant to this Agreement (“<b>Confidential Information</b>”) and shall neither, during or subsequent to the term of this Agreement, use the same for any purpose whatsoever other than for the purposes of performing its obligations under this Agreement nor disclose the same to any third
+                party unless authorized by the Company.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">5.2</span>
+              <div>
+                <span>It is understood that the Confidential Information of the Company shall remain the sole property of the Company. The Consultant, nor its officials shall neither copy any such information nor shall they carry with them any of the aforesaid in any form or manner whatsoever nor use the same subsequently. The Contributor agrees to advise all those of its employees who receive the Confidential Information that such information is proprietary and confidential to the Company and shall not be disclosed to anyone
+                except as authorized herein.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">5.3</span>
+              <div>
+                <span>The Contributor will take all reasonable precautions (being at least as stringent as for its own confidential information, but in any event not less than a reasonable degree of care) to maintain the confidentiality of and to prevent the unauthorized disclosure order use of the Confidential Information.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex flex-column">
+              <div class="d-flex">
+                <span class="mr-4">5.4</span>
+                <div>
+                  <span>Confidential Information does not include information which:</span>
+                </div>
+              </div>
+              <div class="ml-4">
+                <li class="my-3 d-flex">
+                  <span class="mr-4">i.</span>
+                  <div>is known to the Contributor at the time of disclosure to the Contributor as evidenced by written records of the Consultant, or</div>
+                </li>
+                <li class="my-3 d-flex">
+                  <span class="mr-4">ii.</span>
+                  <div>has become publicly known and made generally available through no wrongful act of the Consultant; or</div>
+                </li>
+                <li class="my-3 d-flex">
+                  <span class="mr-4">iii.</span>
+                  <div>has been rightfully received by the Contributor from a third party in circumstances which do not involve any breach of any obligation of the Consultant;</div>
+                </li>
+                <li class="my-3 d-flex">
+                  <span class="mr-4">iv.</span>
+                  <div>the Company consents in writing to disclosure of such information;</div>
+                </li>
+                <li class="my-3 d-flex">
+                  <span class="mr-4">v.</span>
+                  <div>Such disclosure is required in order to enable the Contributor to perform its obligations hereunder in accordance with applicable regulations; or</div>
+                </li>
+                <li class="my-3 d-flex">
+                  <span class="mr-4">vi.</span>
+                  <div>Such disclosure is otherwise required by applicable law or regulation.</div>
+                </li>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">5.5</span>
+              <div>
+                <span>Following termination or expiry of the term of this Agreement, whichever is earlier, the Contributor shall promptly return to, or if so instructed by the Company, destroy all Confidential Information of the Company in material or electronic form (including without limitation, those parts of all notes and other records of the Contributor containing the Company’s Confidential Information) in its possession or control.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>6.</b></span>
+              <div>
+                <span>
+                  <b>INDEMNIFCATION</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">6.1</span>
+              <div>
+                <span>The Contributor(“<b>Indemnifying Party</b>&quot;) shall indemnify, hold harmless and defend the Company and its officers, directors, agents, employees, and affiliates, (“<b>Indemnified Party</b>&quot;) from and against any and all claims, demands, actions, costs, expenses, liabilities, judgments, causes of action, proceedings, suits, losses and damages of any nature, which are threatened or brought against, or are suffered or incurred by, the Indemnified Party or any such person to the extent caused directly by acts or omissions
+                of the Indemnifying Party relating to this Agreement, including without limitation (i) any negligent or tortious conduct, (ii) any breach of any of the representations, warranties, covenants or conditions of the Indemnifying Party contained in this Agreement, (iii) any violation of applicable laws or regulations and (iv) infringement or violation of any patent, copyright, trade secret, or other proprietary interest of any third party.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">6.2</span>
+              <div>
+                <span>IN NO EVENT SHALL EITHER PARTY BE LIABLE TO THE OTHER FOR ANY SPECIAL, INDIRECT, EXEMPLARY OR CONSEQUENTIAL DAMAGES ARISING OUT OF THIS AGREEMENT.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>7.</b></span>
+              <div>
+                <span>
+                  <b>TERMINATION</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">7.1</span>
+              <div>
+                <span>The Agreement can be terminated by the Company with immediate effect.</span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4">7.2</span>
+              <div>
+                <span>The Company may terminate this Agreement with immediate effect if the Contributor commits a breach of any provision of this Agreement.</span>
+              </div>
+            </div> 
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>8.</b></span>
+              <div>
+                <span>
+                  <b>ENTIRE AGREEMENT.</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-4">
+                <span>This Agreement constitutes the final, complete, and exclusive statement of the agreement of the Parties with respect to the subject matter hereof, and supersedes any and all other prior and contemporaneous agreements and understandings, both written and oral, between the Parties.</span>
+              </div>
+            </div>
+
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>9.</b></span>
+              <div>
+                <span>
+                  <b>ASSIGNMENT.</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-4">
+                <span>This Agreement and any of the rights and obligations hereunder may not be assigned by the Contributor in any manner whatsoever to a third Person without the Approval of the Company.</span>
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>10.</b></span>
+              <div>
+                <span>
+                  <b>NOTICE.</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-4">
+                <span>Any notice or other communication provided for herein or given hereunder to a Party hereto shall be in writing and shall be given in person, by overnight courier, or by mail (registered or certified mail, postage prepaid, return-receipt requested) to the respective Parties as follows:</span>
+
+                <div class="ml-4 my-2">
+                  <span><b>If to the Company:</b></span>
+                  <div>
+                    <span class="mr-4">Attention :</span>
+                    <span>Ms. Mansi Zaveri</span>
+                  </div>
+                  <div class="d-flex">
+                    <span class="mr-4">Address :</span>
+                    <div>A-5/1,Worli Sea Side Chs, Narayan Pujari Nagar, Khan A G Road, Worli, Mumbai 400018</div>
+                  </div>
+                  <div>
+                    <span class="mr-4">E-mail :</span>
+                    <span>mansi.zaveri@kidstoppress.com</span>
+                  </div>
+                  <div class="my-2">
+                    <span><b>If to the Contributor :</b></span>
+                  </div>
+                  <div>
+                    <span>Address : the address of the Contributor as per his account on the Site</span>
+                  </div>
+                  <div>
+                    <span>E-mail : the e-mail of the Contributor as per his account on the Site</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>11.</b></span>
+              <div>
+                <span>
+                  <b>GOVERNING LAW AND JURISDICTION.</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-4">This Agreement shall be governed by the laws of India. In the event that litigation results from or arises out of this Agreement or the performance thereof, the Parties agree to reimburse the prevailing Party’s reasonable attorneys’ fees, court costs, and all other expenses, whether or not taxable by the court as costs, in addition to any other relief to which the prevailing Party may be entitled. The courts of Mumbai shall have exclusive jurisdiction to try and settle all disputes arising out of or in connection with this Agreement.
+              </div>
+            </div>
+
+            <div class="d-flex my-3">
+              <span class="mr-4"><b>12.</b></span>
+              <div>
+                <span>
+                  <b>EXECUTION.</b>
+                </span>
+              </div>
+            </div>
+
+            <div class="my-2 d-flex">
+              <span class="mr-4"></span>
+              <div class="ml-4">
+                <span>By the submission of Content to the Site you are hereby confirm your acceptance of these Terms.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

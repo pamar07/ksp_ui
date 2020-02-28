@@ -1,0 +1,29 @@
+.channel-header::after{
+    border-bottom: 1px solid #f3f3f2;
+    width: 100%;
+    display: block;
+    position: absolute;
+    content: '';
+}
+
+.radio-card-layout{
+  -webkit-box-shadow: 0 0 7px rgba(0,0,0, .35);
+  -moz-box-shadow: 0 0 7px rgba(0,0,0, .35);
+  box-shadow: 0 0 7px rgba(0,0,0, .35);
+  height:auto;
+  background-color:#fff;
+}
+
+.no-float{
+  float: none!important;
+}
+
+.border-bottom-radio{
+  border-bottom: 2px solid #dadada;
+}
+.padding15{
+  padding: 15px;
+}
+.margin10{
+  margin:10px;
+}
