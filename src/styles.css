@@ -2004,7 +2004,7 @@ a:hover, a:focus {
 
 .owl-next:after {
 	content: '';
-    background-image: url(/assets/award2017/img/next-arrow.png);
+    background-image: url(/v1/assets/award2017/img/next-arrow.png);
     position: absolute;
     background-size: 86%;
     height: 70px;
@@ -2014,7 +2014,7 @@ a:hover, a:focus {
 
 .owl-prev:after {
 	content: '';
-    background-image: url(/assets/award2017/img/prev-arrow.png);
+    background-image: url(/v1/assets/award2017/img/prev-arrow.png);
     position: absolute;
     background-size: 18%;
     height: 70px;
