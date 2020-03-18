@@ -37,16 +37,16 @@ export class WebBundleIndividualComponent implements OnInit {
   bundle: any;
   itemDetails: any;
   checkStatus: any;
-  articleEnd: boolean = false;  
+  articleEnd: boolean = false;
   shareCount: number;
   payment_link: any;
-  price:any;
-  title:any;
+  price: any;
+  title: any;
   mealPlan: boolean = true;
   subForm: FormGroup;
-  purpose : any;
-  bndle : any;
-  redirectUrl : any;
+  purpose: any;
+  bndle: any;
+  redirectUrl: any;
   magnifyingImage;
 
   openImgPop = false;
@@ -70,17 +70,17 @@ export class WebBundleIndividualComponent implements OnInit {
     public location: PlatformLocation,
     public _apiSeo: SeoService,
     private form: FormBuilder
-  ) {}
+  ) { }
   ngOnInit() {
     Instamojo.configure({
       amount: 2000,
-   handlers: {
-     onOpen: this.onOpenHandler,
-     onClose: this.onCloseHandler,
-     onSuccess: this.onPaymentSuccessHandler, 
-     onFailure: this.onPaymentFailureHandler
-   }
- });
+      handlers: {
+        onOpen: this.onOpenHandler,
+        onClose: this.onCloseHandler,
+        onSuccess: this.onPaymentSuccessHandler,
+        onFailure: this.onPaymentFailureHandler
+      }
+    });
     // modal email for meal plan
     this.subForm = this.form.group({
       email: [null, [Validators.required, Validators.email]]
@@ -96,9 +96,9 @@ export class WebBundleIndividualComponent implements OnInit {
           }
           this.bundle = $ret.data;
           console.log(this.bundle);
-          for(let i of this.bundle.item_details){
-            if(i.type == 1){
-             i.image_or_video_path = i.image_or_video_path.replace("watch?v=","embed/");
+          for (let i of this.bundle.item_details) {
+            if (i.type == 1) {
+              i.image_or_video_path = i.image_or_video_path.replace("watch?v=", "embed/");
             }
           }
           this.payment_link = this.bundle.payment_link;
@@ -112,22 +112,22 @@ export class WebBundleIndividualComponent implements OnInit {
                 let $ret = ret.ret;
                 this.checkStatus = $ret.data;
               },
-              err => {}
+              err => { }
             );
-            this._apiService.getShareCount(this._apiService.share_url + 'bundle-individual/' + this.bundle.id).subscribe(ret_share=>{
-              if(this.bundle.shares != null){
-                this.shareCount = ret_share.shares + this.bundle.shares;
-              }
-              else{
-                this.shareCount = ret_share.shares;
-              }
-            });
+          this._apiService.getShareCount(this._apiService.share_url + 'bundle-individual/' + this.bundle.id).subscribe(ret_share => {
+            if (this.bundle.shares != null) {
+              this.shareCount = ret_share.shares + this.bundle.shares;
+            }
+            else {
+              this.shareCount = ret_share.shares;
+            }
+          });
         },
-        err => {}
+        err => { }
       );
     });
 
-  
+
   }
 
 
@@ -147,26 +147,26 @@ export class WebBundleIndividualComponent implements OnInit {
   //       this._router.navigate(["/login"]);
   //     }
   // }
-  
+
   getBundle() {
     console.log('bundle ljwer');
     const xyz = [];
     this._apiService.getbunddle().subscribe(ret => {
       this.bundle = ret['ret'].data;
-      console.log( this.bundle);
-      if (this._apiService.loggedIn()) {
-        for (let i = 0 ; i < this.bundle.length; i++) {
-          this._apiService.checkBundlePayment({bundle_id: this.bundle[i].id}).subscribe(ret1 => {
-           this.bundle[i].payment = ret1['ret'].data;
-           // if (ret1['ret'].data === 1) {
-           //   this.goToBundle = true;
-           // } else {
-           //   this.goToBundle = false;
-           // }
-         }, err => {
-         });
-      }
       console.log(this.bundle);
+      if (this._apiService.loggedIn()) {
+        for (let i = 0; i < this.bundle.length; i++) {
+          this._apiService.checkBundlePayment({ bundle_id: this.bundle[i].id }).subscribe(ret1 => {
+            this.bundle[i].payment = ret1['ret'].data;
+            // if (ret1['ret'].data === 1) {
+            //   this.goToBundle = true;
+            // } else {
+            //   this.goToBundle = false;
+            // }
+          }, err => {
+          });
+        }
+        console.log(this.bundle);
       }
     }, err => {
     });
@@ -177,13 +177,13 @@ export class WebBundleIndividualComponent implements OnInit {
     this.selectedRow1 = null;
     this.selectedRow = index;
   }
-  submitPaymentDet(bundleId,price) {
+  submitPaymentDet(bundleId, price, title) {
     if (this._apiService.loggedIn()) {
       // this._api.submitPaymentDet(bundleId, status).subscribe(ret => {
       //   if (ret['ret'].code === 1) {
       //       // this._router.navigate([payment_link, '_blank']);
       //      this.document.location.href = payment_link;
-           
+
       //   } else {
       //   }
       // this.selectedBundleId = bundleId;
@@ -195,40 +195,40 @@ export class WebBundleIndividualComponent implements OnInit {
       //         // this._router.navigate([payment_link, '_blank']);
       //         Instamojo.open(this.payment_link+'?amount='+this.price+'&?purpose=KSP-Bundles'+this.id);
       //       //  this.document.location.href = payment_link;
-            
+
       //     } else {
       //     }
-            
-         
+
+
 
       // }, err => {
       // });
       this.bndle = 'bundle';
-      this.purpose = 'kspBundle'+bundleId;
-      this.redirectUrl = this._apiService.getShareUrlPay()+'payment-statusFinal';
-      this._apiService.paymentInitiate(bundleId,this.bndle,price,this.redirectUrl, this.purpose).subscribe(ret => {
+      this.purpose = 'ksp-Bundle - ' + bundleId + ' - ' + title;
+      this.redirectUrl = 'https://kidsstoppress.com/v1/bundle-individual/' + bundleId;
+      this._apiService.paymentInitiate(bundleId, this.bndle, price, this.redirectUrl, this.purpose).subscribe(ret => {
         localStorage.setItem('bundle_id', bundleId);
-          if(ret['ret'].code === 1){
-            location.href = ret['ret'].long_url;
-          }else{
+        if (ret['ret'].code === 1) {
+          location.href = ret['ret'].long_url;
+        } else {
 
-          }
+        }
       })
     }
-    
+
   }
 
 
 
-   onOpenHandler () {
+  onOpenHandler() {
     // alert('Payments Modal is Opened');
   }
 
-   onCloseHandler () {
+  onCloseHandler() {
     // alert('Payments Modal is Closed');
   }
 
-   onPaymentSuccessHandler (response) {
+  onPaymentSuccessHandler(response) {
     // alert('Payment Success');
     // this.paymentResponse = response;
     // alert(JSON.stringify(this.paymentResponse));
@@ -236,14 +236,14 @@ export class WebBundleIndividualComponent implements OnInit {
     console.log('Payment Success Response', response);
   }
 
-  confirmSuccess (paymentId) {
-    ApiService.prototype.submitPaymentDetConfirm(this.selectedBundleId , 1, paymentId);
+  confirmSuccess(paymentId) {
+    ApiService.prototype.submitPaymentDetConfirm(this.selectedBundleId, 1, paymentId);
   }
-   onPaymentFailureHandler (response) {
+  onPaymentFailureHandler(response) {
     // alert('Payment Failure');
     console.log('Payment Failure Response', response);
   }
- 
+
   // Instamojo.configure({
   //   handlers: {
   //     onOpen: onOpenHandler,
@@ -265,12 +265,12 @@ export class WebBundleIndividualComponent implements OnInit {
   safeUrl(url) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(url);
   }
-  getUserId(){
+  getUserId() {
     let user = localStorage.getItem('user');
-    if(user){
+    if (user) {
       return JSON.parse(user).id;
     }
-    else{
+    else {
       return null;
     }
   }
@@ -279,9 +279,9 @@ export class WebBundleIndividualComponent implements OnInit {
 
     this.openImgPop = true;
     setTimeout(() => {
-        const popImg = document.getElementById('img-pop-src');
-        console.log(document.getElementById('img-pop-src'));
-        popImg['src'] = event.target.parentNode.parentNode.children[0].currentSrc;
+      const popImg = document.getElementById('img-pop-src');
+      console.log(document.getElementById('img-pop-src'));
+      popImg['src'] = event.target.parentNode.parentNode.children[0].currentSrc;
     }, 1000);
 
   }

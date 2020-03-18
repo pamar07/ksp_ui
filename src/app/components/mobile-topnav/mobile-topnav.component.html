@@ -9,7 +9,7 @@
 <div class="menu-scroll-box mobile-top-menu" *ngIf="!_apiService.loggedIn() || (_apiService.loggedIn() && _apiService.getAuthUser().usertype != 5)" >
     <!-- <img src="assets/images/banner-background.png" class="web-logo-hide" width="auto" /> -->
   <a *ngIf="!_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" href="/home" class="menu-tab-mobile" aria-selected="true">Home</a>
-  <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/dashboard" class="menu-tab-mobile" aria-selected="true">Home</a>
+  <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" href="/dashboard" class="menu-tab-mobile" aria-selected="true">Home</a>
 
   <a *ngIf="!_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/article-public" class="menu-tab-mobile">Articles</a>
   <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/article-user" class="menu-tab-mobile">Articles</a>
@@ -20,6 +20,7 @@
   <a routerLinkActive="mobile-tab-selected" routerLink="/grow-right" class="menu-tab-mobile" style="color: #502b65 !important;">Grow Right</a>
   <a routerLinkActive="mobile-tab-selected" routerLink="/event-all" class="menu-tab-mobile">Events</a>
   <a routerLinkActive="mobile-tab-selected" routerLink="/categorywise-article/20" class="menu-tab-mobile">Meal Plan</a> 
+  <a routerLinkActive="mobile-tab-selected" routerLink="/categorywise-article/91" class="menu-tab-mobile">Mom Boss</a> 
   <a routerLinkActive="mobile-tab-selected"  class="menu-tab-mobile" *ngFor="let item of awardMenu" [routerLink]="['awards', item.id]">{{item.heading}}</a>
   <a routerLinkActive="mobile-tab-selected" routerLink="/KSPAwards2018" class="menu-tab-mobile">Awards 2018</a>
   <!-- <a *ngIf="_apiService.loggedIn()" routerLinkActive="mobile-tab-selected" routerLink="/social-user" class="menu-tab-mobile">Groups</a> -->

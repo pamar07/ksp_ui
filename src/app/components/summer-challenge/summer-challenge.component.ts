@@ -8,5 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class SummerChallengeComponent implements OnInit {
   constructor() { }
   ngOnInit() {
+    localStorage.setItem('location', location.href);
   }
 }

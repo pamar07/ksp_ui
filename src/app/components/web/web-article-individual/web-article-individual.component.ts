@@ -161,9 +161,11 @@ export class WebArticleIndividualComponent implements OnInit, AfterViewInit {
           this.article = $ret.recent;
           // console.log(this.article);
           console.log(document.getElementById('btn-print-mealplan'));
-          for (let i = 0; i < this.article.category.length; i++) {
-            if (this.article.category[i].id === 77) {
-              localStorage.setItem('viewpool', '1');
+          if (this.article.category) {
+            for (let i = 0; i < this.article.category.length; i++) {
+              if (this.article.category[i].id === 77) {
+                localStorage.setItem('viewpool', '1');
+              }
             }
           }
           let url = 'www.kidsstoppress.com/article-individual/' + this.article.perma_link + '/' + this.article.id;
@@ -243,15 +245,17 @@ export class WebArticleIndividualComponent implements OnInit, AfterViewInit {
           } catch (e) { }
 
           this.article.content = this.safeHtml(this.article.content);
-            console.log(document.getElementById('btn-print-mealplan'));
+          console.log(document.getElementById('btn-print-mealplan'));
           this.article.restricted_content = this.safeHtml(this.article.restricted_content);
-          if (this.article.bookmarked.length > 0) {
-            this.isBookmarked = true;
-            this.bookmarkHoverText = 'You already bookmarked';
-
-          } else {
-            this.isBookmarked = false;
-            this.bookmarkHoverText = 'Click here to bookmark';
+          if (this.article.bookmarked) {
+            if (this.article.bookmarked.length > 0) {
+              this.isBookmarked = true;
+              this.bookmarkHoverText = 'You already bookmarked';
+  
+            } else {
+              this.isBookmarked = false;
+              this.bookmarkHoverText = 'Click here to bookmark';
+            }
           }
 
           if (this._apiService.loggedIn()) {
@@ -559,21 +563,21 @@ export class WebArticleIndividualComponent implements OnInit, AfterViewInit {
   }
   /* end of follow author */
   mealplanPrint() {
-  console.log(document.getElementById('btn-print-mealplan'));
-  $('#btn-print-mealplan').click(function(){
-    const divToPrint = document.getElementById('mealplan-table');
-    const newWin = window.open('');
-    newWin.document.write(divToPrint.outerHTML);
-    newWin.print();
-    newWin.close();
-  });
-}
-ngAfterViewInit() {
-  console.log(document.getElementById('btn-print-mealplan'));
-}
-test() {
-  console.log('hello');
-}
+    console.log(document.getElementById('btn-print-mealplan'));
+    $('#btn-print-mealplan').click(function () {
+      const divToPrint = document.getElementById('mealplan-table');
+      const newWin = window.open('');
+      newWin.document.write(divToPrint.outerHTML);
+      newWin.print();
+      newWin.close();
+    });
+  }
+  ngAfterViewInit() {
+    console.log(document.getElementById('btn-print-mealplan'));
+  }
+  test() {
+    console.log('hello');
+  }
 }
 
 @Component({

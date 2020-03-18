@@ -15,7 +15,7 @@
               </div>
               <div id="crop-feature-image">
                 <a href="/details/{{article.perma_link}}/{{article.id}}" onclick="window.scrollTo(0,0)">
-                  <img src="{{article.path.substring( 0, article.path.lastIndexOf('/')) + '/w_300' + article.path.substring( article.path.lastIndexOf('/'), article.path.length)}}" alt="{{article.title}}">
+                  <img src="{{article?.images[0].path?.substring( 0, article?.images[0]?.path?.lastIndexOf('/')) + '/w_300' + article?.images[0]?.path?.substring( article?.images[0]?.path?.lastIndexOf('/'), article?.images[0]?.path?.length)}}" alt="{{article?.title}}">
                 </a>
               </div>
             </div>

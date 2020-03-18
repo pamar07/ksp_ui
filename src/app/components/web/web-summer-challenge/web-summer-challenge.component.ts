@@ -38,9 +38,9 @@ export class WebSummerChallenge implements OnInit {
   challengeStatus: any;
   bookStatus: any;
   review: any;
-  purpose : any;
-  bndle : any;
-  redirectUrl : any;
+  purpose: any;
+  bndle: any;
+  redirectUrl: any;
   ageGroups: any = {};
   itemToReview: any;
   showReviewButton: any = true;
@@ -65,8 +65,8 @@ export class WebSummerChallenge implements OnInit {
   selected: number = 0;
   selectedRow: Number;
   selectedRow1: Number;
-  cnt:number = 0;
-  email:string;
+  cnt: number = 0;
+  email: string;
   mobNo: number;
   bundle: any = [];
   bundleDetails: any;
@@ -125,16 +125,16 @@ export class WebSummerChallenge implements OnInit {
     const data = {
       age_range: id
     };
-    for(var i = 0; i< this.items.length;i++){
-      if(this.items[i].age === id){
+    for (var i = 0; i < this.items.length; i++) {
+      if (this.items[i].age === id) {
         this.age_id = this.items[i].id;
       }
     }
     this._api.getBundleByAgeId(this.age_id).subscribe(ret => {
       let $ret = ret.ret;
-      if($ret.data.length){
-          this.bundle = $ret.data; 
-      }else{
+      if ($ret.data.length) {
+        this.bundle = $ret.data;
+      } else {
         this.bundle = [];
       }
     })
@@ -166,29 +166,29 @@ export class WebSummerChallenge implements OnInit {
     });
   }
   ngOnInit() {
-     Instamojo.configure({
-       amount: 2000,
-    handlers: {
-      onOpen: this.onOpenHandler,
-      onClose: this.onCloseHandler,
-      onSuccess: this.onPaymentSuccessHandler, 
-      onFailure: this.onPaymentFailureHandler
-    }
-  });
+    Instamojo.configure({
+      amount: 2000,
+      handlers: {
+        onOpen: this.onOpenHandler,
+        onClose: this.onCloseHandler,
+        onSuccess: this.onPaymentSuccessHandler,
+        onFailure: this.onPaymentFailureHandler
+      }
+    });
 
-  if(!this._api.loggedIn()){
+    if (!this._api.loggedIn()) {
       setTimeout(() => {
-        if(this.cnt == 0 && location.pathname == '/summer-funfactory'){
-        $(document).mouseleave(function () {
-            if(this.cnt == undefined){
+        if (this.cnt == 0 && location.pathname == '/summer-funfactory') {
+          $(document).mouseleave(function () {
+            if (this.cnt == undefined) {
               $('#guestDetails').modal('show');
-              this.cnt = 1; 
-            }        
-      });
+              this.cnt = 1;
+            }
+          });
+        }
+      }, 5000);
     }
-    }, 5000);
-  }
-  
+
     this.getAgeGroup();
     this.getUserDetails();
     this.getBundle();
@@ -239,7 +239,7 @@ export class WebSummerChallenge implements OnInit {
 
     // this._route.paramMap.subscribe(params => {
     //   console.log(params);
-      
+
     // });
 
   }
@@ -258,8 +258,8 @@ export class WebSummerChallenge implements OnInit {
     }
     this.scroll = true;
   }
-  toPlaystore(){
-    window.location.href = "https://www.kidsstoppress.com/app";
+  toPlaystore() {
+    window.location.href = 'https://www.kidsstoppress.com/v1/app';
   }
 
   showChallengeContent(challenge) {
@@ -520,8 +520,8 @@ export class WebSummerChallenge implements OnInit {
       console.log(ret['ret']);
       if (ret['ret'].code == 1) {
         this.items = ret['ret'].data;
-        this.items =  this.items.filter(function(item){
-          return (item.id > 29 && item.id < 34 ) ;
+        this.items = this.items.filter(function (item) {
+          return (item.id > 29 && item.id < 34);
         })
       }
     }, err => {
@@ -539,16 +539,16 @@ export class WebSummerChallenge implements OnInit {
     // }
     this.selectedRow = null;
     this.selectedRow1 = index;
-console.log(this.userChallenges);
-console.log(details);
-const index1 = this.userChallenges.findIndex(item => item.challenge_id === details.id);
-console.log(index1);
-if (index1 !== -1) {
-  this.match = false;
+    console.log(this.userChallenges);
+    console.log(details);
+    const index1 = this.userChallenges.findIndex(item => item.challenge_id === details.id);
+    console.log(index1);
+    if (index1 !== -1) {
+      this.match = false;
 
-} else {
-  this.match = true;
-}
+    } else {
+      this.match = true;
+    }
   }
   getUserDetails() {
     this._api.getUser().subscribe(ret => {
@@ -564,44 +564,44 @@ if (index1 !== -1) {
       child_id: child
     };
 
-        this._api.acceptChallenge({ challenge: this.chailangeDetails }).subscribe(ret => {
-          this.disbaleAcceptButton = false;
-          let $ret = ret.ret;
-          if ($ret.code == 1) {
-            let cha = $ret.data;
-            cha.challenge = this.chailangeDetails;
-            this.userChallenges.push(cha);
-          } else {
-          }
-        }, err => {
-        });
-        $('#selectChallenge').modal('hide');
-        $('#greatchoice').modal('show');
+    this._api.acceptChallenge({ challenge: this.chailangeDetails }).subscribe(ret => {
+      this.disbaleAcceptButton = false;
+      let $ret = ret.ret;
+      if ($ret.code == 1) {
+        let cha = $ret.data;
+        cha.challenge = this.chailangeDetails;
+        this.userChallenges.push(cha);
+      } else {
+      }
+    }, err => {
+    });
+    $('#selectChallenge').modal('hide');
+    $('#greatchoice').modal('show');
   }
   getBundle() {
     console.log('bundle ljwer');
     const xyz = [];
     this._api.getbunddle().subscribe(ret => {
       this.bundle = ret['ret'].data;
-      console.log( this.bundle);
-      let prevId =0;
-      if (this._api.loggedIn()) {
-        for (let i = 0 ; i < this.bundle.length; i++) {
-          this._api.checkBundlePayment({bundle_id: this.bundle[i].id}).subscribe(ret1 => {
-           this.bundle[i].payment = ret1['ret'].data;
-           if(this.bundle[i].payment == 1 && prevId !==this.bundle[i].id){
-            this.userBundles.push((this.bundle[i]));
-            prevId = this.bundle[i].id;
-           }
-           // if (ret1['ret'].data === 1) {
-           //   this.goToBundle = true;
-           // } else {
-           //   this.goToBundle = false;
-           // }
-         }, err => {
-         });
-      }    
       console.log(this.bundle);
+      let prevId = 0;
+      if (this._api.loggedIn()) {
+        for (let i = 0; i < this.bundle.length; i++) {
+          this._api.checkBundlePayment({ bundle_id: this.bundle[i].id }).subscribe(ret1 => {
+            this.bundle[i].payment = ret1['ret'].data;
+            if (this.bundle[i].payment == 1 && prevId !== this.bundle[i].id) {
+              this.userBundles.push((this.bundle[i]));
+              prevId = this.bundle[i].id;
+            }
+            // if (ret1['ret'].data === 1) {
+            //   this.goToBundle = true;
+            // } else {
+            //   this.goToBundle = false;
+            // }
+          }, err => {
+          });
+        }
+        console.log(this.bundle);
       }
     }, err => {
     });
@@ -609,7 +609,6 @@ if (index1 !== -1) {
   getBundleDetails(bundle, index) {
     this.chailangeDetails = '';
     this.bundleDetails = bundle;
-    console.log(this.bundleDetails)
     this.selectedRow1 = null;
     this.selectedRow = index;
   }
@@ -618,62 +617,40 @@ if (index1 !== -1) {
     this.priceToPrint = price;
 
     if (this._api.loggedIn()) {
-      // this._api.submitPaymentDet(bundleId, status).subscribe(ret => {
-      //   if (ret['ret'].code === 1) {
-      //       // this._router.navigate([payment_link, '_blank']);
-      //      this.document.location.href = payment_link;
-           
-      //   } else {
-      //   }
-      // this.selectedBundleId = bundleId;
-      //   this._api.initiatePaymentStatus(bundleId, status).subscribe(ret=>{
-      //       // console.log(ret);
-      //       if (ret['ret'].code === 1) {
-      //         localStorage.setItem('bundle_id', bundleId);
-      //         localStorage.setItem('order_no', ret['ret'].order_id);
-      //         // this._router.navigate([payment_link, '_blank']);
-      //         Instamojo.open(payment_link+'?amount='+price+'&?purpose=KSP-Bundles-'+bundleId);
-      //       //  this.document.location.href = payment_link;
-            
-      //     } else {
-      //     }
-            
-         
-
-      // }, err => {
-      // });
       this.bndle = 'bundle';
-      this.purpose = 'kspBundle'+bundleId;
-      this.redirectUrl = this._api.getShareUrlPay()+'payment-statusFinal';
-      this._api.paymentInitiate(bundleId,this.bndle,price,this.redirectUrl, this.purpose).subscribe(ret => {
+      this.purpose = 'ksp-Bundle - ' + bundleId + ' - ' + title;
+      this.redirectUrl = 'https://kidsstoppress.com/v1/bundle-individual/' + bundleId;
+      console.log(title);
+      this._api.paymentInitiate(bundleId, this.bndle, price, this.redirectUrl, this.purpose).subscribe(ret => {
         localStorage.setItem('bundle_id', bundleId);
-          if(ret['ret'].code === 1){
-            location.href = ret['ret'].long_url;
-          }else{
+        if (ret['ret'].code === 1) {
+          console.log(ret['ret'].long_url);
+          location.href = ret['ret'].long_url;
+        } else {
 
-          }
-      })
+        }
+      });
     } else {
       $('#userLogin').modal('show');
     }
-    
+
   }
 
 
-  submitGuestDet(){
-    this.intent_type="summerfunfactory";
-    this._api.submitGuestDet(this.email,this.mobNo,this.intent_type).subscribe(ret=>{
+  submitGuestDet() {
+    this.intent_type = "summerfunfactory";
+    this._api.submitGuestDet(this.email, this.mobNo, this.intent_type).subscribe(ret => {
     })
   }
-   onOpenHandler () {
+  onOpenHandler() {
     // alert('Payments Modal is Opened');
   }
 
-   onCloseHandler () {
+  onCloseHandler() {
     // alert('Payments Modal is Closed');
   }
 
-   onPaymentSuccessHandler (response) {
+  onPaymentSuccessHandler(response) {
     // alert('Payment Success');
     // this.paymentResponse = response;
     // alert(JSON.stringify(this.paymentResponse));
@@ -681,10 +658,10 @@ if (index1 !== -1) {
     console.log('Payment Success Response', response);
   }
 
-  confirmSuccess (paymentId) {
-    ApiService.prototype.submitPaymentDetConfirm(this.selectedBundleId , 1, paymentId);
+  confirmSuccess(paymentId) {
+    ApiService.prototype.submitPaymentDetConfirm(this.selectedBundleId, 1, paymentId);
   }
-   onPaymentFailureHandler (response) {
+  onPaymentFailureHandler(response) {
     // alert('Payment Failure');
     console.log('Payment Failure Response', response);
   }

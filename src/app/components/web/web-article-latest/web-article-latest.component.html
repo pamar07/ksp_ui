@@ -21,7 +21,7 @@
         <div class="single-blog-item box-shadow" *ngIf="article.post_type != 'event'">
           <div class="blog-thumnail">
             <div id="crop-feature-image">
-              <a routerLink="/{{type[article.post_type]}}/{{article.id}}">
+              <a href="/{{type[article.post_type]}}/{{article.id}}">
                 <img src="{{article.path}}" width="100%" class="image-fit" alt="{{article.title}}">
               </a>
             </div>
@@ -32,7 +32,7 @@
                     <div class="blog-content all-caps">
                       <app-category [categories]="article.category" [id]="article.id"></app-category>
                       <h4 class="blog-ellipsis">
-                        <a routerLink="/{{type[article.post_type]}}/{{article.id}}">{{article.title}}</a>
+                        <a href="/{{type[article.post_type]}}/{{article.id}}">{{article.title}}</a>
                       </h4>
                       <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 pull-left paddingNo border-righ">
                       <div class="media-left">

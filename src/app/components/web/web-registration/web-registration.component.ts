@@ -342,7 +342,11 @@ export class WebRegistrationComponent implements OnInit {
           if (this._commonService.navUrl) {
             this._router.navigate([this._commonService.navUrl]);
           } else {
-            this._router.navigate(['/dashboard']);
+            if (localStorage.getItem('location')) {
+              window.location.href = localStorage.getItem('location');
+            } else {
+              window.location.href = 'https://kidsstoppress.com/home';
+            }
           }
         } else {
           let dialogRef = this.dialog.open(RegistrationDialog, { data: 'We are facing some problem.<br/>Please try again.' });
